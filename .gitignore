@@ -1,0 +1,6 @@
+# Seeder credentials + in-flight state (never commit)
+scripts/components-db/.seed-env
+scripts/components-db/.batch-in-flight
+
+node_modules/
+.DS_Store
