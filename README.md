@@ -52,6 +52,13 @@ Seeding is admin-gated, batched, and idempotent: re-running converges
 (`unchanged` for already-seeded slugs). `GET /api/v1/admin/components/seed`
 returns the census (`{ totalSeeded }`).
 
+To publish with your existing Thingtime admin browser session, export the
+folder database with `node scripts/components-db/export.mjs > /tmp/thingtime-catalog.json`.
+Open `/components` on the intended deployment, expand **Import component
+catalog**, choose that JSON file, review the count and select **Publish catalog**.
+The importer requires a compatible runtime, validates the entire file, and
+publishes paced batches with visible counts and a stop control.
+
 ## Contributing components
 
 See `scripts/components-db/README.md` for the full pipeline contract. In short:
