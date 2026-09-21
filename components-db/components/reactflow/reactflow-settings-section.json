@@ -3,7 +3,7 @@
 	"name": "Settings Section",
 	"library": "reactflow",
 	"category": "settings",
-	"description": "Grouped settings card in the React Flow style — mono uppercase section header over a switch row, a select mock with chevron, and a navigation row, split by dashed canvas-style dividers.",
+	"description": "Grouped settings card in the React Flow style — mono uppercase section header over a switch row, a select mock with chevron, and a navigation row, split by dashed canvas-style dividers. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"settings",
 		"section",
@@ -30,24 +30,28 @@
 			"default": "English",
 			"label": "Selected value",
 			"maxLength": 24
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "5px",
-				"boxShadow": "none",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -55,127 +59,45 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"padding": "12px 14px 6px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"letterSpacing": "0.08em",
-								"textTransform": "uppercase",
-								"color": "#6f6e77"
-							}
-						},
-						"children": [
-							"{heading}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "12px",
-						"padding": "10px 14px",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "dashed",
-						"borderBottomColor": "#e2e2e5"
+						"flexDirection": "column",
+						"width": "320px",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#1a192b",
+						"borderRadius": "5px",
+						"boxShadow": "none",
+						"overflow": "hidden",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"color": "#1a192b"
-							}
-						},
-						"children": [
-							"Auto-save"
-						]
-					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "36px",
-								"height": "20px",
-								"padding": "3px",
-								"boxSizing": "border-box",
-								"borderRadius": "999px",
-								"background": {
-									"ttIf": {
-										"arg": "enabled",
-										"then": "#ff0072",
-										"else": "#b1b1b7"
-									}
-								},
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": {
-									"ttIf": {
-										"arg": "enabled",
-										"then": "flex-end",
-										"else": "flex-start"
-									}
-								},
-								"flexShrink": 0
+								"padding": "12px 14px 6px"
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
+								"tag": "span",
 								"props": {
 									"style": {
-										"width": "14px",
-										"height": "14px",
-										"borderRadius": "999px",
-										"background": "#ffffff",
-										"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"letterSpacing": "0.08em",
+										"textTransform": "uppercase",
+										"color": "#6f6e77"
 									}
-								}
+								},
+								"children": [
+									"{heading}"
+								]
 							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "12px",
-						"padding": "10px 14px",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "dashed",
-						"borderBottomColor": "#e2e2e5"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"color": "#1a192b"
-							}
-						},
-						"children": [
-							"Language"
 						]
 					},
 					{
@@ -184,13 +106,183 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "6px",
-								"fontSize": "12px",
-								"color": "#6f6e77"
+								"justifyContent": "space-between",
+								"gap": "12px",
+								"padding": "10px 14px",
+								"borderBottomWidth": "1px",
+								"borderBottomStyle": "dashed",
+								"borderBottomColor": "#e2e2e5",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{value}",
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 500,
+										"color": "#1a192b"
+									}
+								},
+								"children": [
+									"Auto-save"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"style": {
+										"width": "36px",
+										"height": "20px",
+										"padding": "3px",
+										"boxSizing": "border-box",
+										"borderRadius": "999px",
+										"background": {
+											"ttIf": {
+												"arg": "enabled",
+												"then": "#ff0072",
+												"else": "#b1b1b7"
+											}
+										},
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": {
+											"ttIf": {
+												"arg": "enabled",
+												"then": "flex-end",
+												"else": "flex-start"
+											}
+										},
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"flexWrap": "wrap"
+									},
+									"type": "button",
+									"aria-label": "enabled",
+									"aria-pressed": {
+										"ttArg": "enabled"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "14px",
+												"height": "14px",
+												"borderRadius": "999px",
+												"background": "#ffffff",
+												"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "toggle",
+									"key": "enabled"
+								}
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"gap": "12px",
+								"padding": "10px 14px",
+								"borderBottomWidth": "1px",
+								"borderBottomStyle": "dashed",
+								"borderBottomColor": "#e2e2e5",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 500,
+										"color": "#1a192b"
+									}
+								},
+								"children": [
+									"Language"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"fontSize": "12px",
+										"color": "#6f6e77",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"{value}",
+									{
+										"tag": "svg",
+										"props": {
+											"width": 14,
+											"height": 14,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#b1b1b7",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "polyline",
+												"props": {
+													"points": "6 9 12 15 18 9"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"gap": "12px",
+								"padding": "10px 14px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 500,
+										"color": "#1a192b"
+									}
+								},
+								"children": [
+									"Members"
+								]
+							},
 							{
 								"tag": "svg",
 								"props": {
@@ -208,7 +300,7 @@
 									{
 										"tag": "polyline",
 										"props": {
-											"points": "6 9 12 15 18 9"
+											"points": "9 6 15 12 9 18"
 										}
 									}
 								]
@@ -218,48 +310,145 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "12px",
-						"padding": "10px 14px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"color": "#1a192b"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"Members"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "svg",
+						"tag": "fieldset",
 						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#b1b1b7",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
 						},
 						"children": [
 							{
-								"tag": "polyline",
+								"tag": "label",
+								"children": [
+									"Auto-save on ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Auto-save on",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "enabled"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "enabled"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Heading ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Heading",
+											"value": {
+												"ttArg": "heading"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "heading"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Selected value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Selected value",
+											"value": {
+												"ttArg": "value"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "value"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
 								"props": {
-									"points": "9 6 15 12 9 18"
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "settings-section",
+									"title": "Settings Section",
+									"details": "Heading: {heading}\nAuto-save on: {enabled}\nSelected value: {value}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -268,7 +457,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "settings-section",
 	"source": {
 		"kind": "archetype",

@@ -4,3 +4,13 @@ scripts/components-db/.batch-in-flight
 
 node_modules/
 .DS_Store
+
+# Local Graphify state; portable maps remain tracked.
+graphify-out/.graphify*
+graphify-out/.work/
+graphify-out/backup/
+graphify-out/backups/
+graphify-out/chunks/
+graphify-out/cache/ast/
+graphify-out/cache/stat-index.json
+graphify-out/20??-??-??/

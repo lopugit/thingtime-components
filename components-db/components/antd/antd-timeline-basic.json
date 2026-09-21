@@ -3,7 +3,7 @@
 	"name": "Basic Timeline",
 	"library": "antd",
 	"category": "data-display",
-	"description": "Vertical dot-and-rail timeline in the Ant Design style — tone-colored dots down a soft rail, titled entries with a muted note and timestamp.",
+	"description": "Vertical dot-and-rail timeline in the Ant Design style — tone-colored dots down a soft rail, titled entries with a muted note and timestamp. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"timeline",
 		"history",
@@ -46,46 +46,59 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "ul",
+		"tag": "div",
 		"props": {
 			"style": {
-				"listStyle": "none",
-				"margin": 0,
-				"padding": 0,
-				"width": "280px",
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "rgba(0, 0, 0, 0.88)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"ttRepeat": {
-					"arg": "count",
-					"max": 6,
-					"node": {
-						"tag": "li",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "stretch",
-								"gap": "14px"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
+				"tag": "ul",
+				"props": {
+					"style": {
+						"listStyle": "none",
+						"margin": 0,
+						"padding": 0,
+						"width": "280px",
+						"display": "flex",
+						"flexDirection": "column",
+						"color": "rgba(0, 0, 0, 0.88)",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
+					}
+				},
+				"children": [
+					{
+						"ttRepeat": {
+							"arg": "count",
+							"max": 6,
+							"node": {
+								"tag": "li",
 								"props": {
 									"style": {
 										"display": "flex",
-										"flexDirection": "column",
-										"alignItems": "center",
-										"width": "12px",
-										"flexShrink": 0
+										"alignItems": "stretch",
+										"gap": "14px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
@@ -93,100 +106,277 @@
 										"tag": "div",
 										"props": {
 											"style": {
+												"display": "flex",
+												"flexDirection": "column",
+												"alignItems": "center",
 												"width": "12px",
-												"height": "12px",
-												"borderRadius": "999px",
-												"background": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#1677ff",
-															"success": "#52c41a",
-															"warning": "#faad14",
-															"danger": "#ff4d4f",
-															"info": "#1677ff",
-															"neutral": "rgba(0, 0, 0, 0.88)"
-														},
-														"default": "#1677ff"
-													}
-												},
-												"marginTop": "4px",
-												"flexShrink": 0
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											}
-										}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "12px",
+														"height": "12px",
+														"borderRadius": "999px",
+														"background": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "#1677ff",
+																	"success": "#52c41a",
+																	"warning": "#faad14",
+																	"danger": "#ff4d4f",
+																	"info": "#1677ff",
+																	"neutral": "rgba(0, 0, 0, 0.88)"
+																},
+																"default": "#1677ff"
+															}
+														},
+														"marginTop": "4px",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											},
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "2px",
+														"flexGrow": 1,
+														"minHeight": "14px",
+														"marginTop": "4px",
+														"borderRadius": "999px",
+														"background": "#f0f0f0",
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											}
+										]
 									},
 									{
 										"tag": "div",
 										"props": {
 											"style": {
-												"width": "2px",
-												"flexGrow": 1,
-												"minHeight": "14px",
-												"marginTop": "4px",
-												"borderRadius": "999px",
-												"background": "#f0f0f0"
+												"display": "flex",
+												"flexDirection": "column",
+												"gap": "2px",
+												"paddingBottom": "18px",
+												"minWidth": 0
 											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontWeight": 600,
+														"fontSize": "14px"
+													}
+												},
+												"children": [
+													"{title}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "rgba(0, 0, 0, 0.45)",
+														"fontSize": "13px"
+													}
+												},
+												"children": [
+													"{note}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "rgba(0, 0, 0, 0.25)",
+														"fontSize": "12px"
+													}
+												},
+												"children": [
+													"{n}h ago"
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
 										}
 									}
 								]
 							},
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"gap": "2px",
-										"paddingBottom": "18px",
-										"minWidth": 0
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Note ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
+											"aria-label": "Note",
+											"value": {
+												"ttArg": "note"
+											},
+											"maxLength": 60,
 											"style": {
-												"fontWeight": 600,
-												"fontSize": "14px"
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"{title}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "rgba(0, 0, 0, 0.45)",
-												"fontSize": "13px"
-											}
-										},
-										"children": [
-											"{note}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "rgba(0, 0, 0, 0.25)",
-												"fontSize": "12px"
-											}
-										},
-										"children": [
-											"{n}h ago"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "note"
+										}
 									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Entries ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Entries",
+											"value": {
+												"ttArg": "count"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 6
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "count"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "timeline-basic",
+									"title": "Basic Timeline",
+									"details": "Title: {title}\nNote: {note}\nEntries: {count}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "timeline-basic",
 	"source": {
 		"kind": "archetype",

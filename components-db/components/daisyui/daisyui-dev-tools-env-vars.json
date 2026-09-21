@@ -3,7 +3,7 @@
 	"name": "Environment Variables",
 	"library": "daisyui",
 	"category": "developer",
-	"description": "Environment-variable rows in the daisyUI style — monospace KEY names with masked dot values (the first revealable), Production and Preview scope chips, quiet copy ghosts, and a dashed add-variable row.",
+	"description": "Environment-variable rows in the daisyUI style — monospace KEY names with masked dot values (the first revealable), Production and Preview scope chips, quiet copy ghosts, and a dashed add-variable row. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"developer",
 		"env",
@@ -41,23 +41,28 @@
 			],
 			"default": "Production",
 			"label": "First row scope"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e5e6e6",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"overflow": "hidden",
-				"minWidth": "400px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -65,428 +70,244 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
+						"display": "grid",
 						"gap": "12px",
-						"padding": "10px 14px"
+						"padding": "16px",
+						"border": "1px solid #e5e6e6",
+						"borderRadius": "12px",
+						"background": "#ffffff",
+						"color": "#1f2937",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#1f2937",
-								"minWidth": "150px",
-								"flexShrink": 0
-							}
-						},
+						"tag": "h3",
 						"children": [
 							"{name}"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "input",
 						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "#6b7280",
-								"flex": 1,
-								"whiteSpace": "nowrap",
-								"overflow": "hidden",
-								"textOverflow": "ellipsis"
-							}
-						},
-						"children": [
-							{
-								"ttIf": {
-									"arg": "revealed",
-									"then": "{value}",
-									"else": "••••••••"
-								}
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"padding": "2px 8px",
-										"borderRadius": "999px",
-										"flexShrink": 0
-									},
-									{
-										"ttMap": {
-											"arg": "scope",
-											"values": {
-												"Production": {
-													"background": "#eee6ff",
-													"color": "#4506cb"
-												},
-												"Preview": {
-													"background": "#f2f2f2",
-													"color": "#2a323c"
-												}
-											}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							"{scope}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "4px",
-								"color": "#6b7280",
-								"fontSize": "12px",
-								"cursor": "pointer",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "rect",
-										"props": {
-											"x": 9,
-											"y": 9,
-											"width": 13,
-											"height": 13,
-											"rx": 2
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-										}
-									}
-								]
+							"type": "text",
+							"aria-label": "value",
+							"value": {
+								"ttArg": "value"
 							},
-							"Copy"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "12px",
-						"padding": "10px 14px",
-						"borderTopWidth": "1px",
-						"borderTopStyle": "solid",
-						"borderTopColor": "#f2f2f2"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
 							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#1f2937",
-								"minWidth": "150px",
-								"flexShrink": 0
+								"width": "100%",
+								"minWidth": 0,
+								"padding": "8px",
+								"border": "1px solid #e5e6e6",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
 							}
 						},
-						"children": [
-							"STRIPE_SECRET_KEY"
-						]
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "value"
+						}
 					},
 					{
-						"tag": "span",
+						"tag": "button",
 						"props": {
+							"type": "button",
 							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "#6b7280",
-								"flex": 1,
-								"whiteSpace": "nowrap",
-								"overflow": "hidden",
-								"textOverflow": "ellipsis"
-							}
-						},
-						"children": [
-							"••••••••"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"padding": "2px 8px",
-								"borderRadius": "999px",
-								"flexShrink": 0,
-								"background": "#eee6ff",
-								"color": "#4506cb"
-							}
-						},
-						"children": [
-							"Production"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "4px",
-								"color": "#6b7280",
-								"fontSize": "12px",
-								"cursor": "pointer",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "rect",
-										"props": {
-											"x": 9,
-											"y": 9,
-											"width": 13,
-											"height": 13,
-											"rx": 2
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-										}
-									}
-								]
-							},
-							"Copy"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "12px",
-						"padding": "10px 14px",
-						"borderTopWidth": "1px",
-						"borderTopStyle": "solid",
-						"borderTopColor": "#f2f2f2"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#1f2937",
-								"minWidth": "150px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"FEATURE_FLAGS_URL"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "#6b7280",
-								"flex": 1,
-								"whiteSpace": "nowrap",
-								"overflow": "hidden",
-								"textOverflow": "ellipsis"
-							}
-						},
-						"children": [
-							"••••••••"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"padding": "2px 8px",
-								"borderRadius": "999px",
-								"flexShrink": 0,
+								"padding": "8px 12px",
+								"borderRadius": "8px",
+								"border": "1px solid #e5e6e6",
 								"background": "#f2f2f2",
-								"color": "#2a323c"
+								"cursor": "pointer"
 							}
 						},
 						"children": [
-							"Preview"
-						]
+							"Copy value"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "copy",
+							"value": "{value}"
+						}
 					},
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "4px",
-								"color": "#6b7280",
-								"fontSize": "12px",
-								"cursor": "pointer",
-								"flexShrink": 0
-							}
-						},
+						"tag": "small",
 						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "rect",
-										"props": {
-											"x": 9,
-											"y": 9,
-											"width": 13,
-											"height": 13,
-											"rx": 2
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-										}
-									}
-								]
-							},
-							"Copy"
+							"Value is local only and excluded from saved records. Configure real credentials through connection settings."
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"gap": "6px",
-						"margin": "10px 14px 14px",
-						"padding": "9px 0",
-						"borderWidth": "1px",
-						"borderStyle": "dashed",
-						"borderColor": "#e5e6e6",
-						"borderRadius": "8px",
-						"color": "#6b7280",
-						"fontSize": "14px",
-						"fontWeight": 500,
-						"cursor": "pointer"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "svg",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "currentColor",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
 						},
 						"children": [
 							{
-								"tag": "line",
-								"props": {
-									"x1": 12,
-									"y1": 5,
-									"x2": 12,
-									"y2": 19
-								}
+								"tag": "label",
+								"children": [
+									"Variable name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Variable name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
 							},
 							{
-								"tag": "line",
+								"tag": "label",
+								"children": [
+									"Reveal first value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Reveal first value",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "revealed"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "revealed"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"First row scope ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "First row scope",
+											"value": {
+												"ttArg": "scope"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "Production"
+												},
+												"children": [
+													"Production"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Preview"
+												},
+												"children": [
+													"Preview"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "scope"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
 								"props": {
-									"x1": 5,
-									"y1": 12,
-									"x2": 19,
-									"y2": 12
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "dev-tools-env-vars",
+									"title": "Environment Variables",
+									"details": "Variable name: {name}\nReveal first value: {revealed}\nFirst row scope: {scope}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
-					},
-					"Add variable"
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "dev-tools-env-vars",
 	"source": {
 		"kind": "archetype",

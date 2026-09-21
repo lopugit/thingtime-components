@@ -3,7 +3,7 @@
 	"name": "Trend Stat",
 	"library": "reactflow",
 	"category": "data-display",
-	"description": "Trend stat card in the React Flow style — large value with an up or down arrow whose glyph and color flip on the direction enum (green rise, red fall).",
+	"description": "Trend stat card in the React Flow style — large value with an up or down arrow whose glyph and color flip on the direction enum (green rise, red fall). Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"stat",
 		"trend",
@@ -41,48 +41,47 @@
 			],
 			"default": "up",
 			"label": "Direction"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"flexDirection": "column",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e2e2e5",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"boxSizing": "border-box",
-				"padding": "16px 20px",
-				"gap": "8px",
-				"minWidth": "200px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "10px",
-						"fontWeight": 400,
-						"color": "#6f6e77"
-					}
-				},
-				"children": [
-					"{label}"
-				]
-			},
-			{
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
+						"display": "inline-flex",
+						"flexDirection": "column",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e2e2e5",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+						"boxSizing": "border-box",
+						"padding": "16px 20px",
+						"gap": "8px",
+						"minWidth": 0
 					}
 				},
 				"children": [
@@ -90,15 +89,13 @@
 						"tag": "span",
 						"props": {
 							"style": {
-								"fontSize": "24px",
-								"fontWeight": 600,
-								"color": "#1a192b",
-								"lineHeight": 1.15,
-								"fontVariantNumeric": "tabular-nums"
+								"fontSize": "10px",
+								"fontWeight": 400,
+								"color": "#6f6e77"
 							}
 						},
 						"children": [
-							"{value}"
+							"{label}"
 						]
 					},
 					{
@@ -107,97 +104,330 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "4px"
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"ttIf": {
-									"arg": "direction",
-									"equals": "up",
-									"then": {
-										"tag": "svg",
-										"props": {
-											"width": 14,
-											"height": 14,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#22c55e",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "line",
-												"props": {
-													"x1": 12,
-													"y1": 19,
-													"x2": 12,
-													"y2": 5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "5 12 12 5 19 12"
-												}
-											}
-										]
-									},
-									"else": {
-										"tag": "svg",
-										"props": {
-											"width": 14,
-											"height": 14,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#ff0072",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "line",
-												"props": {
-													"x1": 12,
-													"y1": 5,
-													"x2": 12,
-													"y2": 19
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "19 12 12 19 5 12"
-												}
-											}
-										]
-									}
-								}
-							},
-							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "12px",
+										"fontSize": "24px",
 										"fontWeight": 600,
-										"color": {
-											"ttIf": {
-												"arg": "direction",
-												"equals": "up",
-												"then": "#15803d",
-												"else": "#c00055"
-											}
-										}
+										"color": "#1a192b",
+										"lineHeight": 1.15,
+										"fontVariantNumeric": "tabular-nums"
 									}
 								},
 								"children": [
-									"{change}"
+									"{value}"
 								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "4px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttIf": {
+											"arg": "direction",
+											"equals": "up",
+											"then": {
+												"tag": "svg",
+												"props": {
+													"width": 14,
+													"height": 14,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "#22c55e",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "line",
+														"props": {
+															"x1": 12,
+															"y1": 19,
+															"x2": 12,
+															"y2": 5
+														}
+													},
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "5 12 12 5 19 12"
+														}
+													}
+												]
+											},
+											"else": {
+												"tag": "svg",
+												"props": {
+													"width": 14,
+													"height": 14,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "#ff0072",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "line",
+														"props": {
+															"x1": 12,
+															"y1": 5,
+															"x2": 12,
+															"y2": 19
+														}
+													},
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "19 12 12 19 5 12"
+														}
+													}
+												]
+											}
+										}
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"color": {
+													"ttIf": {
+														"arg": "direction",
+														"equals": "up",
+														"then": "#15803d",
+														"else": "#c00055"
+													}
+												}
+											}
+										},
+										"children": [
+											"{change}"
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Value",
+											"value": {
+												"ttArg": "value"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "value"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Change ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Change",
+											"value": {
+												"ttArg": "change"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "change"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Direction ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Direction",
+											"value": {
+												"ttArg": "direction"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "up"
+												},
+												"children": [
+													"up"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "down"
+												},
+												"children": [
+													"down"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "direction"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "stat-metric-trend",
+									"title": "Trend Stat",
+									"details": "Label: {label}\nValue: {value}\nChange: {change}\nDirection: {direction}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -205,7 +435,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "stat-metric-trend",
 	"source": {
 		"kind": "archetype",

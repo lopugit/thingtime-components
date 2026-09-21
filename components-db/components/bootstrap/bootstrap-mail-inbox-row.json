@@ -3,7 +3,7 @@
 	"name": "Inbox Row",
 	"library": "bootstrap",
 	"category": "communication",
-	"description": "Mail list row in the Bootstrap style — unread dot and bold sender on a fresh message, subject with muted snippet on one ellipsized line, time and star on the right.",
+	"description": "Mail list row in the Bootstrap style — unread dot and bold sender on a fresh message, subject with muted snippet on one ellipsized line, time and star on the right. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"mail",
 		"inbox",
@@ -51,89 +51,56 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Starred"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"gap": "10px",
-				"width": "100%",
-				"maxWidth": "560px",
-				"boxSizing": "border-box",
-				"padding": "10px 14px",
-				"background": {
-					"ttIf": {
-						"arg": "unread",
-						"then": "#ffffff",
-						"else": "#f8f9fa"
-					}
-				},
-				"borderBottom": "1px solid #e9ecef",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
+				"tag": "button",
 				"props": {
 					"style": {
-						"width": "8px",
-						"height": "8px",
-						"borderRadius": "50rem",
+						"display": "flex",
+						"alignItems": "center",
+						"gap": "10px",
+						"width": "100%",
+						"maxWidth": "100%",
+						"boxSizing": "border-box",
+						"padding": "10px 14px",
 						"background": {
 							"ttIf": {
 								"arg": "unread",
-								"then": "#0d6efd",
-								"else": "transparent"
+								"then": "#ffffff",
+								"else": "#f8f9fa"
 							}
 						},
-						"flexShrink": 0
-					}
-				}
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"width": "104px",
-						"flexShrink": 0,
-						"fontSize": "14px",
-						"fontWeight": {
-							"ttIf": {
-								"arg": "unread",
-								"then": 700,
-								"else": 500
-							}
-						},
-						"color": {
-							"ttIf": {
-								"arg": "unread",
-								"then": "#212529",
-								"else": "#6c757d"
-							}
-						},
-						"whiteSpace": "nowrap",
-						"overflow": "hidden",
-						"textOverflow": "ellipsis"
-					}
-				},
-				"children": [
-					"{sender}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"flex": 1,
-						"minWidth": 0,
-						"whiteSpace": "nowrap",
-						"overflow": "hidden",
-						"textOverflow": "ellipsis",
-						"fontSize": "14px"
+						"borderBottom": "1px solid #e9ecef",
+						"flexWrap": "wrap"
+					},
+					"type": "button",
+					"aria-label": "Ada Lovelace Q3 forecast review  — Sharing the updated numbers ahead of tomorrow 9:41 AM",
+					"aria-pressed": {
+						"ttArg": "unread"
 					}
 				},
 				"children": [
@@ -141,6 +108,103 @@
 						"tag": "span",
 						"props": {
 							"style": {
+								"width": "8px",
+								"height": "8px",
+								"borderRadius": "50rem",
+								"background": {
+									"ttIf": {
+										"arg": "unread",
+										"then": "#0d6efd",
+										"else": "transparent"
+									}
+								},
+								"flexShrink": 0,
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							}
+						}
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"width": "104px",
+								"flexShrink": 0,
+								"fontSize": "14px",
+								"fontWeight": {
+									"ttIf": {
+										"arg": "unread",
+										"then": 700,
+										"else": 500
+									}
+								},
+								"color": {
+									"ttIf": {
+										"arg": "unread",
+										"then": "#212529",
+										"else": "#6c757d"
+									}
+								},
+								"whiteSpace": "nowrap",
+								"overflow": "hidden",
+								"textOverflow": "ellipsis",
+								"maxWidth": "100%"
+							}
+						},
+						"children": [
+							"{sender}"
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"flex": 1,
+								"minWidth": 0,
+								"whiteSpace": "nowrap",
+								"overflow": "hidden",
+								"textOverflow": "ellipsis",
+								"fontSize": "14px"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontWeight": {
+											"ttIf": {
+												"arg": "unread",
+												"then": 600,
+												"else": 400
+											}
+										},
+										"color": "#212529"
+									}
+								},
+								"children": [
+									"{subject}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"color": "#6c757d"
+									}
+								},
+								"children": [
+									" — {snippet}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"flexShrink": 0,
+								"fontSize": "12px",
 								"fontWeight": {
 									"ttIf": {
 										"arg": "unread",
@@ -148,102 +212,309 @@
 										"else": 400
 									}
 								},
-								"color": "#212529"
+								"color": {
+									"ttIf": {
+										"arg": "unread",
+										"then": "#0d6efd",
+										"else": "#6c757d"
+									}
+								}
 							}
 						},
 						"children": [
-							"{subject}"
+							"{time}"
 						]
 					},
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"color": "#6c757d"
-							}
-						},
-						"children": [
-							" — {snippet}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"flexShrink": 0,
-						"fontSize": "12px",
-						"fontWeight": {
-							"ttIf": {
-								"arg": "unread",
-								"then": 600,
-								"else": 400
-							}
-						},
-						"color": {
-							"ttIf": {
-								"arg": "unread",
-								"then": "#0d6efd",
-								"else": "#6c757d"
+						"ttIf": {
+							"arg": "starred",
+							"then": {
+								"tag": "svg",
+								"props": {
+									"width": 16,
+									"height": 16,
+									"viewBox": "0 0 24 24",
+									"fill": "#ffc107",
+									"stroke": "#ffc107",
+									"strokeWidth": 2,
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polygon",
+										"props": {
+											"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
+										}
+									}
+								]
+							},
+							"else": {
+								"tag": "svg",
+								"props": {
+									"width": 16,
+									"height": 16,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#adb5bd",
+									"strokeWidth": 2,
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polygon",
+										"props": {
+											"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
+										}
+									}
+								]
 							}
 						}
 					}
-				},
-				"children": [
-					"{time}"
-				]
+				],
+				"ttAction": "$ui",
+				"ttActionInputs": {
+					"op": "toggle",
+					"key": "unread"
+				}
 			},
 			{
-				"ttIf": {
-					"arg": "starred",
-					"then": {
-						"tag": "svg",
-						"props": {
-							"width": 16,
-							"height": 16,
-							"viewBox": "0 0 24 24",
-							"fill": "#ffc107",
-							"stroke": "#ffc107",
-							"strokeWidth": 2,
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "polygon",
-								"props": {
-									"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
-								}
-							}
+							"Edit and save"
 						]
 					},
-					"else": {
-						"tag": "svg",
+					{
+						"tag": "fieldset",
 						"props": {
-							"width": 16,
-							"height": 16,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#adb5bd",
-							"strokeWidth": 2,
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
 						},
 						"children": [
 							{
-								"tag": "polygon",
+								"tag": "label",
+								"children": [
+									"Unread ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Unread",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "unread"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "unread"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Sender ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Sender",
+											"value": {
+												"ttArg": "sender"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "sender"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Subject ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Subject",
+											"value": {
+												"ttArg": "subject"
+											},
+											"maxLength": 48,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "subject"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Snippet ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Snippet",
+											"value": {
+												"ttArg": "snippet"
+											},
+											"maxLength": 80,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "snippet"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Time ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Time",
+											"value": {
+												"ttArg": "time"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "time"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Starred ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Starred",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "starred"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "starred"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
 								"props": {
-									"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "mail-inbox-row",
+									"title": "Inbox Row",
+									"details": "Unread: {unread}\nSender: {sender}\nSubject: {subject}\nSnippet: {snippet}\nTime: {time}\nStarred: {starred}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "mail-inbox-row",
 	"source": {
 		"kind": "archetype",

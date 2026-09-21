@@ -3,7 +3,7 @@
 	"name": "Mortgage Calculator",
 	"library": "bootstrap",
 	"category": "property",
-	"description": "Mortgage calculator card in the Bootstrap style — big estimated monthly payment, color-dotted principal/taxes/insurance breakdown rows, a percent-filled down-payment bar, and rate plus loan-term chips.",
+	"description": "Mortgage calculator card in the Bootstrap style — big estimated monthly payment, color-dotted principal/taxes/insurance breakdown rows, a percent-filled down-payment bar, and rate plus loan-term chips. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"real-estate",
 		"mortgage",
@@ -42,22 +42,28 @@
 			],
 			"default": "30-year",
 			"label": "Loan term"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"width": "300px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e9ecef",
-				"borderRadius": "8px",
-				"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#212529",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -65,10 +71,17 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"padding": "14px 16px",
-						"gap": "12px"
+						"width": "300px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e9ecef",
+						"borderRadius": "8px",
+						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+						"color": "#212529",
+						"overflow": "hidden",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
@@ -78,45 +91,8 @@
 							"style": {
 								"display": "flex",
 								"flexDirection": "column",
-								"gap": "2px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "#6c757d",
-										"textTransform": "uppercase",
-										"letterSpacing": "0.06em",
-										"fontWeight": 600
-									}
-								},
-								"children": [
-									"Estimated payment"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "20px",
-										"fontWeight": 500
-									}
-								},
-								"children": [
-									"Est. {payment}/mo"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column"
+								"padding": "14px 16px",
+								"gap": "12px"
 							}
 						},
 						"children": [
@@ -125,9 +101,8 @@
 								"props": {
 									"style": {
 										"display": "flex",
-										"alignItems": "center",
-										"gap": "8px",
-										"padding": "5px 0"
+										"flexDirection": "column",
+										"gap": "2px"
 									}
 								},
 								"children": [
@@ -135,37 +110,27 @@
 										"tag": "span",
 										"props": {
 											"style": {
-												"width": "8px",
-												"height": "8px",
-												"borderRadius": "999px",
-												"background": "#0d6efd",
-												"flexShrink": 0
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"flex": "1",
-												"fontSize": "14px",
-												"color": "#6c757d"
+												"fontSize": "12px",
+												"color": "#6c757d",
+												"textTransform": "uppercase",
+												"letterSpacing": "0.06em",
+												"fontWeight": 600
 											}
 										},
 										"children": [
-											"Principal & interest"
+											"Estimated payment"
 										]
 									},
 									{
 										"tag": "span",
 										"props": {
 											"style": {
-												"fontSize": "14px",
-												"fontWeight": 600
+												"fontSize": "20px",
+												"fontWeight": 500
 											}
 										},
 										"children": [
-											"$3,410"
+											"Est. {payment}/mo"
 										]
 									}
 								]
@@ -175,156 +140,7 @@
 								"props": {
 									"style": {
 										"display": "flex",
-										"alignItems": "center",
-										"gap": "8px",
-										"padding": "5px 0"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"width": "8px",
-												"height": "8px",
-												"borderRadius": "999px",
-												"background": "#0dcaf0",
-												"flexShrink": 0
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"flex": "1",
-												"fontSize": "14px",
-												"color": "#6c757d"
-											}
-										},
-										"children": [
-											"Taxes"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"$495"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "8px",
-										"padding": "5px 0"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"width": "8px",
-												"height": "8px",
-												"borderRadius": "999px",
-												"background": "#ffc107",
-												"flexShrink": 0
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"flex": "1",
-												"fontSize": "14px",
-												"color": "#6c757d"
-											}
-										},
-										"children": [
-											"Insurance"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"$210"
-										]
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "6px"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "space-between"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#6c757d"
-											}
-										},
-										"children": [
-											"Down payment"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"fontWeight": 700
-											}
-										},
-										"children": [
-											"{down}%"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "6px",
-										"borderRadius": "50rem",
-										"background": "#e9ecef"
+										"flexDirection": "column"
 									}
 								},
 								"children": [
@@ -332,119 +148,585 @@
 										"tag": "div",
 										"props": {
 											"style": {
-												"width": "{down}%",
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "8px",
+												"padding": "5px 0",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "8px",
+														"height": "8px",
+														"borderRadius": "999px",
+														"background": "#0d6efd",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"flex": "1",
+														"fontSize": "14px",
+														"color": "#6c757d"
+													}
+												},
+												"children": [
+													"Principal & interest"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"$3,410"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "8px",
+												"padding": "5px 0",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "8px",
+														"height": "8px",
+														"borderRadius": "999px",
+														"background": "#0dcaf0",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"flex": "1",
+														"fontSize": "14px",
+														"color": "#6c757d"
+													}
+												},
+												"children": [
+													"Taxes"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"$495"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "8px",
+												"padding": "5px 0",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "8px",
+														"height": "8px",
+														"borderRadius": "999px",
+														"background": "#ffc107",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"flex": "1",
+														"fontSize": "14px",
+														"color": "#6c757d"
+													}
+												},
+												"children": [
+													"Insurance"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"$210"
+												]
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "6px"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "space-between",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"color": "#6c757d"
+													}
+												},
+												"children": [
+													"Down payment"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 700
+													}
+												},
+												"children": [
+													"{down}%"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
 												"height": "6px",
 												"borderRadius": "50rem",
-												"background": "#0d6efd"
+												"background": "#e9ecef"
 											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "{down}%",
+														"height": "6px",
+														"borderRadius": "50rem",
+														"background": "#0d6efd",
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"padding": "3px 10px",
+												"borderRadius": "50rem",
+												"background": "#cff4fc",
+												"color": "#055160",
+												"fontSize": "12px",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"{rate} APR"
+										]
+									},
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"ttMerge": [
+													{
+														"padding": "3px 10px",
+														"borderRadius": "50rem",
+														"borderWidth": "1px",
+														"borderStyle": "solid",
+														"borderColor": "#dee2e6",
+														"background": "#ffffff",
+														"color": "#6c757d",
+														"fontSize": "12px",
+														"fontWeight": 600
+													},
+													{
+														"ttIf": {
+															"arg": "term",
+															"equals": "15-year",
+															"then": {
+																"background": "#0d6efd",
+																"borderColor": "#0d6efd",
+																"color": "#ffffff"
+															}
+														}
+													}
+												]
+											},
+											"type": "button",
+											"aria-label": "15-year",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "term",
+													"equals": "15-year",
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"children": [
+											"15-year"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "term",
+											"value": "15-year"
+										}
+									},
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"ttMerge": [
+													{
+														"padding": "3px 10px",
+														"borderRadius": "50rem",
+														"borderWidth": "1px",
+														"borderStyle": "solid",
+														"borderColor": "#dee2e6",
+														"background": "#ffffff",
+														"color": "#6c757d",
+														"fontSize": "12px",
+														"fontWeight": 600
+													},
+													{
+														"ttIf": {
+															"arg": "term",
+															"equals": "30-year",
+															"then": {
+																"background": "#0d6efd",
+																"borderColor": "#0d6efd",
+																"color": "#ffffff"
+															}
+														}
+													}
+												]
+											},
+											"type": "button",
+											"aria-label": "30-year",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "term",
+													"equals": "30-year",
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"children": [
+											"30-year"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "term",
+											"value": "30-year"
 										}
 									}
 								]
 							}
 						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px",
-								"flexWrap": "wrap"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"padding": "3px 10px",
-										"borderRadius": "50rem",
-										"background": "#cff4fc",
-										"color": "#055160",
-										"fontSize": "12px",
-										"fontWeight": 600
-									}
-								},
+								"tag": "label",
 								"children": [
-									"{rate} APR"
+									"Loan term ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Loan term",
+											"value": {
+												"ttArg": "term"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "15-year"
+												},
+												"children": [
+													"15-year"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "30-year"
+												},
+												"children": [
+													"30-year"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "term"
+										}
+									}
 								]
 							},
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"padding": "3px 10px",
-												"borderRadius": "50rem",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"background": "#ffffff",
-												"color": "#6c757d",
-												"fontSize": "12px",
-												"fontWeight": 600
-											},
-											{
-												"ttIf": {
-													"arg": "term",
-													"equals": "15-year",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
-									}
-								},
+								"tag": "label",
 								"children": [
-									"15-year"
+									"Monthly payment ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Monthly payment",
+											"value": {
+												"ttArg": "payment"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "payment"
+										}
+									}
 								]
 							},
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"padding": "3px 10px",
-												"borderRadius": "50rem",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"background": "#ffffff",
-												"color": "#6c757d",
-												"fontSize": "12px",
-												"fontWeight": 600
+								"tag": "label",
+								"children": [
+									"Down payment % ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Down payment %",
+											"value": {
+												"ttArg": "down"
 											},
-											{
-												"ttIf": {
-													"arg": "term",
-													"equals": "30-year",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "down"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Rate ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Rate",
+											"value": {
+												"ttArg": "rate"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "rate"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "real-estate-mortgage",
+									"title": "Mortgage Calculator",
+									"details": "Monthly payment: {payment}\nDown payment %: {down}\nRate: {rate}\nLoan term: {term}"
 								},
 								"children": [
-									"30-year"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
 				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "real-estate-mortgage",
 	"source": {
 		"kind": "archetype",

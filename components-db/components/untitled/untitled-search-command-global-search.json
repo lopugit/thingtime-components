@@ -3,7 +3,7 @@
 	"name": "Global Search",
 	"library": "untitled",
 	"category": "forms",
-	"description": "Global search in the Untitled UI style — a navbar strip pairing a tone-dotted brand mark with a compact search field that tucks a keyboard shortcut hint chip against its right edge.",
+	"description": "Global search in the Untitled UI style — a navbar strip pairing a tone-dotted brand mark with a compact search field that tucks a keyboard shortcut hint chip against its right edge. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"search",
 		"navbar",
@@ -45,25 +45,34 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "searchQuery",
+			"type": "string",
+			"default": "",
+			"maxLength": 200
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"justifyContent": "space-between",
-				"gap": "16px",
-				"minWidth": "300px",
-				"padding": "8px 12px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#f2f4f7",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -71,142 +80,228 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #eaecf0",
+						"borderRadius": "8px",
+						"background": "#ffffff",
+						"color": "#101828",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "10px",
-								"height": "10px",
-								"borderRadius": "999px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#7f56d9",
-											"success": "#12b76a",
-											"warning": "#f79009",
-											"danger": "#f04438",
-											"info": "#2e90fa",
-											"neutral": "#344054"
-										},
-										"default": "#7f56d9"
+						"tag": "label",
+						"children": [
+							"Search Things",
+							{
+								"tag": "input",
+								"props": {
+									"type": "search",
+									"aria-label": "searchQuery",
+									"value": {
+										"ttArg": "searchQuery"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #eaecf0",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
 								},
-								"flexShrink": 0
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "searchQuery"
+								}
 							}
-						}
+						]
 					},
 					{
-						"tag": "span",
+						"tag": "button",
 						"props": {
+							"type": "button",
 							"style": {
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#101828"
+								"padding": "8px 12px",
+								"borderRadius": "8px",
+								"border": "1px solid #eaecf0",
+								"background": "#f9fafb",
+								"cursor": "pointer"
 							}
 						},
 						"children": [
-							"{brand}"
-						]
+							"Search Things"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "search",
+							"value": "{searchQuery}"
+						}
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"height": "36px",
-						"padding": "0 6px 0 10px",
-						"boxSizing": "border-box",
-						"background": "#f9fafb",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "#f2f4f7",
-						"borderRadius": "8px",
-						"width": "170px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "svg",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#98a2b3",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
 						},
 						"children": [
 							{
-								"tag": "circle",
-								"props": {
-									"cx": 11,
-									"cy": 11,
-									"r": 7
-								}
+								"tag": "label",
+								"children": [
+									"searchQuery ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "searchQuery",
+											"value": {
+												"ttArg": "searchQuery"
+											},
+											"maxLength": 200,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "searchQuery"
+										}
+									}
+								]
 							},
 							{
-								"tag": "line",
+								"tag": "label",
+								"children": [
+									"Brand ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Brand",
+											"value": {
+												"ttArg": "brand"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "brand"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Shortcut hint ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Shortcut hint",
+											"value": {
+												"ttArg": "shortcut"
+											},
+											"maxLength": 6,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "shortcut"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
 								"props": {
-									"x1": 21,
-									"y1": 21,
-									"x2": 16.65,
-									"y2": 16.65
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "search-command-global-search",
+									"title": "Global Search",
+									"details": "Brand: {brand}\nShortcut hint: {shortcut}\nsearchQuery: {searchQuery}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flexGrow": 1,
-								"fontSize": "14px",
-								"color": "#475467"
-							}
-						},
-						"children": [
-							"{placeholder}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "#475467",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#eaecf0",
-								"borderRadius": "6px",
-								"padding": "1px 5px",
-								"lineHeight": 1.4
-							}
-						},
-						"children": [
-							"{shortcut}"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "search-command-global-search",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Profile Stats Band",
 	"library": "antd",
 	"category": "social",
-	"description": "Profile stats band in the Ant Design style — posts, followers and following counts as big numbers over quiet captions, divider-separated, with one block highlighted by an accent top border.",
+	"description": "Profile stats band in the Ant Design style — posts, followers and following counts as big numbers over quiet captions, divider-separated, with one block highlighted by an accent top border. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"profile",
 		"stats",
@@ -44,23 +44,28 @@
 			],
 			"default": "followers",
 			"label": "Highlight"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#d9d9d9",
-				"borderRadius": "8px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
-				"width": "320px",
-				"display": "flex",
-				"alignItems": "stretch",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -68,205 +73,501 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
-							{
-								"flex": 1,
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"gap": "2px",
-								"padding": "14px 10px",
-								"borderTopWidth": "2px",
-								"borderTopStyle": "solid"
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#d9d9d9",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
+						"width": "320px",
+						"display": "flex",
+						"alignItems": "stretch",
+						"overflow": "hidden",
+						"maxWidth": "100%",
+						"boxSizing": "border-box",
+						"flexWrap": "wrap"
+					}
+				},
+				"children": [
+					{
+						"tag": "button",
+						"props": {
+							"style": {
+								"ttMerge": [
+									{
+										"flex": 1,
+										"display": "flex",
+										"flexDirection": "column",
+										"alignItems": "center",
+										"gap": "2px",
+										"padding": "14px 10px",
+										"borderTopWidth": "2px",
+										"borderTopStyle": "solid"
+									},
+									{
+										"ttIf": {
+											"arg": "highlight",
+											"equals": "posts",
+											"then": {
+												"borderTopColor": "#1677ff"
+											},
+											"else": {
+												"borderTopColor": "transparent"
+											}
+										}
+									}
+								]
 							},
-							{
+							"type": "button",
+							"aria-label": "128 Posts",
+							"aria-pressed": {
 								"ttIf": {
 									"arg": "highlight",
 									"equals": "posts",
-									"then": {
-										"borderTopColor": "#1677ff"
-									},
-									"else": {
-										"borderTopColor": "transparent"
-									}
+									"then": true,
+									"else": false
 								}
 							}
-						]
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "20px",
-								"fontWeight": 600,
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
 						},
 						"children": [
-							"{posts}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "rgba(0, 0, 0, 0.45)",
-								"textTransform": "uppercase",
-								"letterSpacing": "0.04em"
-							}
-						},
-						"children": [
-							"Posts"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"width": "1px",
-						"background": "#f0f0f0",
-						"flexShrink": 0
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"ttMerge": [
 							{
-								"flex": 1,
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"gap": "2px",
-								"padding": "14px 10px",
-								"borderTopWidth": "2px",
-								"borderTopStyle": "solid"
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "20px",
+										"fontWeight": 600,
+										"color": "rgba(0, 0, 0, 0.88)"
+									}
+								},
+								"children": [
+									"{posts}"
+								]
 							},
 							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "rgba(0, 0, 0, 0.45)",
+										"textTransform": "uppercase",
+										"letterSpacing": "0.04em"
+									}
+								},
+								"children": [
+									"Posts"
+								]
+							}
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "highlight",
+							"value": "posts"
+						}
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"width": "1px",
+								"background": "#f0f0f0",
+								"flexShrink": 0,
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							}
+						}
+					},
+					{
+						"tag": "button",
+						"props": {
+							"style": {
+								"ttMerge": [
+									{
+										"flex": 1,
+										"display": "flex",
+										"flexDirection": "column",
+										"alignItems": "center",
+										"gap": "2px",
+										"padding": "14px 10px",
+										"borderTopWidth": "2px",
+										"borderTopStyle": "solid"
+									},
+									{
+										"ttIf": {
+											"arg": "highlight",
+											"equals": "followers",
+											"then": {
+												"borderTopColor": "#1677ff"
+											},
+											"else": {
+												"borderTopColor": "transparent"
+											}
+										}
+									}
+								]
+							},
+							"type": "button",
+							"aria-label": "2,304 Followers",
+							"aria-pressed": {
 								"ttIf": {
 									"arg": "highlight",
 									"equals": "followers",
-									"then": {
-										"borderTopColor": "#1677ff"
-									},
-									"else": {
-										"borderTopColor": "transparent"
-									}
+									"then": true,
+									"else": false
 								}
 							}
-						]
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "20px",
-								"fontWeight": 600,
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
 						},
 						"children": [
-							"{followers}"
-						]
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "20px",
+										"fontWeight": 600,
+										"color": "rgba(0, 0, 0, 0.88)"
+									}
+								},
+								"children": [
+									"{followers}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "rgba(0, 0, 0, 0.45)",
+										"textTransform": "uppercase",
+										"letterSpacing": "0.04em"
+									}
+								},
+								"children": [
+									"Followers"
+								]
+							}
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "highlight",
+							"value": "followers"
+						}
 					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "rgba(0, 0, 0, 0.45)",
-								"textTransform": "uppercase",
-								"letterSpacing": "0.04em"
+								"width": "1px",
+								"background": "#f0f0f0",
+								"flexShrink": 0,
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							}
+						}
+					},
+					{
+						"tag": "button",
+						"props": {
+							"style": {
+								"ttMerge": [
+									{
+										"flex": 1,
+										"display": "flex",
+										"flexDirection": "column",
+										"alignItems": "center",
+										"gap": "2px",
+										"padding": "14px 10px",
+										"borderTopWidth": "2px",
+										"borderTopStyle": "solid"
+									},
+									{
+										"ttIf": {
+											"arg": "highlight",
+											"equals": "following",
+											"then": {
+												"borderTopColor": "#1677ff"
+											},
+											"else": {
+												"borderTopColor": "transparent"
+											}
+										}
+									}
+								]
+							},
+							"type": "button",
+							"aria-label": "180 Following",
+							"aria-pressed": {
+								"ttIf": {
+									"arg": "highlight",
+									"equals": "following",
+									"then": true,
+									"else": false
+								}
 							}
 						},
 						"children": [
-							"Followers"
-						]
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "20px",
+										"fontWeight": 600,
+										"color": "rgba(0, 0, 0, 0.88)"
+									}
+								},
+								"children": [
+									"{following}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "rgba(0, 0, 0, 0.45)",
+										"textTransform": "uppercase",
+										"letterSpacing": "0.04em"
+									}
+								},
+								"children": [
+									"Following"
+								]
+							}
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "highlight",
+							"value": "following"
+						}
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"width": "1px",
-						"background": "#f0f0f0",
-						"flexShrink": 0
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"ttMerge": [
-							{
-								"flex": 1,
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"gap": "2px",
-								"padding": "14px 10px",
-								"borderTopWidth": "2px",
-								"borderTopStyle": "solid"
-							},
-							{
-								"ttIf": {
-									"arg": "highlight",
-									"equals": "following",
-									"then": {
-										"borderTopColor": "#1677ff"
-									},
-									"else": {
-										"borderTopColor": "transparent"
-									}
-								}
-							}
-						]
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "20px",
-								"fontWeight": 600,
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"{following}"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "rgba(0, 0, 0, 0.45)",
-								"textTransform": "uppercase",
-								"letterSpacing": "0.04em"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"Following"
+							{
+								"tag": "label",
+								"children": [
+									"Highlight ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Highlight",
+											"value": {
+												"ttArg": "highlight"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "posts"
+												},
+												"children": [
+													"posts"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "followers"
+												},
+												"children": [
+													"followers"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "following"
+												},
+												"children": [
+													"following"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "none"
+												},
+												"children": [
+													"none"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "highlight"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Posts ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Posts",
+											"value": {
+												"ttArg": "posts"
+											},
+											"maxLength": 10,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "posts"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Followers ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Followers",
+											"value": {
+												"ttArg": "followers"
+											},
+											"maxLength": 10,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "followers"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Following ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Following",
+											"value": {
+												"ttArg": "following"
+											},
+											"maxLength": 10,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "following"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "profile-social-stats",
+									"title": "Profile Stats Band",
+									"details": "Posts: {posts}\nFollowers: {followers}\nFollowing: {following}\nHighlight: {highlight}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "profile-social-stats",
 	"source": {
 		"kind": "archetype",

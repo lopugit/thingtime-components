@@ -3,7 +3,7 @@
 	"name": "Streak Card",
 	"library": "antd",
 	"category": "engagement",
-	"description": "Daily streak card in the Ant Design style — a zap glyph in a warning-tone circle beside the big day count, seven day-dots filled by a repeat-driven overlay, and a mono personal-best caption.",
+	"description": "Daily streak card in the Ant Design style — a zap glyph in a warning-tone circle beside the big day count, seven day-dots filled by a repeat-driven overlay, and a mono personal-best caption. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"gamification",
 		"streak",
@@ -32,25 +32,28 @@
 			"default": 21,
 			"label": "Personal best",
 			"min": 0
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "240px",
-				"padding": "16px",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#d9d9d9",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"gap": "14px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -59,8 +62,18 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "12px"
+						"flexDirection": "column",
+						"width": "240px",
+						"padding": "16px",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#d9d9d9",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
+						"gap": "14px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -68,117 +81,92 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "44px",
-								"height": "44px",
-								"borderRadius": "999px",
-								"background": "#fffbe6",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0
+								"gap": "12px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
+								"tag": "div",
 								"props": {
-									"width": 22,
-									"height": 22,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#faad14",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"style": {
+										"width": "44px",
+										"height": "44px",
+										"borderRadius": "999px",
+										"background": "#fffbe6",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
 								},
 								"children": [
 									{
-										"tag": "polygon",
+										"tag": "svg",
 										"props": {
-											"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-										}
+											"width": 22,
+											"height": 22,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#faad14",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "polygon",
+												"props": {
+													"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+												}
+											}
+										]
 									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "30px",
-										"fontWeight": 600,
-										"color": "rgba(0, 0, 0, 0.88)",
-										"lineHeight": 1
-									}
-								},
-								"children": [
-									"{days}"
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "13px",
-										"color": "rgba(0, 0, 0, 0.45)"
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px"
 									}
 								},
 								"children": [
-									"day streak"
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"position": "relative",
-						"display": "inline-flex"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px"
-							}
-						},
-						"children": [
-							{
-								"ttRepeat": {
-									"count": 7,
-									"max": 7,
-									"node": {
-										"tag": "div",
+									{
+										"tag": "span",
 										"props": {
 											"style": {
-												"width": "10px",
-												"height": "10px",
-												"borderRadius": "999px",
-												"background": "#f0f0f0",
-												"flexShrink": 0
+												"fontSize": "30px",
+												"fontWeight": 600,
+												"color": "rgba(0, 0, 0, 0.88)",
+												"lineHeight": 1
 											}
-										}
+										},
+										"children": [
+											"{days}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"color": "rgba(0, 0, 0, 0.45)"
+											}
+										},
+										"children": [
+											"day streak"
+										]
 									}
-								}
+								]
 							}
 						]
 					},
@@ -186,9 +174,9 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"position": "absolute",
-								"top": "0px",
-								"left": "0px"
+								"position": "relative",
+								"display": "inline-flex",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -198,13 +186,14 @@
 									"style": {
 										"display": "flex",
 										"alignItems": "center",
-										"gap": "6px"
+										"gap": "6px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
 										"ttRepeat": {
-											"arg": "done",
+											"count": 7,
 											"max": 7,
 											"node": {
 												"tag": "div",
@@ -213,35 +202,241 @@
 														"width": "10px",
 														"height": "10px",
 														"borderRadius": "999px",
-														"background": "#faad14",
-														"flexShrink": 0
+														"background": "#f0f0f0",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
 													}
 												}
 											}
 										}
 									}
 								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"position": "absolute",
+										"top": "0px",
+										"left": "0px"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "6px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"ttRepeat": {
+													"arg": "done",
+													"max": 7,
+													"node": {
+														"tag": "div",
+														"props": {
+															"style": {
+																"width": "10px",
+																"height": "10px",
+																"borderRadius": "999px",
+																"background": "#faad14",
+																"flexShrink": 0,
+																"maxWidth": "100%",
+																"boxSizing": "border-box"
+															}
+														}
+													}
+												}
+											}
+										]
+									}
+								]
 							}
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "12px",
+								"color": "rgba(0, 0, 0, 0.45)",
+								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+							}
+						},
+						"children": [
+							"best: {best} days"
 						]
 					}
 				]
 			},
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "12px",
-						"color": "rgba(0, 0, 0, 0.45)",
-						"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"best: {best} days"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Streak days ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Streak days",
+											"value": {
+												"ttArg": "days"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "days"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Days done this week (0–7) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Days done this week (0–7)",
+											"value": {
+												"ttArg": "done"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 7
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "done"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Personal best ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Personal best",
+											"value": {
+												"ttArg": "best"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "best"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "gamification-streak",
+									"title": "Streak Card",
+									"details": "Streak days: {days}\nDays done this week (0–7): {done}\nPersonal best: {best}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "gamification-streak",
 	"source": {
 		"kind": "archetype",

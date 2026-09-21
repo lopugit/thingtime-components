@@ -3,7 +3,7 @@
 	"name": "Grouped Select",
 	"library": "antd",
 	"category": "forms",
-	"description": "Open select panel with option groups in the Ant Design style — muted group headers over their options, separated by a hairline divider, first option showing the selected check.",
+	"description": "Open select panel with option groups in the Ant Design style — muted group headers over their options, separated by a hairline divider, first option showing the selected check. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"select",
@@ -52,214 +52,406 @@
 			"default": "Kale",
 			"label": "Group B item 2",
 			"maxLength": 30
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "selection",
+			"type": "string",
+			"default": ""
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#f0f0f0",
-				"borderRadius": "6px",
-				"boxShadow": "0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 6px 16px 0 rgba(0, 0, 0, 0.08)",
-				"padding": "4px 0",
-				"display": "flex",
-				"flexDirection": "column",
-				"marginTop": "0",
-				"width": "240px",
-				"boxSizing": "border-box"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontSize": "12px",
-						"fontWeight": 600,
-						"color": "rgba(0, 0, 0, 0.45)",
-						"padding": "6px 10px 2px"
-					}
-				},
-				"children": [
-					"{groupA}"
-				]
-			},
-			{
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px",
-								"padding": "7px 10px",
-								"borderRadius": "0",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.88)",
-								"cursor": "pointer"
-							},
-							{
-								"fontWeight": 600
-							}
-						]
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #d9d9d9",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.88)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "label",
 						"children": [
-							"{itemA1}"
-						]
-					},
-					{
-						"tag": "svg",
-						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#1677ff",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
+							"Select an option",
 							{
-								"tag": "polyline",
+								"tag": "select",
 								"props": {
-									"points": "20 6 9 17 4 12"
+									"value": {
+										"ttArg": "selection"
+									},
+									"aria-label": "Select an option",
+									"disabled": false
+								},
+								"children": [
+									{
+										"tag": "option",
+										"props": {
+											"value": ""
+										},
+										"children": [
+											"Choose…"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{itemA1}"
+										},
+										"children": [
+											"{itemA1}"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{itemA2}"
+										},
+										"children": [
+											"{itemA2}"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{itemB1}"
+										},
+										"children": [
+											"{itemB1}"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{itemB2}"
+										},
+										"children": [
+											"{itemB2}"
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selection"
 								}
 							}
 						]
+					},
+					{
+						"tag": "p",
+						"children": [
+							"Selected: {selection}"
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px",
-								"padding": "7px 10px",
-								"borderRadius": "0",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.88)",
-								"cursor": "pointer"
-							},
-							{}
-						]
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
+						"tag": "summary",
 						"children": [
-							"{itemA2}"
+							"Edit and save"
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"height": "1px",
-						"background": "#f0f0f0",
-						"margin": "4px 0"
-					}
-				}
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontSize": "12px",
-						"fontWeight": 600,
-						"color": "rgba(0, 0, 0, 0.45)",
-						"padding": "6px 10px 2px"
-					}
-				},
-				"children": [
-					"{groupB}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px",
-								"padding": "7px 10px",
-								"borderRadius": "0",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.88)",
-								"cursor": "pointer"
-							},
-							{}
-						]
-					}
-				},
-				"children": [
+					},
 					{
-						"tag": "span",
-						"children": [
-							"{itemB1}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
 								"gap": "8px",
-								"padding": "7px 10px",
-								"borderRadius": "0",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.88)",
-								"cursor": "pointer"
-							},
-							{}
-						]
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
 						"children": [
-							"{itemB2}"
+							{
+								"tag": "label",
+								"children": [
+									"selection ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "selection",
+											"value": {
+												"ttArg": "selection"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selection"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"First group ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "First group",
+											"value": {
+												"ttArg": "groupA"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "groupA"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Group A item 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Group A item 1",
+											"value": {
+												"ttArg": "itemA1"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "itemA1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Group A item 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Group A item 2",
+											"value": {
+												"ttArg": "itemA2"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "itemA2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Second group ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Second group",
+											"value": {
+												"ttArg": "groupB"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "groupB"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Group B item 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Group B item 1",
+											"value": {
+												"ttArg": "itemB1"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "itemB1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Group B item 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Group B item 2",
+											"value": {
+												"ttArg": "itemB2"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "itemB2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "select-menu-grouped",
+									"title": "Grouped Select",
+									"details": "First group: {groupA}\nGroup A item 1: {itemA1}\nGroup A item 2: {itemA2}\nSecond group: {groupB}\nGroup B item 1: {itemB1}\nGroup B item 2: {itemB2}\nselection: {selection}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "select-menu-grouped",
 	"source": {
 		"kind": "archetype",

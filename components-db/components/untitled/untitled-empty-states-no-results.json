@@ -3,7 +3,7 @@
 	"name": "No Results",
 	"library": "untitled",
 	"category": "feedback",
-	"description": "No-search-results panel in the Untitled UI style — magnifier icon, the searched query echoed in the title, a helper hint, and an optional clear-search button.",
+	"description": "No-search-results panel in the Untitled UI style — magnifier icon, the searched query echoed in the title, a helper hint, and an optional clear-search button. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"empty-state",
 		"search",
@@ -22,7 +22,8 @@
 			"name": "hint",
 			"type": "text",
 			"default": "Check the spelling or try a broader search term.",
-			"label": "Hint"
+			"label": "Hint",
+			"maxLength": 500
 		},
 		{
 			"name": "clearLabel",
@@ -36,26 +37,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Show clear button"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"alignItems": "center",
-				"justifyContent": "center",
-				"textAlign": "center",
-				"gap": "6px",
-				"width": "340px",
-				"padding": "36px 24px",
-				"background": "#ffffff",
-				"borderRadius": "12px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#101828",
-				"border": "1px solid #eaecf0",
-				"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -63,113 +66,320 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"width": "46px",
-						"height": "46px",
-						"borderRadius": "999px",
-						"background": "#f9fafb",
-						"color": "#475467",
 						"display": "flex",
+						"flexDirection": "column",
 						"alignItems": "center",
 						"justifyContent": "center",
-						"marginBottom": "4px"
+						"textAlign": "center",
+						"gap": "6px",
+						"width": "340px",
+						"padding": "36px 24px",
+						"background": "#ffffff",
+						"borderRadius": "12px",
+						"color": "#101828",
+						"border": "1px solid #eaecf0",
+						"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
+						"tag": "div",
 						"props": {
-							"width": 20,
-							"height": 20,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "currentColor",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "circle",
-								"props": {
-									"cx": 11,
-									"cy": 11,
-									"r": 7
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 21,
-									"y1": 21,
-									"x2": 16.65,
-									"y2": 16.65
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontWeight": 600,
-						"fontSize": "16px"
-					}
-				},
-				"children": [
-					"No results for “{query}”"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "14px",
-						"color": "#475467",
-						"lineHeight": 1.5,
-						"maxWidth": "250px"
-					}
-				},
-				"children": [
-					"{hint}"
-				]
-			},
-			{
-				"ttIf": {
-					"arg": "showClear",
-					"then": {
-						"tag": "button",
-						"props": {
-							"type": "button",
 							"style": {
-								"display": "inline-flex",
+								"width": "46px",
+								"height": "46px",
+								"borderRadius": "999px",
+								"background": "#f9fafb",
+								"color": "#475467",
+								"display": "flex",
 								"alignItems": "center",
 								"justifyContent": "center",
-								"height": "36px",
-								"padding": "0 14px",
-								"background": "transparent",
-								"color": "#101828",
-								"border": "1px solid #eaecf0",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"cursor": "pointer",
-								"marginTop": "10px"
+								"marginBottom": "4px",
+								"maxWidth": "100%",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{clearLabel}"
+							{
+								"tag": "svg",
+								"props": {
+									"width": 20,
+									"height": 20,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "currentColor",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "circle",
+										"props": {
+											"cx": 11,
+											"cy": 11,
+											"r": 7
+										}
+									},
+									{
+										"tag": "line",
+										"props": {
+											"x1": 21,
+											"y1": 21,
+											"x2": 16.65,
+											"y2": 16.65
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontWeight": 600,
+								"fontSize": "16px"
+							}
+						},
+						"children": [
+							"No results for “{query}”"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "14px",
+								"color": "#475467",
+								"lineHeight": 1.5,
+								"maxWidth": "250px"
+							}
+						},
+						"children": [
+							"{hint}"
+						]
+					},
+					{
+						"ttIf": {
+							"arg": "showClear",
+							"then": {
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"height": "36px",
+										"padding": "0 14px",
+										"background": "transparent",
+										"color": "#101828",
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"cursor": "pointer",
+										"marginTop": "10px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"{clearLabel}"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Search query ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Search query",
+											"value": {
+												"ttArg": "query"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "query"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Hint ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Hint",
+											"value": {
+												"ttArg": "hint"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "hint"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Clear label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Clear label",
+											"value": {
+												"ttArg": "clearLabel"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "clearLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show clear button ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show clear button",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showClear"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showClear"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "empty-states-no-results",
+									"title": "No Results",
+									"details": "Search query: {query}\nHint: {hint}\nClear label: {clearLabel}\nShow clear button: {showClear}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
 	"previewBg": "#f9fafb",
-	"version": 1,
+	"version": 2,
 	"familyKey": "empty-states-no-results",
 	"source": {
 		"kind": "archetype",

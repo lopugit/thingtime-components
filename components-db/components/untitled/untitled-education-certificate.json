@@ -3,7 +3,7 @@
 	"name": "Completion Certificate",
 	"library": "untitled",
 	"category": "learning",
-	"description": "Certificate of completion in the Untitled UI style — bordered card with an inner hairline frame, laurel flourish, letterspaced heading, script-large recipient name, and a signature/date line pair.",
+	"description": "Certificate of completion in the Untitled UI style — bordered card with an inner hairline frame, laurel flourish, letterspaced heading, script-large recipient name, and a signature/date line pair. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"education",
 		"certificate",
@@ -45,23 +45,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#101828",
-				"background": "#ffffff",
-				"border": "1px solid #eaecf0",
-				"borderRadius": "12px",
-				"boxShadow": "0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03)",
-				"boxSizing": "border-box",
-				"overflow": "hidden",
-				"width": "320px",
-				"padding": "10px",
-				"textAlign": "center"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -69,169 +74,126 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"alignItems": "center",
-						"gap": "8px",
-						"padding": "20px 18px 16px",
-						"border": "1px solid #f2f4f7",
-						"borderRadius": "8px"
+						"color": "#101828",
+						"background": "#ffffff",
+						"border": "1px solid #eaecf0",
+						"borderRadius": "12px",
+						"boxShadow": "0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03)",
+						"boxSizing": "border-box",
+						"overflow": "hidden",
+						"width": "320px",
+						"padding": "10px",
+						"textAlign": "center",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					{
-						"tag": "svg",
-						"props": {
-							"width": 30,
-							"height": 30,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#7f56d9",
-										"success": "#12b76a",
-										"warning": "#f79009",
-										"danger": "#f04438",
-										"info": "#2e90fa",
-										"neutral": "#344054"
-									},
-									"default": "#7f56d9"
-								}
-							},
-							"strokeWidth": 1.5,
-							"strokeLinecap": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "path",
-								"props": {
-									"d": "M7 3C3.5 7.5 3.5 16.5 7 21"
-								}
-							},
-							{
-								"tag": "path",
-								"props": {
-									"d": "M17 3c3.5 4.5 3.5 13.5 0 18"
-								}
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"letterSpacing": "0.22em",
-								"textTransform": "uppercase",
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#6941c6",
-											"success": "#027a48",
-											"warning": "#b54708",
-											"danger": "#b42318",
-											"info": "#175cd3",
-											"neutral": "#344054"
-										},
-										"default": "#6941c6"
-									}
-								}
-							}
-						},
-						"children": [
-							"Certificate of Completion"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "26px",
-								"fontStyle": "italic",
-								"fontWeight": 600,
-								"lineHeight": 1.2
-							}
-						},
-						"children": [
-							"{name}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"color": "#475467"
-							}
-						},
-						"children": [
-							"for completing {course}"
-						]
-					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
+								"flexDirection": "column",
 								"alignItems": "center",
-								"gap": "24px",
-								"width": "100%",
-								"marginTop": "12px"
+								"gap": "8px",
+								"padding": "20px 18px 16px",
+								"border": "1px solid #f2f4f7",
+								"borderRadius": "8px"
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
+								"tag": "svg",
 								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"flex": 1,
-										"gap": "4px",
-										"alignItems": "center"
-									}
+									"width": 30,
+									"height": 30,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": {
+										"ttMap": {
+											"arg": "tone",
+											"values": {
+												"primary": "#7f56d9",
+												"success": "#12b76a",
+												"warning": "#f79009",
+												"danger": "#f04438",
+												"info": "#2e90fa",
+												"neutral": "#344054"
+											},
+											"default": "#7f56d9"
+										}
+									},
+									"strokeWidth": 1.5,
+									"strokeLinecap": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
 								},
 								"children": [
 									{
-										"tag": "span",
+										"tag": "path",
 										"props": {
-											"style": {
-												"fontSize": "14px",
-												"fontStyle": "italic"
-											}
-										},
-										"children": [
-											"E. Hartley"
-										]
-									},
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "100%",
-												"borderTop": "1px solid #eaecf0"
-											}
+											"d": "M7 3C3.5 7.5 3.5 16.5 7 21"
 										}
 									},
 									{
-										"tag": "span",
+										"tag": "path",
 										"props": {
-											"style": {
-												"fontSize": "12px",
-												"color": "#98a2b3",
-												"textTransform": "uppercase",
-												"letterSpacing": "0.08em"
-											}
-										},
-										"children": [
-											"Instructor"
-										]
+											"d": "M17 3c3.5 4.5 3.5 13.5 0 18"
+										}
 									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"letterSpacing": "0.22em",
+										"textTransform": "uppercase",
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#6941c6",
+													"success": "#027a48",
+													"warning": "#b54708",
+													"danger": "#b42318",
+													"info": "#175cd3",
+													"neutral": "#344054"
+												},
+												"default": "#6941c6"
+											}
+										}
+									}
+								},
+								"children": [
+									"Certificate of Completion"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "26px",
+										"fontStyle": "italic",
+										"fontWeight": 600,
+										"lineHeight": 1.2
+									}
+								},
+								"children": [
+									"{name}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "14px",
+										"color": "#475467"
+									}
+								},
+								"children": [
+									"for completing {course}"
 								]
 							},
 							{
@@ -239,46 +201,114 @@
 								"props": {
 									"style": {
 										"display": "flex",
-										"flexDirection": "column",
-										"flex": 1,
-										"gap": "4px",
-										"alignItems": "center"
+										"alignItems": "center",
+										"gap": "24px",
+										"width": "100%",
+										"marginTop": "12px",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
-										"tag": "span",
+										"tag": "div",
 										"props": {
 											"style": {
-												"fontSize": "14px",
-												"fontStyle": "italic"
+												"display": "flex",
+												"flexDirection": "column",
+												"flex": 1,
+												"gap": "4px",
+												"alignItems": "center"
 											}
 										},
 										"children": [
-											"{date}"
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontStyle": "italic"
+													}
+												},
+												"children": [
+													"E. Hartley"
+												]
+											},
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "100%",
+														"borderTop": "1px solid #eaecf0",
+														"maxWidth": "100%"
+													}
+												}
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"color": "#98a2b3",
+														"textTransform": "uppercase",
+														"letterSpacing": "0.08em"
+													}
+												},
+												"children": [
+													"Instructor"
+												]
+											}
 										]
 									},
 									{
 										"tag": "div",
 										"props": {
 											"style": {
-												"width": "100%",
-												"borderTop": "1px solid #eaecf0"
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"color": "#98a2b3",
-												"textTransform": "uppercase",
-												"letterSpacing": "0.08em"
+												"display": "flex",
+												"flexDirection": "column",
+												"flex": 1,
+												"gap": "4px",
+												"alignItems": "center"
 											}
 										},
 										"children": [
-											"Date"
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontStyle": "italic"
+													}
+												},
+												"children": [
+													"{date}"
+												]
+											},
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "100%",
+														"borderTop": "1px solid #eaecf0",
+														"maxWidth": "100%"
+													}
+												}
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"color": "#98a2b3",
+														"textTransform": "uppercase",
+														"letterSpacing": "0.08em"
+													}
+												},
+												"children": [
+													"Date"
+												]
+											}
 										]
 									}
 								]
@@ -286,10 +316,165 @@
 						]
 					}
 				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Recipient ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Recipient",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Course ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Course",
+											"value": {
+												"ttArg": "course"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "course"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Date ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Date",
+											"value": {
+												"ttArg": "date"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "date"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "education-certificate",
+									"title": "Completion Certificate",
+									"details": "Recipient: {name}\nCourse: {course}\nDate: {date}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "education-certificate",
 	"source": {
 		"kind": "archetype",

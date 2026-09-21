@@ -3,7 +3,7 @@
 	"name": "Bottom Sheet",
 	"library": "thingtime",
 	"category": "overlays",
-	"description": "Bottom sheet rising over a dimmed backdrop in the Thingtime style — a slim grab handle above the title, body copy, and a full-width tone action.",
+	"description": "Bottom sheet rising over a dimmed backdrop in the Thingtime style — a slim grab handle above the title, body copy, and a full-width tone action. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"sheet",
 		"mobile",
@@ -28,7 +28,7 @@
 		{
 			"name": "actionLabel",
 			"type": "string",
-			"default": "Copy link",
+			"default": "Save record",
 			"label": "Action label",
 			"maxLength": 24
 		},
@@ -45,138 +45,192 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"width": "340px",
-				"minHeight": "280px",
-				"boxSizing": "border-box",
-				"background": "rgba(12, 12, 16, 0.45)",
-				"borderRadius": "12px",
-				"overflow": "hidden",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"flexDirection": "column",
-				"justifyContent": "flex-end",
-				"alignItems": "stretch"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "div",
+				"tag": "tt-dialog",
 				"props": {
-					"style": {
-						"background": "#ffffff",
-						"color": "#33333c",
-						"borderRadius": "16px 16px 0 0",
-						"boxShadow": "0 12px 32px rgba(22, 22, 26, 0.10)",
-						"display": "flex",
-						"flexDirection": "column",
-						"overflow": "hidden",
-						"padding": "10px 20px 20px"
-					}
+					"title": "{title}",
+					"name": "Open sheet",
+					"type": "drawer"
 				},
 				"children": [
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "40px",
-								"height": "4px",
-								"borderRadius": "999px",
-								"background": "#ececef",
-								"margin": "0 auto 14px",
-								"flexShrink": 0
-							}
-						}
-					},
-					{
-						"tag": "h3",
-						"props": {
-							"style": {
-								"margin": "0 0 6px",
-								"fontSize": "16px",
-								"fontWeight": 700
+								"display": "grid",
+								"gap": "12px",
+								"padding": "16px",
+								"border": "1px solid #ececef",
+								"borderRadius": "12px",
+								"background": "#ffffff",
+								"color": "#33333c",
+								"minWidth": 0,
+								"maxWidth": "100%"
 							}
 						},
 						"children": [
-							"{title}"
+							{
+								"tag": "p",
+								"children": [
+									"{body}"
+								]
+							},
+							{
+								"tag": "p",
+								"children": [
+									"Edit the values below and save a private draft. No external changes are made."
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "p",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"margin": "0 0 16px",
-								"color": "#9a9aa6",
-								"fontSize": "12px",
-								"lineHeight": 1.6
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{body}"
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "36px",
-								"padding": "0 14px",
-								"borderRadius": "9px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"cursor": "pointer",
-								"border": "none",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#16161a",
-											"success": "#2f9e63",
-											"warning": "#d99a1f",
-											"danger": "#d5484f",
-											"info": "#d53f8c",
-											"neutral": "#9a9aa6"
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"default": "#16161a"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
 									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Body ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Body",
+											"value": {
+												"ttArg": "body"
+											},
+											"maxLength": 200,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"default": "#ffffff"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "body"
+										}
 									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
 								},
-								"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-								"width": "100%"
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "modal-drawer-sheet",
+									"title": "Bottom Sheet",
+									"details": "Title: {title}\nBody: {body}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"children": [
-							"{actionLabel}"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "modal-drawer-sheet",
 	"source": {
 		"kind": "archetype",

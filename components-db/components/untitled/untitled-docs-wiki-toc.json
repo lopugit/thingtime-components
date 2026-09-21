@@ -3,7 +3,7 @@
 	"name": "On This Page ToC",
 	"library": "untitled",
 	"category": "documentation",
-	"description": "On-this-page rail in the Untitled UI style — mono kicker over nested section links, a tone accent bar bolding the active item, and a tone-filled reading-progress hairline on the left.",
+	"description": "On-this-page rail in the Untitled UI style — mono kicker over nested section links, a tone accent bar bolding the active item, and a tone-filled reading-progress hairline on the left. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"docs",
 		"toc",
@@ -40,85 +40,61 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"background": "#ffffff",
-				"border": "1px solid #f2f4f7",
-				"borderRadius": "12px",
-				"padding": "16px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"gap": "10px",
-				"width": "240px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-						"fontSize": "12px",
-						"fontWeight": 600,
-						"letterSpacing": "0.08em",
-						"color": "#98a2b3"
-					}
-				},
-				"children": [
-					"ON THIS PAGE"
-				]
-			},
 			{
 				"tag": "div",
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "stretch",
-						"gap": "10px"
+						"flexDirection": "column",
+						"background": "#ffffff",
+						"border": "1px solid #f2f4f7",
+						"borderRadius": "12px",
+						"padding": "16px",
+						"gap": "10px",
+						"width": "240px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
+						"tag": "span",
 						"props": {
 							"style": {
-								"width": "3px",
-								"borderRadius": "999px",
-								"background": "#f2f4f7",
-								"overflow": "hidden",
-								"flexShrink": 0
+								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+								"fontSize": "12px",
+								"fontWeight": 600,
+								"letterSpacing": "0.08em",
+								"color": "#98a2b3"
 							}
 						},
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "100%",
-										"height": "{progress}%",
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#7f56d9",
-													"success": "#12b76a",
-													"warning": "#f79009",
-													"danger": "#f04438",
-													"info": "#2e90fa",
-													"neutral": "#344054"
-												},
-												"default": "#7f56d9"
-											}
-										},
-										"borderRadius": "999px"
-									}
-								}
-							}
+							"ON THIS PAGE"
 						]
 					},
 					{
@@ -126,9 +102,9 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"flexGrow": 1
+								"alignItems": "stretch",
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -136,463 +112,703 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"minHeight": "26px",
-												"paddingLeft": "0px",
-												"fontSize": "14px",
-												"lineHeight": 1.3
+										"width": "3px",
+										"borderRadius": "999px",
+										"background": "#f2f4f7",
+										"overflow": "hidden",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "100%",
+												"height": "{progress}%",
+												"background": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#7f56d9",
+															"success": "#12b76a",
+															"warning": "#f79009",
+															"danger": "#f04438",
+															"info": "#2e90fa",
+															"neutral": "#344054"
+														},
+														"default": "#7f56d9"
+													}
+												},
+												"borderRadius": "999px",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"flexGrow": 1
+									}
+								},
+								"children": [
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"ttMerge": [
+													{
+														"display": "flex",
+														"alignItems": "center",
+														"minHeight": "26px",
+														"paddingLeft": "0px",
+														"fontSize": "14px",
+														"lineHeight": 1.3,
+														"flexWrap": "wrap"
+													},
+													{
+														"ttIf": {
+															"arg": "active",
+															"equals": 1,
+															"then": {
+																"color": "#101828",
+																"fontWeight": 600
+															},
+															"else": {
+																"color": "#475467",
+																"fontWeight": 400
+															}
+														}
+													}
+												]
 											},
+											"type": "button",
+											"aria-label": "Overview",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "active",
+													"equals": 1,
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"children": [
 											{
 												"ttIf": {
 													"arg": "active",
 													"equals": 1,
 													"then": {
-														"color": "#101828",
-														"fontWeight": 600
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"borderRadius": "999px",
+																"background": {
+																	"ttMap": {
+																		"arg": "tone",
+																		"values": {
+																			"primary": "#7f56d9",
+																			"success": "#12b76a",
+																			"warning": "#f79009",
+																			"danger": "#f04438",
+																			"info": "#2e90fa",
+																			"neutral": "#344054"
+																		},
+																		"default": "#7f56d9"
+																	}
+																},
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%",
+																"boxSizing": "border-box"
+															}
+														}
 													},
 													"else": {
-														"color": "#475467",
-														"fontWeight": 400
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									{
-										"ttIf": {
-											"arg": "active",
-											"equals": 1,
-											"then": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"borderRadius": "999px",
-														"background": {
-															"ttMap": {
-																"arg": "tone",
-																"values": {
-																	"primary": "#7f56d9",
-																	"success": "#12b76a",
-																	"warning": "#f79009",
-																	"danger": "#f04438",
-																	"info": "#2e90fa",
-																	"neutral": "#344054"
-																},
-																"default": "#7f56d9"
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%"
 															}
-														},
-														"marginRight": "8px",
-														"flexShrink": 0
+														}
 													}
 												}
 											},
-											"else": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"marginRight": "8px",
-														"flexShrink": 0
-													}
-												}
-											}
+											"Overview"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active",
+											"value": 1
 										}
 									},
-									"Overview"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"minHeight": "26px",
-												"paddingLeft": "16px",
-												"fontSize": "14px",
-												"lineHeight": 1.3
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"ttMerge": [
+													{
+														"display": "flex",
+														"alignItems": "center",
+														"minHeight": "26px",
+														"paddingLeft": "16px",
+														"fontSize": "14px",
+														"lineHeight": 1.3,
+														"flexWrap": "wrap"
+													},
+													{
+														"ttIf": {
+															"arg": "active",
+															"equals": 2,
+															"then": {
+																"color": "#101828",
+																"fontWeight": 600
+															},
+															"else": {
+																"color": "#475467",
+																"fontWeight": 400
+															}
+														}
+													}
+												]
 											},
+											"type": "button",
+											"aria-label": "Prerequisites",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "active",
+													"equals": 2,
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"children": [
 											{
 												"ttIf": {
 													"arg": "active",
 													"equals": 2,
 													"then": {
-														"color": "#101828",
-														"fontWeight": 600
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"borderRadius": "999px",
+																"background": {
+																	"ttMap": {
+																		"arg": "tone",
+																		"values": {
+																			"primary": "#7f56d9",
+																			"success": "#12b76a",
+																			"warning": "#f79009",
+																			"danger": "#f04438",
+																			"info": "#2e90fa",
+																			"neutral": "#344054"
+																		},
+																		"default": "#7f56d9"
+																	}
+																},
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%",
+																"boxSizing": "border-box"
+															}
+														}
 													},
 													"else": {
-														"color": "#475467",
-														"fontWeight": 400
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									{
-										"ttIf": {
-											"arg": "active",
-											"equals": 2,
-											"then": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"borderRadius": "999px",
-														"background": {
-															"ttMap": {
-																"arg": "tone",
-																"values": {
-																	"primary": "#7f56d9",
-																	"success": "#12b76a",
-																	"warning": "#f79009",
-																	"danger": "#f04438",
-																	"info": "#2e90fa",
-																	"neutral": "#344054"
-																},
-																"default": "#7f56d9"
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%"
 															}
-														},
-														"marginRight": "8px",
-														"flexShrink": 0
+														}
 													}
 												}
 											},
-											"else": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"marginRight": "8px",
-														"flexShrink": 0
-													}
-												}
-											}
+											"Prerequisites"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active",
+											"value": 2
 										}
 									},
-									"Prerequisites"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"minHeight": "26px",
-												"paddingLeft": "16px",
-												"fontSize": "14px",
-												"lineHeight": 1.3
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"ttMerge": [
+													{
+														"display": "flex",
+														"alignItems": "center",
+														"minHeight": "26px",
+														"paddingLeft": "16px",
+														"fontSize": "14px",
+														"lineHeight": 1.3,
+														"flexWrap": "wrap"
+													},
+													{
+														"ttIf": {
+															"arg": "active",
+															"equals": 3,
+															"then": {
+																"color": "#101828",
+																"fontWeight": 600
+															},
+															"else": {
+																"color": "#475467",
+																"fontWeight": 400
+															}
+														}
+													}
+												]
 											},
+											"type": "button",
+											"aria-label": "Install the CLI",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "active",
+													"equals": 3,
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"children": [
 											{
 												"ttIf": {
 													"arg": "active",
 													"equals": 3,
 													"then": {
-														"color": "#101828",
-														"fontWeight": 600
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"borderRadius": "999px",
+																"background": {
+																	"ttMap": {
+																		"arg": "tone",
+																		"values": {
+																			"primary": "#7f56d9",
+																			"success": "#12b76a",
+																			"warning": "#f79009",
+																			"danger": "#f04438",
+																			"info": "#2e90fa",
+																			"neutral": "#344054"
+																		},
+																		"default": "#7f56d9"
+																	}
+																},
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%",
+																"boxSizing": "border-box"
+															}
+														}
 													},
 													"else": {
-														"color": "#475467",
-														"fontWeight": 400
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									{
-										"ttIf": {
-											"arg": "active",
-											"equals": 3,
-											"then": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"borderRadius": "999px",
-														"background": {
-															"ttMap": {
-																"arg": "tone",
-																"values": {
-																	"primary": "#7f56d9",
-																	"success": "#12b76a",
-																	"warning": "#f79009",
-																	"danger": "#f04438",
-																	"info": "#2e90fa",
-																	"neutral": "#344054"
-																},
-																"default": "#7f56d9"
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%"
 															}
-														},
-														"marginRight": "8px",
-														"flexShrink": 0
+														}
 													}
 												}
 											},
-											"else": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"marginRight": "8px",
-														"flexShrink": 0
-													}
-												}
-											}
+											"Install the CLI"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active",
+											"value": 3
 										}
 									},
-									"Install the CLI"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"minHeight": "26px",
-												"paddingLeft": "0px",
-												"fontSize": "14px",
-												"lineHeight": 1.3
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"ttMerge": [
+													{
+														"display": "flex",
+														"alignItems": "center",
+														"minHeight": "26px",
+														"paddingLeft": "0px",
+														"fontSize": "14px",
+														"lineHeight": 1.3,
+														"flexWrap": "wrap"
+													},
+													{
+														"ttIf": {
+															"arg": "active",
+															"equals": 4,
+															"then": {
+																"color": "#101828",
+																"fontWeight": 600
+															},
+															"else": {
+																"color": "#475467",
+																"fontWeight": 400
+															}
+														}
+													}
+												]
 											},
+											"type": "button",
+											"aria-label": "Configuration",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "active",
+													"equals": 4,
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"children": [
 											{
 												"ttIf": {
 													"arg": "active",
 													"equals": 4,
 													"then": {
-														"color": "#101828",
-														"fontWeight": 600
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"borderRadius": "999px",
+																"background": {
+																	"ttMap": {
+																		"arg": "tone",
+																		"values": {
+																			"primary": "#7f56d9",
+																			"success": "#12b76a",
+																			"warning": "#f79009",
+																			"danger": "#f04438",
+																			"info": "#2e90fa",
+																			"neutral": "#344054"
+																		},
+																		"default": "#7f56d9"
+																	}
+																},
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%",
+																"boxSizing": "border-box"
+															}
+														}
 													},
 													"else": {
-														"color": "#475467",
-														"fontWeight": 400
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									{
-										"ttIf": {
-											"arg": "active",
-											"equals": 4,
-											"then": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"borderRadius": "999px",
-														"background": {
-															"ttMap": {
-																"arg": "tone",
-																"values": {
-																	"primary": "#7f56d9",
-																	"success": "#12b76a",
-																	"warning": "#f79009",
-																	"danger": "#f04438",
-																	"info": "#2e90fa",
-																	"neutral": "#344054"
-																},
-																"default": "#7f56d9"
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%"
 															}
-														},
-														"marginRight": "8px",
-														"flexShrink": 0
+														}
 													}
 												}
 											},
-											"else": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"marginRight": "8px",
-														"flexShrink": 0
-													}
-												}
-											}
+											"Configuration"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active",
+											"value": 4
 										}
 									},
-									"Configuration"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"minHeight": "26px",
-												"paddingLeft": "16px",
-												"fontSize": "14px",
-												"lineHeight": 1.3
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"ttMerge": [
+													{
+														"display": "flex",
+														"alignItems": "center",
+														"minHeight": "26px",
+														"paddingLeft": "16px",
+														"fontSize": "14px",
+														"lineHeight": 1.3,
+														"flexWrap": "wrap"
+													},
+													{
+														"ttIf": {
+															"arg": "active",
+															"equals": 5,
+															"then": {
+																"color": "#101828",
+																"fontWeight": 600
+															},
+															"else": {
+																"color": "#475467",
+																"fontWeight": 400
+															}
+														}
+													}
+												]
 											},
+											"type": "button",
+											"aria-label": "Environment variables",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "active",
+													"equals": 5,
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"children": [
 											{
 												"ttIf": {
 													"arg": "active",
 													"equals": 5,
 													"then": {
-														"color": "#101828",
-														"fontWeight": 600
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"borderRadius": "999px",
+																"background": {
+																	"ttMap": {
+																		"arg": "tone",
+																		"values": {
+																			"primary": "#7f56d9",
+																			"success": "#12b76a",
+																			"warning": "#f79009",
+																			"danger": "#f04438",
+																			"info": "#2e90fa",
+																			"neutral": "#344054"
+																		},
+																		"default": "#7f56d9"
+																	}
+																},
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%",
+																"boxSizing": "border-box"
+															}
+														}
 													},
 													"else": {
-														"color": "#475467",
-														"fontWeight": 400
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									{
-										"ttIf": {
-											"arg": "active",
-											"equals": 5,
-											"then": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"borderRadius": "999px",
-														"background": {
-															"ttMap": {
-																"arg": "tone",
-																"values": {
-																	"primary": "#7f56d9",
-																	"success": "#12b76a",
-																	"warning": "#f79009",
-																	"danger": "#f04438",
-																	"info": "#2e90fa",
-																	"neutral": "#344054"
-																},
-																"default": "#7f56d9"
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%"
 															}
-														},
-														"marginRight": "8px",
-														"flexShrink": 0
+														}
 													}
 												}
 											},
-											"else": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"marginRight": "8px",
-														"flexShrink": 0
-													}
-												}
-											}
+											"Environment variables"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active",
+											"value": 5
 										}
 									},
-									"Environment variables"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"minHeight": "26px",
-												"paddingLeft": "0px",
-												"fontSize": "14px",
-												"lineHeight": 1.3
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"ttMerge": [
+													{
+														"display": "flex",
+														"alignItems": "center",
+														"minHeight": "26px",
+														"paddingLeft": "0px",
+														"fontSize": "14px",
+														"lineHeight": 1.3,
+														"flexWrap": "wrap"
+													},
+													{
+														"ttIf": {
+															"arg": "active",
+															"equals": 6,
+															"then": {
+																"color": "#101828",
+																"fontWeight": 600
+															},
+															"else": {
+																"color": "#475467",
+																"fontWeight": 400
+															}
+														}
+													}
+												]
 											},
+											"type": "button",
+											"aria-label": "Troubleshooting",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "active",
+													"equals": 6,
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"children": [
 											{
 												"ttIf": {
 													"arg": "active",
 													"equals": 6,
 													"then": {
-														"color": "#101828",
-														"fontWeight": 600
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"borderRadius": "999px",
+																"background": {
+																	"ttMap": {
+																		"arg": "tone",
+																		"values": {
+																			"primary": "#7f56d9",
+																			"success": "#12b76a",
+																			"warning": "#f79009",
+																			"danger": "#f04438",
+																			"info": "#2e90fa",
+																			"neutral": "#344054"
+																		},
+																		"default": "#7f56d9"
+																	}
+																},
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%",
+																"boxSizing": "border-box"
+															}
+														}
 													},
 													"else": {
-														"color": "#475467",
-														"fontWeight": 400
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									{
-										"ttIf": {
-											"arg": "active",
-											"equals": 6,
-											"then": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"borderRadius": "999px",
-														"background": {
-															"ttMap": {
-																"arg": "tone",
-																"values": {
-																	"primary": "#7f56d9",
-																	"success": "#12b76a",
-																	"warning": "#f79009",
-																	"danger": "#f04438",
-																	"info": "#2e90fa",
-																	"neutral": "#344054"
-																},
-																"default": "#7f56d9"
+														"tag": "span",
+														"props": {
+															"style": {
+																"width": "3px",
+																"height": "14px",
+																"marginRight": "8px",
+																"flexShrink": 0,
+																"maxWidth": "100%"
 															}
-														},
-														"marginRight": "8px",
-														"flexShrink": 0
+														}
 													}
 												}
 											},
-											"else": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "3px",
-														"height": "14px",
-														"marginRight": "8px",
-														"flexShrink": 0
-													}
-												}
-											}
+											"Troubleshooting"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active",
+											"value": 6
 										}
-									},
-									"Troubleshooting"
+									}
 								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "docs-wiki-toc",
+									"title": "On This Page ToC",
+									"details": "Active item: {active}\nProgress %: {progress}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -600,7 +816,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "docs-wiki-toc",
 	"source": {
 		"kind": "archetype",

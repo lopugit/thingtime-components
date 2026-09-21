@@ -3,7 +3,7 @@
 	"name": "Parking Session Card",
 	"library": "antd",
 	"category": "automotive",
-	"description": "Parking session card in the Ant Design style — P emblem tile with garage name, level and spot mono chips, an expiry timer that turns warning when low, a rate caption, and Extend plus Directions actions.",
+	"description": "Parking session card in the Ant Design style — P emblem tile with garage name, level and spot mono chips, an expiry timer that turns warning when low, a rate caption, and Extend plus Directions actions. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"automotive",
 		"parking",
@@ -53,27 +53,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "280px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#d9d9d9",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "rgba(0, 0, 0, 0.88)",
-				"overflow": "hidden",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"gap": "10px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -82,8 +83,20 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
+						"flexDirection": "column",
+						"width": "280px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#d9d9d9",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
+						"color": "rgba(0, 0, 0, 0.88)",
+						"overflow": "hidden",
+						"boxSizing": "border-box",
+						"padding": "16px",
+						"gap": "10px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -91,47 +104,140 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "40px",
-								"height": "40px",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"borderRadius": "6px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1677ff",
-											"success": "#52c41a",
-											"warning": "#faad14",
-											"danger": "#ff4d4f",
-											"info": "#1677ff",
-											"neutral": "rgba(0, 0, 0, 0.88)"
-										},
-										"default": "#1677ff"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"fontWeight": 700,
-								"fontSize": "16px",
-								"flexShrink": 0
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"P"
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "40px",
+										"height": "40px",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"borderRadius": "6px",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1677ff",
+													"success": "#52c41a",
+													"warning": "#faad14",
+													"danger": "#ff4d4f",
+													"info": "#1677ff",
+													"neutral": "rgba(0, 0, 0, 0.88)"
+												},
+												"default": "#1677ff"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"fontWeight": 700,
+										"fontSize": "16px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"P"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "4px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"{garage}"
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "6px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"display": "inline-flex",
+														"alignItems": "center",
+														"padding": "2px 8px",
+														"borderRadius": "4px",
+														"background": "#fafafa",
+														"color": "rgba(0, 0, 0, 0.45)",
+														"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+														"fontSize": "12px",
+														"fontWeight": 500,
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													"L2"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"display": "inline-flex",
+														"alignItems": "center",
+														"padding": "2px 8px",
+														"borderRadius": "4px",
+														"background": "#fafafa",
+														"color": "rgba(0, 0, 0, 0.45)",
+														"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+														"fontSize": "12px",
+														"fontWeight": 500,
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													"{spot}"
+												]
+											}
+										]
+									}
+								]
+							}
 						]
 					},
 					{
@@ -140,7 +246,7 @@
 							"style": {
 								"display": "flex",
 								"flexDirection": "column",
-								"gap": "4px"
+								"gap": "2px"
 							}
 						},
 						"children": [
@@ -148,225 +254,369 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600
+										"fontSize": "13px",
+										"fontWeight": 600,
+										"color": {
+											"ttMap": {
+												"arg": "mins",
+												"values": {
+													"0": "#d48806",
+													"1": "#d48806",
+													"2": "#d48806",
+													"3": "#d48806",
+													"4": "#d48806",
+													"5": "#d48806",
+													"6": "#d48806",
+													"7": "#d48806",
+													"8": "#d48806",
+													"9": "#d48806"
+												},
+												"default": "rgba(0, 0, 0, 0.88)"
+											}
+										}
 									}
 								},
 								"children": [
-									"{garage}"
+									"Expires in {mins} min"
 								]
 							},
 							{
-								"tag": "div",
+								"tag": "span",
 								"props": {
 									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "6px"
+										"fontSize": "12px",
+										"color": "rgba(0, 0, 0, 0.45)"
 									}
 								},
 								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"display": "inline-flex",
-												"alignItems": "center",
-												"padding": "2px 8px",
-												"borderRadius": "4px",
-												"background": "#fafafa",
-												"color": "rgba(0, 0, 0, 0.45)",
-												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-												"fontSize": "12px",
-												"fontWeight": 500
-											}
-										},
-										"children": [
-											"L2"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"display": "inline-flex",
-												"alignItems": "center",
-												"padding": "2px 8px",
-												"borderRadius": "4px",
-												"background": "#fafafa",
-												"color": "rgba(0, 0, 0, 0.45)",
-												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-												"fontSize": "12px",
-												"fontWeight": 500
-											}
-										},
-										"children": [
-											"{spot}"
-										]
-									}
+									"{rate}"
 								]
 							}
 						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "6px",
+										"fontWeight": 400,
+										"fontSize": "13px",
+										"cursor": "pointer",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1677ff",
+													"success": "#52c41a",
+													"warning": "#faad14",
+													"danger": "#ff4d4f",
+													"info": "#1677ff",
+													"neutral": "rgba(0, 0, 0, 0.88)"
+												},
+												"default": "#1677ff"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"flex": "1",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "automotive-parking",
+									"title": "Parking Session Card",
+									"details": "Garage: {garage}\nSpot: {spot}\nMinutes left: {mins}\nRate: {rate}"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "6px",
+										"fontWeight": 400,
+										"fontSize": "13px",
+										"cursor": "pointer",
+										"background": "transparent",
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1677ff",
+													"success": "#52c41a",
+													"warning": "#faad14",
+													"danger": "#ff4d4f",
+													"info": "#1677ff",
+													"neutral": "rgba(0, 0, 0, 0.88)"
+												},
+												"default": "#1677ff"
+											}
+										},
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "automotive-parking",
+									"title": "Parking Session Card",
+									"details": "Garage: {garage}\nSpot: {spot}\nMinutes left: {mins}\nRate: {rate}"
+								}
+							}
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "2px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"fontWeight": 600,
-								"color": {
-									"ttMap": {
-										"arg": "mins",
-										"values": {
-											"0": "#d48806",
-											"1": "#d48806",
-											"2": "#d48806",
-											"3": "#d48806",
-											"4": "#d48806",
-											"5": "#d48806",
-											"6": "#d48806",
-											"7": "#d48806",
-											"8": "#d48806",
-											"9": "#d48806"
-										},
-										"default": "rgba(0, 0, 0, 0.88)"
-									}
-								}
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"Expires in {mins} min"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "rgba(0, 0, 0, 0.45)"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{rate}"
+							{
+								"tag": "label",
+								"children": [
+									"Garage ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Garage",
+											"value": {
+												"ttArg": "garage"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "garage"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Spot ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Spot",
+											"value": {
+												"ttArg": "spot"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "spot"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Minutes left ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Minutes left",
+											"value": {
+												"ttArg": "mins"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 240
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mins"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Rate ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Rate",
+											"value": {
+												"ttArg": "rate"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "rate"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "automotive-parking",
+									"title": "Parking Session Card",
+									"details": "Garage: {garage}\nSpot: {spot}\nMinutes left: {mins}\nRate: {rate}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
+				"tag": "small",
 				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "24px",
-								"padding": "0 14px",
-								"border": "none",
-								"borderRadius": "6px",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 400,
-								"fontSize": "13px",
-								"cursor": "pointer",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1677ff",
-											"success": "#52c41a",
-											"warning": "#faad14",
-											"danger": "#ff4d4f",
-											"info": "#1677ff",
-											"neutral": "rgba(0, 0, 0, 0.88)"
-										},
-										"default": "#1677ff"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"flex": "1"
-							}
-						},
-						"children": [
-							"Extend"
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "24px",
-								"padding": "0 14px",
-								"border": "none",
-								"borderRadius": "6px",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 400,
-								"fontSize": "13px",
-								"cursor": "pointer",
-								"background": "transparent",
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1677ff",
-											"success": "#52c41a",
-											"warning": "#faad14",
-											"danger": "#ff4d4f",
-											"info": "#1677ff",
-											"neutral": "rgba(0, 0, 0, 0.88)"
-										},
-										"default": "#1677ff"
-									}
-								}
-							}
-						},
-						"children": [
-							"Directions"
-						]
-					}
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "automotive-parking",
 	"source": {
 		"kind": "archetype",

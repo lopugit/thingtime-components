@@ -3,7 +3,7 @@
 	"name": "Browser Window",
 	"library": "mui",
 	"category": "mockups",
-	"description": "Browser window mockup in the Material UI style — traffic-light dots, back/forward chevrons and a pill URL bar with a star, over muted placeholder content lines.",
+	"description": "Browser window mockup in the Material UI style — traffic-light dots, back/forward chevrons and a pill URL bar with a star, over muted placeholder content lines. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"mockup",
 		"browser",
@@ -29,24 +29,28 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Starred"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
 				"maxWidth": "100%",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "rgba(0, 0, 0, 0.12)",
-				"borderRadius": "8px",
-				"background": "#ffffff",
-				"overflow": "hidden",
-				"boxShadow": "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -55,13 +59,17 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "9px",
-						"padding": "8px 10px",
-						"background": "#fafafa",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "solid",
-						"borderBottomColor": "rgba(0, 0, 0, 0.08)"
+						"flexDirection": "column",
+						"width": "320px",
+						"maxWidth": "100%",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "rgba(0, 0, 0, 0.12)",
+						"borderRadius": "8px",
+						"background": "#ffffff",
+						"overflow": "hidden",
+						"boxShadow": "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
@@ -71,90 +79,199 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "6px",
-								"flexShrink": 0
+								"gap": "9px",
+								"padding": "8px 10px",
+								"background": "#fafafa",
+								"borderBottomWidth": "1px",
+								"borderBottomStyle": "solid",
+								"borderBottomColor": "rgba(0, 0, 0, 0.08)",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"width": "10px",
-										"height": "10px",
-										"borderRadius": "999px",
-										"background": "#ff5f57",
-										"flexShrink": 0
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexShrink": 0,
+										"flexWrap": "wrap"
 									}
-								}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "10px",
+												"height": "10px",
+												"borderRadius": "999px",
+												"background": "#ff5f57",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "10px",
+												"height": "10px",
+												"borderRadius": "999px",
+												"background": "#febc2e",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "10px",
+												"height": "10px",
+												"borderRadius": "999px",
+												"background": "#28c840",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
 							},
 							{
-								"tag": "span",
+								"tag": "svg",
 								"props": {
-									"style": {
-										"width": "10px",
-										"height": "10px",
-										"borderRadius": "999px",
-										"background": "#febc2e",
-										"flexShrink": 0
+									"width": 14,
+									"height": 14,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "rgba(0, 0, 0, 0.6)",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "15 6 9 12 15 18"
+										}
 									}
-								}
+								]
 							},
 							{
-								"tag": "span",
+								"tag": "svg",
+								"props": {
+									"width": 14,
+									"height": 14,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "rgba(0, 0, 0, 0.38)",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "9 6 15 12 9 18"
+										}
+									}
+								]
+							},
+							{
+								"tag": "div",
 								"props": {
 									"style": {
-										"width": "10px",
-										"height": "10px",
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "8px",
+										"flexGrow": 1,
+										"minWidth": 0,
+										"height": "24px",
+										"padding": "0 10px",
+										"background": "#ffffff",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "rgba(0, 0, 0, 0.08)",
 										"borderRadius": "999px",
-										"background": "#28c840",
-										"flexShrink": 0
+										"fontSize": "12px",
+										"color": "rgba(0, 0, 0, 0.6)",
+										"flexWrap": "wrap"
 									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "svg",
-						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "rgba(0, 0, 0, 0.6)",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "polyline",
-								"props": {
-									"points": "15 6 9 12 15 18"
-								}
-							}
-						]
-					},
-					{
-						"tag": "svg",
-						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "rgba(0, 0, 0, 0.38)",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "polyline",
-								"props": {
-									"points": "9 6 15 12 9 18"
-								}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"flexGrow": 1,
+												"overflow": "hidden",
+												"whiteSpace": "nowrap"
+											}
+										},
+										"children": [
+											"{url}"
+										]
+									},
+									{
+										"ttIf": {
+											"arg": "starred",
+											"then": {
+												"tag": "svg",
+												"props": {
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "#ed6c02",
+													"stroke": "#ed6c02",
+													"strokeWidth": 2,
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polygon",
+														"props": {
+															"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
+														}
+													}
+												]
+											},
+											"else": {
+												"tag": "svg",
+												"props": {
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "rgba(0, 0, 0, 0.38)",
+													"strokeWidth": 2,
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polygon",
+														"props": {
+															"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
+														}
+													}
+												]
+											}
+										}
+									}
+								]
 							}
 						]
 					},
@@ -163,79 +280,28 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
+								"flexDirection": "column",
 								"gap": "8px",
-								"flexGrow": 1,
-								"minWidth": 0,
-								"height": "24px",
-								"padding": "0 10px",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "rgba(0, 0, 0, 0.08)",
-								"borderRadius": "999px",
-								"fontSize": "12px",
-								"color": "rgba(0, 0, 0, 0.6)"
+								"padding": "14px"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"flexGrow": 1,
-										"overflow": "hidden",
-										"whiteSpace": "nowrap"
-									}
-								},
-								"children": [
-									"{url}"
-								]
-							},
-							{
-								"ttIf": {
-									"arg": "starred",
-									"then": {
-										"tag": "svg",
+								"ttRepeat": {
+									"arg": "lines",
+									"max": 8,
+									"node": {
+										"tag": "div",
 										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "#ed6c02",
-											"stroke": "#ed6c02",
-											"strokeWidth": 2,
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polygon",
-												"props": {
-													"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
-												}
+											"style": {
+												"height": "10px",
+												"borderRadius": "4px",
+												"background": "rgba(0, 0, 0, 0.08)",
+												"width": "calc(100% - {index} * 11%)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											}
-										]
-									},
-									"else": {
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "rgba(0, 0, 0, 0.38)",
-											"strokeWidth": 2,
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polygon",
-												"props": {
-													"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
-												}
-											}
-										]
+										}
 									}
 								}
 							}
@@ -244,38 +310,154 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "8px",
-						"padding": "14px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"ttRepeat": {
-							"arg": "lines",
-							"max": 8,
-							"node": {
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "10px",
-										"borderRadius": "4px",
-										"background": "rgba(0, 0, 0, 0.08)",
-										"width": "calc(100% - {index} * 11%)"
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"URL ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "URL",
+											"value": {
+												"ttArg": "url"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "url"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Content lines ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Content lines",
+											"value": {
+												"ttArg": "lines"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "lines"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Starred ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Starred",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "starred"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "starred"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "window-chrome-browser",
+									"title": "Browser Window",
+									"details": "URL: {url}\nContent lines: {lines}\nStarred: {starred}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
-						}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "window-chrome-browser",
 	"source": {
 		"kind": "archetype",

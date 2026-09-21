@@ -3,7 +3,7 @@
 	"name": "Sparkline Stat",
 	"library": "reactflow",
 	"category": "data-display",
-	"description": "Stat card with an inline svg polyline sparkline in the React Flow style — tone-colored stroke with an optional soft area fill under the line.",
+	"description": "Stat card with an inline svg polyline sparkline in the React Flow style — tone-colored stroke with an optional soft area fill under the line. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"stat",
 		"sparkline",
@@ -44,25 +44,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Area fill"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"flexDirection": "column",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e2e2e5",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"boxSizing": "border-box",
-				"padding": "16px 20px",
-				"gap": "10px",
-				"minWidth": "200px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -70,105 +73,251 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
+						"display": "inline-flex",
 						"flexDirection": "column",
-						"gap": "4px"
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e2e2e5",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+						"boxSizing": "border-box",
+						"padding": "16px 20px",
+						"gap": "10px",
+						"minWidth": 0
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "10px",
-								"fontWeight": 400,
-								"color": "#6f6e77"
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "4px"
 							}
 						},
 						"children": [
-							"{label}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "10px",
+										"fontWeight": 400,
+										"color": "#6f6e77"
+									}
+								},
+								"children": [
+									"{label}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "24px",
+										"fontWeight": 600,
+										"color": "#1a192b",
+										"lineHeight": 1.15,
+										"fontVariantNumeric": "tabular-nums"
+									}
+								},
+								"children": [
+									"{value}"
+								]
+							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "svg",
 						"props": {
-							"style": {
-								"fontSize": "24px",
-								"fontWeight": 600,
-								"color": "#1a192b",
-								"lineHeight": 1.15,
-								"fontVariantNumeric": "tabular-nums"
-							}
+							"width": 128,
+							"height": 32,
+							"viewBox": "0 0 128 32",
+							"fill": "none",
+							"xmlns": "http://www.w3.org/2000/svg"
 						},
 						"children": [
-							"{value}"
+							{
+								"ttIf": {
+									"arg": "filled",
+									"then": {
+										"tag": "polygon",
+										"props": {
+											"points": "0 26 16 20 32 24 48 12 64 17 80 8 96 14 112 4 128 10 128 32 0 32",
+											"fill": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#f4f4f5",
+														"success": "#f0fdf4",
+														"warning": "#fefce8",
+														"danger": "#ffe4f1",
+														"info": "#f1ecfd",
+														"neutral": "#f4f4f5"
+													},
+													"default": "#f4f4f5"
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								"tag": "polyline",
+								"props": {
+									"points": "0 26 16 20 32 24 48 12 64 17 80 8 96 14 112 4 128 10",
+									"stroke": {
+										"ttMap": {
+											"arg": "tone",
+											"values": {
+												"primary": "#1a192b",
+												"success": "#22c55e",
+												"warning": "#eab308",
+												"danger": "#ff0072",
+												"info": "#784be8",
+												"neutral": "#6f6e77"
+											},
+											"default": "#1a192b"
+										}
+									},
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round"
+								}
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "svg",
-				"props": {
-					"width": 128,
-					"height": 32,
-					"viewBox": "0 0 128 32",
-					"fill": "none",
-					"xmlns": "http://www.w3.org/2000/svg"
-				},
+				"tag": "details",
 				"children": [
 					{
-						"ttIf": {
-							"arg": "filled",
-							"then": {
-								"tag": "polygon",
-								"props": {
-									"points": "0 26 16 20 32 24 48 12 64 17 80 8 96 14 112 4 128 10 128 32 0 32",
-									"fill": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#f4f4f5",
-												"success": "#f0fdf4",
-												"warning": "#fefce8",
-												"danger": "#ffe4f1",
-												"info": "#f1ecfd",
-												"neutral": "#f4f4f5"
-											},
-											"default": "#f4f4f5"
-										}
-									}
-								}
-							}
-						}
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
 					},
 					{
-						"tag": "polyline",
+						"tag": "fieldset",
 						"props": {
-							"points": "0 26 16 20 32 24 48 12 64 17 80 8 96 14 112 4 128 10",
-							"stroke": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#1a192b",
-										"success": "#22c55e",
-										"warning": "#eab308",
-										"danger": "#ff0072",
-										"info": "#784be8",
-										"neutral": "#6f6e77"
-									},
-									"default": "#1a192b"
-								}
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
 							},
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round"
-						}
+							{
+								"tag": "label",
+								"children": [
+									"Value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Value",
+											"value": {
+												"ttArg": "value"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "value"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "stat-metric-sparkline",
+									"title": "Sparkline Stat",
+									"details": "Label: {label}\nValue: {value}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "stat-metric-sparkline",
 	"source": {
 		"kind": "archetype",

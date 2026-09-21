@@ -3,7 +3,7 @@
 	"name": "Light Dimmer Row",
 	"library": "antd",
 	"category": "iot",
-	"description": "Light control row in the Ant Design style — a warm-washed bulb that dims with brightness, a calc-driven dimmer fill with thumb, and four scene hue dots with a selected ring.",
+	"description": "Light control row in the Ant Design style — a warm-washed bulb that dims with brightness, a calc-driven dimmer fill with thumb, and four scene hue dots with a selected ring. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"smart-home",
 		"iot",
@@ -49,26 +49,28 @@
 			],
 			"default": "sunset",
 			"label": "Scene"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "row",
-				"boxSizing": "border-box",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#d9d9d9",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
-				"alignItems": "center",
-				"gap": "12px",
-				"padding": "14px",
-				"width": "290px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -76,67 +78,651 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"width": "44px",
-						"height": "44px",
-						"flexShrink": "0",
-						"borderRadius": "999px",
-						"background": "#fffbe6",
-						"color": "#faad14",
-						"opacity": {
-							"ttMap": {
-								"arg": "brightness",
-								"values": {
-									"0": 0.25,
-									"10": 0.33,
-									"20": 0.4,
-									"30": 0.47,
-									"40": 0.55,
-									"50": 0.63,
-									"60": 0.7,
-									"70": 0.77,
-									"80": 0.85,
-									"90": 0.93,
-									"100": 1
-								},
-								"default": 0.78
-							}
-						},
 						"display": "flex",
+						"flexDirection": "row",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#d9d9d9",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
 						"alignItems": "center",
-						"justifyContent": "center"
+						"gap": "12px",
+						"padding": "14px",
+						"width": "290px",
+						"maxWidth": "100%",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
+						"tag": "div",
 						"props": {
-							"width": 20,
-							"height": 20,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "currentColor",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"width": "44px",
+								"height": "44px",
+								"flexShrink": "0",
+								"borderRadius": "999px",
+								"background": "#fffbe6",
+								"color": "#faad14",
+								"opacity": {
+									"ttMap": {
+										"arg": "brightness",
+										"values": {
+											"0": 0.25,
+											"10": 0.33,
+											"20": 0.4,
+											"30": 0.47,
+											"40": 0.55,
+											"50": 0.63,
+											"60": 0.7,
+											"70": 0.77,
+											"80": 0.85,
+											"90": 0.93,
+											"100": 1
+										},
+										"default": 0.78
+									}
+								},
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"maxWidth": "100%",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
+							}
 						},
 						"children": [
 							{
-								"tag": "path",
+								"tag": "svg",
 								"props": {
-									"d": "M9 18h6"
-								}
+									"width": 20,
+									"height": 20,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "currentColor",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "path",
+										"props": {
+											"d": "M9 18h6"
+										}
+									},
+									{
+										"tag": "path",
+										"props": {
+											"d": "M10 22h4"
+										}
+									},
+									{
+										"tag": "path",
+										"props": {
+											"d": "M12 2a7 7 0 0 1 4.9 12 5 5 0 0 0-1.4 3H8.5a5 5 0 0 0-1.4-3A7 7 0 0 1 12 2z"
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "9px",
+								"flex": "1",
+								"minWidth": "0"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"gap": "8px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "rgba(0, 0, 0, 0.88)"
+											}
+										},
+										"children": [
+											"{room}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "rgba(0, 0, 0, 0.45)",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+											}
+										},
+										"children": [
+											"{brightness}%"
+										]
+									}
+								]
 							},
 							{
-								"tag": "path",
+								"tag": "div",
 								"props": {
-									"d": "M10 22h4"
-								}
+									"style": {
+										"position": "relative",
+										"height": "6px",
+										"borderRadius": "999px",
+										"background": "#f0f0f0"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"position": "absolute",
+												"left": "0",
+												"top": "0",
+												"bottom": "0",
+												"width": "{brightness}%",
+												"borderRadius": "999px",
+												"background": "#faad14",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"position": "absolute",
+												"top": "50%",
+												"left": "calc({brightness}% - 7px)",
+												"transform": "translateY(-50%)",
+												"width": "14px",
+												"height": "14px",
+												"boxSizing": "border-box",
+												"borderRadius": "999px",
+												"background": "#ffffff",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#d9d9d9",
+												"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
+												"maxWidth": "100%"
+											}
+										}
+									}
+								]
 							},
 							{
-								"tag": "path",
+								"tag": "div",
 								"props": {
-									"d": "M12 2a7 7 0 0 1 4.9 12 5 5 0 0 0-1.4 3H8.5a5 5 0 0 0-1.4-3A7 7 0 0 1 12 2z"
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "8px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"width": "14px",
+												"height": "14px",
+												"borderRadius": "999px",
+												"background": "#f97316",
+												"boxShadow": {
+													"ttIf": {
+														"arg": "scene",
+														"equals": "sunset",
+														"then": "0 0 0 2px #ffffff, 0 0 0 4px #f97316",
+														"else": "none"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "button",
+											"aria-label": "scene",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "scene",
+													"equals": "sunset",
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "scene",
+											"value": "sunset"
+										}
+									},
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"width": "14px",
+												"height": "14px",
+												"borderRadius": "999px",
+												"background": "#22c55e",
+												"boxShadow": {
+													"ttIf": {
+														"arg": "scene",
+														"equals": "forest",
+														"then": "0 0 0 2px #ffffff, 0 0 0 4px #22c55e",
+														"else": "none"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "button",
+											"aria-label": "scene",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "scene",
+													"equals": "forest",
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "scene",
+											"value": "forest"
+										}
+									},
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"width": "14px",
+												"height": "14px",
+												"borderRadius": "999px",
+												"background": "#0ea5e9",
+												"boxShadow": {
+													"ttIf": {
+														"arg": "scene",
+														"equals": "ocean",
+														"then": "0 0 0 2px #ffffff, 0 0 0 4px #0ea5e9",
+														"else": "none"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "button",
+											"aria-label": "scene",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "scene",
+													"equals": "ocean",
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "scene",
+											"value": "ocean"
+										}
+									},
+									{
+										"tag": "button",
+										"props": {
+											"style": {
+												"width": "14px",
+												"height": "14px",
+												"borderRadius": "999px",
+												"background": "#a78bfa",
+												"boxShadow": {
+													"ttIf": {
+														"arg": "scene",
+														"equals": "lavender",
+														"then": "0 0 0 2px #ffffff, 0 0 0 4px #a78bfa",
+														"else": "none"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "button",
+											"aria-label": "scene",
+											"aria-pressed": {
+												"ttIf": {
+													"arg": "scene",
+													"equals": "lavender",
+													"then": true,
+													"else": false
+												}
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "scene",
+											"value": "lavender"
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Scene ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Scene",
+											"value": {
+												"ttArg": "scene"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "sunset"
+												},
+												"children": [
+													"sunset"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "forest"
+												},
+												"children": [
+													"forest"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "ocean"
+												},
+												"children": [
+													"ocean"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "lavender"
+												},
+												"children": [
+													"lavender"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "scene"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Room ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Room",
+											"value": {
+												"ttArg": "room"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "room"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Brightness % ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Brightness %",
+											"value": {
+												"ttArg": "brightness"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "0"
+												},
+												"children": [
+													"0"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "10"
+												},
+												"children": [
+													"10"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "20"
+												},
+												"children": [
+													"20"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "30"
+												},
+												"children": [
+													"30"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "40"
+												},
+												"children": [
+													"40"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "50"
+												},
+												"children": [
+													"50"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "60"
+												},
+												"children": [
+													"60"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "70"
+												},
+												"children": [
+													"70"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "80"
+												},
+												"children": [
+													"80"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "90"
+												},
+												"children": [
+													"90"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "100"
+												},
+												"children": [
+													"100"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "brightness"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "smart-home-lights",
+									"title": "Light Dimmer Row",
+									"details": "Room: {room}\nBrightness %: {brightness}\nScene: {scene}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -144,200 +730,14 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "9px",
-						"flex": "1",
-						"minWidth": "0"
-					}
-				},
+				"tag": "small",
 				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "rgba(0, 0, 0, 0.88)"
-									}
-								},
-								"children": [
-									"{room}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "rgba(0, 0, 0, 0.45)",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-									}
-								},
-								"children": [
-									"{brightness}%"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"position": "relative",
-								"height": "6px",
-								"borderRadius": "999px",
-								"background": "#f0f0f0"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"position": "absolute",
-										"left": "0",
-										"top": "0",
-										"bottom": "0",
-										"width": "{brightness}%",
-										"borderRadius": "999px",
-										"background": "#faad14"
-									}
-								}
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"position": "absolute",
-										"top": "50%",
-										"left": "calc({brightness}% - 7px)",
-										"transform": "translateY(-50%)",
-										"width": "14px",
-										"height": "14px",
-										"boxSizing": "border-box",
-										"borderRadius": "999px",
-										"background": "#ffffff",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#d9d9d9",
-										"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)"
-									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "8px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "14px",
-										"height": "14px",
-										"borderRadius": "999px",
-										"background": "#f97316",
-										"cursor": "pointer",
-										"boxShadow": {
-											"ttIf": {
-												"arg": "scene",
-												"equals": "sunset",
-												"then": "0 0 0 2px #ffffff, 0 0 0 4px #f97316",
-												"else": "none"
-											}
-										}
-									}
-								}
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "14px",
-										"height": "14px",
-										"borderRadius": "999px",
-										"background": "#22c55e",
-										"cursor": "pointer",
-										"boxShadow": {
-											"ttIf": {
-												"arg": "scene",
-												"equals": "forest",
-												"then": "0 0 0 2px #ffffff, 0 0 0 4px #22c55e",
-												"else": "none"
-											}
-										}
-									}
-								}
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "14px",
-										"height": "14px",
-										"borderRadius": "999px",
-										"background": "#0ea5e9",
-										"cursor": "pointer",
-										"boxShadow": {
-											"ttIf": {
-												"arg": "scene",
-												"equals": "ocean",
-												"then": "0 0 0 2px #ffffff, 0 0 0 4px #0ea5e9",
-												"else": "none"
-											}
-										}
-									}
-								}
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "14px",
-										"height": "14px",
-										"borderRadius": "999px",
-										"background": "#a78bfa",
-										"cursor": "pointer",
-										"boxShadow": {
-											"ttIf": {
-												"arg": "scene",
-												"equals": "lavender",
-												"then": "0 0 0 2px #ffffff, 0 0 0 4px #a78bfa",
-												"else": "none"
-											}
-										}
-									}
-								}
-							}
-						]
-					}
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "smart-home-lights",
 	"source": {
 		"kind": "archetype",

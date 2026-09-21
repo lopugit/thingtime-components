@@ -3,7 +3,7 @@
 	"name": "Watch Party Card",
 	"library": "reactflow",
 	"category": "entertainment",
-	"description": "Watch party card in the React Flow style — stacked viewer avatars with a watching count, a synced-position caption over a thin progress bar, a chat teaser bubble, and Invite plus Leave ghost actions.",
+	"description": "Watch party card in the React Flow style — stacked viewer avatars with a watching count, a synced-position caption over a thin progress bar, a chat teaser bubble, and Invite plus Leave ghost actions. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"streaming",
 		"watch-party",
@@ -40,26 +40,35 @@
 			"default": "That reveal was wild",
 			"label": "Chat teaser",
 			"maxLength": 60
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "mediaUrl",
+			"type": "string",
+			"default": "",
+			"label": "Media URL",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "280px",
-				"boxSizing": "border-box",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"background": "#ffffff",
-				"borderRadius": "8px",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"overflow": "visible",
-				"padding": "14px",
-				"gap": "12px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -67,309 +76,294 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #1a192b",
+						"borderRadius": "5px",
+						"background": "#ffffff",
+						"color": "#1a192b",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center"
-							}
-						},
+						"tag": "label",
 						"children": [
+							"Media URL",
 							{
-								"tag": "div",
+								"tag": "input",
 								"props": {
+									"type": "url",
+									"aria-label": "mediaUrl",
+									"value": {
+										"ttArg": "mediaUrl"
+									},
 									"style": {
-										"width": "28px",
-										"height": "28px",
-										"borderRadius": "999px",
-										"background": "#1a192b",
-										"color": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontWeight": 600,
-										"fontSize": "10px",
-										"flexShrink": 0,
-										"borderWidth": "2px",
-										"borderStyle": "solid",
-										"borderColor": "#ffffff",
-										"boxSizing": "content-box"
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #1a192b",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
 								},
-								"children": [
-									"NK"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "28px",
-										"height": "28px",
-										"borderRadius": "999px",
-										"background": "#784be8",
-										"color": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontWeight": 600,
-										"fontSize": "10px",
-										"flexShrink": 0,
-										"borderWidth": "2px",
-										"borderStyle": "solid",
-										"borderColor": "#ffffff",
-										"boxSizing": "content-box",
-										"marginLeft": "-8px"
-									}
-								},
-								"children": [
-									"JD"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "28px",
-										"height": "28px",
-										"borderRadius": "999px",
-										"background": "#eab308",
-										"color": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontWeight": 600,
-										"fontSize": "10px",
-										"flexShrink": 0,
-										"borderWidth": "2px",
-										"borderStyle": "solid",
-										"borderColor": "#ffffff",
-										"boxSizing": "content-box",
-										"marginLeft": "-8px"
-									}
-								},
-								"children": [
-									"AR"
-								]
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": "#1a192b"
-							}
-						},
-						"children": [
-							"{count} watching"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "6px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "10px",
-								"color": "#6f6e77"
-							}
-						},
-						"children": [
-							"Synced · {position}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "4px",
-								"borderRadius": "999px",
-								"background": "#e2e2e5",
-								"overflow": "hidden"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "100%",
-										"width": "{percent}%",
-										"background": "#ff0072"
-									}
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "mediaUrl"
 								}
 							}
 						]
+					},
+					{
+						"ttIf": {
+							"arg": "mediaUrl",
+							"equals": "",
+							"then": null,
+							"else": {
+								"tag": "video",
+								"props": {
+									"src": "{mediaUrl}",
+									"controls": true,
+									"style": {
+										"width": "100%",
+										"maxHeight": "400px"
+									}
+								}
+							}
+						}
+					},
+					{
+						"tag": "small",
+						"children": [
+							"Add a playable media URL to play, pause, seek, adjust volume, and use fullscreen."
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-start",
-						"gap": "8px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "22px",
-								"height": "22px",
-								"borderRadius": "999px",
-								"background": "#784be8",
-								"color": "#ffffff",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "10px",
-								"flexShrink": 0
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"JD"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"background": "#f4f4f5",
-								"borderRadius": "5px",
-								"borderTopLeftRadius": "2px",
-								"padding": "6px 10px",
-								"fontSize": "10px",
-								"color": "#1a192b"
-							}
-						},
-						"children": [
-							"{message}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"justifyContent": "space-between"
-					}
-				},
-				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "6px",
-								"border": "none",
-								"background": "transparent",
-								"cursor": "pointer",
-								"padding": "6px 10px",
-								"borderRadius": "3px",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 500,
-								"fontSize": "12px",
-								"color": "#ff0072"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
-								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
+								"tag": "label",
 								"children": [
+									"Media URL ",
 									{
-										"tag": "line",
+										"tag": "input",
 										"props": {
-											"x1": 12,
-											"y1": 5,
-											"x2": 12,
-											"y2": 19
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 5,
-											"y1": 12,
-											"x2": 19,
-											"y2": 12
+											"aria-label": "Media URL",
+											"value": {
+												"ttArg": "mediaUrl"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mediaUrl"
 										}
 									}
 								]
 							},
-							"Invite"
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "6px",
-								"border": "none",
-								"background": "transparent",
-								"cursor": "pointer",
-								"padding": "6px 10px",
-								"borderRadius": "3px",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 500,
-								"fontSize": "12px",
-								"color": "#ff0072"
+							{
+								"tag": "label",
+								"children": [
+									"Watching count ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Watching count",
+											"value": {
+												"ttArg": "count"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "count"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Synced position ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Synced position",
+											"value": {
+												"ttArg": "position"
+											},
+											"maxLength": 10,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "position"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Progress % ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Progress %",
+											"value": {
+												"ttArg": "percent"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "percent"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Chat teaser ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Chat teaser",
+											"value": {
+												"ttArg": "message"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "message"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "streaming-tv-watch-party",
+									"title": "Watch Party Card",
+									"details": "Watching count: {count}\nSynced position: {position}\nProgress %: {percent}\nChat teaser: {message}\nMedia URL: {mediaUrl}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"children": [
-							"Leave"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "streaming-tv-watch-party",
 	"source": {
 		"kind": "archetype",

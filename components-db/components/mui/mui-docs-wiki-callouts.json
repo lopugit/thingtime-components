@@ -3,7 +3,7 @@
 	"name": "Doc Callout Stack",
 	"library": "mui",
 	"category": "documentation",
-	"description": "Stacked documentation callouts in the Material UI style — an info note, a warning and a success tip, each pairing an icon with a bold title and one-line body on a soft tone tint.",
+	"description": "Stacked documentation callouts in the Material UI style — an info note, a warning and a success tip, each pairing an icon with a bold title and one-line body on a soft tone tint. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"docs",
 		"callout",
@@ -31,18 +31,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Bordered"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "10px",
-				"minWidth": "300px",
-				"maxWidth": "420px",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -50,25 +60,11 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "flex-start",
-								"gap": "10px",
-								"padding": "12px 14px",
-								"borderRadius": "4px",
-								"background": "#e5f6fd",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-							},
-							{
-								"ttIf": {
-									"arg": "bordered",
-									"then": {
-										"border": "1px solid #81d4fa"
-									}
-								}
-							}
-						]
+						"display": "flex",
+						"flexDirection": "column",
+						"gap": "10px",
+						"minWidth": 0,
+						"maxWidth": "420px"
 					}
 				},
 				"children": [
@@ -76,51 +72,119 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexShrink": 0,
-								"marginTop": "1px"
+								"ttMerge": [
+									{
+										"display": "flex",
+										"alignItems": "flex-start",
+										"gap": "10px",
+										"padding": "12px 14px",
+										"borderRadius": "4px",
+										"background": "#e5f6fd",
+										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+										"flexWrap": "wrap"
+									},
+									{
+										"ttIf": {
+											"arg": "bordered",
+											"then": {
+												"border": "1px solid #81d4fa"
+											}
+										}
+									}
+								]
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
+								"tag": "div",
 								"props": {
-									"width": 16,
-									"height": 16,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#014361",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"style": {
+										"display": "flex",
+										"flexShrink": 0,
+										"marginTop": "1px",
+										"flexWrap": "wrap"
+									}
 								},
 								"children": [
 									{
-										"tag": "circle",
+										"tag": "svg",
 										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
-										}
+											"width": 16,
+											"height": 16,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#014361",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 10
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 16,
+													"x2": 12,
+													"y2": 12
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 8,
+													"x2": 12.01,
+													"y2": 8
+												}
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "#014361"
+											}
+										},
+										"children": [
+											"{title}"
+										]
 									},
 									{
-										"tag": "line",
+										"tag": "span",
 										"props": {
-											"x1": 12,
-											"y1": 16,
-											"x2": 12,
-											"y2": 12
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 12,
-											"y1": 8,
-											"x2": 12.01,
-											"y2": 8
-										}
+											"style": {
+												"fontSize": "13px",
+												"color": "rgba(0, 0, 0, 0.87)",
+												"lineHeight": 1.4
+											}
+										},
+										"children": [
+											"{body}"
+										]
 									}
 								]
 							}
@@ -130,36 +194,220 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px"
+								"ttMerge": [
+									{
+										"display": "flex",
+										"alignItems": "flex-start",
+										"gap": "10px",
+										"padding": "12px 14px",
+										"borderRadius": "4px",
+										"background": "#fff4e5",
+										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+										"flexWrap": "wrap"
+									},
+									{
+										"ttIf": {
+											"arg": "bordered",
+											"then": {
+												"border": "1px solid #ffb74d"
+											}
+										}
+									}
+								]
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "#014361"
+										"display": "flex",
+										"flexShrink": 0,
+										"marginTop": "1px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"{title}"
+									{
+										"tag": "svg",
+										"props": {
+											"width": 16,
+											"height": 16,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#663c00",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "path",
+												"props": {
+													"d": "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 9,
+													"x2": 12,
+													"y2": 13
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 17,
+													"x2": 12.01,
+													"y2": 17
+												}
+											}
+										]
+									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "13px",
-										"color": "rgba(0, 0, 0, 0.87)",
-										"lineHeight": 1.4
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px"
 									}
 								},
 								"children": [
-									"{body}"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "#663c00"
+											}
+										},
+										"children": [
+											"Warning"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"color": "rgba(0, 0, 0, 0.87)",
+												"lineHeight": 1.4
+											}
+										},
+										"children": [
+											"Rotating this key signs out every active session immediately."
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"ttMerge": [
+									{
+										"display": "flex",
+										"alignItems": "flex-start",
+										"gap": "10px",
+										"padding": "12px 14px",
+										"borderRadius": "4px",
+										"background": "#edf7ed",
+										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+										"flexWrap": "wrap"
+									},
+									{
+										"ttIf": {
+											"arg": "bordered",
+											"then": {
+												"border": "1px solid #a5d6a7"
+											}
+										}
+									}
+								]
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexShrink": 0,
+										"marginTop": "1px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 16,
+											"height": 16,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#1e4620",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "polygon",
+												"props": {
+													"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+												}
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "#1e4620"
+											}
+										},
+										"children": [
+											"Tip"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"color": "rgba(0, 0, 0, 0.87)",
+												"lineHeight": 1.4
+											}
+										},
+										"children": [
+											"Pass --watch to rebuild the docs preview on every save."
+										]
+									}
 								]
 							}
 						]
@@ -167,218 +415,125 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "flex-start",
-								"gap": "10px",
-								"padding": "12px 14px",
-								"borderRadius": "4px",
-								"background": "#fff4e5",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-							},
-							{
-								"ttIf": {
-									"arg": "bordered",
-									"then": {
-										"border": "1px solid #ffb74d"
-									}
-								}
-							}
-						]
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexShrink": 0,
-								"marginTop": "1px"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 16,
-									"height": 16,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#663c00",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "path",
-										"props": {
-											"d": "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 12,
-											"y1": 9,
-											"x2": 12,
-											"y2": 13
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 12,
-											"y1": 17,
-											"x2": 12.01,
-											"y2": 17
-										}
-									}
-								]
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "#663c00"
-									}
-								},
+								"tag": "label",
 								"children": [
-									"Warning"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"color": "rgba(0, 0, 0, 0.87)",
-										"lineHeight": 1.4
-									}
-								},
-								"children": [
-									"Rotating this key signs out every active session immediately."
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "flex-start",
-								"gap": "10px",
-								"padding": "12px 14px",
-								"borderRadius": "4px",
-								"background": "#edf7ed",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-							},
-							{
-								"ttIf": {
-									"arg": "bordered",
-									"then": {
-										"border": "1px solid #a5d6a7"
-									}
-								}
-							}
-						]
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexShrink": 0,
-								"marginTop": "1px"
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 16,
-									"height": 16,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#1e4620",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
+									"Note title ",
 									{
-										"tag": "polygon",
+										"tag": "input",
 										"props": {
-											"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+											"aria-label": "Note title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
 										}
 									}
 								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px"
-							}
-						},
-						"children": [
+							},
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "#1e4620"
-									}
-								},
+								"tag": "label",
 								"children": [
-									"Tip"
+									"Note body ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Note body",
+											"value": {
+												"ttArg": "body"
+											},
+											"maxLength": 120,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "body"
+										}
+									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"fontSize": "13px",
-										"color": "rgba(0, 0, 0, 0.87)",
-										"lineHeight": 1.4
-									}
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "docs-wiki-callouts",
+									"title": "Doc Callout Stack",
+									"details": "Note title: {title}\nNote body: {body}"
 								},
 								"children": [
-									"Pass --watch to rebuild the docs preview on every save."
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -386,7 +541,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "docs-wiki-callouts",
 	"source": {
 		"kind": "archetype",

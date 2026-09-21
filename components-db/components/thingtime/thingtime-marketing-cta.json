@@ -3,7 +3,7 @@
 	"name": "CTA Band",
 	"library": "thingtime",
 	"category": "marketing",
-	"description": "Call-to-action band in the Thingtime style — gradient or solid tone background with heading, subtext, and an inverted surface button; gradient mode uses the house rainbow.",
+	"description": "Call-to-action band in the Thingtime style — gradient or solid tone background with heading, subtext, and an inverted surface button; gradient mode uses the house rainbow. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"marketing",
 		"cta",
@@ -51,63 +51,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"padding": "24px 28px",
-				"borderRadius": "16px",
-				"background": {
-					"ttIf": {
-						"arg": "gradient",
-						"then": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)",
-						"else": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#16161a",
-									"success": "#2f9e63",
-									"warning": "#d99a1f",
-									"danger": "#d5484f",
-									"info": "#d53f8c",
-									"neutral": "#9a9aa6"
-								},
-								"default": "#16161a"
-							}
-						}
-					}
-				},
-				"color": {
-					"ttIf": {
-						"arg": "gradient",
-						"then": "#16161a",
-						"else": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#ffffff",
-									"success": "#ffffff",
-									"warning": "#ffffff",
-									"danger": "#ffffff",
-									"info": "#ffffff",
-									"neutral": "#ffffff"
-								},
-								"default": "#ffffff"
-							}
-						}
-					}
-				},
-				"gap": "18px",
-				"justifyContent": "space-between",
-				"flexWrap": "wrap",
-				"maxWidth": "560px",
-				"boxShadow": "0 4px 12px rgba(22, 22, 26, 0.06)",
-				"boxSizing": "border-box"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -116,69 +81,295 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"flexDirection": "column",
-						"gap": "4px",
-						"flex": "1 1 220px",
-						"minWidth": "200px"
+						"alignItems": "center",
+						"padding": "24px 28px",
+						"borderRadius": "16px",
+						"background": {
+							"ttIf": {
+								"arg": "gradient",
+								"then": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)",
+								"else": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#16161a",
+											"success": "#2f9e63",
+											"warning": "#d99a1f",
+											"danger": "#d5484f",
+											"info": "#d53f8c",
+											"neutral": "#9a9aa6"
+										},
+										"default": "#16161a"
+									}
+								}
+							}
+						},
+						"color": {
+							"ttIf": {
+								"arg": "gradient",
+								"then": "#16161a",
+								"else": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#ffffff",
+											"success": "#ffffff",
+											"warning": "#ffffff",
+											"danger": "#ffffff",
+											"info": "#ffffff",
+											"neutral": "#ffffff"
+										},
+										"default": "#ffffff"
+									}
+								}
+							}
+						},
+						"gap": "18px",
+						"justifyContent": "space-between",
+						"flexWrap": "wrap",
+						"maxWidth": "560px",
+						"boxShadow": "0 4px 12px rgba(22, 22, 26, 0.06)",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "18px",
-								"fontWeight": 700
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "4px",
+								"flex": "1 1 220px",
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{heading}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "18px",
+										"fontWeight": 700
+									}
+								},
+								"children": [
+									"{heading}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"opacity": 0.85
+									}
+								},
+								"children": [
+									"{subtext}"
+								]
+							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "button",
 						"props": {
+							"type": "button",
 							"style": {
-								"fontSize": "12px",
-								"opacity": 0.85
-							}
+								"display": "inline-flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"gap": "8px",
+								"border": "none",
+								"height": "auto",
+								"padding": "8px 12px",
+								"borderRadius": "12px",
+								"fontWeight": 600,
+								"fontSize": "14px",
+								"cursor": "pointer",
+								"background": "#ffffff",
+								"color": "#33333c",
+								"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
+								"flexShrink": 0,
+								"width": "auto",
+								"minWidth": 0,
+								"whiteSpace": "normal",
+								"maxWidth": "100%",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
+							},
+							"aria-label": "{actionLabel}"
 						},
 						"children": [
-							"{subtext}"
-						]
+							"{actionLabel}"
+						],
+						"ttAction": "{actionKey}",
+						"ttActionInputs": {
+							"family": "marketing-cta",
+							"title": "CTA Band",
+							"details": "Heading: {heading}\nSubtext: {subtext}\nButton label: {buttonLabel}"
+						}
 					}
 				]
 			},
 			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"gap": "8px",
-						"border": "none",
-						"height": "36px",
-						"padding": "0 18px",
-						"borderRadius": "12px",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontWeight": 600,
-						"fontSize": "14px",
-						"cursor": "pointer",
-						"background": "#ffffff",
-						"color": "#33333c",
-						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-						"flexShrink": 0
-					}
-				},
+				"tag": "details",
 				"children": [
-					"{buttonLabel}"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Heading ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Heading",
+											"value": {
+												"ttArg": "heading"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "heading"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Subtext ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Subtext",
+											"value": {
+												"ttArg": "subtext"
+											},
+											"maxLength": 120,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "subtext"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Button label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Button label",
+											"value": {
+												"ttArg": "buttonLabel"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "buttonLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "marketing-cta",
+									"title": "CTA Band",
+									"details": "Heading: {heading}\nSubtext: {subtext}\nButton label: {buttonLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "marketing-cta",
 	"source": {
 		"kind": "archetype",

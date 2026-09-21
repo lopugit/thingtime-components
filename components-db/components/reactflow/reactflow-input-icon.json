@@ -3,7 +3,7 @@
 	"name": "Icon Input",
 	"library": "reactflow",
 	"category": "forms",
-	"description": "Search field with a leading icon in the React Flow style — muted magnifier inside the field chrome, plus an optional mono shortcut chip.",
+	"description": "Search field with a leading icon in the React Flow style — muted magnifier inside the field chrome, plus an optional mono shortcut chip. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"input",
 		"icon",
@@ -34,128 +34,286 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Shortcut chip"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"width": "260px",
-						"padding": "0 10px",
-						"border": "1px solid #e2e2e5",
-						"borderRadius": "5px",
-						"background": "#ffffff",
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"boxSizing": "border-box"
-					},
-					{
-						"ttMap": {
-							"arg": "size",
-							"values": {
-								"sm": {
-									"height": "24px",
-									"fontSize": "12px"
-								},
-								"md": {
-									"height": "30px",
-									"fontSize": "12px"
-								},
-								"lg": {
-									"height": "38px",
-									"fontSize": "14px"
-								}
-							},
-							"default": {
-								"height": "30px",
-								"fontSize": "12px"
-							}
-						}
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "svg",
+				"tag": "div",
 				"props": {
-					"width": 16,
-					"height": 16,
-					"viewBox": "0 0 24 24",
-					"fill": "none",
-					"stroke": "#6f6e77",
-					"strokeWidth": 2,
-					"strokeLinecap": "round",
-					"strokeLinejoin": "round",
-					"xmlns": "http://www.w3.org/2000/svg"
+					"style": {
+						"ttMerge": [
+							{
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"width": "260px",
+								"padding": "0 10px",
+								"border": "1px solid #e2e2e5",
+								"borderRadius": "5px",
+								"background": "#ffffff",
+								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+								"boxSizing": "border-box",
+								"maxWidth": "100%",
+								"flexWrap": "wrap"
+							},
+							{
+								"ttMap": {
+									"arg": "size",
+									"values": {
+										"sm": {
+											"height": "24px",
+											"fontSize": "12px"
+										},
+										"md": {
+											"height": "30px",
+											"fontSize": "12px"
+										},
+										"lg": {
+											"height": "38px",
+											"fontSize": "14px"
+										}
+									},
+									"default": {
+										"height": "30px",
+										"fontSize": "12px"
+									}
+								}
+							}
+						]
+					}
 				},
 				"children": [
 					{
-						"tag": "circle",
+						"tag": "svg",
 						"props": {
-							"cx": 11,
-							"cy": 11,
-							"r": 7
+							"width": 16,
+							"height": 16,
+							"viewBox": "0 0 24 24",
+							"fill": "none",
+							"stroke": "#6f6e77",
+							"strokeWidth": 2,
+							"strokeLinecap": "round",
+							"strokeLinejoin": "round",
+							"xmlns": "http://www.w3.org/2000/svg"
+						},
+						"children": [
+							{
+								"tag": "circle",
+								"props": {
+									"cx": 11,
+									"cy": 11,
+									"r": 7
+								}
+							},
+							{
+								"tag": "line",
+								"props": {
+									"x1": 21,
+									"y1": 21,
+									"x2": 16.65,
+									"y2": 16.65
+								}
+							}
+						]
+					},
+					{
+						"tag": "input",
+						"props": {
+							"type": "text",
+							"placeholder": "{placeholder}",
+							"style": {
+								"flex": 1,
+								"minWidth": 0,
+								"border": "none",
+								"outline": "none",
+								"background": "transparent",
+								"padding": 0,
+								"color": "#1a192b",
+								"fontSize": "inherit"
+							},
+							"value": {
+								"ttArg": "entry1"
+							},
+							"aria-label": "{placeholder}",
+							"maxLength": 500
+						},
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "entry1"
 						}
 					},
 					{
-						"tag": "line",
-						"props": {
-							"x1": 21,
-							"y1": 21,
-							"x2": 16.65,
-							"y2": 16.65
+						"ttIf": {
+							"arg": "shortcut",
+							"then": {
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "10px",
+										"color": "#b1b1b7",
+										"border": "1px solid #e2e2e5",
+										"borderRadius": "2px",
+										"padding": "2px 5px",
+										"flexShrink": 0
+									}
+								},
+								"children": [
+									"⌘K"
+								]
+							}
 						}
 					}
 				]
 			},
 			{
-				"tag": "input",
-				"props": {
-					"type": "text",
-					"placeholder": "{placeholder}",
-					"style": {
-						"flex": 1,
-						"minWidth": 0,
-						"border": "none",
-						"outline": "none",
-						"background": "transparent",
-						"padding": 0,
-						"color": "#1a192b",
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontSize": "inherit"
-					}
-				}
-			},
-			{
-				"ttIf": {
-					"arg": "shortcut",
-					"then": {
-						"tag": "span",
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "10px",
-								"color": "#b1b1b7",
-								"border": "1px solid #e2e2e5",
-								"borderRadius": "2px",
-								"padding": "2px 5px",
-								"flexShrink": 0
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"⌘K"
+							{
+								"tag": "label",
+								"children": [
+									"entry1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "entry1",
+											"value": {
+												"ttArg": "entry1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Shortcut chip ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Shortcut chip",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "shortcut"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "shortcut"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "input-icon",
+									"title": "Icon Input",
+									"details": "Shortcut chip: {shortcut}\nentry1: {entry1}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "input-icon",
 	"source": {
 		"kind": "archetype",

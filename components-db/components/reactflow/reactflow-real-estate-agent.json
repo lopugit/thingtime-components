@@ -3,7 +3,7 @@
 	"name": "Agent Card",
 	"library": "reactflow",
 	"category": "property",
-	"description": "Real-estate agent card in the React Flow style — initials avatar with name and brokerage, listings/sold/rating stat trio with mini stars, a response-time chip, Call and Message actions, and a mono license caption.",
+	"description": "Real-estate agent card in the React Flow style — initials avatar with name and brokerage, listings/sold/rating stat trio with mini stars, a response-time chip, Call and Message actions, and a mono license caption. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"real-estate",
 		"agent",
@@ -59,22 +59,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"width": "300px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#1a192b",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -82,10 +88,17 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"padding": "14px 16px",
-						"gap": "12px"
+						"width": "300px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#1a192b",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+						"color": "#1a192b",
+						"overflow": "hidden",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
@@ -94,8 +107,9 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px"
+								"flexDirection": "column",
+								"padding": "14px 16px",
+								"gap": "12px"
 							}
 						},
 						"children": [
@@ -103,191 +117,35 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "44px",
-										"height": "44px",
-										"borderRadius": "999px",
-										"background": "#f4f4f5",
-										"color": "#1a192b",
 										"display": "flex",
 										"alignItems": "center",
-										"justifyContent": "center",
-										"fontWeight": 600,
-										"fontSize": "12px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"{initials}"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"gap": "1px",
-										"flex": "1",
-										"minWidth": "0"
+										"gap": "10px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
-										"tag": "span",
+										"tag": "div",
 										"props": {
 											"style": {
-												"fontSize": "14px",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"{name}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
+												"width": "44px",
+												"height": "44px",
+												"borderRadius": "999px",
+												"background": "#f4f4f5",
+												"color": "#1a192b",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"fontWeight": 600,
 												"fontSize": "12px",
-												"color": "#6f6e77"
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
 											}
 										},
 										"children": [
-											"{brokerage}"
-										]
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"alignItems": "center",
-										"gap": "2px",
-										"flex": "1"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"{listings}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "10px",
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"Listings"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "1px",
-										"alignSelf": "stretch",
-										"background": "#e2e2e5"
-									}
-								}
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"alignItems": "center",
-										"gap": "2px",
-										"flex": "1"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"112"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "10px",
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"Sold"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "1px",
-										"alignSelf": "stretch",
-										"background": "#e2e2e5"
-									}
-								}
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"alignItems": "center",
-										"gap": "3px",
-										"flex": "1"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"{rating}"
+											"{initials}"
 										]
 									},
 									{
@@ -295,149 +153,610 @@
 										"props": {
 											"style": {
 												"display": "flex",
-												"alignItems": "center",
-												"gap": "1px"
+												"flexDirection": "column",
+												"gap": "1px",
+												"flex": "1",
+												"minWidth": "0"
 											}
 										},
 										"children": [
 											{
-												"ttRepeat": {
-													"count": 5,
-													"max": 5,
-													"node": {
-														"tag": "svg",
-														"props": {
-															"width": 9,
-															"height": 9,
-															"viewBox": "0 0 24 24",
-															"fill": "#eab308",
-															"stroke": "#eab308",
-															"strokeWidth": 2,
-															"strokeLinejoin": "round",
-															"xmlns": "http://www.w3.org/2000/svg"
-														},
-														"children": [
-															{
-																"tag": "polygon",
-																"props": {
-																	"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
-																}
-															}
-														]
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600
 													}
-												}
+												},
+												"children": [
+													"{name}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"{brokerage}"
+												]
 											}
 										]
 									}
 								]
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"gap": "5px",
-								"padding": "3px 9px",
-								"borderRadius": "3px",
-								"background": "#f0fdf4",
-								"color": "#15803d",
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"alignSelf": "flex-start",
-								"boxShadow": "none"
-							}
-						},
-						"children": [
+							},
 							{
-								"tag": "svg",
+								"tag": "div",
 								"props": {
-									"width": 11,
-									"height": 11,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "10px",
+										"flexWrap": "wrap"
+									}
 								},
 								"children": [
 									{
-										"tag": "circle",
+										"tag": "div",
 										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
+											"style": {
+												"display": "flex",
+												"flexDirection": "column",
+												"alignItems": "center",
+												"gap": "2px",
+												"flex": "1"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"{listings}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "10px",
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"Listings"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "1px",
+												"alignSelf": "stretch",
+												"background": "#e2e2e5",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
 										}
 									},
 									{
-										"tag": "polyline",
+										"tag": "div",
 										"props": {
-											"points": "12 6 12 12 16 14"
+											"style": {
+												"display": "flex",
+												"flexDirection": "column",
+												"alignItems": "center",
+												"gap": "2px",
+												"flex": "1"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"112"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "10px",
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"Sold"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "1px",
+												"alignSelf": "stretch",
+												"background": "#e2e2e5",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"flexDirection": "column",
+												"alignItems": "center",
+												"gap": "3px",
+												"flex": "1"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"{rating}"
+												]
+											},
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"display": "flex",
+														"alignItems": "center",
+														"gap": "1px",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													{
+														"ttRepeat": {
+															"count": 5,
+															"max": 5,
+															"node": {
+																"tag": "svg",
+																"props": {
+																	"width": 9,
+																	"height": 9,
+																	"viewBox": "0 0 24 24",
+																	"fill": "#eab308",
+																	"stroke": "#eab308",
+																	"strokeWidth": 2,
+																	"strokeLinejoin": "round",
+																	"xmlns": "http://www.w3.org/2000/svg"
+																},
+																"children": [
+																	{
+																		"tag": "polygon",
+																		"props": {
+																			"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
+																		}
+																	}
+																]
+															}
+														}
+													}
+												]
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "5px",
+										"padding": "3px 9px",
+										"borderRadius": "3px",
+										"background": "#f0fdf4",
+										"color": "#15803d",
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"alignSelf": "flex-start",
+										"boxShadow": "none",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 11,
+											"height": 11,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 10
+												}
+											},
+											{
+												"tag": "polyline",
+												"props": {
+													"points": "12 6 12 12 16 14"
+												}
+											}
+										]
+									},
+									"Replies in ~1 hr"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "8px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "button",
+										"props": {
+											"type": "button",
+											"style": {
+												"ttMerge": [
+													{
+														"display": "flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"height": "30px",
+														"padding": "0 14px",
+														"border": "none",
+														"borderRadius": "5px",
+														"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+														"fontWeight": 500,
+														"fontSize": "12px",
+														"cursor": "pointer",
+														"flexWrap": "wrap"
+													},
+													{
+														"flex": "1"
+													},
+													{
+														"background": "transparent",
+														"color": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "#1a192b",
+																	"success": "#22c55e",
+																	"warning": "#eab308",
+																	"danger": "#ff0072",
+																	"info": "#784be8",
+																	"neutral": "#6f6e77"
+																},
+																"default": "#1a192b"
+															}
+														}
+													},
+													{
+														"width": "auto",
+														"height": "auto",
+														"minWidth": 0,
+														"padding": "8px 12px",
+														"whiteSpace": "normal",
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												]
+											},
+											"aria-label": "{actionLabel}"
+										},
+										"children": [
+											"{actionLabel}"
+										],
+										"ttAction": "{actionKey}",
+										"ttActionInputs": {
+											"family": "real-estate-agent",
+											"title": "Agent Card",
+											"details": "Name: {name}\nInitials: {initials}\nBrokerage: {brokerage}\nActive listings: {listings}\nRating: {rating}"
+										}
+									},
+									{
+										"tag": "button",
+										"props": {
+											"type": "button",
+											"style": {
+												"ttMerge": [
+													{
+														"display": "flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"height": "30px",
+														"padding": "0 14px",
+														"border": "none",
+														"borderRadius": "5px",
+														"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+														"fontWeight": 500,
+														"fontSize": "12px",
+														"cursor": "pointer",
+														"flexWrap": "wrap"
+													},
+													{
+														"flex": "1"
+													},
+													{
+														"background": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "#1a192b",
+																	"success": "#22c55e",
+																	"warning": "#eab308",
+																	"danger": "#ff0072",
+																	"info": "#784be8",
+																	"neutral": "#6f6e77"
+																},
+																"default": "#1a192b"
+															}
+														},
+														"color": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "#ffffff",
+																	"success": "#ffffff",
+																	"warning": "#ffffff",
+																	"danger": "#ffffff",
+																	"info": "#ffffff",
+																	"neutral": "#ffffff"
+																},
+																"default": "#ffffff"
+															}
+														},
+														"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
+													},
+													{
+														"width": "auto",
+														"height": "auto",
+														"minWidth": 0,
+														"padding": "8px 12px",
+														"whiteSpace": "normal",
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												]
+											},
+											"aria-label": "{actionLabel}"
+										},
+										"children": [
+											"{actionLabel}"
+										],
+										"ttAction": "{actionKey}",
+										"ttActionInputs": {
+											"family": "real-estate-agent",
+											"title": "Agent Card",
+											"details": "Name: {name}\nInitials: {initials}\nBrokerage: {brokerage}\nActive listings: {listings}\nRating: {rating}"
 										}
 									}
 								]
 							},
-							"Replies in ~1 hr"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "10px",
+										"color": "#b1b1b7"
+									}
+								},
+								"children": [
+									"Lic. #01429876"
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "8px"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "button",
-								"props": {
-									"type": "button",
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "30px",
-												"padding": "0 14px",
-												"border": "none",
-												"borderRadius": "5px",
-												"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-												"fontWeight": 500,
-												"fontSize": "12px",
-												"cursor": "pointer"
-											},
-											{
-												"flex": "1"
-											},
-											{
-												"background": "transparent",
-												"color": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#1a192b",
-															"success": "#22c55e",
-															"warning": "#eab308",
-															"danger": "#ff0072",
-															"info": "#784be8",
-															"neutral": "#6f6e77"
-														},
-														"default": "#1a192b"
-													}
-												}
-											}
-										]
-									}
-								},
+								"tag": "label",
 								"children": [
-									"Call"
+									"Name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Initials ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Initials",
+											"value": {
+												"ttArg": "initials"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "initials"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Brokerage ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Brokerage",
+											"value": {
+												"ttArg": "brokerage"
+											},
+											"maxLength": 48,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "brokerage"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Active listings ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Active listings",
+											"value": {
+												"ttArg": "listings"
+											},
+											"maxLength": 4,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "listings"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Rating ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Rating",
+											"value": {
+												"ttArg": "rating"
+											},
+											"maxLength": 4,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "rating"
+										}
+									}
 								]
 							},
 							{
@@ -445,81 +764,55 @@
 								"props": {
 									"type": "button",
 									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "30px",
-												"padding": "0 14px",
-												"border": "none",
-												"borderRadius": "5px",
-												"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-												"fontWeight": 500,
-												"fontSize": "12px",
-												"cursor": "pointer"
-											},
-											{
-												"flex": "1"
-											},
-											{
-												"background": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#1a192b",
-															"success": "#22c55e",
-															"warning": "#eab308",
-															"danger": "#ff0072",
-															"info": "#784be8",
-															"neutral": "#6f6e77"
-														},
-														"default": "#1a192b"
-													}
-												},
-												"color": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#ffffff",
-															"success": "#ffffff",
-															"warning": "#ffffff",
-															"danger": "#ffffff",
-															"info": "#ffffff",
-															"neutral": "#ffffff"
-														},
-														"default": "#ffffff"
-													}
-												},
-												"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
-											}
-										]
-									}
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "real-estate-agent",
+									"title": "Agent Card",
+									"details": "Name: {name}\nInitials: {initials}\nBrokerage: {brokerage}\nActive listings: {listings}\nRating: {rating}"
 								},
 								"children": [
-									"Message"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "10px",
-								"color": "#b1b1b7"
-							}
-						},
-						"children": [
-							"Lic. #01429876"
 						]
 					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "real-estate-agent",
 	"source": {
 		"kind": "archetype",

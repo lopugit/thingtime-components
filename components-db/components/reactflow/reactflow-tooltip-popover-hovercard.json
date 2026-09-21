@@ -3,7 +3,7 @@
 	"name": "Hovercard",
 	"library": "reactflow",
 	"category": "overlays",
-	"description": "Profile hovercard in the React Flow style — dotted-underline handle trigger above a card with an initials avatar, name, bio, follower stats, and a tone follow button.",
+	"description": "Profile hovercard in the React Flow style — dotted-underline handle trigger above a card with an initials avatar, name, bio, follower stats, and a tone follow button. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"hovercard",
 		"profile",
@@ -36,7 +36,8 @@
 			"name": "bio",
 			"type": "text",
 			"default": "Writing about analytical engines, poetry, and the software in between.",
-			"label": "Bio"
+			"label": "Bio",
+			"maxLength": 500
 		},
 		{
 			"name": "tone",
@@ -51,289 +52,271 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"flexDirection": "column",
-				"alignItems": "flex-start",
-				"gap": "6px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
+				"tag": "details",
 				"props": {
 					"style": {
-						"fontSize": "12px",
-						"color": "#6f6e77",
-						"textDecoration": "underline dotted",
-						"cursor": "pointer"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #1a192b",
+						"borderRadius": "5px",
+						"background": "#ffffff",
+						"color": "#1a192b",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					"@{handle}"
+					{
+						"tag": "summary",
+						"children": [
+							"{name}"
+						]
+					},
+					{
+						"tag": "section",
+						"children": [
+							{
+								"tag": "p",
+								"children": [
+									"{bio}"
+								]
+							},
+							{
+								"tag": "nav",
+								"children": [
+									{
+										"tag": "a",
+										"props": {
+											"href": "/things"
+										},
+										"children": [
+											"Open Things"
+										]
+									},
+									" · ",
+									{
+										"tag": "a",
+										"props": {
+											"href": "/builder"
+										},
+										"children": [
+											"Open builder"
+										]
+									}
+								]
+							}
+						]
+					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"width": "290px",
-						"padding": "16px",
-						"gap": "10px",
-						"background": "#ffffff",
-						"border": "1px solid #1a192b",
-						"borderRadius": "8px",
-						"boxShadow": "0 0 0 0.5px #1a192b, 0 3px 10px rgba(26, 25, 43, 0.15)",
-						"color": "#1a192b"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "12px"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": 40,
-										"height": 40,
-										"borderRadius": "999px",
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#f4f4f5",
-													"success": "#f0fdf4",
-													"warning": "#fefce8",
-													"danger": "#ffe4f1",
-													"info": "#f1ecfd",
-													"neutral": "#f4f4f5"
-												},
-												"default": "#f4f4f5"
-											}
-										},
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#1a192b",
-													"success": "#15803d",
-													"warning": "#a16207",
-													"danger": "#c00055",
-													"info": "#5b21b6",
-													"neutral": "#3f3e4a"
-												},
-												"default": "#1a192b"
-											}
-										},
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontWeight": 600,
-										"fontSize": "12px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"{initials}"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"gap": "1px"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontWeight": 600,
-												"fontSize": "12px"
-											}
-										},
-										"children": [
-											"{name}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"@{handle}"
-										]
-									}
-								]
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "#6f6e77",
-								"lineHeight": 1.5
-							}
-						},
-						"children": [
-							"{bio}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "14px",
-								"fontSize": "12px"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "4px"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Name ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
+											"aria-label": "Name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 40,
 											"style": {
-												"fontWeight": 600
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"128"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"Following"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
 									}
 								]
 							},
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "4px"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Handle ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
+											"aria-label": "Handle",
+											"value": {
+												"ttArg": "handle"
+											},
+											"maxLength": 24,
 											"style": {
-												"fontWeight": 600
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"2.4k"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"Followers"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "handle"
+										}
 									}
 								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"width": "100%",
-								"height": "24px",
-								"border": "none",
-								"borderRadius": "5px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1a192b",
-											"success": "#22c55e",
-											"warning": "#eab308",
-											"danger": "#ff0072",
-											"info": "#784be8",
-											"neutral": "#6f6e77"
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Initials ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Initials",
+											"value": {
+												"ttArg": "initials"
+											},
+											"maxLength": 2,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"default": "#1a192b"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "initials"
+										}
 									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Bio ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Bio",
+											"value": {
+												"ttArg": "bio"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"default": "#ffffff"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "bio"
+										}
 									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
 								},
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"cursor": "pointer",
-								"marginTop": "2px"
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "tooltip-popover-hovercard",
+									"title": "Hovercard",
+									"details": "Name: {name}\nHandle: {handle}\nInitials: {initials}\nBio: {bio}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"children": [
-							"Follow"
 						]
 					}
 				]
@@ -341,7 +324,7 @@
 		]
 	},
 	"previewBg": "#f8f8f8",
-	"version": 1,
+	"version": 2,
 	"familyKey": "tooltip-popover-hovercard",
 	"source": {
 		"kind": "archetype",

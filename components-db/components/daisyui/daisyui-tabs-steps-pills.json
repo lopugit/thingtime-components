@@ -3,7 +3,7 @@
 	"name": "Pill Tabs",
 	"library": "daisyui",
 	"category": "navigation",
-	"description": "Pill-shaped tab row in the daisyUI style — the active tab fills with the tone color while inactive tabs stay quiet text.",
+	"description": "Pill-shaped tab row in the daisyUI style — the active tab fills with the tone color while inactive tabs stay quiet text. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"tabs",
 		"navigation",
@@ -55,241 +55,616 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "panel1",
+			"type": "string",
+			"default": "Your overview notes.",
+			"maxLength": 500
+		},
+		{
+			"name": "panel2",
+			"type": "string",
+			"default": "Record your latest activity.",
+			"maxLength": 500
+		},
+		{
+			"name": "panel3",
+			"type": "string",
+			"default": "Describe your preferred settings.",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"gap": "8px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "button",
+				"tag": "div",
 				"props": {
-					"type": "button",
 					"style": {
-						"border": "none",
-						"background": {
-							"ttIf": {
-								"arg": "active",
-								"equals": "1",
-								"then": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#570df8",
-											"success": "#00a96e",
-											"warning": "#ffbe00",
-											"danger": "#ff5861",
-											"info": "#00b6ff",
-											"neutral": "#2a323c"
-										},
-										"default": "#570df8"
-									}
-								},
-								"else": "transparent"
-							}
-						},
-						"cursor": "pointer",
-						"padding": "0 14px",
-						"margin": 0,
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontWeight": 600,
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"height": "32px",
-						"fontSize": "14px",
-						"borderRadius": "999px",
-						"color": {
-							"ttIf": {
-								"arg": "active",
-								"equals": "1",
-								"then": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#382800",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"else": "#6b7280"
-							}
-						},
-						"boxShadow": {
-							"ttIf": {
-								"arg": "active",
-								"equals": "1",
-								"then": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-								"else": "none"
-							}
-						}
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #e5e6e6",
+						"borderRadius": "12px",
+						"background": "#ffffff",
+						"color": "#1f2937",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					"{tab1}"
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexWrap": "wrap",
+								"gap": "6px"
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "8px",
+										"border": "1px solid #e5e6e6",
+										"background": {
+											"ttIf": {
+												"arg": "active",
+												"equals": "1",
+												"then": "#570df8",
+												"else": "#f2f2f2"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "active",
+												"equals": "1",
+												"then": "#ffffff",
+												"else": "#1f2937"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "active",
+											"equals": "1",
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"{tab1}"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "active",
+									"value": "1"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "8px",
+										"border": "1px solid #e5e6e6",
+										"background": {
+											"ttIf": {
+												"arg": "active",
+												"equals": "2",
+												"then": "#570df8",
+												"else": "#f2f2f2"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "active",
+												"equals": "2",
+												"then": "#ffffff",
+												"else": "#1f2937"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "active",
+											"equals": "2",
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"{tab2}"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "active",
+									"value": "2"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "8px",
+										"border": "1px solid #e5e6e6",
+										"background": {
+											"ttIf": {
+												"arg": "active",
+												"equals": "3",
+												"then": "#570df8",
+												"else": "#f2f2f2"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "active",
+												"equals": "3",
+												"then": "#ffffff",
+												"else": "#1f2937"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "active",
+											"equals": "3",
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"{tab3}"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "active",
+									"value": "3"
+								}
+							}
+						]
+					},
+					{
+						"tag": "section",
+						"children": [
+							{
+								"tag": "h3",
+								"children": [
+									{
+										"ttMap": {
+											"arg": "active",
+											"values": {
+												"1": "{tab1}",
+												"2": "{tab2}",
+												"3": "{tab3}"
+											}
+										}
+									}
+								]
+							},
+							{
+								"ttMap": {
+									"arg": "active",
+									"values": {
+										"1": {
+											"tag": "input",
+											"props": {
+												"type": "text",
+												"aria-label": "panel1",
+												"value": {
+													"ttArg": "panel1"
+												},
+												"style": {
+													"width": "100%",
+													"minWidth": 0,
+													"padding": "8px",
+													"border": "1px solid #e5e6e6",
+													"maxWidth": "100%",
+													"boxSizing": "border-box"
+												}
+											},
+											"ttAction": "$ui",
+											"ttActionInputs": {
+												"op": "set",
+												"key": "panel1"
+											}
+										},
+										"2": {
+											"tag": "input",
+											"props": {
+												"type": "text",
+												"aria-label": "panel2",
+												"value": {
+													"ttArg": "panel2"
+												},
+												"style": {
+													"width": "100%",
+													"minWidth": 0,
+													"padding": "8px",
+													"border": "1px solid #e5e6e6",
+													"maxWidth": "100%",
+													"boxSizing": "border-box"
+												}
+											},
+											"ttAction": "$ui",
+											"ttActionInputs": {
+												"op": "set",
+												"key": "panel2"
+											}
+										},
+										"3": {
+											"tag": "input",
+											"props": {
+												"type": "text",
+												"aria-label": "panel3",
+												"value": {
+													"ttArg": "panel3"
+												},
+												"style": {
+													"width": "100%",
+													"minWidth": 0,
+													"padding": "8px",
+													"border": "1px solid #e5e6e6",
+													"maxWidth": "100%",
+													"boxSizing": "border-box"
+												}
+											},
+											"ttAction": "$ui",
+											"ttActionInputs": {
+												"op": "set",
+												"key": "panel3"
+											}
+										}
+									}
+								}
+							}
+						]
+					}
 				]
 			},
 			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"border": "none",
-						"background": {
-							"ttIf": {
-								"arg": "active",
-								"equals": "2",
-								"then": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#570df8",
-											"success": "#00a96e",
-											"warning": "#ffbe00",
-											"danger": "#ff5861",
-											"info": "#00b6ff",
-											"neutral": "#2a323c"
-										},
-										"default": "#570df8"
-									}
-								},
-								"else": "transparent"
-							}
-						},
-						"cursor": "pointer",
-						"padding": "0 14px",
-						"margin": 0,
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontWeight": 600,
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"height": "32px",
-						"fontSize": "14px",
-						"borderRadius": "999px",
-						"color": {
-							"ttIf": {
-								"arg": "active",
-								"equals": "2",
-								"then": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#382800",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"else": "#6b7280"
-							}
-						},
-						"boxShadow": {
-							"ttIf": {
-								"arg": "active",
-								"equals": "2",
-								"then": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-								"else": "none"
-							}
-						}
-					}
-				},
+				"tag": "details",
 				"children": [
-					"{tab2}"
-				]
-			},
-			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"border": "none",
-						"background": {
-							"ttIf": {
-								"arg": "active",
-								"equals": "3",
-								"then": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#570df8",
-											"success": "#00a96e",
-											"warning": "#ffbe00",
-											"danger": "#ff5861",
-											"info": "#00b6ff",
-											"neutral": "#2a323c"
-										},
-										"default": "#570df8"
-									}
-								},
-								"else": "transparent"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
-						"cursor": "pointer",
-						"padding": "0 14px",
-						"margin": 0,
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontWeight": 600,
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"height": "32px",
-						"fontSize": "14px",
-						"borderRadius": "999px",
-						"color": {
-							"ttIf": {
-								"arg": "active",
-								"equals": "3",
-								"then": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#382800",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Active tab ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Active tab",
+											"value": {
+												"ttArg": "active"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
 										},
-										"default": "#ffffff"
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "1"
+												},
+												"children": [
+													"1"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "2"
+												},
+												"children": [
+													"2"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "3"
+												},
+												"children": [
+													"3"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"panel1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "panel1",
+											"value": {
+												"ttArg": "panel1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "panel1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"panel2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "panel2",
+											"value": {
+												"ttArg": "panel2"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "panel2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"panel3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "panel3",
+											"value": {
+												"ttArg": "panel3"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "panel3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Tab 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Tab 1",
+											"value": {
+												"ttArg": "tab1"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "tab1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Tab 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Tab 2",
+											"value": {
+												"ttArg": "tab2"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "tab2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Tab 3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Tab 3",
+											"value": {
+												"ttArg": "tab3"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "tab3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
 								},
-								"else": "#6b7280"
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "tabs-steps-pills",
+									"title": "Pill Tabs",
+									"details": "Tab 1: {tab1}\nTab 2: {tab2}\nTab 3: {tab3}\nActive tab: {active}\npanel1: {panel1}\npanel2: {panel2}\npanel3: {panel3}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"boxShadow": {
-							"ttIf": {
-								"arg": "active",
-								"equals": "3",
-								"then": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-								"else": "none"
-							}
-						}
+						]
 					}
-				},
-				"children": [
-					"{tab3}"
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "tabs-steps-pills",
 	"source": {
 		"kind": "archetype",

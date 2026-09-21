@@ -3,7 +3,7 @@
 	"name": "OTP Code Input",
 	"library": "thingtime",
 	"category": "forms",
-	"description": "One-time-code entry in the Thingtime style — six square code boxes with four digits typed in, an active box carrying the text caret, and a resend helper caption.",
+	"description": "One-time-code entry in the Thingtime style — six square code boxes with four digits typed in, an active box carrying the text caret, and a resend helper caption. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"otp",
@@ -37,16 +37,34 @@
 			"default": "Didn't get a code?",
 			"label": "Helper text",
 			"maxLength": 40
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "code",
+			"type": "string",
+			"default": "",
+			"maxLength": 8
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "10px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -54,230 +72,265 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #ececef",
+						"borderRadius": "12px",
+						"background": "#ffffff",
+						"color": "#33333c",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "44px",
-								"height": "44px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"boxSizing": "border-box",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#ececef",
-								"borderRadius": "9px",
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "18px",
-								"fontWeight": 700,
-								"color": "#33333c"
-							}
-						},
+						"tag": "label",
 						"children": [
-							"{digit1}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "44px",
-								"height": "44px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"boxSizing": "border-box",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#ececef",
-								"borderRadius": "9px",
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "18px",
-								"fontWeight": 700,
-								"color": "#33333c"
-							}
-						},
-						"children": [
-							"{digit2}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "44px",
-								"height": "44px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"boxSizing": "border-box",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#ececef",
-								"borderRadius": "9px",
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "18px",
-								"fontWeight": 700,
-								"color": "#33333c"
-							}
-						},
-						"children": [
-							"4"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "44px",
-								"height": "44px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"boxSizing": "border-box",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#ececef",
-								"borderRadius": "9px",
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "18px",
-								"fontWeight": 700,
-								"color": "#33333c"
-							}
-						},
-						"children": [
-							"1"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "44px",
-								"height": "44px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"boxSizing": "border-box",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": {
-									"ttIf": {
-										"arg": "active",
-										"then": "#16161a",
-										"else": "#ececef"
-									}
-								},
-								"borderRadius": "9px",
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "18px",
-								"fontWeight": 700,
-								"color": "#33333c",
-								"boxShadow": {
-									"ttIf": {
-										"arg": "active",
-										"then": "0 0 0 3px rgba(213, 63, 140, 0.15)",
-										"else": "none"
-									}
-								}
-							}
-						},
-						"children": [
+							"Code draft",
 							{
-								"ttIf": {
-									"arg": "active",
-									"then": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "2px",
-												"height": "20px",
-												"borderRadius": "1px",
-												"background": "#16161a",
-												"flexShrink": 0
-											}
-										}
-									}
+								"tag": "input",
+								"props": {
+									"type": "text",
+									"aria-label": "code",
+									"value": {
+										"ttArg": "code"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #ececef",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"maxLength": 8
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "code"
 								}
 							}
 						]
 					},
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "44px",
-								"height": "44px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"boxSizing": "border-box",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#ececef",
-								"borderRadius": "9px",
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "18px",
-								"fontWeight": 700,
-								"color": "#33333c"
-							}
-						}
+						"tag": "small",
+						"children": [
+							"Verification requires your configured authentication Action."
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "6px",
-						"fontSize": "12px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"color": "#9a9aa6"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"{helper}"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"color": "#16161a",
-								"fontWeight": 600,
-								"cursor": "pointer"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"Resend"
+							{
+								"tag": "label",
+								"children": [
+									"code ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "code",
+											"value": {
+												"ttArg": "code"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "code"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"First digit ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "First digit",
+											"value": {
+												"ttArg": "digit1"
+											},
+											"maxLength": 1,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "digit1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Second digit ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Second digit",
+											"value": {
+												"ttArg": "digit2"
+											},
+											"maxLength": 1,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "digit2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Active box ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Active box",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "active"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Helper text ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Helper text",
+											"value": {
+												"ttArg": "helper"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "helper"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "forms-advanced-otp",
+									"title": "OTP Code Input",
+									"details": "First digit: {digit1}\nSecond digit: {digit2}\nActive box: {active}\nHelper text: {helper}\ncode: {code}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "forms-advanced-otp",
 	"source": {
 		"kind": "archetype",

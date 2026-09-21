@@ -3,7 +3,7 @@
 	"name": "Asset Price Card",
 	"library": "bootstrap",
 	"category": "finance",
-	"description": "Crypto asset price card in the Bootstrap style — coin glyph circle, symbol and name, big mono price, a 24h change chip that flips success/danger with direction, and a matching sparkline.",
+	"description": "Crypto asset price card in the Bootstrap style — coin glyph circle, symbol and name, big mono price, a 24h change chip that flips success/danger with direction, and a matching sparkline. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"crypto",
 		"price",
@@ -44,26 +44,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Trending up"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#212529",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#dee2e6",
-				"borderRadius": "8px",
-				"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-				"padding": "14px",
-				"boxSizing": "border-box",
-				"width": "250px",
-				"gap": "10px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -72,8 +74,19 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
+						"flexDirection": "column",
+						"color": "#212529",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#dee2e6",
+						"borderRadius": "8px",
+						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+						"padding": "14px",
+						"boxSizing": "border-box",
+						"width": "250px",
+						"gap": "10px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -81,22 +94,74 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "34px",
-								"height": "34px",
-								"borderRadius": "999px",
-								"background": "#fff3cd",
-								"color": "#664d03",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontWeight": 700,
-								"fontSize": "15px",
-								"flexShrink": 0
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"₿"
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "34px",
+										"height": "34px",
+										"borderRadius": "999px",
+										"background": "#fff3cd",
+										"color": "#664d03",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontWeight": 700,
+										"fontSize": "15px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"₿"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "1px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "16px",
+												"fontWeight": 500
+											}
+										},
+										"children": [
+											"{symbol}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#6c757d"
+											}
+										},
+										"children": [
+											"{name}"
+										]
+									}
+								]
+							}
 						]
 					},
 					{
@@ -104,8 +169,10 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "1px"
+								"alignItems": "flex-end",
+								"justifyContent": "space-between",
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -113,189 +180,375 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "16px",
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "20px",
 										"fontWeight": 500
 									}
 								},
 								"children": [
-									"{symbol}"
+									"{price}"
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
 									"style": {
-										"fontSize": "12px",
-										"color": "#6c757d"
+										"ttMerge": [
+											{
+												"display": "inline-flex",
+												"alignItems": "center",
+												"gap": "4px",
+												"padding": "2px 8px",
+												"borderRadius": "50rem",
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "up",
+													"then": {
+														"background": "#d1e7dd",
+														"color": "#0a3622"
+													},
+													"else": {
+														"background": "#f8d7da",
+														"color": "#58151c"
+													}
+												}
+											}
+										]
+									},
+									"type": "button",
+									"aria-label": "2.4%",
+									"aria-pressed": {
+										"ttArg": "up"
 									}
 								},
 								"children": [
-									"{name}"
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-end",
-						"justifyContent": "space-between",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "20px",
-								"fontWeight": 500
-							}
-						},
-						"children": [
-							"{price}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"display": "inline-flex",
-										"alignItems": "center",
-										"gap": "4px",
-										"padding": "2px 8px",
-										"borderRadius": "50rem",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-									},
 									{
 										"ttIf": {
 											"arg": "up",
 											"then": {
-												"background": "#d1e7dd",
-												"color": "#0a3622"
+												"tag": "svg",
+												"props": {
+													"width": 10,
+													"height": 10,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "line",
+														"props": {
+															"x1": 12,
+															"y1": 19,
+															"x2": 12,
+															"y2": 5
+														}
+													},
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "5 12 12 5 19 12"
+														}
+													}
+												]
 											},
 											"else": {
-												"background": "#f8d7da",
-												"color": "#58151c"
+												"tag": "svg",
+												"props": {
+													"width": 10,
+													"height": 10,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "line",
+														"props": {
+															"x1": 12,
+															"y1": 5,
+															"x2": 12,
+															"y2": 19
+														}
+													},
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "19 12 12 19 5 12"
+														}
+													}
+												]
 											}
 										}
-									}
-								]
+									},
+									"{change}"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "toggle",
+									"key": "up"
+								}
 							}
+						]
+					},
+					{
+						"tag": "svg",
+						"props": {
+							"width": 220,
+							"height": 36,
+							"viewBox": "0 0 220 36",
+							"fill": "none",
+							"xmlns": "http://www.w3.org/2000/svg"
 						},
 						"children": [
 							{
-								"ttIf": {
-									"arg": "up",
-									"then": {
-										"tag": "svg",
-										"props": {
-											"width": 10,
-											"height": 10,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "line",
-												"props": {
-													"x1": 12,
-													"y1": 19,
-													"x2": 12,
-													"y2": 5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "5 12 12 5 19 12"
-												}
-											}
-										]
+								"tag": "polyline",
+								"props": {
+									"points": "4 28 30 20 56 24 82 12 108 16 134 8 160 14 186 5 216 9",
+									"stroke": {
+										"ttIf": {
+											"arg": "up",
+											"then": "#198754",
+											"else": "#dc3545"
+										}
 									},
-									"else": {
-										"tag": "svg",
-										"props": {
-											"width": 10,
-											"height": 10,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "line",
-												"props": {
-													"x1": 12,
-													"y1": 5,
-													"x2": 12,
-													"y2": 19
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "19 12 12 19 5 12"
-												}
-											}
-										]
-									}
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round"
 								}
-							},
-							"{change}"
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "svg",
-				"props": {
-					"width": 220,
-					"height": 36,
-					"viewBox": "0 0 220 36",
-					"fill": "none",
-					"xmlns": "http://www.w3.org/2000/svg"
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "polyline",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
-							"points": "4 28 30 20 56 24 82 12 108 16 134 8 160 14 186 5 216 9",
-							"stroke": {
-								"ttIf": {
-									"arg": "up",
-									"then": "#198754",
-									"else": "#dc3545"
-								}
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Trending up ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Trending up",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "up"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "up"
+										}
+									}
+								]
 							},
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round"
-						}
+							{
+								"tag": "label",
+								"children": [
+									"Symbol ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Symbol",
+											"value": {
+												"ttArg": "symbol"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "symbol"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Price ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Price",
+											"value": {
+												"ttArg": "price"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "price"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"24h change ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "24h change",
+											"value": {
+												"ttArg": "change"
+											},
+											"maxLength": 10,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "change"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "crypto-trading-price",
+									"title": "Asset Price Card",
+									"details": "Symbol: {symbol}\nName: {name}\nPrice: {price}\n24h change: {change}\nTrending up: {up}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "crypto-trading-price",
 	"source": {
 		"kind": "archetype",

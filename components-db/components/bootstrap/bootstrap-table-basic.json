@@ -3,7 +3,7 @@
 	"name": "Basic Table",
 	"library": "bootstrap",
 	"category": "data-display",
-	"description": "Simple data table in the Bootstrap style — real thead/tbody markup, three text columns, hairline row dividers, and optional column borders.",
+	"description": "Simple data table in the Bootstrap style — real thead/tbody markup, three text columns, hairline row dividers, and optional column borders. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"table",
 		"data",
@@ -36,334 +36,360 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Column borders"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"width": "100%",
-				"overflow": "hidden",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"border": "1px solid #dee2e6",
-				"borderRadius": "6px",
-				"boxShadow": "none",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "table",
+				"tag": "div",
 				"props": {
 					"style": {
 						"width": "100%",
-						"borderCollapse": "collapse",
-						"fontSize": "16px",
-						"color": "#212529"
+						"overflow": "hidden",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"border": "1px solid #dee2e6",
+						"borderRadius": "6px",
+						"boxShadow": "none",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "thead",
-						"children": [
-							{
-								"tag": "tr",
-								"children": [
-									{
-										"tag": "th",
-										"props": {
-											"style": {
-												"textAlign": "left",
-												"padding": "10px 14px",
-												"fontSize": "14px",
-												"fontWeight": 500,
-												"color": "#6c757d",
-												"background": "transparent",
-												"borderBottom": "1px solid #dee2e6",
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
-													}
-												}
-											}
-										},
-										"children": [
-											"{col1}"
-										]
-									},
-									{
-										"tag": "th",
-										"props": {
-											"style": {
-												"textAlign": "left",
-												"padding": "10px 14px",
-												"fontSize": "14px",
-												"fontWeight": 500,
-												"color": "#6c757d",
-												"background": "transparent",
-												"borderBottom": "1px solid #dee2e6",
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
-													}
-												}
-											}
-										},
-										"children": [
-											"{col2}"
-										]
-									},
-									{
-										"tag": "th",
-										"props": {
-											"style": {
-												"textAlign": "left",
-												"padding": "10px 14px",
-												"fontSize": "14px",
-												"fontWeight": 500,
-												"color": "#6c757d",
-												"background": "transparent",
-												"borderBottom": "1px solid #dee2e6"
-											}
-										},
-										"children": [
-											"{col3}"
-										]
-									}
-								]
+						"tag": "table",
+						"props": {
+							"style": {
+								"width": "100%",
+								"borderCollapse": "collapse",
+								"fontSize": "16px",
+								"color": "#212529",
+								"maxWidth": "100%"
 							}
-						]
-					},
-					{
-						"tag": "tbody",
+						},
 						"children": [
 							{
-								"tag": "tr",
+								"tag": "thead",
 								"children": [
 									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#212529",
-												"fontWeight": 500,
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
+										"tag": "tr",
+										"children": [
+											{
+												"tag": "th",
+												"props": {
+													"style": {
+														"textAlign": "left",
+														"padding": "10px 14px",
+														"fontSize": "14px",
+														"fontWeight": 500,
+														"color": "#6c757d",
+														"background": "transparent",
+														"borderBottom": "1px solid #dee2e6",
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
 													}
-												}
-											}
-										},
-										"children": [
-											"Ada Lovelace"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#6c757d",
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
+												},
+												"children": [
+													"{col1}"
+												]
+											},
+											{
+												"tag": "th",
+												"props": {
+													"style": {
+														"textAlign": "left",
+														"padding": "10px 14px",
+														"fontSize": "14px",
+														"fontWeight": 500,
+														"color": "#6c757d",
+														"background": "transparent",
+														"borderBottom": "1px solid #dee2e6",
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
 													}
-												}
+												},
+												"children": [
+													"{col2}"
+												]
+											},
+											{
+												"tag": "th",
+												"props": {
+													"style": {
+														"textAlign": "left",
+														"padding": "10px 14px",
+														"fontSize": "14px",
+														"fontWeight": 500,
+														"color": "#6c757d",
+														"background": "transparent",
+														"borderBottom": "1px solid #dee2e6"
+													}
+												},
+												"children": [
+													"{col3}"
+												]
 											}
-										},
-										"children": [
-											"Engineering"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#6c757d"
-											}
-										},
-										"children": [
-											"ada@example.com"
 										]
 									}
 								]
 							},
 							{
-								"tag": "tr",
+								"tag": "tbody",
 								"children": [
 									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#212529",
-												"fontWeight": 500,
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
-													}
-												}
-											}
-										},
+										"tag": "tr",
 										"children": [
-											"Grace Hopper"
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#212529",
+														"fontWeight": 500,
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
+													}
+												},
+												"children": [
+													"Ada Lovelace"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#6c757d",
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
+													}
+												},
+												"children": [
+													"Engineering"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#6c757d"
+													}
+												},
+												"children": [
+													"ada@example.com"
+												]
+											}
 										]
 									},
 									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#6c757d",
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
-													}
-												}
-											}
-										},
+										"tag": "tr",
 										"children": [
-											"Research"
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#212529",
+														"fontWeight": 500,
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
+													}
+												},
+												"children": [
+													"Grace Hopper"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#6c757d",
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
+													}
+												},
+												"children": [
+													"Research"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#6c757d"
+													}
+												},
+												"children": [
+													"grace@example.com"
+												]
+											}
 										]
 									},
 									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#6c757d"
-											}
-										},
+										"tag": "tr",
 										"children": [
-											"grace@example.com"
-										]
-									}
-								]
-							},
-							{
-								"tag": "tr",
-								"children": [
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#212529",
-												"fontWeight": 500,
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#212529",
+														"fontWeight": 500,
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
 													}
-												}
+												},
+												"children": [
+													"Alan Turing"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#6c757d",
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
+													}
+												},
+												"children": [
+													"Design"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#6c757d"
+													}
+												},
+												"children": [
+													"alan@example.com"
+												]
 											}
-										},
-										"children": [
-											"Alan Turing"
 										]
 									},
 									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#6c757d",
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
+										"tag": "tr",
+										"children": [
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#212529",
+														"fontWeight": 500,
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
 													}
-												}
-											}
-										},
-										"children": [
-											"Design"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#6c757d"
-											}
-										},
-										"children": [
-											"alan@example.com"
-										]
-									}
-								]
-							},
-							{
-								"tag": "tr",
-								"children": [
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#212529",
-												"fontWeight": 500,
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
+												},
+												"children": [
+													"Margaret Hamilton"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#6c757d",
+														"borderRight": {
+															"ttIf": {
+																"arg": "bordered",
+																"then": "1px solid #e9ecef"
+															}
+														}
 													}
-												}
-											}
-										},
-										"children": [
-											"Margaret Hamilton"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#6c757d",
-												"borderRight": {
-													"ttIf": {
-														"arg": "bordered",
-														"then": "1px solid #e9ecef"
+												},
+												"children": [
+													"Operations"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #e9ecef",
+														"color": "#6c757d"
 													}
-												}
+												},
+												"children": [
+													"margaret@example.com"
+												]
 											}
-										},
-										"children": [
-											"Operations"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #e9ecef",
-												"color": "#6c757d"
-											}
-										},
-										"children": [
-											"margaret@example.com"
 										]
 									}
 								]
@@ -371,10 +397,165 @@
 						]
 					}
 				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Column 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Column 1",
+											"value": {
+												"ttArg": "col1"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "col1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Column 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Column 2",
+											"value": {
+												"ttArg": "col2"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "col2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Column 3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Column 3",
+											"value": {
+												"ttArg": "col3"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "col3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "table-basic",
+									"title": "Basic Table",
+									"details": "Column 1: {col1}\nColumn 2: {col2}\nColumn 3: {col3}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "table-basic",
 	"source": {
 		"kind": "archetype",

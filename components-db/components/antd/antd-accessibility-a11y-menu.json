@@ -3,7 +3,7 @@
 	"name": "Accessibility Menu",
 	"library": "antd",
 	"category": "accessibility",
-	"description": "Accessibility settings menu in the Ant Design style — person-in-circle header, an A−/A+ text-size stepper, switches for reduce motion, screen-reader hints and dyslexia-friendly type, and a quiet reset footer.",
+	"description": "Accessibility settings menu in the Ant Design style — person-in-circle header, an A−/A+ text-size stepper, switches for reduce motion, screen-reader hints and dyslexia-friendly type, and a quiet reset footer. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"accessibility",
 		"settings",
@@ -34,26 +34,28 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Dyslexia-friendly font"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#f0f0f0",
-				"borderRadius": "8px",
-				"boxShadow": "0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12)",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "rgba(0, 0, 0, 0.88)",
-				"boxSizing": "border-box",
-				"width": "250px",
-				"padding": "12px",
-				"gap": "11px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -62,108 +64,107 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
+						"flexDirection": "column",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#f0f0f0",
+						"borderRadius": "8px",
+						"boxShadow": "0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12)",
+						"color": "rgba(0, 0, 0, 0.88)",
+						"boxSizing": "border-box",
+						"width": "250px",
+						"padding": "12px",
+						"gap": "11px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					{
-						"tag": "svg",
-						"props": {
-							"width": 22,
-							"height": 22,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#1677ff",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "circle",
-								"props": {
-									"cx": 12,
-									"cy": 12,
-									"r": 10
-								}
-							},
-							{
-								"tag": "circle",
-								"props": {
-									"cx": 12,
-									"cy": 8.5,
-									"r": 2.5
-								}
-							},
-							{
-								"tag": "path",
-								"props": {
-									"d": "M7 17.5a5.5 5.5 0 0 1 10 0"
-								}
-							}
-						]
-					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "1px"
+								"alignItems": "center",
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "svg",
 								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600
-									}
+									"width": 22,
+									"height": 22,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#1677ff",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
 								},
 								"children": [
-									"Accessibility"
+									{
+										"tag": "circle",
+										"props": {
+											"cx": 12,
+											"cy": 12,
+											"r": 10
+										}
+									},
+									{
+										"tag": "circle",
+										"props": {
+											"cx": 12,
+											"cy": 8.5,
+											"r": 2.5
+										}
+									},
+									{
+										"tag": "path",
+										"props": {
+											"d": "M7 17.5a5.5 5.5 0 0 1 10 0"
+										}
+									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "12px",
-										"color": "rgba(0, 0, 0, 0.45)"
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "1px"
 									}
 								},
 								"children": [
-									"Reading & display"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"Accessibility"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "rgba(0, 0, 0, 0.45)"
+											}
+										},
+										"children": [
+											"Reading & display"
+										]
+									}
 								]
 							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
-						},
-						"children": [
-							"Text size"
 						]
 					},
 					{
@@ -172,48 +173,511 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "6px"
+								"justifyContent": "space-between",
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "button",
-								"props": {
-									"type": "button",
-									"style": {
-										"width": "24px",
-										"height": "22px",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"padding": "0",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#d9d9d9",
-										"borderRadius": "4px",
-										"background": "#ffffff",
-										"color": "rgba(0, 0, 0, 0.88)",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"cursor": "pointer"
-									}
-								},
-								"children": [
-									"A−"
-								]
-							},
-							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
 										"fontSize": "13px",
-										"minWidth": "42px",
-										"textAlign": "center"
+										"color": "rgba(0, 0, 0, 0.88)"
 									}
 								},
 								"children": [
-									"{textSize}%"
+									"Text size"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "button",
+										"props": {
+											"type": "button",
+											"style": {
+												"width": "24px",
+												"height": "22px",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"padding": "0",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#d9d9d9",
+												"borderRadius": "4px",
+												"background": "#ffffff",
+												"color": "rgba(0, 0, 0, 0.88)",
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"cursor": "pointer",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"A−"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "increment",
+											"key": "textSize",
+											"step": -10,
+											"min": 70,
+											"max": 200
+										}
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "13px",
+												"minWidth": "42px",
+												"textAlign": "center"
+											}
+										},
+										"children": [
+											"{textSize}%"
+										]
+									},
+									{
+										"tag": "button",
+										"props": {
+											"type": "button",
+											"style": {
+												"width": "24px",
+												"height": "22px",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"padding": "0",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#d9d9d9",
+												"borderRadius": "4px",
+												"background": "#ffffff",
+												"color": "rgba(0, 0, 0, 0.88)",
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"cursor": "pointer",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"A+"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "increment",
+											"key": "textSize",
+											"step": 10,
+											"min": 70,
+											"max": 200
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"gap": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "13px",
+										"color": "rgba(0, 0, 0, 0.88)"
+									}
+								},
+								"children": [
+									"Reduce motion"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"width": "34px",
+										"height": "20px",
+										"padding": "2px",
+										"boxSizing": "border-box",
+										"borderRadius": "999px",
+										"flexShrink": 0,
+										"background": {
+											"ttIf": {
+												"arg": "reduceMotion",
+												"then": "#1677ff",
+												"else": "#d9d9d9"
+											}
+										},
+										"justifyContent": {
+											"ttIf": {
+												"arg": "reduceMotion",
+												"then": "flex-end",
+												"else": "flex-start"
+											}
+										},
+										"maxWidth": "100%",
+										"flexWrap": "wrap"
+									},
+									"type": "button",
+									"aria-label": "reduceMotion",
+									"aria-pressed": {
+										"ttArg": "reduceMotion"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "16px",
+												"height": "16px",
+												"borderRadius": "999px",
+												"background": "#ffffff",
+												"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "toggle",
+									"key": "reduceMotion"
+								}
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"gap": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "13px",
+										"color": "rgba(0, 0, 0, 0.88)"
+									}
+								},
+								"children": [
+									"Screen-reader hints"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"width": "34px",
+										"height": "20px",
+										"padding": "2px",
+										"boxSizing": "border-box",
+										"borderRadius": "999px",
+										"flexShrink": 0,
+										"background": {
+											"ttIf": {
+												"arg": "srHints",
+												"then": "#1677ff",
+												"else": "#d9d9d9"
+											}
+										},
+										"justifyContent": {
+											"ttIf": {
+												"arg": "srHints",
+												"then": "flex-end",
+												"else": "flex-start"
+											}
+										},
+										"maxWidth": "100%",
+										"flexWrap": "wrap"
+									},
+									"type": "button",
+									"aria-label": "srHints",
+									"aria-pressed": {
+										"ttArg": "srHints"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "16px",
+												"height": "16px",
+												"borderRadius": "999px",
+												"background": "#ffffff",
+												"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "toggle",
+									"key": "srHints"
+								}
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"gap": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "13px",
+										"color": "rgba(0, 0, 0, 0.88)"
+									}
+								},
+								"children": [
+									"Dyslexia-friendly font"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"width": "34px",
+										"height": "20px",
+										"padding": "2px",
+										"boxSizing": "border-box",
+										"borderRadius": "999px",
+										"flexShrink": 0,
+										"background": {
+											"ttIf": {
+												"arg": "dyslexiaFont",
+												"then": "#1677ff",
+												"else": "#d9d9d9"
+											}
+										},
+										"justifyContent": {
+											"ttIf": {
+												"arg": "dyslexiaFont",
+												"then": "flex-end",
+												"else": "flex-start"
+											}
+										},
+										"maxWidth": "100%",
+										"flexWrap": "wrap"
+									},
+									"type": "button",
+									"aria-label": "dyslexiaFont",
+									"aria-pressed": {
+										"ttArg": "dyslexiaFont"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "16px",
+												"height": "16px",
+												"borderRadius": "999px",
+												"background": "#ffffff",
+												"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "toggle",
+									"key": "dyslexiaFont"
+								}
+							}
+						]
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
+								"background": "transparent",
+								"border": "none",
+								"color": "rgba(0, 0, 0, 0.45)",
+								"fontSize": "13px",
+								"fontWeight": 400,
+								"padding": "3px 0 0",
+								"cursor": "pointer"
+							}
+						},
+						"children": [
+							"Reset to defaults"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "reset"
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Text size % ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Text size %",
+											"value": {
+												"ttArg": "textSize"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "textSize"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Reduce motion ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Reduce motion",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "reduceMotion"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "reduceMotion"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Screen-reader hints ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Screen-reader hints",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "srHints"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "srHints"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Dyslexia-friendly font ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Dyslexia-friendly font",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "dyslexiaFont"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "dyslexiaFont"
+										}
+									}
 								]
 							},
 							{
@@ -221,257 +685,49 @@
 								"props": {
 									"type": "button",
 									"style": {
-										"width": "24px",
-										"height": "22px",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"padding": "0",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#d9d9d9",
-										"borderRadius": "4px",
-										"background": "#ffffff",
-										"color": "rgba(0, 0, 0, 0.88)",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"cursor": "pointer"
-									}
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "accessibility-a11y-menu",
+									"title": "Accessibility Menu",
+									"details": "Text size %: {textSize}\nReduce motion: {reduceMotion}\nScreen-reader hints: {srHints}\nDyslexia-friendly font: {dyslexiaFont}"
 								},
 								"children": [
-									"A+"
+									"{actionLabel}"
 								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
-						},
-						"children": [
-							"Reduce motion"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"width": "34px",
-								"height": "20px",
-								"padding": "2px",
-								"boxSizing": "border-box",
-								"borderRadius": "999px",
-								"flexShrink": 0,
-								"background": {
-									"ttIf": {
-										"arg": "reduceMotion",
-										"then": "#1677ff",
-										"else": "#d9d9d9"
-									}
-								},
-								"justifyContent": {
-									"ttIf": {
-										"arg": "reduceMotion",
-										"then": "flex-end",
-										"else": "flex-start"
-									}
-								}
-							}
-						},
-						"children": [
+							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
-									"style": {
-										"width": "16px",
-										"height": "16px",
-										"borderRadius": "999px",
-										"background": "#ffffff",
-										"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)"
-									}
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
-						},
-						"children": [
-							"Screen-reader hints"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"width": "34px",
-								"height": "20px",
-								"padding": "2px",
-								"boxSizing": "border-box",
-								"borderRadius": "999px",
-								"flexShrink": 0,
-								"background": {
-									"ttIf": {
-										"arg": "srHints",
-										"then": "#1677ff",
-										"else": "#d9d9d9"
-									}
+									"type": "button"
 								},
-								"justifyContent": {
-									"ttIf": {
-										"arg": "srHints",
-										"then": "flex-end",
-										"else": "flex-start"
-									}
-								}
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "16px",
-										"height": "16px",
-										"borderRadius": "999px",
-										"background": "#ffffff",
-										"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)"
-									}
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
-						},
-						"children": [
-							"Dyslexia-friendly font"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"width": "34px",
-								"height": "20px",
-								"padding": "2px",
-								"boxSizing": "border-box",
-								"borderRadius": "999px",
-								"flexShrink": 0,
-								"background": {
-									"ttIf": {
-										"arg": "dyslexiaFont",
-										"then": "#1677ff",
-										"else": "#d9d9d9"
-									}
-								},
-								"justifyContent": {
-									"ttIf": {
-										"arg": "dyslexiaFont",
-										"then": "flex-end",
-										"else": "flex-start"
-									}
-								}
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "16px",
-										"height": "16px",
-										"borderRadius": "999px",
-										"background": "#ffffff",
-										"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)"
-									}
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"background": "transparent",
-						"border": "none",
-						"color": "rgba(0, 0, 0, 0.45)",
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontSize": "13px",
-						"fontWeight": 400,
-						"padding": "3px 0 0",
-						"cursor": "pointer"
-					}
-				},
-				"children": [
-					"Reset to defaults"
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "accessibility-a11y-menu",
 	"source": {
 		"kind": "archetype",

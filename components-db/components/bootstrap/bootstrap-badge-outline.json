@@ -3,7 +3,7 @@
 	"name": "Outline Badge",
 	"library": "bootstrap",
 	"category": "data-display",
-	"description": "Bordered status badge in the Bootstrap style — transparent body with a tone-colored border and matching label text.",
+	"description": "Bordered status badge in the Bootstrap style — transparent body with a tone-colored border and matching label text. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"badge",
 		"status",
@@ -40,82 +40,203 @@
 			],
 			"default": "sm",
 			"label": "Size"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "span",
+		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"display": "inline-flex",
-						"alignItems": "center",
-						"gap": "6px",
-						"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontWeight": 600,
-						"lineHeight": 1.4,
-						"borderRadius": "50rem"
-					},
-					{
-						"ttMap": {
-							"arg": "size",
-							"values": {
-								"sm": {
-									"fontSize": "12px",
-									"padding": "2px 8px"
-								},
-								"md": {
-									"fontSize": "14px",
-									"padding": "4px 10px"
-								}
-							},
-							"default": {
-								"fontSize": "12px",
-								"padding": "2px 8px"
-							}
-						}
-					},
-					{
-						"background": "transparent",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#0d6efd",
-									"success": "#198754",
-									"warning": "#ffc107",
-									"danger": "#dc3545",
-									"info": "#0dcaf0",
-									"neutral": "#6c757d"
-								},
-								"default": "#0d6efd"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#0d6efd",
-									"success": "#198754",
-									"warning": "#ffc107",
-									"danger": "#dc3545",
-									"info": "#0dcaf0",
-									"neutral": "#6c757d"
-								},
-								"default": "#0d6efd"
-							}
-						}
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			"{label}"
+			{
+				"tag": "span",
+				"props": {
+					"style": {
+						"ttMerge": [
+							{
+								"display": "inline-flex",
+								"alignItems": "center",
+								"gap": "6px",
+								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+								"fontWeight": 600,
+								"lineHeight": 1.4,
+								"borderRadius": "50rem",
+								"flexWrap": "wrap"
+							},
+							{
+								"ttMap": {
+									"arg": "size",
+									"values": {
+										"sm": {
+											"fontSize": "12px",
+											"padding": "2px 8px"
+										},
+										"md": {
+											"fontSize": "14px",
+											"padding": "4px 10px"
+										}
+									},
+									"default": {
+										"fontSize": "12px",
+										"padding": "2px 8px"
+									}
+								}
+							},
+							{
+								"background": "transparent",
+								"borderWidth": "1px",
+								"borderStyle": "solid",
+								"borderColor": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#0d6efd",
+											"success": "#198754",
+											"warning": "#ffc107",
+											"danger": "#dc3545",
+											"info": "#0dcaf0",
+											"neutral": "#6c757d"
+										},
+										"default": "#0d6efd"
+									}
+								},
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#0d6efd",
+											"success": "#198754",
+											"warning": "#ffc107",
+											"danger": "#dc3545",
+											"info": "#0dcaf0",
+											"neutral": "#6c757d"
+										},
+										"default": "#0d6efd"
+									}
+								}
+							}
+						]
+					}
+				},
+				"children": [
+					"{label}"
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "badge-outline",
+									"title": "Outline Badge",
+									"details": "Label: {label}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "badge-outline",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Token Swap",
 	"library": "bootstrap",
 	"category": "finance",
-	"description": "Token swap widget in the Bootstrap style — From/To panels with token chips and mono amounts, a swap-arrows pivot button between them, a rate caption, and a full-width tone Swap button.",
+	"description": "Token swap widget in the Bootstrap style — From/To panels with token chips and mono amounts, a swap-arrows pivot button between them, a rate caption, and a full-width tone Swap button. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"crypto",
 		"swap",
@@ -52,26 +52,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#212529",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#dee2e6",
-				"borderRadius": "8px",
-				"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-				"padding": "14px",
-				"boxSizing": "border-box",
-				"width": "264px",
-				"gap": "10px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -79,217 +81,345 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"background": "#f8f9fa",
-						"borderRadius": "6px",
-						"padding": "10px 12px",
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#6c757d",
-								"fontWeight": 600
-							}
-						},
-						"children": [
-							"From"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "10px"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "6px",
-										"background": "#ffffff",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderRadius": "50rem",
-										"padding": "3px 8px",
-										"fontWeight": 600,
-										"fontSize": "14px"
-									}
-								},
-								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "18px",
-												"height": "18px",
-												"borderRadius": "999px",
-												"background": "#cff4fc",
-												"color": "#055160",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-												"fontWeight": 700,
-												"fontSize": "10px",
-												"flexShrink": 0
-											}
-										},
-										"children": [
-											"Ξ"
-										]
-									},
-									"{fromToken}",
-									{
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#6c757d",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "6 9 12 15 18 9"
-												}
-											}
-										]
-									}
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "18px",
-										"fontWeight": 600,
-										"color": "#212529"
-									}
-								},
-								"children": [
-									"{amount}"
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"width": "30px",
-						"height": "30px",
-						"borderRadius": "999px",
+						"color": "#212529",
 						"background": "#ffffff",
 						"borderWidth": "1px",
 						"borderStyle": "solid",
 						"borderColor": "#dee2e6",
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"alignSelf": "center",
-						"marginTop": "-19px",
-						"marginBottom": "-19px",
-						"position": "relative",
-						"zIndex": 1,
-						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+						"borderRadius": "8px",
+						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+						"padding": "14px",
+						"boxSizing": "border-box",
+						"width": "264px",
+						"gap": "10px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
-						"props": {
-							"width": 13,
-							"height": 13,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#0d6efd",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "line",
-								"props": {
-									"x1": 8,
-									"y1": 4,
-									"x2": 8,
-									"y2": 20
-								}
-							},
-							{
-								"tag": "polyline",
-								"props": {
-									"points": "4 16 8 20 12 16"
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 16,
-									"y1": 20,
-									"x2": 16,
-									"y2": 4
-								}
-							},
-							{
-								"tag": "polyline",
-								"props": {
-									"points": "12 8 16 4 20 8"
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"background": "#f8f9fa",
-						"borderRadius": "6px",
-						"padding": "10px 12px",
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "#6c757d",
-								"fontWeight": 600
+								"background": "#f8f9fa",
+								"borderRadius": "6px",
+								"padding": "10px 12px",
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "8px"
 							}
 						},
 						"children": [
-							"To"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "#6c757d",
+										"fontWeight": 600
+									}
+								},
+								"children": [
+									"From"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"gap": "10px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "6px",
+												"background": "#ffffff",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderRadius": "50rem",
+												"padding": "3px 8px",
+												"fontWeight": 600,
+												"fontSize": "14px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "18px",
+														"height": "18px",
+														"borderRadius": "999px",
+														"background": "#cff4fc",
+														"color": "#055160",
+														"display": "flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+														"fontWeight": 700,
+														"fontSize": "10px",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													"Ξ"
+												]
+											},
+											"{fromToken}",
+											{
+												"tag": "svg",
+												"props": {
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "#6c757d",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "6 9 12 15 18 9"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "18px",
+												"fontWeight": 600,
+												"color": "#212529"
+											}
+										},
+										"children": [
+											"{amount}"
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"width": "30px",
+								"height": "30px",
+								"borderRadius": "999px",
+								"background": "#ffffff",
+								"borderWidth": "1px",
+								"borderStyle": "solid",
+								"borderColor": "#dee2e6",
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"alignSelf": "center",
+								"marginTop": "-19px",
+								"marginBottom": "-19px",
+								"position": "relative",
+								"zIndex": 1,
+								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+								"maxWidth": "100%",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "svg",
+								"props": {
+									"width": 13,
+									"height": 13,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#0d6efd",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "line",
+										"props": {
+											"x1": 8,
+											"y1": 4,
+											"x2": 8,
+											"y2": 20
+										}
+									},
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "4 16 8 20 12 16"
+										}
+									},
+									{
+										"tag": "line",
+										"props": {
+											"x1": 16,
+											"y1": 20,
+											"x2": 16,
+											"y2": 4
+										}
+									},
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "12 8 16 4 20 8"
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"background": "#f8f9fa",
+								"borderRadius": "6px",
+								"padding": "10px 12px",
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "8px"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "#6c757d",
+										"fontWeight": 600
+									}
+								},
+								"children": [
+									"To"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"gap": "10px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "6px",
+												"background": "#ffffff",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderRadius": "50rem",
+												"padding": "3px 8px",
+												"fontWeight": 600,
+												"fontSize": "14px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "18px",
+														"height": "18px",
+														"borderRadius": "999px",
+														"background": "#d1e7dd",
+														"color": "#0a3622",
+														"display": "flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+														"fontWeight": 700,
+														"fontSize": "10px",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													"$"
+												]
+											},
+											"{toToken}",
+											{
+												"tag": "svg",
+												"props": {
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "#6c757d",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "6 9 12 15 18 9"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "18px",
+												"fontWeight": 600,
+												"color": "#6c757d"
+											}
+										},
+										"children": [
+											"≈ 5,118.42"
+										]
+									}
+								]
+							}
 						]
 					},
 					{
@@ -299,191 +429,250 @@
 								"display": "flex",
 								"alignItems": "center",
 								"justifyContent": "space-between",
-								"gap": "10px"
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
+								"tag": "span",
 								"props": {
 									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "6px",
-										"background": "#ffffff",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderRadius": "50rem",
-										"padding": "3px 8px",
-										"fontWeight": 600,
-										"fontSize": "14px"
+										"fontSize": "12px",
+										"color": "#6c757d"
 									}
 								},
 								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "18px",
-												"height": "18px",
-												"borderRadius": "999px",
-												"background": "#d1e7dd",
-												"color": "#0a3622",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-												"fontWeight": 700,
-												"fontSize": "10px",
-												"flexShrink": 0
-											}
-										},
-										"children": [
-											"$"
-										]
-									},
-									"{toToken}",
-									{
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#6c757d",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "6 9 12 15 18 9"
-												}
-											}
-										]
-									}
+									"Rate"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "18px",
-										"fontWeight": 600,
-										"color": "#6c757d"
+										"fontSize": "12px",
+										"color": "#212529",
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 									}
 								},
 								"children": [
-									"≈ 5,118.42"
+									"{rate}"
 								]
 							}
 						]
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
+								"ttMerge": [
+									{
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"width": "100%",
+										"height": "38px",
+										"border": "none",
+										"borderRadius": "6px",
+										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+										"fontWeight": 400,
+										"fontSize": "16px",
+										"cursor": "pointer",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									{
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#0d6efd",
+													"success": "#198754",
+													"warning": "#ffc107",
+													"danger": "#dc3545",
+													"info": "#0dcaf0",
+													"neutral": "#6c757d"
+												},
+												"default": "#0d6efd"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#000000",
+													"danger": "#ffffff",
+													"info": "#000000",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"boxShadow": "none"
+									},
+									{
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								]
+							},
+							"aria-label": "{actionLabel}"
+						},
+						"children": [
+							"{actionLabel}"
+						],
+						"ttAction": "{actionKey}",
+						"ttActionInputs": {
+							"family": "crypto-trading-swap",
+							"title": "Token Swap",
+							"details": "Amount: {amount}\nRate: {rate}"
+						}
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "8px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#6c757d"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"Rate"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "#212529",
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{rate}"
+							{
+								"tag": "label",
+								"children": [
+									"Amount ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Amount",
+											"value": {
+												"ttArg": "amount"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "amount"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Rate ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Rate",
+											"value": {
+												"ttArg": "rate"
+											},
+											"maxLength": 28,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "rate"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "crypto-trading-swap",
+									"title": "Token Swap",
+									"details": "Amount: {amount}\nRate: {rate}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"width": "100%",
-								"height": "38px",
-								"border": "none",
-								"borderRadius": "6px",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 400,
-								"fontSize": "16px",
-								"cursor": "pointer"
-							},
-							{
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#0d6efd",
-											"success": "#198754",
-											"warning": "#ffc107",
-											"danger": "#dc3545",
-											"info": "#0dcaf0",
-											"neutral": "#6c757d"
-										},
-										"default": "#0d6efd"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#000000",
-											"danger": "#ffffff",
-											"info": "#000000",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"boxShadow": "none"
-							}
-						]
-					}
-				},
+				"tag": "small",
 				"children": [
-					"Swap"
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "crypto-trading-swap",
 	"source": {
 		"kind": "archetype",
