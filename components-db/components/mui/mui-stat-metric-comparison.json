@@ -3,7 +3,7 @@
 	"name": "Comparison Stat",
 	"library": "mui",
 	"category": "data-display",
-	"description": "Two-value comparison card in the Material UI style — current figure in the tone color beside the previous figure, split by a vertical divider.",
+	"description": "Two-value comparison card in the Material UI style — current figure in the tone color beside the previous figure, split by a vertical divider. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"stat",
 		"comparison",
@@ -52,24 +52,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"alignItems": "stretch",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "rgba(0, 0, 0, 0.12)",
-				"borderRadius": "8px",
-				"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
-				"boxSizing": "border-box",
-				"padding": "16px 20px",
-				"gap": "18px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -77,118 +81,326 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "4px",
-						"flex": "1 1 0",
-						"minWidth": "90px"
+						"display": "inline-flex",
+						"alignItems": "stretch",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "rgba(0, 0, 0, 0.12)",
+						"borderRadius": "8px",
+						"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+						"boxSizing": "border-box",
+						"padding": "16px 20px",
+						"gap": "18px",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"fontWeight": 400,
-								"color": "rgba(0, 0, 0, 0.6)",
-								"textTransform": "uppercase",
-								"letterSpacing": "0.08em"
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "4px",
+								"flex": "1 1 0",
+								"minWidth": "90px"
 							}
 						},
 						"children": [
-							"{leftLabel}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 400,
+										"color": "rgba(0, 0, 0, 0.6)",
+										"textTransform": "uppercase",
+										"letterSpacing": "0.08em"
+									}
+								},
+								"children": [
+									"{leftLabel}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "20px",
+										"fontWeight": 500,
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1976d2",
+													"success": "#2e7d32",
+													"warning": "#ed6c02",
+													"danger": "#d32f2f",
+													"info": "#0288d1",
+													"neutral": "#616161"
+												},
+												"default": "#1976d2"
+											}
+										},
+										"lineHeight": 1.15,
+										"fontVariantNumeric": "tabular-nums"
+									}
+								},
+								"children": [
+									"{leftValue}"
+								]
+							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "20px",
-								"fontWeight": 500,
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1976d2",
-											"success": "#2e7d32",
-											"warning": "#ed6c02",
-											"danger": "#d32f2f",
-											"info": "#0288d1",
-											"neutral": "#616161"
-										},
-										"default": "#1976d2"
-									}
-								},
-								"lineHeight": 1.15,
-								"fontVariantNumeric": "tabular-nums"
+								"width": "2px",
+								"alignSelf": "stretch",
+								"borderRadius": "999px",
+								"background": "rgba(0, 0, 0, 0.08)",
+								"flexShrink": 0,
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							}
+						}
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "4px",
+								"flex": "1 1 0",
+								"minWidth": "90px"
 							}
 						},
 						"children": [
-							"{leftValue}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 400,
+										"color": "rgba(0, 0, 0, 0.6)",
+										"textTransform": "uppercase",
+										"letterSpacing": "0.08em"
+									}
+								},
+								"children": [
+									"{rightLabel}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "20px",
+										"fontWeight": 500,
+										"color": "rgba(0, 0, 0, 0.87)",
+										"lineHeight": 1.15,
+										"fontVariantNumeric": "tabular-nums"
+									}
+								},
+								"children": [
+									"{rightValue}"
+								]
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"width": "2px",
-						"alignSelf": "stretch",
-						"borderRadius": "999px",
-						"background": "rgba(0, 0, 0, 0.08)",
-						"flexShrink": 0
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "4px",
-						"flex": "1 1 0",
-						"minWidth": "90px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 400,
-								"color": "rgba(0, 0, 0, 0.6)",
-								"textTransform": "uppercase",
-								"letterSpacing": "0.08em"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"{rightLabel}"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "20px",
-								"fontWeight": 500,
-								"color": "rgba(0, 0, 0, 0.87)",
-								"lineHeight": 1.15,
-								"fontVariantNumeric": "tabular-nums"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{rightValue}"
+							{
+								"tag": "label",
+								"children": [
+									"Left label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Left label",
+											"value": {
+												"ttArg": "leftLabel"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "leftLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Left value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Left value",
+											"value": {
+												"ttArg": "leftValue"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "leftValue"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Right label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Right label",
+											"value": {
+												"ttArg": "rightLabel"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "rightLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Right value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Right value",
+											"value": {
+												"ttArg": "rightValue"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "rightValue"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "stat-metric-comparison",
+									"title": "Comparison Stat",
+									"details": "Left label: {leftLabel}\nLeft value: {leftValue}\nRight label: {rightLabel}\nRight value: {rightValue}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "stat-metric-comparison",
 	"source": {
 		"kind": "archetype",

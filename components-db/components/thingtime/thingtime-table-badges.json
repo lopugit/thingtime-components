@@ -3,7 +3,7 @@
 	"name": "Badge Table",
 	"library": "thingtime",
 	"category": "data-display",
-	"description": "Status table in the Thingtime style — task rows with a column of tone badges, switchable between soft tints and solid fills.",
+	"description": "Status table in the Thingtime style — task rows with a column of tone badges, switchable between soft tints and solid fills. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"table",
 		"badges",
@@ -47,20 +47,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Pill badges"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"width": "100%",
-				"overflow": "hidden",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"border": "1px solid #ececef",
-				"borderRadius": "12px",
-				"boxShadow": "none",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -68,171 +76,93 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"height": "3px",
-						"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
-					}
-				}
-			},
-			{
-				"tag": "table",
-				"props": {
-					"style": {
 						"width": "100%",
-						"borderCollapse": "collapse",
-						"fontSize": "14px",
-						"color": "#33333c"
+						"overflow": "hidden",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"border": "1px solid #ececef",
+						"borderRadius": "12px",
+						"boxShadow": "none",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "thead",
-						"children": [
-							{
-								"tag": "tr",
-								"children": [
-									{
-										"tag": "th",
-										"props": {
-											"style": {
-												"textAlign": "left",
-												"padding": "10px 14px",
-												"fontSize": "12px",
-												"fontWeight": 700,
-												"color": "#9a9aa6",
-												"background": "transparent",
-												"borderBottom": "1px solid #ececef"
-											}
-										},
-										"children": [
-											"{col1}"
-										]
-									},
-									{
-										"tag": "th",
-										"props": {
-											"style": {
-												"textAlign": "left",
-												"padding": "10px 14px",
-												"fontSize": "12px",
-												"fontWeight": 700,
-												"color": "#9a9aa6",
-												"background": "transparent",
-												"borderBottom": "1px solid #ececef"
-											}
-										},
-										"children": [
-											"{col2}"
-										]
-									},
-									{
-										"tag": "th",
-										"props": {
-											"style": {
-												"textAlign": "left",
-												"padding": "10px 14px",
-												"fontSize": "12px",
-												"fontWeight": 700,
-												"color": "#9a9aa6",
-												"background": "transparent",
-												"borderBottom": "1px solid #ececef"
-											}
-										},
-										"children": [
-											"{col3}"
-										]
-									}
-								]
+						"tag": "div",
+						"props": {
+							"style": {
+								"height": "3px",
+								"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
 							}
-						]
+						}
 					},
 					{
-						"tag": "tbody",
+						"tag": "table",
+						"props": {
+							"style": {
+								"width": "100%",
+								"borderCollapse": "collapse",
+								"fontSize": "14px",
+								"color": "#33333c",
+								"maxWidth": "100%"
+							}
+						},
 						"children": [
 							{
-								"tag": "tr",
+								"tag": "thead",
 								"children": [
 									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#33333c",
-												"fontWeight": 500
-											}
-										},
-										"children": [
-											"Nightly backup"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#9a9aa6"
-											}
-										},
-										"children": [
-											"Ops"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#33333c"
-											}
-										},
+										"tag": "tr",
 										"children": [
 											{
-												"tag": "span",
+												"tag": "th",
 												"props": {
 													"style": {
-														"display": "inline-flex",
-														"alignItems": "center",
-														"padding": "2px 9px",
-														"fontSize": "11px",
-														"fontWeight": 600,
-														"lineHeight": "18px",
-														"borderRadius": {
-															"ttIf": {
-																"arg": "pill",
-																"then": "999px",
-																"else": "7px"
-															}
-														},
-														"background": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "#2f9e63",
-																"else": "#eafaf1"
-															}
-														},
-														"color": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "#ffffff",
-																"else": "#1f7a4a"
-															}
-														},
-														"border": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "1px solid transparent",
-																"else": "1px solid #bfe9d2"
-															}
-														}
+														"textAlign": "left",
+														"padding": "10px 14px",
+														"fontSize": "12px",
+														"fontWeight": 700,
+														"color": "#9a9aa6",
+														"background": "transparent",
+														"borderBottom": "1px solid #ececef"
 													}
 												},
 												"children": [
-													"Active"
+													"{col1}"
+												]
+											},
+											{
+												"tag": "th",
+												"props": {
+													"style": {
+														"textAlign": "left",
+														"padding": "10px 14px",
+														"fontSize": "12px",
+														"fontWeight": 700,
+														"color": "#9a9aa6",
+														"background": "transparent",
+														"borderBottom": "1px solid #ececef"
+													}
+												},
+												"children": [
+													"{col2}"
+												]
+											},
+											{
+												"tag": "th",
+												"props": {
+													"style": {
+														"textAlign": "left",
+														"padding": "10px 14px",
+														"fontSize": "12px",
+														"fontWeight": 700,
+														"color": "#9a9aa6",
+														"background": "transparent",
+														"borderBottom": "1px solid #ececef"
+													}
+												},
+												"children": [
+													"{col3}"
 												]
 											}
 										]
@@ -240,272 +170,436 @@
 								]
 							},
 							{
-								"tag": "tr",
+								"tag": "tbody",
 								"children": [
 									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#33333c",
-												"fontWeight": 500
-											}
-										},
-										"children": [
-											"Invoice sync"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#9a9aa6"
-											}
-										},
-										"children": [
-											"Finance"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#33333c"
-											}
-										},
+										"tag": "tr",
 										"children": [
 											{
-												"tag": "span",
+												"tag": "td",
 												"props": {
 													"style": {
-														"display": "inline-flex",
-														"alignItems": "center",
-														"padding": "2px 9px",
-														"fontSize": "11px",
-														"fontWeight": 600,
-														"lineHeight": "18px",
-														"borderRadius": {
-															"ttIf": {
-																"arg": "pill",
-																"then": "999px",
-																"else": "7px"
-															}
-														},
-														"background": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "#d99a1f",
-																"else": "#fdf6e5"
-															}
-														},
-														"color": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "#ffffff",
-																"else": "#9a6c12"
-															}
-														},
-														"border": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "1px solid transparent",
-																"else": "1px solid #f2ddaa"
-															}
-														}
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#33333c",
+														"fontWeight": 500
 													}
 												},
 												"children": [
-													"Pending"
+													"Nightly backup"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#9a9aa6"
+													}
+												},
+												"children": [
+													"Ops"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#33333c"
+													}
+												},
+												"children": [
+													{
+														"tag": "button",
+														"props": {
+															"style": {
+																"display": "inline-flex",
+																"alignItems": "center",
+																"padding": "2px 9px",
+																"fontSize": "11px",
+																"fontWeight": 600,
+																"lineHeight": "18px",
+																"borderRadius": {
+																	"ttIf": {
+																		"arg": "pill",
+																		"then": "999px",
+																		"else": "7px"
+																	}
+																},
+																"background": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "#2f9e63",
+																		"else": "#eafaf1"
+																	}
+																},
+																"color": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "#ffffff",
+																		"else": "#1f7a4a"
+																	}
+																},
+																"border": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "1px solid transparent",
+																		"else": "1px solid #bfe9d2"
+																	}
+																},
+																"flexWrap": "wrap"
+															},
+															"type": "button",
+															"aria-label": "Active",
+															"aria-pressed": {
+																"ttIf": {
+																	"arg": "badgeStyle",
+																	"equals": "solid",
+																	"then": true,
+																	"else": false
+																}
+															}
+														},
+														"children": [
+															"Active"
+														],
+														"ttAction": "$ui",
+														"ttActionInputs": {
+															"op": "set",
+															"key": "badgeStyle",
+															"value": "solid"
+														}
+													}
 												]
 											}
 										]
-									}
-								]
-							},
-							{
-								"tag": "tr",
-								"children": [
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#33333c",
-												"fontWeight": 500
-											}
-										},
-										"children": [
-											"Edge deploy"
-										]
 									},
 									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#9a9aa6"
-											}
-										},
-										"children": [
-											"Platform"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#33333c"
-											}
-										},
+										"tag": "tr",
 										"children": [
 											{
-												"tag": "span",
+												"tag": "td",
 												"props": {
 													"style": {
-														"display": "inline-flex",
-														"alignItems": "center",
-														"padding": "2px 9px",
-														"fontSize": "11px",
-														"fontWeight": 600,
-														"lineHeight": "18px",
-														"borderRadius": {
-															"ttIf": {
-																"arg": "pill",
-																"then": "999px",
-																"else": "7px"
-															}
-														},
-														"background": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "#d5484f",
-																"else": "#fdeceb"
-															}
-														},
-														"color": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "#ffffff",
-																"else": "#a83238"
-															}
-														},
-														"border": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "1px solid transparent",
-																"else": "1px solid #f4c1c3"
-															}
-														}
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#33333c",
+														"fontWeight": 500
 													}
 												},
 												"children": [
-													"Failed"
+													"Invoice sync"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#9a9aa6"
+													}
+												},
+												"children": [
+													"Finance"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#33333c"
+													}
+												},
+												"children": [
+													{
+														"tag": "button",
+														"props": {
+															"style": {
+																"display": "inline-flex",
+																"alignItems": "center",
+																"padding": "2px 9px",
+																"fontSize": "11px",
+																"fontWeight": 600,
+																"lineHeight": "18px",
+																"borderRadius": {
+																	"ttIf": {
+																		"arg": "pill",
+																		"then": "999px",
+																		"else": "7px"
+																	}
+																},
+																"background": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "#d99a1f",
+																		"else": "#fdf6e5"
+																	}
+																},
+																"color": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "#ffffff",
+																		"else": "#9a6c12"
+																	}
+																},
+																"border": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "1px solid transparent",
+																		"else": "1px solid #f2ddaa"
+																	}
+																},
+																"flexWrap": "wrap"
+															},
+															"type": "button",
+															"aria-label": "Pending",
+															"aria-pressed": {
+																"ttIf": {
+																	"arg": "badgeStyle",
+																	"equals": "solid",
+																	"then": true,
+																	"else": false
+																}
+															}
+														},
+														"children": [
+															"Pending"
+														],
+														"ttAction": "$ui",
+														"ttActionInputs": {
+															"op": "set",
+															"key": "badgeStyle",
+															"value": "solid"
+														}
+													}
 												]
 											}
 										]
-									}
-								]
-							},
-							{
-								"tag": "tr",
-								"children": [
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#33333c",
-												"fontWeight": 500
-											}
-										},
-										"children": [
-											"Legacy import"
-										]
 									},
 									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#9a9aa6"
-											}
-										},
-										"children": [
-											"Data"
-										]
-									},
-									{
-										"tag": "td",
-										"props": {
-											"style": {
-												"padding": "9px 14px",
-												"borderBottom": "1px solid #f5f5f7",
-												"color": "#33333c"
-											}
-										},
+										"tag": "tr",
 										"children": [
 											{
-												"tag": "span",
+												"tag": "td",
 												"props": {
 													"style": {
-														"display": "inline-flex",
-														"alignItems": "center",
-														"padding": "2px 9px",
-														"fontSize": "11px",
-														"fontWeight": 600,
-														"lineHeight": "18px",
-														"borderRadius": {
-															"ttIf": {
-																"arg": "pill",
-																"then": "999px",
-																"else": "7px"
-															}
-														},
-														"background": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "#9a9aa6",
-																"else": "#f5f5f7"
-															}
-														},
-														"color": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "#ffffff",
-																"else": "#5a5a66"
-															}
-														},
-														"border": {
-															"ttIf": {
-																"arg": "badgeStyle",
-																"equals": "solid",
-																"then": "1px solid transparent",
-																"else": "1px solid #ececef"
-															}
-														}
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#33333c",
+														"fontWeight": 500
 													}
 												},
 												"children": [
-													"Archived"
+													"Edge deploy"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#9a9aa6"
+													}
+												},
+												"children": [
+													"Platform"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#33333c"
+													}
+												},
+												"children": [
+													{
+														"tag": "button",
+														"props": {
+															"style": {
+																"display": "inline-flex",
+																"alignItems": "center",
+																"padding": "2px 9px",
+																"fontSize": "11px",
+																"fontWeight": 600,
+																"lineHeight": "18px",
+																"borderRadius": {
+																	"ttIf": {
+																		"arg": "pill",
+																		"then": "999px",
+																		"else": "7px"
+																	}
+																},
+																"background": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "#d5484f",
+																		"else": "#fdeceb"
+																	}
+																},
+																"color": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "#ffffff",
+																		"else": "#a83238"
+																	}
+																},
+																"border": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "1px solid transparent",
+																		"else": "1px solid #f4c1c3"
+																	}
+																},
+																"flexWrap": "wrap"
+															},
+															"type": "button",
+															"aria-label": "Failed",
+															"aria-pressed": {
+																"ttIf": {
+																	"arg": "badgeStyle",
+																	"equals": "solid",
+																	"then": true,
+																	"else": false
+																}
+															}
+														},
+														"children": [
+															"Failed"
+														],
+														"ttAction": "$ui",
+														"ttActionInputs": {
+															"op": "set",
+															"key": "badgeStyle",
+															"value": "solid"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"tag": "tr",
+										"children": [
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#33333c",
+														"fontWeight": 500
+													}
+												},
+												"children": [
+													"Legacy import"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#9a9aa6"
+													}
+												},
+												"children": [
+													"Data"
+												]
+											},
+											{
+												"tag": "td",
+												"props": {
+													"style": {
+														"padding": "9px 14px",
+														"borderBottom": "1px solid #f5f5f7",
+														"color": "#33333c"
+													}
+												},
+												"children": [
+													{
+														"tag": "button",
+														"props": {
+															"style": {
+																"display": "inline-flex",
+																"alignItems": "center",
+																"padding": "2px 9px",
+																"fontSize": "11px",
+																"fontWeight": 600,
+																"lineHeight": "18px",
+																"borderRadius": {
+																	"ttIf": {
+																		"arg": "pill",
+																		"then": "999px",
+																		"else": "7px"
+																	}
+																},
+																"background": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "#9a9aa6",
+																		"else": "#f5f5f7"
+																	}
+																},
+																"color": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "#ffffff",
+																		"else": "#5a5a66"
+																	}
+																},
+																"border": {
+																	"ttIf": {
+																		"arg": "badgeStyle",
+																		"equals": "solid",
+																		"then": "1px solid transparent",
+																		"else": "1px solid #ececef"
+																	}
+																},
+																"flexWrap": "wrap"
+															},
+															"type": "button",
+															"aria-label": "Archived",
+															"aria-pressed": {
+																"ttIf": {
+																	"arg": "badgeStyle",
+																	"equals": "solid",
+																	"then": true,
+																	"else": false
+																}
+															}
+														},
+														"children": [
+															"Archived"
+														],
+														"ttAction": "$ui",
+														"ttActionInputs": {
+															"op": "set",
+															"key": "badgeStyle",
+															"value": "solid"
+														}
+													}
 												]
 											}
 										]
@@ -515,10 +609,214 @@
 						]
 					}
 				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Badge style ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Badge style",
+											"value": {
+												"ttArg": "badgeStyle"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "soft"
+												},
+												"children": [
+													"soft"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "solid"
+												},
+												"children": [
+													"solid"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "badgeStyle"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Column 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Column 1",
+											"value": {
+												"ttArg": "col1"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "col1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Column 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Column 2",
+											"value": {
+												"ttArg": "col2"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "col2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Column 3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Column 3",
+											"value": {
+												"ttArg": "col3"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "col3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "table-badges",
+									"title": "Badge Table",
+									"details": "Column 1: {col1}\nColumn 2: {col2}\nColumn 3: {col3}\nBadge style: {badgeStyle}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "table-badges",
 	"source": {
 		"kind": "archetype",

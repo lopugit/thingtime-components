@@ -3,7 +3,7 @@
 	"name": "Trip Computer",
 	"library": "reactflow",
 	"category": "automotive",
-	"description": "Trip computer card in the React Flow style — four stat tiles for distance, speed, drive time and efficiency, a route caption, and an eco-score mini-ring drawn with a stepped dasharray.",
+	"description": "Trip computer card in the React Flow style — four stat tiles for distance, speed, drive time and efficiency, a route caption, and an eco-score mini-ring drawn with a stepped dasharray. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"automotive",
 		"trip",
@@ -39,27 +39,28 @@
 			"label": "Eco score (0-10)",
 			"min": 0,
 			"max": 10
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "290px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#1a192b",
-				"overflow": "hidden",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"gap": "10px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -69,267 +70,22 @@
 					"style": {
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "2px"
+						"width": "290px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#1a192b",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+						"color": "#1a192b",
+						"overflow": "hidden",
+						"boxSizing": "border-box",
+						"padding": "16px",
+						"gap": "10px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"letterSpacing": "0.08em",
-								"textTransform": "uppercase",
-								"color": "#b1b1b7"
-							}
-						},
-						"children": [
-							"Trip computer"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#6f6e77"
-							}
-						},
-						"children": [
-							"{from} → {to}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "grid",
-						"gridTemplateColumns": "1fr 1fr",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"padding": "8px 10px",
-								"gap": "2px",
-								"borderRadius": "5px",
-								"background": "#f4f4f5"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "10px",
-										"color": "#6f6e77"
-									}
-								},
-								"children": [
-									"Distance"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600
-									}
-								},
-								"children": [
-									"{distance}"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"padding": "8px 10px",
-								"gap": "2px",
-								"borderRadius": "5px",
-								"background": "#f4f4f5"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "10px",
-										"color": "#6f6e77"
-									}
-								},
-								"children": [
-									"Avg speed"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600
-									}
-								},
-								"children": [
-									"54 km/h"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"padding": "8px 10px",
-								"gap": "2px",
-								"borderRadius": "5px",
-								"background": "#f4f4f5"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "10px",
-										"color": "#6f6e77"
-									}
-								},
-								"children": [
-									"Drive time"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600
-									}
-								},
-								"children": [
-									"2h 08m"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"padding": "8px 10px",
-								"gap": "2px",
-								"borderRadius": "5px",
-								"background": "#f4f4f5"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "10px",
-										"color": "#6f6e77"
-									}
-								},
-								"children": [
-									"Efficiency"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600
-									}
-								},
-								"children": [
-									"16.4 kWh/100km"
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "svg",
-						"props": {
-							"width": 40,
-							"height": 40,
-							"viewBox": "0 0 36 36",
-							"fill": "none",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "path",
-								"props": {
-									"d": "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831",
-									"stroke": "#e2e2e5",
-									"strokeWidth": 4
-								}
-							},
-							{
-								"tag": "path",
-								"props": {
-									"d": "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831",
-									"stroke": "#ff0072",
-									"strokeWidth": 4,
-									"strokeLinecap": "round",
-									"style": {
-										"strokeDasharray": {
-											"ttMap": {
-												"arg": "eco",
-												"values": {
-													"0": "0 100",
-													"1": "10 100",
-													"2": "20 100",
-													"3": "30 100",
-													"4": "40 100",
-													"5": "50 100",
-													"6": "60 100",
-													"7": "70 100",
-													"8": "80 100",
-													"9": "90 100",
-													"10": "100 100"
-												},
-												"default": "80 100"
-											}
-										}
-									}
-								}
-							}
-						]
-					},
 					{
 						"tag": "div",
 						"props": {
@@ -344,33 +100,496 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"letterSpacing": "0.08em",
+										"textTransform": "uppercase",
+										"color": "#b1b1b7"
 									}
 								},
 								"children": [
-									"Eco score {eco}/10"
+									"Trip computer"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "10px",
+										"fontSize": "12px",
 										"color": "#6f6e77"
 									}
 								},
 								"children": [
-									"Smooth accel & braking"
+									"{from} → {to}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gridTemplateColumns": "minmax(0, 1fr) minmax(0, 1fr)",
+								"gap": "8px"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"padding": "8px 10px",
+										"gap": "2px",
+										"borderRadius": "5px",
+										"background": "#f4f4f5"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Distance"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"{distance}"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"padding": "8px 10px",
+										"gap": "2px",
+										"borderRadius": "5px",
+										"background": "#f4f4f5"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Avg speed"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"54 km/h"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"padding": "8px 10px",
+										"gap": "2px",
+										"borderRadius": "5px",
+										"background": "#f4f4f5"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Drive time"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"2h 08m"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"padding": "8px 10px",
+										"gap": "2px",
+										"borderRadius": "5px",
+										"background": "#f4f4f5"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Efficiency"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"16.4 kWh/100km"
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "svg",
+								"props": {
+									"width": 40,
+									"height": 40,
+									"viewBox": "0 0 36 36",
+									"fill": "none",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "path",
+										"props": {
+											"d": "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831",
+											"stroke": "#e2e2e5",
+											"strokeWidth": 4
+										}
+									},
+									{
+										"tag": "path",
+										"props": {
+											"d": "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831",
+											"stroke": "#ff0072",
+											"strokeWidth": 4,
+											"strokeLinecap": "round",
+											"style": {
+												"strokeDasharray": {
+													"ttMap": {
+														"arg": "eco",
+														"values": {
+															"0": "0 100",
+															"1": "10 100",
+															"2": "20 100",
+															"3": "30 100",
+															"4": "40 100",
+															"5": "50 100",
+															"6": "60 100",
+															"7": "70 100",
+															"8": "80 100",
+															"9": "90 100",
+															"10": "100 100"
+														},
+														"default": "80 100"
+													}
+												}
+											}
+										}
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"Eco score {eco}/10"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Smooth accel & braking"
+										]
+									}
 								]
 							}
 						]
 					}
 				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Distance ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Distance",
+											"value": {
+												"ttArg": "distance"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "distance"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"From ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "From",
+											"value": {
+												"ttArg": "from"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "from"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"To ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "To",
+											"value": {
+												"ttArg": "to"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "to"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Eco score (0-10) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Eco score (0-10)",
+											"value": {
+												"ttArg": "eco"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 10
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "eco"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "automotive-trip",
+									"title": "Trip Computer",
+									"details": "Distance: {distance}\nFrom: {from}\nTo: {to}\nEco score (0-10): {eco}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "automotive-trip",
 	"source": {
 		"kind": "archetype",

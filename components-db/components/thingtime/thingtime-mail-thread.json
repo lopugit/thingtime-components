@@ -3,7 +3,7 @@
 	"name": "Email Thread",
 	"library": "thingtime",
 	"category": "communication",
-	"description": "Open email thread in the Thingtime style — avatar sender header with a 'to me' caption and time, a collapsed earlier-messages bar, body paragraphs, and reply/forward ghost buttons.",
+	"description": "Open email thread in the Thingtime style — avatar sender header with a 'to me' caption and time, a collapsed earlier-messages bar, body paragraphs, and reply/forward ghost buttons. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"mail",
 		"thread",
@@ -47,23 +47,28 @@
 			"label": "Earlier messages",
 			"min": 1,
 			"max": 99
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "12px",
-				"maxWidth": "440px",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"background": "#ffffff",
-				"border": "1px solid #ececef",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -72,8 +77,15 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
+						"flexDirection": "column",
+						"gap": "12px",
+						"maxWidth": "440px",
+						"boxSizing": "border-box",
+						"padding": "16px",
+						"background": "#ffffff",
+						"border": "1px solid #ececef",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
 					}
 				},
 				"children": [
@@ -81,247 +93,481 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "36px",
-								"height": "36px",
-								"borderRadius": "999px",
-								"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)",
-								"color": "#ffffff",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "12px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"{initials}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"minWidth": 0
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "14px",
-										"fontWeight": 700,
-										"color": "#33333c"
+										"width": "36px",
+										"height": "36px",
+										"borderRadius": "999px",
+										"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)",
+										"color": "#ffffff",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "12px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"{sender}"
+									"{initials}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"minWidth": 0
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 700,
+												"color": "#33333c"
+											}
+										},
+										"children": [
+											"{sender}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"gap": "4px",
+												"fontSize": "11px",
+												"color": "#9a9aa6",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"to me",
+											{
+												"tag": "svg",
+												"props": {
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "#b6b6c0",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "6 9 12 15 18 9"
+														}
+													}
+												]
+											}
+										]
+									}
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"gap": "4px",
+										"marginLeft": "auto",
 										"fontSize": "11px",
-										"color": "#9a9aa6"
+										"color": "#9a9aa6",
+										"flexShrink": 0
 									}
 								},
 								"children": [
-									"to me",
-									{
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#b6b6c0",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "6 9 12 15 18 9"
-												}
-											}
-										]
-									}
+									"{time}"
 								]
 							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"marginLeft": "auto",
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"padding": "6px 12px",
+								"background": "#f5f5f7",
+								"border": "1px solid #f5f5f7",
+								"borderRadius": "12px",
 								"fontSize": "11px",
 								"color": "#9a9aa6",
-								"flexShrink": 0
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{time}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"padding": "6px 12px",
-						"background": "#f5f5f7",
-						"border": "1px solid #f5f5f7",
-						"borderRadius": "12px",
-						"fontSize": "11px",
-						"color": "#9a9aa6",
-						"cursor": "pointer"
-					}
-				},
-				"children": [
-					"••• {earlier} earlier messages"
-				]
-			},
-			{
-				"tag": "p",
-				"props": {
-					"style": {
-						"margin": 0,
-						"fontSize": "12px",
-						"lineHeight": 1.6,
-						"color": "#33333c"
-					}
-				},
-				"children": [
-					"{body}"
-				]
-			},
-			{
-				"tag": "p",
-				"props": {
-					"style": {
-						"margin": 0,
-						"fontSize": "12px",
-						"lineHeight": 1.6,
-						"color": "#33333c"
-					}
-				},
-				"children": [
-					"Happy to walk through the details whenever suits — the numbers are in the attached deck."
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"paddingTop": "4px"
-					}
-				},
-				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "6px",
-								"height": "28px",
-								"padding": "0 10px",
-								"border": "none",
-								"background": "transparent",
-								"borderRadius": "12px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 600,
-								"fontSize": "12px",
-								"color": "#16161a",
-								"cursor": "pointer"
-							}
-						},
-						"children": [
-							"Reply"
+							"••• {earlier} earlier messages"
 						]
 					},
 					{
-						"tag": "button",
+						"tag": "p",
 						"props": {
-							"type": "button",
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "6px",
-								"height": "28px",
-								"padding": "0 10px",
-								"border": "none",
-								"background": "transparent",
-								"borderRadius": "12px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 600,
+								"margin": 0,
 								"fontSize": "12px",
-								"color": "#9a9aa6",
-								"cursor": "pointer"
+								"lineHeight": 1.6,
+								"color": "#33333c"
 							}
 						},
 						"children": [
-							"Forward",
+							"{body}"
+						]
+					},
+					{
+						"tag": "p",
+						"props": {
+							"style": {
+								"margin": 0,
+								"fontSize": "12px",
+								"lineHeight": 1.6,
+								"color": "#33333c"
+							}
+						},
+						"children": [
+							"Happy to walk through the details whenever suits — the numbers are in the attached deck."
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"paddingTop": "4px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
 							{
-								"tag": "svg",
+								"tag": "button",
 								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"gap": "6px",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"background": "transparent",
+										"borderRadius": "12px",
+										"fontWeight": 600,
+										"fontSize": "12px",
+										"color": "#16161a",
+										"cursor": "pointer",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
 								},
 								"children": [
-									{
-										"tag": "line",
-										"props": {
-											"x1": 5,
-											"y1": 12,
-											"x2": 19,
-											"y2": 12
-										}
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "mail-thread",
+									"title": "Email Thread",
+									"details": "Sender: {sender}\nInitials: {initials}\nTime: {time}\nBody: {body}\nEarlier messages: {earlier}"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"gap": "6px",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"background": "transparent",
+										"borderRadius": "12px",
+										"fontWeight": 600,
+										"fontSize": "12px",
+										"color": "#9a9aa6",
+										"cursor": "pointer",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
 									},
-									{
-										"tag": "polyline",
-										"props": {
-											"points": "12 5 19 12 12 19"
-										}
-									}
-								]
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "mail-thread",
+									"title": "Email Thread",
+									"details": "Sender: {sender}\nInitials: {initials}\nTime: {time}\nBody: {body}\nEarlier messages: {earlier}"
+								}
 							}
 						]
 					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Sender ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Sender",
+											"value": {
+												"ttArg": "sender"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "sender"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Initials ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Initials",
+											"value": {
+												"ttArg": "initials"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "initials"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Time ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Time",
+											"value": {
+												"ttArg": "time"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "time"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Body ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Body",
+											"value": {
+												"ttArg": "body"
+											},
+											"maxLength": 240,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "body"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Earlier messages ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Earlier messages",
+											"value": {
+												"ttArg": "earlier"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 99
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "earlier"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "mail-thread",
+									"title": "Email Thread",
+									"details": "Sender: {sender}\nInitials: {initials}\nTime: {time}\nBody: {body}\nEarlier messages: {earlier}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "mail-thread",
 	"source": {
 		"kind": "archetype",

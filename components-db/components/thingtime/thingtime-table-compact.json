@@ -3,7 +3,7 @@
 	"name": "Compact Table",
 	"library": "thingtime",
 	"category": "data-display",
-	"description": "Dense compact table in the Thingtime style — tight paddings, small monospace ids, and an adjustable repeated row count.",
+	"description": "Dense compact table in the Thingtime style — tight paddings, small monospace ids, and an adjustable repeated row count. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"table",
 		"compact",
@@ -39,20 +39,28 @@
 			"label": "Rows",
 			"min": 1,
 			"max": 10
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"width": "100%",
-				"overflow": "hidden",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"border": "1px solid #ececef",
-				"borderRadius": "12px",
-				"boxShadow": "none",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -60,138 +68,343 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"height": "3px",
-						"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
-					}
-				}
-			},
-			{
-				"tag": "table",
-				"props": {
-					"style": {
 						"width": "100%",
-						"borderCollapse": "collapse",
-						"fontSize": "12px",
-						"color": "#33333c"
+						"overflow": "hidden",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"border": "1px solid #ececef",
+						"borderRadius": "12px",
+						"boxShadow": "none",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "thead",
+						"tag": "div",
+						"props": {
+							"style": {
+								"height": "3px",
+								"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
+							}
+						}
+					},
+					{
+						"tag": "table",
+						"props": {
+							"style": {
+								"width": "100%",
+								"borderCollapse": "collapse",
+								"fontSize": "12px",
+								"color": "#33333c",
+								"maxWidth": "100%"
+							}
+						},
 						"children": [
 							{
-								"tag": "tr",
+								"tag": "thead",
 								"children": [
 									{
-										"tag": "th",
-										"props": {
-											"style": {
-												"textAlign": "left",
-												"padding": "7px 10px",
-												"fontSize": "11px",
-												"fontWeight": 700,
-												"color": "#9a9aa6",
-												"background": "transparent",
-												"borderBottom": "1px solid #ececef"
-											}
-										},
+										"tag": "tr",
 										"children": [
-											"{col1}"
+											{
+												"tag": "th",
+												"props": {
+													"style": {
+														"textAlign": "left",
+														"padding": "7px 10px",
+														"fontSize": "11px",
+														"fontWeight": 700,
+														"color": "#9a9aa6",
+														"background": "transparent",
+														"borderBottom": "1px solid #ececef"
+													}
+												},
+												"children": [
+													"{col1}"
+												]
+											},
+											{
+												"tag": "th",
+												"props": {
+													"style": {
+														"textAlign": "left",
+														"padding": "7px 10px",
+														"fontSize": "11px",
+														"fontWeight": 700,
+														"color": "#9a9aa6",
+														"background": "transparent",
+														"borderBottom": "1px solid #ececef"
+													}
+												},
+												"children": [
+													"{col2}"
+												]
+											},
+											{
+												"tag": "th",
+												"props": {
+													"style": {
+														"textAlign": "left",
+														"padding": "7px 10px",
+														"fontSize": "11px",
+														"fontWeight": 700,
+														"color": "#9a9aa6",
+														"background": "transparent",
+														"borderBottom": "1px solid #ececef"
+													}
+												},
+												"children": [
+													"{col3}"
+												]
+											}
 										]
-									},
+									}
+								]
+							},
+							{
+								"tag": "tbody",
+								"children": [
 									{
-										"tag": "th",
-										"props": {
-											"style": {
-												"textAlign": "left",
-												"padding": "7px 10px",
-												"fontSize": "11px",
-												"fontWeight": 700,
-												"color": "#9a9aa6",
-												"background": "transparent",
-												"borderBottom": "1px solid #ececef"
+										"ttRepeat": {
+											"arg": "rows",
+											"max": 10,
+											"node": {
+												"tag": "tr",
+												"children": [
+													{
+														"tag": "td",
+														"props": {
+															"style": {
+																"padding": "5px 10px",
+																"borderBottom": "1px solid #f5f5f7",
+																"color": "#9a9aa6",
+																"fontSize": "11px",
+																"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+															}
+														},
+														"children": [
+															"#10{n}"
+														]
+													},
+													{
+														"tag": "td",
+														"props": {
+															"style": {
+																"padding": "5px 10px",
+																"borderBottom": "1px solid #f5f5f7",
+																"color": "#33333c",
+																"fontSize": "12px"
+															}
+														},
+														"children": [
+															"Queued job {n}"
+														]
+													},
+													{
+														"tag": "td",
+														"props": {
+															"style": {
+																"padding": "5px 10px",
+																"borderBottom": "1px solid #f5f5f7",
+																"color": "#9a9aa6",
+																"fontSize": "12px"
+															}
+														},
+														"children": [
+															"{n} of {rows}"
+														]
+													}
+												]
 											}
-										},
-										"children": [
-											"{col2}"
-										]
-									},
-									{
-										"tag": "th",
-										"props": {
-											"style": {
-												"textAlign": "left",
-												"padding": "7px 10px",
-												"fontSize": "11px",
-												"fontWeight": 700,
-												"color": "#9a9aa6",
-												"background": "transparent",
-												"borderBottom": "1px solid #ececef"
-											}
-										},
-										"children": [
-											"{col3}"
-										]
+										}
 									}
 								]
 							}
 						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
 					},
 					{
-						"tag": "tbody",
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
 						"children": [
 							{
-								"ttRepeat": {
-									"arg": "rows",
-									"max": 10,
-									"node": {
-										"tag": "tr",
-										"children": [
-											{
-												"tag": "td",
-												"props": {
-													"style": {
-														"padding": "5px 10px",
-														"borderBottom": "1px solid #f5f5f7",
-														"color": "#9a9aa6",
-														"fontSize": "11px",
-														"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-													}
-												},
-												"children": [
-													"#10{n}"
-												]
+								"tag": "label",
+								"children": [
+									"Column 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Column 1",
+											"value": {
+												"ttArg": "col1"
 											},
-											{
-												"tag": "td",
-												"props": {
-													"style": {
-														"padding": "5px 10px",
-														"borderBottom": "1px solid #f5f5f7",
-														"color": "#33333c",
-														"fontSize": "12px"
-													}
-												},
-												"children": [
-													"Queued job {n}"
-												]
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											},
-											{
-												"tag": "td",
-												"props": {
-													"style": {
-														"padding": "5px 10px",
-														"borderBottom": "1px solid #f5f5f7",
-														"color": "#9a9aa6",
-														"fontSize": "12px"
-													}
-												},
-												"children": [
-													"{n} of {rows}"
-												]
-											}
-										]
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "col1"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Column 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Column 2",
+											"value": {
+												"ttArg": "col2"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "col2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Column 3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Column 3",
+											"value": {
+												"ttArg": "col3"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "col3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Rows ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Rows",
+											"value": {
+												"ttArg": "rows"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 10
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "rows"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "table-compact",
+									"title": "Compact Table",
+									"details": "Column 1: {col1}\nColumn 2: {col2}\nColumn 3: {col3}\nRows: {rows}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -200,7 +413,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "table-compact",
 	"source": {
 		"kind": "archetype",

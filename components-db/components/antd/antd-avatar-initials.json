@@ -3,7 +3,7 @@
 	"name": "Initials Avatar",
 	"library": "antd",
 	"category": "data-display",
-	"description": "Circular initials avatar in the Ant Design style — tone-filled disc with library type, optional soft tint and a surface-offset ring.",
+	"description": "Circular initials avatar in the Ant Design style — tone-filled disc with library type, optional soft tint and a surface-offset ring. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"avatar",
 		"initials",
@@ -53,159 +53,301 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Ring"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontWeight": 600,
-						"borderRadius": "999px",
-						"flexShrink": 0,
-						"userSelect": "none"
-					},
-					{
-						"ttMap": {
-							"arg": "size",
-							"values": {
-								"sm": {
-									"width": "28px",
-									"height": "28px",
-									"fontSize": "12px"
-								},
-								"md": {
-									"width": "40px",
-									"height": "40px",
-									"fontSize": "13px"
-								},
-								"lg": {
-									"width": "56px",
-									"height": "56px",
-									"fontSize": "16px"
-								}
-							},
-							"default": {
-								"width": "40px",
-								"height": "40px",
-								"fontSize": "13px"
-							}
-						}
-					},
-					{
-						"ttIf": {
-							"arg": "soft",
-							"then": {
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#e6f4ff",
-											"success": "#f6ffed",
-											"warning": "#fffbe6",
-											"danger": "#fff2f0",
-											"info": "#e6f4ff",
-											"neutral": "#fafafa"
-										},
-										"default": "#e6f4ff"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#0958d9",
-											"success": "#389e0d",
-											"warning": "#d48806",
-											"danger": "#cf1322",
-											"info": "#0958d9",
-											"neutral": "rgba(0, 0, 0, 0.65)"
-										},
-										"default": "#0958d9"
-									}
-								},
-								"border": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "1px solid #91caff",
-											"success": "1px solid #b7eb8f",
-											"warning": "1px solid #ffe58f",
-											"danger": "1px solid #ffccc7",
-											"info": "1px solid #91caff",
-											"neutral": "1px solid #d9d9d9"
-										},
-										"default": "1px solid #91caff"
-									}
-								}
-							},
-							"else": {
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1677ff",
-											"success": "#52c41a",
-											"warning": "#faad14",
-											"danger": "#ff4d4f",
-											"info": "#1677ff",
-											"neutral": "rgba(0, 0, 0, 0.88)"
-										},
-										"default": "#1677ff"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								}
-							}
-						}
-					},
-					{
-						"ttIf": {
-							"arg": "ring",
-							"then": {
-								"boxShadow": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "0 0 0 2px #ffffff, 0 0 0 4px #91caff",
-											"success": "0 0 0 2px #ffffff, 0 0 0 4px #b7eb8f",
-											"warning": "0 0 0 2px #ffffff, 0 0 0 4px #ffe58f",
-											"danger": "0 0 0 2px #ffffff, 0 0 0 4px #ffccc7",
-											"info": "0 0 0 2px #ffffff, 0 0 0 4px #91caff",
-											"neutral": "0 0 0 2px #ffffff, 0 0 0 4px #d9d9d9"
-										},
-										"default": "0 0 0 2px #ffffff, 0 0 0 4px #91caff"
-									}
-								}
-							},
-							"else": {}
-						}
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			"{initials}"
+			{
+				"tag": "div",
+				"props": {
+					"style": {
+						"ttMerge": [
+							{
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+								"fontWeight": 600,
+								"borderRadius": "999px",
+								"flexShrink": 0,
+								"userSelect": "none",
+								"flexWrap": "wrap"
+							},
+							{
+								"ttMap": {
+									"arg": "size",
+									"values": {
+										"sm": {
+											"width": "28px",
+											"height": "28px",
+											"fontSize": "12px"
+										},
+										"md": {
+											"width": "40px",
+											"height": "40px",
+											"fontSize": "13px"
+										},
+										"lg": {
+											"width": "56px",
+											"height": "56px",
+											"fontSize": "16px"
+										}
+									},
+									"default": {
+										"width": "40px",
+										"height": "40px",
+										"fontSize": "13px"
+									}
+								}
+							},
+							{
+								"ttIf": {
+									"arg": "soft",
+									"then": {
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#e6f4ff",
+													"success": "#f6ffed",
+													"warning": "#fffbe6",
+													"danger": "#fff2f0",
+													"info": "#e6f4ff",
+													"neutral": "#fafafa"
+												},
+												"default": "#e6f4ff"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#0958d9",
+													"success": "#389e0d",
+													"warning": "#d48806",
+													"danger": "#cf1322",
+													"info": "#0958d9",
+													"neutral": "rgba(0, 0, 0, 0.65)"
+												},
+												"default": "#0958d9"
+											}
+										},
+										"border": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "1px solid #91caff",
+													"success": "1px solid #b7eb8f",
+													"warning": "1px solid #ffe58f",
+													"danger": "1px solid #ffccc7",
+													"info": "1px solid #91caff",
+													"neutral": "1px solid #d9d9d9"
+												},
+												"default": "1px solid #91caff"
+											}
+										}
+									},
+									"else": {
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1677ff",
+													"success": "#52c41a",
+													"warning": "#faad14",
+													"danger": "#ff4d4f",
+													"info": "#1677ff",
+													"neutral": "rgba(0, 0, 0, 0.88)"
+												},
+												"default": "#1677ff"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										}
+									}
+								}
+							},
+							{
+								"ttIf": {
+									"arg": "ring",
+									"then": {
+										"boxShadow": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "0 0 0 2px #ffffff, 0 0 0 4px #91caff",
+													"success": "0 0 0 2px #ffffff, 0 0 0 4px #b7eb8f",
+													"warning": "0 0 0 2px #ffffff, 0 0 0 4px #ffe58f",
+													"danger": "0 0 0 2px #ffffff, 0 0 0 4px #ffccc7",
+													"info": "0 0 0 2px #ffffff, 0 0 0 4px #91caff",
+													"neutral": "0 0 0 2px #ffffff, 0 0 0 4px #d9d9d9"
+												},
+												"default": "0 0 0 2px #ffffff, 0 0 0 4px #91caff"
+											}
+										}
+									},
+									"else": {}
+								}
+							}
+						]
+					}
+				},
+				"children": [
+					"{initials}"
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Initials ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Initials",
+											"value": {
+												"ttArg": "initials"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "initials"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Soft tint ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Soft tint",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "soft"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "soft"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "avatar-initials",
+									"title": "Initials Avatar",
+									"details": "Initials: {initials}\nSoft tint: {soft}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "avatar-initials",
 	"source": {
 		"kind": "archetype",

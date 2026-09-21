@@ -3,7 +3,7 @@
 	"name": "Search Navbar",
 	"library": "antd",
 	"category": "navigation",
-	"description": "Navigation bar with a centered search field in the Ant Design style — brand on the left, keyboard-shortcut hint in the input, utility icons on the right.",
+	"description": "Navigation bar with a centered search field in the Ant Design style — brand on the left, keyboard-shortcut hint in the input, utility icons on the right. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"navbar",
 		"search",
@@ -45,319 +45,255 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "searchQuery",
+			"type": "string",
+			"default": "",
+			"maxLength": 200
 		}
 	],
 	"render": {
-		"tag": "nav",
+		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"justifyContent": "space-between",
-				"gap": "24px",
-				"width": "100%",
-				"boxSizing": "border-box",
-				"height": "56px",
-				"padding": "0 18px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"background": "#ffffff",
-				"borderBottom": "1px solid #d9d9d9",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "div",
+				"tag": "nav",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "9px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #d9d9d9",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.88)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "26px",
-								"height": "26px",
-								"borderRadius": "6px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0,
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1677ff",
-											"success": "#52c41a",
-											"warning": "#faad14",
-											"danger": "#ff4d4f",
-											"info": "#1677ff",
-											"neutral": "rgba(0, 0, 0, 0.88)"
-										},
-										"default": "#1677ff"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								}
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "polygon",
-										"props": {
-											"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 600,
-								"fontSize": "16px",
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
-						},
+						"tag": "strong",
 						"children": [
 							"{brand}"
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"flex": 1,
-						"display": "flex",
-						"justifyContent": "center",
-						"minWidth": 0
-					}
-				},
-				"children": [
+					},
 					{
-						"tag": "div",
+						"tag": "input",
 						"props": {
+							"type": "search",
+							"aria-label": "searchQuery",
+							"value": {
+								"ttArg": "searchQuery"
+							},
 							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "8px",
-								"height": "34px",
-								"padding": "0 10px",
 								"width": "100%",
-								"maxWidth": "300px",
-								"boxSizing": "border-box",
+								"minWidth": 0,
+								"padding": "8px",
+								"border": "1px solid #d9d9d9",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							}
+						},
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "searchQuery"
+						}
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
+								"padding": "8px 12px",
+								"borderRadius": "6px",
+								"border": "1px solid #d9d9d9",
 								"background": "#fafafa",
-								"border": "1px solid #f0f0f0",
-								"borderRadius": "6px"
+								"cursor": "pointer"
 							}
 						},
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"color": "rgba(0, 0, 0, 0.25)"
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 15,
-											"height": 15,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 11,
-													"cy": 11,
-													"r": 7
-												}
-											},
-											{
-												"tag": "line",
-												"props": {
-													"x1": 21,
-													"y1": 21,
-													"x2": 16.65,
-													"y2": 16.65
-												}
-											}
-										]
-									}
-								]
-							},
-							{
-								"tag": "input",
-								"props": {
-									"type": "text",
-									"placeholder": "{placeholder}",
-									"style": {
-										"flex": 1,
-										"minWidth": 0,
-										"border": "none",
-										"outline": "none",
-										"background": "transparent",
-										"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"fontSize": "13px",
-										"color": "rgba(0, 0, 0, 0.88)",
-										"padding": 0
-									}
-								}
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "rgba(0, 0, 0, 0.45)",
-										"background": "#ffffff",
-										"border": "1px solid #d9d9d9",
-										"borderRadius": "4px",
-										"padding": "1px 5px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"{shortcut}"
-								]
-							}
-						]
+							"Search Things"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "search",
+							"value": "{searchQuery}"
+						}
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "14px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"color": "rgba(0, 0, 0, 0.45)"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 18,
-									"height": 18,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "path",
-										"props": {
-											"d": "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M13.73 21a2 2 0 0 1-3.46 0"
-										}
-									}
-								]
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"color": "rgba(0, 0, 0, 0.45)"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
-								"props": {
-									"width": 18,
-									"height": 18,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
+								"tag": "label",
 								"children": [
+									"searchQuery ",
 									{
-										"tag": "circle",
+										"tag": "input",
 										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 3
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.08a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+											"aria-label": "searchQuery",
+											"value": {
+												"ttArg": "searchQuery"
+											},
+											"maxLength": 200,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "searchQuery"
 										}
 									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Brand ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Brand",
+											"value": {
+												"ttArg": "brand"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "brand"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Shortcut hint ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Shortcut hint",
+											"value": {
+												"ttArg": "shortcut"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "shortcut"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "navbar-search",
+									"title": "Search Navbar",
+									"details": "Brand: {brand}\nShortcut hint: {shortcut}\nsearchQuery: {searchQuery}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -365,7 +301,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "navbar-search",
 	"source": {
 		"kind": "archetype",

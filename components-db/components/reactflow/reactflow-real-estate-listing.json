@@ -3,7 +3,7 @@
 	"name": "Listing Card",
 	"library": "reactflow",
 	"category": "property",
-	"description": "Property listing card in the React Flow style — tinted photo band with a home glyph and optional New chip, bold price over the address, bed/bath/area spec chips, and a saved-heart toggle.",
+	"description": "Property listing card in the React Flow style — tinted photo band with a home glyph and optional New chip, bold price over the address, bed/bath/area spec chips, and a saved-heart toggle. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"real-estate",
 		"listing",
@@ -50,24 +50,28 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Saved"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "300px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#1a192b",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -75,132 +79,588 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"position": "relative",
-						"height": "104px",
-						"background": "#f4f4f5",
 						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center"
+						"flexDirection": "column",
+						"width": "300px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#1a192b",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+						"color": "#1a192b",
+						"overflow": "hidden",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
+						"tag": "div",
 						"props": {
-							"width": 30,
-							"height": 30,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#ff0072",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"position": "relative",
+								"height": "104px",
+								"background": "#f4f4f5",
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"flexWrap": "wrap"
+							}
 						},
 						"children": [
 							{
-								"tag": "path",
+								"tag": "svg",
 								"props": {
-									"d": "M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+									"width": 30,
+									"height": 30,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#ff0072",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "path",
+										"props": {
+											"d": "M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+										}
+									},
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "9 22 9 12 15 12 15 22"
+										}
+									}
+								]
+							},
+							{
+								"ttIf": {
+									"arg": "isNew",
+									"then": {
+										"tag": "span",
+										"props": {
+											"style": {
+												"position": "absolute",
+												"top": "10px",
+												"left": "10px",
+												"padding": "2px 8px",
+												"borderRadius": "3px",
+												"background": "#ff0072",
+												"color": "#ffffff",
+												"fontSize": "10px",
+												"fontWeight": 700
+											}
+										},
+										"children": [
+											"New"
+										]
+									}
 								}
 							},
 							{
-								"tag": "polyline",
-								"props": {
-									"points": "9 22 9 12 15 12 15 22"
-								}
-							}
-						]
-					},
-					{
-						"ttIf": {
-							"arg": "isNew",
-							"then": {
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
 										"position": "absolute",
-										"top": "10px",
-										"left": "10px",
-										"padding": "2px 8px",
-										"borderRadius": "3px",
-										"background": "#ff0072",
-										"color": "#ffffff",
-										"fontSize": "10px",
-										"fontWeight": 700
+										"top": "8px",
+										"right": "8px",
+										"width": "28px",
+										"height": "28px",
+										"borderRadius": "999px",
+										"background": "#ffffff",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"New"
+									{
+										"ttIf": {
+											"arg": "saved",
+											"then": {
+												"tag": "svg",
+												"props": {
+													"width": 15,
+													"height": 15,
+													"viewBox": "0 0 24 24",
+													"fill": "#ff0072",
+													"stroke": "#ff0072",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "path",
+														"props": {
+															"d": "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+														}
+													}
+												]
+											},
+											"else": {
+												"tag": "svg",
+												"props": {
+													"width": 15,
+													"height": 15,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "#6f6e77",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "path",
+														"props": {
+															"d": "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+														}
+													}
+												]
+											}
+										}
+									}
 								]
 							}
-						}
+						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"position": "absolute",
-								"top": "8px",
-								"right": "8px",
-								"width": "28px",
-								"height": "28px",
-								"borderRadius": "999px",
-								"background": "#ffffff",
 								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
+								"flexDirection": "column",
+								"padding": "12px 14px",
+								"gap": "5px"
 							}
 						},
 						"children": [
 							{
-								"ttIf": {
-									"arg": "saved",
-									"then": {
-										"tag": "svg",
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "16px",
+										"fontWeight": 600,
+										"lineHeight": 1.2
+									}
+								},
+								"children": [
+									"{price}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "#6f6e77"
+									}
+								},
+								"children": [
+									"{address}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"marginTop": "4px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
 										"props": {
-											"width": 15,
-											"height": 15,
-											"viewBox": "0 0 24 24",
-											"fill": "#ff0072",
-											"stroke": "#ff0072",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"gap": "5px",
+												"padding": "3px 8px",
+												"borderRadius": "3px",
+												"background": "#f4f4f5",
+												"color": "#6f6e77",
+												"fontSize": "10px",
+												"fontWeight": 500,
+												"flexWrap": "wrap"
+											}
 										},
 										"children": [
 											{
-												"tag": "path",
+												"tag": "svg",
 												"props": {
-													"d": "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-												}
-											}
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "path",
+														"props": {
+															"d": "M2 17v-6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6"
+														}
+													},
+													{
+														"tag": "line",
+														"props": {
+															"x1": 2,
+															"y1": 14,
+															"x2": 22,
+															"y2": 14
+														}
+													}
+												]
+											},
+											"{beds} bd"
 										]
 									},
-									"else": {
-										"tag": "svg",
+									{
+										"tag": "span",
 										"props": {
-											"width": 15,
-											"height": 15,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#6f6e77",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"gap": "5px",
+												"padding": "3px 8px",
+												"borderRadius": "3px",
+												"background": "#f4f4f5",
+												"color": "#6f6e77",
+												"fontSize": "10px",
+												"fontWeight": 500,
+												"flexWrap": "wrap"
+											}
 										},
 										"children": [
 											{
-												"tag": "path",
+												"tag": "svg",
 												"props": {
-													"d": "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-												}
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "path",
+														"props": {
+															"d": "M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"
+														}
+													},
+													{
+														"tag": "path",
+														"props": {
+															"d": "M7 12V6a2 2 0 0 1 4 0"
+														}
+													}
+												]
+											},
+											"2 ba"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"gap": "5px",
+												"padding": "3px 8px",
+												"borderRadius": "3px",
+												"background": "#f4f4f5",
+												"color": "#6f6e77",
+												"fontSize": "10px",
+												"fontWeight": 500,
+												"flexWrap": "wrap"
 											}
+										},
+										"children": [
+											{
+												"tag": "svg",
+												"props": {
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "rect",
+														"props": {
+															"x": 4,
+															"y": 4,
+															"width": 16,
+															"height": 16,
+															"rx": 1
+														}
+													},
+													{
+														"tag": "path",
+														"props": {
+															"d": "M12 4v8h8"
+														}
+													}
+												]
+											},
+											"{sqft} sqft"
 										]
 									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Price ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Price",
+											"value": {
+												"ttArg": "price"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "price"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Address ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Address",
+											"value": {
+												"ttArg": "address"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "address"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Beds ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Beds",
+											"value": {
+												"ttArg": "beds"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "beds"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Square feet ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Square feet",
+											"value": {
+												"ttArg": "sqft"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "sqft"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"New listing ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "New listing",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "isNew"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "isNew"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Saved ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Saved",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "saved"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "saved"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "real-estate-listing",
+									"title": "Listing Card",
+									"details": "Price: {price}\nAddress: {address}\nBeds: {beds}\nSquare feet: {sqft}\nNew listing: {isNew}\nSaved: {saved}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -208,208 +668,14 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"padding": "12px 14px",
-						"gap": "5px"
-					}
-				},
+				"tag": "small",
 				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "16px",
-								"fontWeight": 600,
-								"lineHeight": 1.2
-							}
-						},
-						"children": [
-							"{price}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#6f6e77"
-							}
-						},
-						"children": [
-							"{address}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px",
-								"marginTop": "4px",
-								"flexWrap": "wrap"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"gap": "5px",
-										"padding": "3px 8px",
-										"borderRadius": "3px",
-										"background": "#f4f4f5",
-										"color": "#6f6e77",
-										"fontSize": "10px",
-										"fontWeight": 500
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "path",
-												"props": {
-													"d": "M2 17v-6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6"
-												}
-											},
-											{
-												"tag": "line",
-												"props": {
-													"x1": 2,
-													"y1": 14,
-													"x2": 22,
-													"y2": 14
-												}
-											}
-										]
-									},
-									"{beds} bd"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"gap": "5px",
-										"padding": "3px 8px",
-										"borderRadius": "3px",
-										"background": "#f4f4f5",
-										"color": "#6f6e77",
-										"fontSize": "10px",
-										"fontWeight": 500
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "path",
-												"props": {
-													"d": "M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"
-												}
-											},
-											{
-												"tag": "path",
-												"props": {
-													"d": "M7 12V6a2 2 0 0 1 4 0"
-												}
-											}
-										]
-									},
-									"2 ba"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"gap": "5px",
-										"padding": "3px 8px",
-										"borderRadius": "3px",
-										"background": "#f4f4f5",
-										"color": "#6f6e77",
-										"fontSize": "10px",
-										"fontWeight": 500
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "rect",
-												"props": {
-													"x": 4,
-													"y": 4,
-													"width": 16,
-													"height": 16,
-													"rx": 1
-												}
-											},
-											{
-												"tag": "path",
-												"props": {
-													"d": "M12 4v8h8"
-												}
-											}
-										]
-									},
-									"{sqft} sqft"
-								]
-							}
-						]
-					}
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "real-estate-listing",
 	"source": {
 		"kind": "archetype",

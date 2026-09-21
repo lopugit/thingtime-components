@@ -3,7 +3,7 @@
 	"name": "Open Select",
 	"library": "mui",
 	"category": "forms",
-	"description": "Select in its open state in the Material UI style — trigger above a floating menu panel where one row shows the hover tint and the selected row earns a primary check.",
+	"description": "Select in its open state in the Material UI style — trigger above a floating menu panel where one row shows the hover tint and the selected row earns a primary check. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"select",
@@ -53,15 +53,33 @@
 			],
 			"default": "2",
 			"label": "Hovered option"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "selection",
+			"type": "string",
+			"default": ""
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "260px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -69,317 +87,380 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
-							{
-								"height": "36px",
-								"padding": "0 12px",
-								"borderRadius": "4px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "rgba(0, 0, 0, 0.12)",
-								"background": "#ffffff",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.87)",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px",
-								"cursor": "pointer",
-								"boxSizing": "border-box",
-								"boxShadow": "none"
-							},
-							{
-								"borderColor": "#90caf9"
-							}
-						]
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid rgba(0, 0, 0, 0.12)",
+						"borderRadius": "4px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "label",
 						"children": [
+							"Select an option",
 							{
-								"ttMap": {
-									"arg": "selected",
-									"values": {
-										"1": "{optionA}",
-										"2": "{optionB}",
-										"3": "{optionC}"
+								"tag": "select",
+								"props": {
+									"value": {
+										"ttArg": "selection"
 									},
-									"default": "{optionA}"
+									"aria-label": "Select an option",
+									"disabled": false
+								},
+								"children": [
+									{
+										"tag": "option",
+										"props": {
+											"value": ""
+										},
+										"children": [
+											"Choose…"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{optionA}"
+										},
+										"children": [
+											"{optionA}"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{optionB}"
+										},
+										"children": [
+											"{optionB}"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{optionC}"
+										},
+										"children": [
+											"{optionC}"
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selection"
 								}
 							}
 						]
 					},
 					{
-						"tag": "svg",
-						"props": {
-							"width": 16,
-							"height": 16,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "rgba(0, 0, 0, 0.6)",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
+						"tag": "p",
 						"children": [
-							{
-								"tag": "polyline",
-								"props": {
-									"points": "6 9 12 15 18 9"
-								}
-							}
+							"Selected: {selection}"
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"background": "#ffffff",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "rgba(0, 0, 0, 0.08)",
-						"borderRadius": "4px",
-						"boxShadow": "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)",
-						"padding": "4px",
-						"display": "flex",
-						"flexDirection": "column",
-						"marginTop": "6px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "space-between",
-										"gap": "8px",
-										"padding": "7px 10px",
-										"borderRadius": "4px",
-										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-										"fontSize": "14px",
-										"color": "rgba(0, 0, 0, 0.87)",
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "hovered",
-											"equals": "1",
-											"then": {
-												"background": "#fafafa"
-											},
-											"else": {}
-										}
-									},
-									{
-										"ttIf": {
-											"arg": "selected",
-											"equals": "1",
-											"then": {
-												"fontWeight": 600
-											},
-											"else": {}
-										}
-									}
-								]
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "span",
-								"children": [
-									"{optionA}"
-								]
-							},
-							{
-								"ttIf": {
-									"arg": "selected",
-									"equals": "1",
-									"then": {
-										"tag": "svg",
-										"props": {
-											"width": 14,
-											"height": 14,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#1976d2",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
-									}
-								}
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "space-between",
-										"gap": "8px",
-										"padding": "7px 10px",
-										"borderRadius": "4px",
-										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-										"fontSize": "14px",
-										"color": "rgba(0, 0, 0, 0.87)",
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "hovered",
-											"equals": "2",
-											"then": {
-												"background": "#fafafa"
-											},
-											"else": {}
-										}
-									},
-									{
-										"ttIf": {
-											"arg": "selected",
-											"equals": "2",
-											"then": {
-												"fontWeight": 600
-											},
-											"else": {}
-										}
-									}
-								]
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "label",
 								"children": [
-									"{optionB}"
+									"selection ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "selection",
+											"value": {
+												"ttArg": "selection"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selection"
+										}
+									}
 								]
 							},
 							{
-								"ttIf": {
-									"arg": "selected",
-									"equals": "2",
-									"then": {
-										"tag": "svg",
+								"tag": "label",
+								"children": [
+									"Option A ",
+									{
+										"tag": "input",
 										"props": {
-											"width": 14,
-											"height": 14,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#1976d2",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
+											"aria-label": "Option A",
+											"value": {
+												"ttArg": "optionA"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "optionA"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Option B ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Option B",
+											"value": {
+												"ttArg": "optionB"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "optionB"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Option C ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Option C",
+											"value": {
+												"ttArg": "optionC"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "optionC"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Selected option ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Selected option",
+											"value": {
+												"ttArg": "selected"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
 										},
 										"children": [
 											{
-												"tag": "polyline",
+												"tag": "option",
 												"props": {
-													"points": "20 6 9 17 4 12"
-												}
+													"value": "1"
+												},
+												"children": [
+													"1"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "2"
+												},
+												"children": [
+													"2"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "3"
+												},
+												"children": [
+													"3"
+												]
 											}
-										]
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selected"
+										}
 									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Hovered option ",
 									{
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "space-between",
-										"gap": "8px",
-										"padding": "7px 10px",
+										"tag": "select",
+										"props": {
+											"aria-label": "Hovered option",
+											"value": {
+												"ttArg": "hovered"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "1"
+												},
+												"children": [
+													"1"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "2"
+												},
+												"children": [
+													"2"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "3"
+												},
+												"children": [
+													"3"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "hovered"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
 										"borderRadius": "4px",
-										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-										"fontSize": "14px",
-										"color": "rgba(0, 0, 0, 0.87)",
-										"cursor": "pointer"
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									},
-									{
-										"ttIf": {
-											"arg": "hovered",
-											"equals": "3",
-											"then": {
-												"background": "#fafafa"
-											},
-											"else": {}
-										}
-									},
-									{
-										"ttIf": {
-											"arg": "selected",
-											"equals": "3",
-											"then": {
-												"fontWeight": 600
-											},
-											"else": {}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "select-menu-open",
+									"title": "Open Select",
+									"details": "Option A: {optionA}\nOption B: {optionB}\nOption C: {optionC}\nSelected option: {selected}\nHovered option: {hovered}\nselection: {selection}"
+								},
 								"children": [
-									"{optionC}"
+									"{actionLabel}"
 								]
 							},
 							{
-								"ttIf": {
-									"arg": "selected",
-									"equals": "3",
-									"then": {
-										"tag": "svg",
-										"props": {
-											"width": 14,
-											"height": 14,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#1976d2",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
-									}
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -388,7 +469,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "select-menu-open",
 	"source": {
 		"kind": "archetype",

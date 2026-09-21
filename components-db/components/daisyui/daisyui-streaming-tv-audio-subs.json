@@ -3,7 +3,7 @@
 	"name": "Audio & Subtitles Panel",
 	"library": "daisyui",
 	"category": "entertainment",
-	"description": "Audio and subtitles picker in the daisyUI style — two column groups of language radio rows with one selection each, an optional CC chip in the header, and a quiet settings caption underneath.",
+	"description": "Audio and subtitles picker in the daisyUI style — two column groups of language radio rows with one selection each, an optional CC chip in the header, and a quiet settings caption underneath. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"streaming",
 		"subtitles",
@@ -45,24 +45,35 @@
 			"type": "boolean",
 			"default": true,
 			"label": "CC chip"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "mediaUrl",
+			"type": "string",
+			"default": "",
+			"label": "Media URL",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
-				"boxSizing": "border-box",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"borderRadius": "16px",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#f2f2f2",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -70,458 +81,252 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"padding": "12px 14px",
-						"gap": "8px",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "solid",
-						"borderBottomColor": "#f2f2f2"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #e5e6e6",
+						"borderRadius": "12px",
+						"background": "#ffffff",
+						"color": "#1f2937",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 700,
-								"color": "#1f2937",
-								"flex": 1
-							}
-						},
+						"tag": "label",
 						"children": [
-							"Audio & Subtitles"
+							"Media URL",
+							{
+								"tag": "input",
+								"props": {
+									"type": "url",
+									"aria-label": "mediaUrl",
+									"value": {
+										"ttArg": "mediaUrl"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e5e6e6",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "mediaUrl"
+								}
+							}
 						]
 					},
 					{
 						"ttIf": {
-							"arg": "cc",
-							"then": {
-								"tag": "span",
+							"arg": "mediaUrl",
+							"equals": "",
+							"then": null,
+							"else": {
+								"tag": "video",
 								"props": {
+									"src": "{mediaUrl}",
+									"controls": true,
 									"style": {
-										"padding": "1px 5px",
-										"borderRadius": "8px",
-										"borderWidth": "1.5px",
-										"borderStyle": "solid",
-										"borderColor": "#1f2937",
-										"color": "#1f2937",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"lineHeight": 1.3
+										"width": "100%",
+										"maxHeight": "400px"
 									}
-								},
-								"children": [
-									"CC"
-								]
+								}
 							}
 						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-start",
-						"padding": "12px 14px",
-						"gap": "16px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"flex": 1,
-								"gap": "10px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"letterSpacing": "0.06em",
-										"textTransform": "uppercase",
-										"color": "#6b7280"
-									}
-								},
-								"children": [
-									"Audio"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "8px"
-									}
-								},
-								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "14px",
-												"height": "14px",
-												"borderRadius": "999px",
-												"boxSizing": "border-box",
-												"flexShrink": 0,
-												"borderWidth": "4px",
-												"borderStyle": "solid",
-												"borderColor": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#570df8",
-															"success": "#00a96e",
-															"warning": "#ffbe00",
-															"danger": "#ff5861",
-															"info": "#00b6ff",
-															"neutral": "#2a323c"
-														},
-														"default": "#570df8"
-													}
-												},
-												"background": "#ffffff"
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#1f2937",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"{audio}"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "8px"
-									}
-								},
-								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "14px",
-												"height": "14px",
-												"borderRadius": "999px",
-												"boxSizing": "border-box",
-												"flexShrink": 0,
-												"borderWidth": "1.5px",
-												"borderStyle": "solid",
-												"borderColor": "#e5e6e6",
-												"background": "#ffffff"
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#6b7280",
-												"fontWeight": 400
-											}
-										},
-										"children": [
-											"Japanese"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "8px"
-									}
-								},
-								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "14px",
-												"height": "14px",
-												"borderRadius": "999px",
-												"boxSizing": "border-box",
-												"flexShrink": 0,
-												"borderWidth": "1.5px",
-												"borderStyle": "solid",
-												"borderColor": "#e5e6e6",
-												"background": "#ffffff"
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#6b7280",
-												"fontWeight": 400
-											}
-										},
-										"children": [
-											"French"
-										]
-									}
-								]
-							}
-						]
 					},
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"flex": 1,
-								"gap": "10px"
-							}
-						},
+						"tag": "small",
 						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"letterSpacing": "0.06em",
-										"textTransform": "uppercase",
-										"color": "#6b7280"
-									}
-								},
-								"children": [
-									"Subtitles"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "8px"
-									}
-								},
-								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "14px",
-												"height": "14px",
-												"borderRadius": "999px",
-												"boxSizing": "border-box",
-												"flexShrink": 0,
-												"borderWidth": "1.5px",
-												"borderStyle": "solid",
-												"borderColor": "#e5e6e6",
-												"background": "#ffffff"
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#6b7280",
-												"fontWeight": 400
-											}
-										},
-										"children": [
-											"Off"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "8px"
-									}
-								},
-								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "14px",
-												"height": "14px",
-												"borderRadius": "999px",
-												"boxSizing": "border-box",
-												"flexShrink": 0,
-												"borderWidth": "4px",
-												"borderStyle": "solid",
-												"borderColor": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#570df8",
-															"success": "#00a96e",
-															"warning": "#ffbe00",
-															"danger": "#ff5861",
-															"info": "#00b6ff",
-															"neutral": "#2a323c"
-														},
-														"default": "#570df8"
-													}
-												},
-												"background": "#ffffff"
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#1f2937",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"{lang}"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "8px"
-									}
-								},
-								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "14px",
-												"height": "14px",
-												"borderRadius": "999px",
-												"boxSizing": "border-box",
-												"flexShrink": 0,
-												"borderWidth": "1.5px",
-												"borderStyle": "solid",
-												"borderColor": "#e5e6e6",
-												"background": "#ffffff"
-											}
-										}
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#6b7280",
-												"fontWeight": 400
-											}
-										},
-										"children": [
-											"Spanish"
-										]
-									}
-								]
-							}
+							"Add a playable media URL to play, pause, seek, adjust volume, and use fullscreen."
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"padding": "10px 14px",
-						"gap": "6px",
-						"borderTopWidth": "1px",
-						"borderTopStyle": "solid",
-						"borderTopColor": "#f2f2f2"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "svg",
-						"props": {
-							"width": 12,
-							"height": 12,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#9ca3af",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "circle",
-								"props": {
-									"cx": 12,
-									"cy": 12,
-									"r": 3
-								}
-							},
-							{
-								"tag": "path",
-								"props": {
-									"d": "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.08a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
-								}
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "#9ca3af"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"Applies to every title on this profile"
+							{
+								"tag": "label",
+								"children": [
+									"Media URL ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Media URL",
+											"value": {
+												"ttArg": "mediaUrl"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mediaUrl"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Selected audio ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Selected audio",
+											"value": {
+												"ttArg": "audio"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "audio"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Selected subtitle ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Selected subtitle",
+											"value": {
+												"ttArg": "lang"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "lang"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"CC chip ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "CC chip",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "cc"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "cc"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "streaming-tv-audio-subs",
+									"title": "Audio & Subtitles Panel",
+									"details": "Selected audio: {audio}\nSelected subtitle: {lang}\nCC chip: {cc}\nMedia URL: {mediaUrl}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "streaming-tv-audio-subs",
 	"source": {
 		"kind": "archetype",

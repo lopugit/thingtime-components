@@ -16,6 +16,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { verifyCapabilities } from './lib/capabilities.mjs';
 
 const repoRoot = fileURLToPath(new URL('../../', import.meta.url));
 const dbRoot = path.join(repoRoot, 'components-db');
@@ -40,7 +41,13 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const run = async () => {
 	await loadSeedEnv();
-	const BASE = process.argv[2] || process.env.TT_SEED_BASE || 'http://127.0.0.1:16802';
+	const selected = new URL(process.argv[2] || process.env.TT_SEED_BASE || 'http://127.0.0.1:16802');
+	if (selected.username || selected.password || selected.search || selected.hash || selected.pathname !== '/') throw new Error('Select a plain Thingtime origin');
+	if (selected.protocol !== 'https:' && !(selected.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(selected.hostname))) throw new Error('Remote seeding requires HTTPS');
+	const BASE = selected.origin;
+	const manifest = await fetch(`${BASE}/.well-known/thingtime-capabilities.json`, { redirect: 'error', signal: AbortSignal.timeout(15000) });
+	if (!manifest.ok) throw new Error(`Capability manifest unavailable (${manifest.status})`);
+	verifyCapabilities(await manifest.json(), BASE);
 	const username = process.env.TT_SEED_ADMIN_USER;
 	const password = process.env.TT_SEED_ADMIN_PASS;
 	if (!username || !password) {
@@ -50,18 +57,22 @@ const run = async () => {
 
 	const login = await fetch(`${BASE}/api/v1/login`, {
 		method: 'POST',
+		redirect: 'error',
+		signal: AbortSignal.timeout(30000),
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ username, password })
 	});
 	const cookie = /tt_auth=[^;]+/.exec(login.headers.get('set-cookie') || '')?.[0];
 	if (!login.ok || !cookie) {
-		console.error(`admin login failed (${login.status}) — is the dev stack up at ${BASE} with ADMIN_USERNAMES=${username}?`);
+		console.error(`admin login failed (${login.status}) — is the dev stack up at ${BASE} with the intended admin account?`);
 		process.exit(1);
 	}
 
 	const api = async (pathname, init = {}) => {
 		const response = await fetch(`${BASE}${pathname}`, {
 			...init,
+			redirect: 'error',
+			signal: AbortSignal.timeout(60000),
 			headers: { 'Content-Type': 'application/json', Cookie: cookie, ...(init.headers || {}) }
 		});
 		let body = null;

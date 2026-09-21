@@ -3,7 +3,7 @@
 	"name": "Checkbox",
 	"library": "bootstrap",
 	"category": "forms",
-	"description": "Single checkbox with label in the Bootstrap style — checking fills the box with the tone color and draws the check glyph at the library's corner radius.",
+	"description": "Single checkbox with label in the Bootstrap style — checking fills the box with the tone color and draws the check glyph at the library's corner radius. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"checkbox",
@@ -43,23 +43,28 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Disabled"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"gap": "8px",
-				"cursor": "pointer",
-				"opacity": {
-					"ttIf": {
-						"arg": "disabled",
-						"then": 0.5,
-						"else": 1
-					}
-				}
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -67,120 +72,160 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
-							{
-								"width": "18px",
-								"height": "18px",
-								"borderRadius": "4px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0,
-								"boxSizing": "border-box"
-							},
-							{
-								"ttIf": {
-									"arg": "checked",
-									"then": {
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#0d6efd",
-													"success": "#198754",
-													"warning": "#ffc107",
-													"danger": "#dc3545",
-													"info": "#0dcaf0",
-													"neutral": "#6c757d"
-												},
-												"default": "#0d6efd"
-											}
-										},
-										"borderColor": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#0d6efd",
-													"success": "#198754",
-													"warning": "#ffc107",
-													"danger": "#dc3545",
-													"info": "#0dcaf0",
-													"neutral": "#6c757d"
-												},
-												"default": "#0d6efd"
-											}
-										}
-									},
-									"else": {
-										"background": "#ffffff",
-										"borderColor": "#dee2e6"
-									}
-								}
-							}
-						]
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #dee2e6",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "#212529",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"ttIf": {
-							"arg": "checked",
-							"then": {
-								"tag": "svg",
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
 								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#ffffff",
-												"success": "#ffffff",
-												"warning": "#000000",
-												"danger": "#ffffff",
-												"info": "#000000",
-												"neutral": "#ffffff"
-											},
-											"default": "#ffffff"
-										}
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "checked"
 									},
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"aria-label": "{label}"
 								},
-								"children": [
-									{
-										"tag": "polyline",
-										"props": {
-											"points": "20 6 9 17 4 12"
-										}
-									}
-								]
-							}
-						}
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "checked"
+								}
+							},
+							"{label}"
+						]
 					}
 				]
 			},
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontSize": "16px",
-						"color": "#212529"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"{label}"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Checked ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Checked",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "checked"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "checked"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 50,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "choice-controls-checkbox",
+									"title": "Checkbox",
+									"details": "Label: {label}\nChecked: {checked}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "choice-controls-checkbox",
 	"source": {
 		"kind": "archetype",

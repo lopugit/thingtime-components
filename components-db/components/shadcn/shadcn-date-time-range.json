@@ -3,7 +3,7 @@
 	"name": "Date Range Picker",
 	"library": "shadcn",
 	"category": "forms",
-	"description": "Date range control in the shadcn/ui style — two joined date fields bridged by an arrow, under a row of quick preset chips with one active.",
+	"description": "Date range control in the shadcn/ui style — two joined date fields bridged by an arrow, under a row of quick preset chips with one active. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"date",
 		"range",
@@ -35,17 +35,40 @@
 			],
 			"default": "30d",
 			"label": "Active preset"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "selectedDate",
+			"type": "string",
+			"default": "",
+			"label": "Date"
+		},
+		{
+			"name": "selectedTime",
+			"type": "string",
+			"default": "",
+			"label": "Time"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "10px",
-				"width": "fit-content",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -53,278 +76,353 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "inline-flex",
-						"alignItems": "center",
-						"background": "#ffffff",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "#e4e4e7",
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #e4e4e7",
 						"borderRadius": "8px",
-						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-						"overflow": "hidden"
+						"background": "#ffffff",
+						"color": "#09090b",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px",
-								"height": "36px",
-								"padding": "0 12px",
-								"fontSize": "13px",
-								"color": "#09090b"
-							}
-						},
+						"tag": "label",
 						"children": [
+							"Date",
 							{
-								"tag": "svg",
+								"tag": "input",
 								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#71717a",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "rect",
-										"props": {
-											"x": 3,
-											"y": 4,
-											"width": 18,
-											"height": 18,
-											"rx": 2
-										}
+									"type": "date",
+									"aria-label": "selectedDate",
+									"value": {
+										"ttArg": "selectedDate"
 									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 16,
-											"y1": 2,
-											"x2": 16,
-											"y2": 6
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 8,
-											"y1": 2,
-											"x2": 8,
-											"y2": 6
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 3,
-											"y1": 10,
-											"x2": 21,
-											"y2": 10
-										}
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e4e4e7",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
-								]
-							},
-							"{start}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"alignSelf": "stretch",
-								"padding": "0 8px",
-								"background": "#f4f4f5"
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#71717a",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
 								},
-								"children": [
-									{
-										"tag": "line",
-										"props": {
-											"x1": 5,
-											"y1": 12,
-											"x2": 19,
-											"y2": 12
-										}
-									},
-									{
-										"tag": "polyline",
-										"props": {
-											"points": "12 5 19 12 12 19"
-										}
-									}
-								]
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selectedDate"
+								}
 							}
 						]
 					},
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px",
-								"height": "36px",
-								"padding": "0 12px",
-								"fontSize": "13px",
-								"color": "#09090b"
-							}
-						},
+						"tag": "label",
 						"children": [
-							"{end}"
+							"Time",
+							{
+								"tag": "input",
+								"props": {
+									"type": "time",
+									"aria-label": "selectedTime",
+									"value": {
+										"ttArg": "selectedTime"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e4e4e7",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selectedTime"
+								}
+							}
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							"End date",
+							{
+								"tag": "input",
+								"props": {
+									"type": "date",
+									"aria-label": "end",
+									"value": {
+										"ttArg": "end"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e4e4e7",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "end"
+								}
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "6px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"padding": "4px 12px",
-										"borderRadius": "999px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "preset",
-											"equals": "Today",
-											"then": {
-												"background": "#18181b",
-												"borderColor": "#18181b",
-												"color": "#fafafa"
-											},
-											"else": {
-												"background": "#ffffff",
-												"borderColor": "#e4e4e7",
-												"color": "#71717a"
-											}
-										}
-									}
-								]
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"Today"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"padding": "4px 12px",
-										"borderRadius": "999px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "preset",
-											"equals": "7d",
-											"then": {
-												"background": "#18181b",
-												"borderColor": "#18181b",
-												"color": "#fafafa"
-											},
-											"else": {
-												"background": "#ffffff",
-												"borderColor": "#e4e4e7",
-												"color": "#71717a"
-											}
-										}
-									}
-								]
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"7d"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"ttMerge": [
+							{
+								"tag": "label",
+								"children": [
+									"End date ",
 									{
-										"padding": "4px 12px",
-										"borderRadius": "999px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "preset",
-											"equals": "30d",
-											"then": {
-												"background": "#18181b",
-												"borderColor": "#18181b",
-												"color": "#fafafa"
+										"tag": "input",
+										"props": {
+											"aria-label": "End date",
+											"value": {
+												"ttArg": "end"
 											},
-											"else": {
-												"background": "#ffffff",
-												"borderColor": "#e4e4e7",
-												"color": "#71717a"
-											}
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "end"
 										}
 									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Date ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Date",
+											"value": {
+												"ttArg": "selectedDate"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedDate"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Time ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Time",
+											"value": {
+												"ttArg": "selectedTime"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedTime"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Start date ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Start date",
+											"value": {
+												"ttArg": "start"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "start"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Active preset ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Active preset",
+											"value": {
+												"ttArg": "preset"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "Today"
+												},
+												"children": [
+													"Today"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "7d"
+												},
+												"children": [
+													"7d"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "30d"
+												},
+												"children": [
+													"30d"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "preset"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "date-time-range",
+									"title": "Date Range Picker",
+									"details": "Start date: {start}\nEnd date: {end}\nActive preset: {preset}\nDate: {selectedDate}\nTime: {selectedTime}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"children": [
-							"30d"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "date-time-range",
 	"source": {
 		"kind": "archetype",

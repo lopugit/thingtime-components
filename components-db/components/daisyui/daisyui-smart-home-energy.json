@@ -3,7 +3,7 @@
 	"name": "Energy Usage Card",
 	"library": "daisyui",
 	"category": "iot",
-	"description": "Home energy card in the daisyUI style — today's kWh and cost beside a week of mini bars with today rendered solid, and a vs-last-week trend chip that flips tone with direction.",
+	"description": "Home energy card in the daisyUI style — today's kWh and cost beside a week of mini bars with today rendered solid, and a vs-last-week trend chip that flips tone with direction. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"smart-home",
 		"iot",
@@ -45,25 +45,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"boxSizing": "border-box",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e5e6e6",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"width": "270px",
-				"padding": "16px",
-				"gap": "12px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -72,9 +75,18 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "flex-start",
-						"justifyContent": "space-between",
-						"gap": "10px"
+						"flexDirection": "column",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e5e6e6",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"width": "270px",
+						"padding": "16px",
+						"gap": "12px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -83,155 +95,218 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px"
+								"alignItems": "flex-start",
+								"justifyContent": "space-between",
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "20px",
-										"fontWeight": 700,
-										"color": "#1f2937"
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px"
 									}
 								},
 								"children": [
-									"{kwh} kWh"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "20px",
+												"fontWeight": 700,
+												"color": "#1f2937"
+											}
+										},
+										"children": [
+											"{kwh} kWh"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#6b7280"
+											}
+										},
+										"children": [
+											"{cost} today"
+										]
+									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
 									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "4px",
+										"padding": "3px 8px",
+										"borderRadius": "999px",
 										"fontSize": "12px",
-										"color": "#6b7280"
+										"fontWeight": 600,
+										"whiteSpace": "nowrap",
+										"background": {
+											"ttIf": {
+												"arg": "up",
+												"then": "#ffe4e6",
+												"else": "#dcfce7"
+											}
+										},
+										"color": {
+											"ttIf": {
+												"arg": "up",
+												"then": "#be123c",
+												"else": "#00753d"
+											}
+										},
+										"flexWrap": "wrap"
+									},
+									"type": "button",
+									"aria-label": "8% vs last week",
+									"aria-pressed": {
+										"ttArg": "up"
 									}
 								},
 								"children": [
-									"{cost} today"
-								]
+									{
+										"ttIf": {
+											"arg": "up",
+											"then": {
+												"tag": "svg",
+												"props": {
+													"width": 11,
+													"height": 11,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "line",
+														"props": {
+															"x1": 12,
+															"y1": 19,
+															"x2": 12,
+															"y2": 5
+														}
+													},
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "5 12 12 5 19 12"
+														}
+													}
+												]
+											},
+											"else": {
+												"tag": "svg",
+												"props": {
+													"width": 11,
+													"height": 11,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "line",
+														"props": {
+															"x1": 12,
+															"y1": 5,
+															"x2": 12,
+															"y2": 19
+														}
+													},
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "19 12 12 19 5 12"
+														}
+													}
+												]
+											}
+										}
+									},
+									"8% vs last week"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "toggle",
+									"key": "up"
+								}
 							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"gap": "4px",
-								"padding": "3px 8px",
-								"borderRadius": "999px",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"whiteSpace": "nowrap",
-								"background": {
-									"ttIf": {
-										"arg": "up",
-										"then": "#ffe4e6",
-										"else": "#dcfce7"
-									}
-								},
-								"color": {
-									"ttIf": {
-										"arg": "up",
-										"then": "#be123c",
-										"else": "#00753d"
-									}
-								}
+								"display": "flex",
+								"alignItems": "flex-end",
+								"gap": "6px",
+								"height": "52px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"ttIf": {
-									"arg": "up",
-									"then": {
-										"tag": "svg",
+								"ttRepeat": {
+									"count": 6,
+									"max": 6,
+									"node": {
+										"tag": "div",
 										"props": {
-											"width": 11,
-											"height": 11,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "line",
-												"props": {
-													"x1": 12,
-													"y1": 19,
-													"x2": 12,
-													"y2": 5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "5 12 12 5 19 12"
+											"style": {
+												"flex": "1",
+												"borderRadius": "8px",
+												"background": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#eee6ff",
+															"success": "#dcfce7",
+															"warning": "#fef9c3",
+															"danger": "#ffe4e6",
+															"info": "#e0f2fe",
+															"neutral": "#f2f2f2"
+														},
+														"default": "#eee6ff"
+													}
+												},
+												"height": {
+													"ttMap": {
+														"arg": "index",
+														"values": {
+															"0": "18px",
+															"1": "30px",
+															"2": "24px",
+															"3": "40px",
+															"4": "28px",
+															"5": "34px"
+														},
+														"default": "24px"
+													}
 												}
 											}
-										]
-									},
-									"else": {
-										"tag": "svg",
-										"props": {
-											"width": 11,
-											"height": 11,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "line",
-												"props": {
-													"x1": 12,
-													"y1": 5,
-													"x2": 12,
-													"y2": 19
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "19 12 12 19 5 12"
-												}
-											}
-										]
+										}
 									}
 								}
 							},
-							"8% vs last week"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-end",
-						"gap": "6px",
-						"height": "52px"
-					}
-				},
-				"children": [
-					{
-						"ttRepeat": {
-							"count": 6,
-							"max": 6,
-							"node": {
+							{
 								"tag": "div",
 								"props": {
 									"style": {
@@ -241,64 +316,179 @@
 											"ttMap": {
 												"arg": "tone",
 												"values": {
-													"primary": "#eee6ff",
-													"success": "#dcfce7",
-													"warning": "#fef9c3",
-													"danger": "#ffe4e6",
-													"info": "#e0f2fe",
-													"neutral": "#f2f2f2"
+													"primary": "#570df8",
+													"success": "#00a96e",
+													"warning": "#ffbe00",
+													"danger": "#ff5861",
+													"info": "#00b6ff",
+													"neutral": "#2a323c"
 												},
-												"default": "#eee6ff"
+												"default": "#570df8"
 											}
 										},
-										"height": {
-											"ttMap": {
-												"arg": "index",
-												"values": {
-													"0": "18px",
-													"1": "30px",
-													"2": "24px",
-													"3": "40px",
-													"4": "28px",
-													"5": "34px"
-												},
-												"default": "24px"
-											}
-										}
+										"height": "46px"
 									}
 								}
 							}
-						}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"flex": "1",
-								"borderRadius": "8px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#570df8",
-											"success": "#00a96e",
-											"warning": "#ffbe00",
-											"danger": "#ff5861",
-											"info": "#00b6ff",
-											"neutral": "#2a323c"
-										},
-										"default": "#570df8"
-									}
-								},
-								"height": "46px"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Usage up ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Usage up",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "up"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "up"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"kWh today ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "kWh today",
+											"value": {
+												"ttArg": "kwh"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "kwh"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Cost ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Cost",
+											"value": {
+												"ttArg": "cost"
+											},
+											"maxLength": 10,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "cost"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "smart-home-energy",
+									"title": "Energy Usage Card",
+									"details": "kWh today: {kwh}\nCost: {cost}\nUsage up: {up}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "smart-home-energy",
 	"source": {
 		"kind": "archetype",

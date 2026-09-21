@@ -52,6 +52,13 @@ Seeding is admin-gated, batched, and idempotent: re-running converges
 (`unchanged` for already-seeded slugs). `GET /api/v1/admin/components/seed`
 returns the census (`{ totalSeeded }`).
 
+To publish with your existing Thingtime admin browser session, export the
+folder database with `node scripts/components-db/export.mjs > /tmp/thingtime-catalog.json`.
+Open `/components` on the intended deployment, expand **Import component
+catalog**, choose that JSON file, review the count and select **Publish catalog**.
+The importer requires a compatible runtime, validates the entire file, and
+publishes paced batches with visible counts and a stop control.
+
 ## Contributing components
 
 See `scripts/components-db/README.md` for the full pipeline contract. In short:
@@ -72,3 +79,50 @@ Keep archetypes genuinely varied — new UI patterns, not palette swaps.
 Extracted from [lopugit/thingtime#291](https://github.com/lopugit/thingtime/pull/291)
 so the app repo ships only the Thingtime runtime and the components Thingtime
 itself needs, while the full catalog lives and grows here.
+
+## Functional catalog, version 2
+
+Every rendition includes editable values and a private-record Action. Controls
+use native fields and isolated local state; choices, tab panels, pagination,
+disclosures, dialogs, countdowns, notes, checklists, media playback and image
+previews have working behavior. Saving uses `demo-catalog-records-save` and the
+current component's edited values. Reset restores the component defaults.
+
+Banking, payments, communication, devices and other external-service examples
+save private drafts. They do not claim to send, purchase or operate anything.
+Configure an owner-scoped integration Action and set `actionKey` / `actionLabel`
+to enable external effects. The default Action accepts `family`, `title` and
+`details`; an integration adapter can accept the same input contract. Credentials
+belong in connection settings, never in component arguments. Password/key fields
+and environment-value examples are excluded from saved metadata.
+
+Deploy [Thingtime PR 870](https://github.com/lopugit/thingtime/pull/870) before
+seeding version 2. The seeder checks the selected origin's capability manifest
+and requires `api.webpages-suites-install >= 1.1.0`, `api.admin-components-seed
+>= 1.0.0` and `api.login >= 1.0.0`, with matching major versions. It rejects
+redirects and requires HTTPS outside loopback. Forks need their own admin account
+and ordinary Thingtime database/session setup; no shared external API key is
+needed for local controls or private records.
+
+```sh
+node --test scripts/components-db/*.test.mjs
+node scripts/components-db/generate.mjs --check
+# Cross-check using the real app sanitizer and resolver:
+THINGTIME_SOURCE=/path/to/thingtime node \
+  --import /path/to/thingtime/remix/node_modules/tsx/dist/loader.mjs \
+  scripts/components-db/verify-thingtime.mjs
+# Local browser fixture (exclude remix/.functional-preview/ in that checkout):
+THINGTIME_SOURCE=/path/to/thingtime node scripts/components-db/create-preview.mjs
+```
+
+The fixture is served at `/.functional-preview/index.html` by the app's managed
+Vite dev process. It can display one component or all 350 families for a selected
+design. The acceptance checkout used http://localhost:19970 (HMR 19971, API 19972).
+Tailscale Funnel could not be verified because the installed CLI points to a
+missing application executable; no Funnel mapping was changed.
+
+Acceptance on 2026-09-21: all 2,800 definitions passed the app's schema gate,
+matched its resolver output and used supported native tags. Browser layout scans
+covered all 350 families in all eight styles at phone width, with no horizontal
+overflow after fixing fixed minimum widths and wrapping rows. Native dialog,
+countdown, pagination, tab-state and select interactions were also checked.

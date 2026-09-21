@@ -3,7 +3,7 @@
 	"name": "Diff Viewer",
 	"library": "daisyui",
 	"category": "data-display",
-	"description": "Diff viewer in the daisyUI style — hunk header plus removed and added lines washed in the library's danger and success tints, with +/− counters in the file bar.",
+	"description": "Diff viewer in the daisyUI style — hunk header plus removed and added lines washed in the library's danger and success tints, with +/− counters in the file bar. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"code",
 		"diff",
@@ -31,22 +31,34 @@
 			"default": "const total = items.reduce(sum, 0)",
 			"label": "Added line",
 			"maxLength": 60
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "code",
+			"type": "text",
+			"default": "const greeting = \"Hello, Thingtime\";",
+			"maxLength": 1000
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e5e6e6",
-				"borderRadius": "16px",
-				"overflow": "hidden",
-				"background": "#ffffff",
-				"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-				"fontSize": "14px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -54,150 +66,246 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"padding": "8px 12px",
-						"gap": "8px",
-						"background": "#f2f2f2",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "solid",
-						"borderBottomColor": "#f2f2f2",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #e5e6e6",
+						"borderRadius": "12px",
+						"background": "#ffffff",
+						"color": "#1f2937",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "pre",
 						"props": {
 							"style": {
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#1f2937"
+								"whiteSpace": "pre-wrap",
+								"overflowWrap": "anywhere"
 							}
 						},
 						"children": [
-							"{filename}"
+							{
+								"tag": "code",
+								"children": [
+									"{code}"
+								]
+							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "button",
 						"props": {
+							"type": "button",
 							"style": {
-								"flex": 1
+								"padding": "8px 12px",
+								"borderRadius": "8px",
+								"border": "1px solid #e5e6e6",
+								"background": "#f2f2f2",
+								"cursor": "pointer"
 							}
+						},
+						"children": [
+							"Copy code"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "copy",
+							"value": "{code}"
 						}
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 700,
-								"color": "#00753d"
-							}
-						},
-						"children": [
-							"+2"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 700,
-								"color": "#be123c"
-							}
-						},
-						"children": [
-							"−2"
-						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"whiteSpace": "pre",
-						"lineHeight": 1.7,
-						"padding": "6px 0",
-						"overflowX": "auto"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"padding": "2px 12px",
-								"background": "#e0f2fe",
-								"color": "#0369a1"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"@@ -18,5 +18,5 @@"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"padding": "2px 12px",
-								"background": "#ffe4e6",
-								"color": "#be123c"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"- {removed}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"padding": "2px 12px",
-								"background": "#ffe4e6",
-								"color": "#be123c"
+							{
+								"tag": "label",
+								"children": [
+									"Filename ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Filename",
+											"value": {
+												"ttArg": "filename"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "filename"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Removed line ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Removed line",
+											"value": {
+												"ttArg": "removed"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "removed"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Added line ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Added line",
+											"value": {
+												"ttArg": "added"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "added"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"code ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "code",
+											"value": {
+												"ttArg": "code"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "code"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "code-block-diff",
+									"title": "Diff Viewer",
+									"details": "Filename: {filename}\nRemoved line: {removed}\nAdded line: {added}\ncode: {code}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"children": [
-							"- console.log('total', total)"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"padding": "2px 12px",
-								"background": "#dcfce7",
-								"color": "#00753d"
-							}
-						},
-						"children": [
-							"+ {added}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"padding": "2px 12px",
-								"background": "#dcfce7",
-								"color": "#00753d"
-							}
-						},
-						"children": [
-							"+ logger.debug(total)"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "code-block-diff",
 	"source": {
 		"kind": "archetype",

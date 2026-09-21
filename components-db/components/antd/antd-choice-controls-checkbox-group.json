@@ -3,7 +3,7 @@
 	"name": "Checkbox Group",
 	"library": "antd",
 	"category": "forms",
-	"description": "Vertical stack of three labeled checkboxes in the Ant Design style — each row's label and checked state is its own arg, boxes fill with the primary color.",
+	"description": "Vertical stack of three labeled checkboxes in the Ant Design style — each row's label and checked state is its own arg, boxes fill with the primary color. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"checkbox",
@@ -49,15 +49,28 @@
 			"type": "boolean",
 			"default": false,
 			"label": "C checked"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "10px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -65,269 +78,304 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #d9d9d9",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.88)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "4px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0,
-										"boxSizing": "border-box"
-									},
-									{
-										"ttIf": {
-											"arg": "checkedA",
-											"then": {
-												"background": "#1677ff",
-												"borderColor": "#1677ff"
-											},
-											"else": {
-												"background": "#ffffff",
-												"borderColor": "#d9d9d9"
-											}
-										}
-									}
-								]
-							}
-						},
+						"tag": "label",
 						"children": [
 							{
-								"ttIf": {
-									"arg": "checkedA",
-									"then": {
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#ffffff",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
-									}
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "checkedA"
+									},
+									"aria-label": "{labelA}"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "checkedA"
 								}
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
-						},
-						"children": [
+							},
 							"{labelA}"
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "4px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0,
-										"boxSizing": "border-box"
-									},
-									{
-										"ttIf": {
-											"arg": "checkedB",
-											"then": {
-												"background": "#1677ff",
-												"borderColor": "#1677ff"
-											},
-											"else": {
-												"background": "#ffffff",
-												"borderColor": "#d9d9d9"
-											}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"ttIf": {
-									"arg": "checkedB",
-									"then": {
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#ffffff",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
-									}
-								}
-							}
-						]
 					},
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
-						},
+						"tag": "label",
 						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "checkedB"
+									},
+									"aria-label": "{labelB}"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "checkedB"
+								}
+							},
 							"{labelB}"
 						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "checkedC"
+									},
+									"aria-label": "{labelC}"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "checkedC"
+								}
+							},
+							"{labelC}"
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "4px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0,
-										"boxSizing": "border-box"
-									},
-									{
-										"ttIf": {
-											"arg": "checkedC",
-											"then": {
-												"background": "#1677ff",
-												"borderColor": "#1677ff"
-											},
-											"else": {
-												"background": "#ffffff",
-												"borderColor": "#d9d9d9"
-											}
-										}
-									}
-								]
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"ttIf": {
-									"arg": "checkedC",
-									"then": {
-										"tag": "svg",
+								"tag": "label",
+								"children": [
+									"A checked ",
+									{
+										"tag": "input",
 										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#ffffff",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
+											"aria-label": "A checked",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "checkedA"
 											}
-										]
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "checkedA"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"B checked ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "B checked",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "checkedB"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "checkedB"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"C checked ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "C checked",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "checkedC"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "checkedC"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Option A ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Option A",
+											"value": {
+												"ttArg": "labelA"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "labelA"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Option B ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Option B",
+											"value": {
+												"ttArg": "labelB"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "labelB"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Option C ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Option C",
+											"value": {
+												"ttArg": "labelC"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "labelC"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "choice-controls-checkbox-group",
+									"title": "Checkbox Group",
+									"details": "Option A: {labelA}\nA checked: {checkedA}\nOption B: {labelB}\nB checked: {checkedB}\nOption C: {labelC}\nC checked: {checkedC}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.88)"
-							}
-						},
-						"children": [
-							"{labelC}"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "choice-controls-checkbox-group",
 	"source": {
 		"kind": "archetype",

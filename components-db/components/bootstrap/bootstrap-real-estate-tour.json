@@ -3,7 +3,7 @@
 	"name": "Tour Scheduler",
 	"library": "bootstrap",
 	"category": "property",
-	"description": "Home tour scheduler in the Bootstrap style — a four-day date chip row, a six-slot time grid with one slot struck out as unavailable, an in-person/video segmented toggle, and a Confirm tour action.",
+	"description": "Home tour scheduler in the Bootstrap style — a four-day date chip row, a six-slot time grid with one slot struck out as unavailable, an in-person/video segmented toggle, and a Confirm tour action. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"real-estate",
 		"tour",
@@ -59,22 +59,34 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "selectedDate",
+			"type": "string",
+			"default": "",
+			"maxLength": 20
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"width": "300px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e9ecef",
-				"borderRadius": "8px",
-				"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#212529",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -82,635 +94,464 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"padding": "14px 16px",
-						"gap": "12px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #dee2e6",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "#212529",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "18px",
-								"fontWeight": 500
-							}
-						},
+						"tag": "h3",
 						"children": [
-							"Schedule a tour"
+							"Tour request draft"
 						]
 					},
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px"
-							}
-						},
+						"tag": "label",
 						"children": [
+							"Date",
 							{
-								"tag": "div",
+								"tag": "input",
 								"props": {
+									"type": "date",
+									"aria-label": "selectedDate",
+									"value": {
+										"ttArg": "selectedDate"
+									},
 									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"flexDirection": "column",
-												"alignItems": "center",
-												"gap": "2px",
-												"padding": "7px 0",
-												"flex": "1",
-												"borderRadius": "6px",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"boxShadow": "none"
-											},
-											{
-												"ttIf": {
-													"arg": "day",
-													"equals": "Mon",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #dee2e6",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
 								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"opacity": 0.75
-											}
-										},
-										"children": [
-											"Mon"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "16px",
-												"fontWeight": 700
-											}
-										},
-										"children": [
-											"12"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"flexDirection": "column",
-												"alignItems": "center",
-												"gap": "2px",
-												"padding": "7px 0",
-												"flex": "1",
-												"borderRadius": "6px",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"boxShadow": "none"
-											},
-											{
-												"ttIf": {
-													"arg": "day",
-													"equals": "Tue",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"opacity": 0.75
-											}
-										},
-										"children": [
-											"Tue"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "16px",
-												"fontWeight": 700
-											}
-										},
-										"children": [
-											"13"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"flexDirection": "column",
-												"alignItems": "center",
-												"gap": "2px",
-												"padding": "7px 0",
-												"flex": "1",
-												"borderRadius": "6px",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"boxShadow": "none"
-											},
-											{
-												"ttIf": {
-													"arg": "day",
-													"equals": "Wed",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"opacity": 0.75
-											}
-										},
-										"children": [
-											"Wed"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "16px",
-												"fontWeight": 700
-											}
-										},
-										"children": [
-											"14"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"flexDirection": "column",
-												"alignItems": "center",
-												"gap": "2px",
-												"padding": "7px 0",
-												"flex": "1",
-												"borderRadius": "6px",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"boxShadow": "none"
-											},
-											{
-												"ttIf": {
-													"arg": "day",
-													"equals": "Thu",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"opacity": 0.75
-											}
-										},
-										"children": [
-											"Thu"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "16px",
-												"fontWeight": 700
-											}
-										},
-										"children": [
-											"15"
-										]
-									}
-								]
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selectedDate"
+								}
 							}
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "label",
+						"children": [
+							"time",
+							{
+								"tag": "select",
+								"props": {
+									"value": {
+										"ttArg": "time"
+									},
+									"aria-label": "time"
+								},
+								"children": [
+									{
+										"tag": "option",
+										"props": {
+											"value": "9:00"
+										},
+										"children": [
+											"9:00"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "10:30"
+										},
+										"children": [
+											"10:30"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "1:30"
+										},
+										"children": [
+											"1:30"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "3:00"
+										},
+										"children": [
+											"3:00"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "4:30"
+										},
+										"children": [
+											"4:30"
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "time"
+								}
+							}
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							"mode",
+							{
+								"tag": "select",
+								"props": {
+									"value": {
+										"ttArg": "mode"
+									},
+									"aria-label": "mode"
+								},
+								"children": [
+									{
+										"tag": "option",
+										"props": {
+											"value": "in-person"
+										},
+										"children": [
+											"in-person"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "video"
+										},
+										"children": [
+											"video"
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "mode"
+								}
+							}
+						]
+					},
+					{
+						"tag": "small",
+						"children": [
+							"Save your preferred date and time. Booking requires a configured integration Action."
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
 								"display": "grid",
-								"gridTemplateColumns": "repeat(3, 1fr)",
-								"gap": "6px"
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "30px",
-												"borderRadius": "50rem",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"fontSize": "12px",
-												"fontWeight": 600
-											},
-											{
-												"ttIf": {
-													"arg": "time",
-													"equals": "9:00",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
-									}
-								},
+								"tag": "label",
 								"children": [
-									"9:00"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "30px",
-												"borderRadius": "50rem",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"fontSize": "12px",
-												"fontWeight": 600
-											},
-											{
-												"ttIf": {
-													"arg": "time",
-													"equals": "10:30",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									"10:30"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "30px",
-												"borderRadius": "50rem",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"fontSize": "12px",
-												"fontWeight": 600
-											},
-											{
-												"color": "#adb5bd",
-												"textDecoration": "line-through",
-												"background": "#f8f9fa",
-												"borderColor": "#e9ecef"
-											}
-										]
-									}
-								},
-								"children": [
-									"12:00"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "30px",
-												"borderRadius": "50rem",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"fontSize": "12px",
-												"fontWeight": 600
-											},
-											{
-												"ttIf": {
-													"arg": "time",
-													"equals": "1:30",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									"1:30"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "30px",
-												"borderRadius": "50rem",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"fontSize": "12px",
-												"fontWeight": 600
-											},
-											{
-												"ttIf": {
-													"arg": "time",
-													"equals": "3:00",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									"3:00"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "30px",
-												"borderRadius": "50rem",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6",
-												"fontSize": "12px",
-												"fontWeight": 600
-											},
-											{
-												"ttIf": {
-													"arg": "time",
-													"equals": "4:30",
-													"then": {
-														"background": "#0d6efd",
-														"borderColor": "#0d6efd",
-														"color": "#ffffff"
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									"4:30"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"padding": "3px",
-								"background": "#f8f9fa",
-								"borderRadius": "50rem",
-								"gap": "2px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"flex": "1",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "26px",
-												"borderRadius": "50rem",
-												"fontSize": "12px",
-												"fontWeight": 600,
-												"color": "#6c757d"
-											},
-											{
-												"ttIf": {
-													"arg": "mode",
-													"equals": "in-person",
-													"then": {
-														"background": "#ffffff",
-														"color": "#212529",
-														"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									"In person"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"flex": "1",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "26px",
-												"borderRadius": "50rem",
-												"fontSize": "12px",
-												"fontWeight": 600,
-												"color": "#6c757d"
-											},
-											{
-												"ttIf": {
-													"arg": "mode",
-													"equals": "video",
-													"then": {
-														"background": "#ffffff",
-														"color": "#212529",
-														"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
-													}
-												}
-											}
-										]
-									}
-								},
-								"children": [
-									"Video call"
-								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
+									"Time ",
 									{
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"height": "38px",
-										"padding": "0 14px",
-										"border": "none",
+										"tag": "select",
+										"props": {
+											"aria-label": "Time",
+											"value": {
+												"ttArg": "time"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "9:00"
+												},
+												"children": [
+													"9:00"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "10:30"
+												},
+												"children": [
+													"10:30"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "1:30"
+												},
+												"children": [
+													"1:30"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "3:00"
+												},
+												"children": [
+													"3:00"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "4:30"
+												},
+												"children": [
+													"4:30"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "time"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Tour type ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Tour type",
+											"value": {
+												"ttArg": "mode"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "in-person"
+												},
+												"children": [
+													"in-person"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "video"
+												},
+												"children": [
+													"video"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mode"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"selectedDate ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "selectedDate",
+											"value": {
+												"ttArg": "selectedDate"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedDate"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Day ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Day",
+											"value": {
+												"ttArg": "day"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "Mon"
+												},
+												"children": [
+													"Mon"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Tue"
+												},
+												"children": [
+													"Tue"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Wed"
+												},
+												"children": [
+													"Wed"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Thu"
+												},
+												"children": [
+													"Thu"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
 										"borderRadius": "6px",
-										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"fontWeight": 400,
-										"fontSize": "14px",
-										"cursor": "pointer"
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									},
-									{
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#0d6efd",
-													"success": "#198754",
-													"warning": "#ffc107",
-													"danger": "#dc3545",
-													"info": "#0dcaf0",
-													"neutral": "#6c757d"
-												},
-												"default": "#0d6efd"
-											}
-										},
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#ffffff",
-													"success": "#ffffff",
-													"warning": "#000000",
-													"danger": "#ffffff",
-													"info": "#000000",
-													"neutral": "#ffffff"
-												},
-												"default": "#ffffff"
-											}
-										},
-										"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
-									}
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "real-estate-tour",
+									"title": "Tour Scheduler",
+									"details": "Day: {day}\nTime: {time}\nTour type: {mode}\nselectedDate: {selectedDate}"
+								},
+								"children": [
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"children": [
-							"Confirm tour"
 						]
 					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "real-estate-tour",
 	"source": {
 		"kind": "archetype",

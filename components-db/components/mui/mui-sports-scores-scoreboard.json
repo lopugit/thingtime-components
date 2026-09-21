@@ -3,7 +3,7 @@
 	"name": "Live Scoreboard",
 	"library": "mui",
 	"category": "sports",
-	"description": "Live match scoreboard in the Material UI style — home/away rows with initials tiles and big mono scores, a LIVE chip with period clock, possession dot, and a thin momentum bar.",
+	"description": "Live match scoreboard in the Material UI style — home/away rows with initials tiles and big mono scores, a LIVE chip with period clock, possession dot, and a thin momentum bar. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"sports",
 		"scoreboard",
@@ -55,26 +55,28 @@
 			],
 			"default": "home",
 			"label": "Possession"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"boxSizing": "border-box",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-				"color": "rgba(0, 0, 0, 0.87)",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "rgba(0, 0, 0, 0.12)",
-				"borderRadius": "8px",
-				"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
-				"width": "280px",
-				"padding": "14px",
-				"gap": "10px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -83,9 +85,19 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "8px"
+						"flexDirection": "column",
+						"boxSizing": "border-box",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "rgba(0, 0, 0, 0.12)",
+						"borderRadius": "8px",
+						"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+						"width": "280px",
+						"padding": "14px",
+						"gap": "10px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -95,237 +107,533 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "6px",
-								"padding": "2px 8px",
-								"borderRadius": "999px",
-								"background": "#fdeded",
-								"color": "#5f2120",
-								"fontSize": "12px",
-								"fontWeight": 700,
-								"letterSpacing": "0.06em"
+								"justifyContent": "space-between",
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"padding": "2px 8px",
+										"borderRadius": "999px",
+										"background": "#fdeded",
+										"color": "#5f2120",
+										"fontSize": "12px",
+										"fontWeight": 700,
+										"letterSpacing": "0.06em",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "6px",
+												"height": "6px",
+												"borderRadius": "999px",
+												"background": "#d32f2f",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									"LIVE"
+								]
+							},
+							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"width": "6px",
-										"height": "6px",
-										"borderRadius": "999px",
-										"background": "#d32f2f"
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "12px",
+										"color": "rgba(0, 0, 0, 0.6)"
+									}
+								},
+								"children": [
+									"{clock}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "26px",
+										"height": "26px",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"color": "rgba(0, 0, 0, 0.6)",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontSize": "12px",
+										"fontWeight": 700,
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"H"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"flex": 1,
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"minWidth": 0,
+										"overflow": "hidden",
+										"textOverflow": "ellipsis",
+										"whiteSpace": "nowrap"
+									}
+								},
+								"children": [
+									"{home}"
+								]
+							},
+							{
+								"ttIf": {
+									"arg": "possession",
+									"equals": "home",
+									"then": {
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "8px",
+												"height": "8px",
+												"borderRadius": "999px",
+												"background": "#1976d2",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
 									}
 								}
 							},
-							"LIVE"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "rgba(0, 0, 0, 0.6)"
-							}
-						},
-						"children": [
-							"{clock}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "26px",
-								"height": "26px",
-								"borderRadius": "4px",
-								"background": "#fafafa",
-								"color": "rgba(0, 0, 0, 0.6)",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontSize": "12px",
-								"fontWeight": 700,
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"H"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1,
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"minWidth": 0,
-								"overflow": "hidden",
-								"textOverflow": "ellipsis",
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"{home}"
-						]
-					},
-					{
-						"ttIf": {
-							"arg": "possession",
-							"equals": "home",
-							"then": {
+							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"width": "8px",
-										"height": "8px",
-										"borderRadius": "999px",
-										"background": "#1976d2",
-										"flexShrink": 0
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "20px",
+										"fontWeight": 700,
+										"color": "rgba(0, 0, 0, 0.87)"
 									}
-								}
+								},
+								"children": [
+									"{homeScore}"
+								]
 							}
-						}
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "20px",
-								"fontWeight": 700,
-								"color": "rgba(0, 0, 0, 0.87)"
-							}
-						},
-						"children": [
-							"{homeScore}"
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
+					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "26px",
-								"height": "26px",
-								"borderRadius": "4px",
-								"background": "#fafafa",
-								"color": "rgba(0, 0, 0, 0.6)",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"fontSize": "12px",
-								"fontWeight": 700,
-								"flexShrink": 0
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"A"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1,
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"minWidth": 0,
-								"overflow": "hidden",
-								"textOverflow": "ellipsis",
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"{away}"
-						]
-					},
-					{
-						"ttIf": {
-							"arg": "possession",
-							"equals": "away",
-							"then": {
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "26px",
+										"height": "26px",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"color": "rgba(0, 0, 0, 0.6)",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontSize": "12px",
+										"fontWeight": 700,
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"A"
+								]
+							},
+							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"width": "8px",
-										"height": "8px",
-										"borderRadius": "999px",
-										"background": "#1976d2",
-										"flexShrink": 0
+										"flex": 1,
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"minWidth": 0,
+										"overflow": "hidden",
+										"textOverflow": "ellipsis",
+										"whiteSpace": "nowrap"
+									}
+								},
+								"children": [
+									"{away}"
+								]
+							},
+							{
+								"ttIf": {
+									"arg": "possession",
+									"equals": "away",
+									"then": {
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "8px",
+												"height": "8px",
+												"borderRadius": "999px",
+												"background": "#1976d2",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
 									}
 								}
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "20px",
+										"fontWeight": 700,
+										"color": "rgba(0, 0, 0, 0.87)"
+									}
+								},
+								"children": [
+									"{awayScore}"
+								]
 							}
-						}
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "20px",
-								"fontWeight": 700,
-								"color": "rgba(0, 0, 0, 0.87)"
-							}
-						},
-						"children": [
-							"{awayScore}"
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"height": "4px",
-						"borderRadius": "999px",
-						"background": "rgba(0, 0, 0, 0.08)",
-						"overflow": "hidden",
-						"display": "flex"
-					}
-				},
-				"children": [
+					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "62%",
+								"height": "4px",
 								"borderRadius": "999px",
-								"background": "#1976d2"
+								"background": "rgba(0, 0, 0, 0.08)",
+								"overflow": "hidden",
+								"display": "flex",
+								"flexWrap": "wrap"
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "62%",
+										"borderRadius": "999px",
+										"background": "#1976d2",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Home team ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Home team",
+											"value": {
+												"ttArg": "home"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "home"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Away team ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Away team",
+											"value": {
+												"ttArg": "away"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "away"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Home score ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Home score",
+											"value": {
+												"ttArg": "homeScore"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "homeScore"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Away score ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Away score",
+											"value": {
+												"ttArg": "awayScore"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "awayScore"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Period + clock ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Period + clock",
+											"value": {
+												"ttArg": "clock"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "clock"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Possession ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Possession",
+											"value": {
+												"ttArg": "possession"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "home"
+												},
+												"children": [
+													"home"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "away"
+												},
+												"children": [
+													"away"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "possession"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "sports-scores-scoreboard",
+									"title": "Live Scoreboard",
+									"details": "Home team: {home}\nAway team: {away}\nHome score: {homeScore}\nAway score: {awayScore}\nPeriod + clock: {clock}\nPossession: {possession}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "sports-scores-scoreboard",
 	"source": {
 		"kind": "archetype",

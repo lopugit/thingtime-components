@@ -3,7 +3,7 @@
 	"name": "Setup Checklist",
 	"library": "untitled",
 	"category": "onboarding",
-	"description": "Setup checklist card in the Untitled UI style — two completed steps with green check circles, the current step highlighted by a tone border and wash, one faint pending step, plus a mono completion caption.",
+	"description": "Setup checklist card in the Untitled UI style — two completed steps with green check circles, the current step highlighted by a tone border and wash, one faint pending step, plus a mono completion caption. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"onboarding",
 		"checklist",
@@ -60,25 +60,48 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "completed1",
+			"type": "boolean",
+			"default": false
+		},
+		{
+			"name": "completed2",
+			"type": "boolean",
+			"default": false
+		},
+		{
+			"name": "completed3",
+			"type": "boolean",
+			"default": false
+		},
+		{
+			"name": "completed4",
+			"type": "boolean",
+			"default": false
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#eaecf0",
-				"borderRadius": "12px",
-				"boxShadow": "0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03)",
-				"boxSizing": "border-box",
-				"width": "280px",
-				"gap": "10px",
-				"padding": "16px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -86,328 +109,370 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #eaecf0",
+						"borderRadius": "8px",
+						"background": "#ffffff",
+						"color": "#101828",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "16px",
-								"fontWeight": 600,
-								"color": "#101828"
-							}
-						},
+						"tag": "label",
 						"children": [
-							"Setup checklist"
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "completed1"
+									},
+									"aria-label": "{item1}"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "completed1"
+								}
+							},
+							"{item1}"
 						]
 					},
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "#475467"
-							}
-						},
+						"tag": "label",
 						"children": [
-							"{done} of 4 complete"
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "completed2"
+									},
+									"aria-label": "{item2}"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "completed2"
+								}
+							},
+							"{item2}"
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "completed3"
+									},
+									"aria-label": "{item3}"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "completed3"
+								}
+							},
+							"{item3}"
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "completed4"
+									},
+									"aria-label": "{item4}"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "completed4"
+								}
+							},
+							"{item4}"
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "4px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px",
-								"padding": "7px 10px",
-								"borderRadius": "8px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "transparent"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"background": "#12b76a",
-										"color": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 10,
-											"height": 10,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
-									}
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#475467"
-									}
-								},
-								"children": [
-									"{item1}"
-								]
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px",
-								"padding": "7px 10px",
-								"borderRadius": "8px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "transparent"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"background": "#12b76a",
-										"color": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0
-									}
-								},
+								"tag": "label",
 								"children": [
+									"completed1 ",
 									{
-										"tag": "svg",
+										"tag": "input",
 										"props": {
-											"width": 10,
-											"height": 10,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
-									}
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#475467"
-									}
-								},
-								"children": [
-									"{item2}"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px",
-								"padding": "7px 10px",
-								"borderRadius": "8px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#e9d7fe",
-											"success": "#a6f4c5",
-											"warning": "#fedf89",
-											"danger": "#fecdca",
-											"info": "#b2ddff",
-											"neutral": "#d0d5dd"
-										},
-										"default": "#e9d7fe"
-									}
-								},
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#f9f5ff",
-											"success": "#ecfdf3",
-											"warning": "#fffaeb",
-											"danger": "#fef3f2",
-											"info": "#eff8ff",
-											"neutral": "#f2f4f7"
-										},
-										"default": "#f9f5ff"
-									}
-								}
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"borderWidth": "2px",
-										"borderStyle": "solid",
-										"borderColor": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#7f56d9",
-													"success": "#12b76a",
-													"warning": "#f79009",
-													"danger": "#f04438",
-													"info": "#2e90fa",
-													"neutral": "#344054"
-												},
-												"default": "#7f56d9"
+											"aria-label": "completed1",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "completed1"
 											}
 										},
-										"boxSizing": "border-box",
-										"flexShrink": 0
-									}
-								}
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#6941c6",
-													"success": "#027a48",
-													"warning": "#b54708",
-													"danger": "#b42318",
-													"info": "#175cd3",
-													"neutral": "#344054"
-												},
-												"default": "#6941c6"
-											}
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "completed1"
 										}
 									}
-								},
-								"children": [
-									"{item3}"
 								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px",
-								"padding": "7px 10px",
-								"borderRadius": "8px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "transparent"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"borderWidth": "1px",
-										"borderStyle": "dashed",
-										"borderColor": "#98a2b3",
-										"boxSizing": "border-box",
-										"flexShrink": 0
-									}
-								}
 							},
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#98a2b3"
+								"tag": "label",
+								"children": [
+									"completed2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "completed2",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "completed2"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "completed2"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"completed3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "completed3",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "completed3"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "completed3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"completed4 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "completed4",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "completed4"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "completed4"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Done count ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Done count",
+											"value": {
+												"ttArg": "done"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 4
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "done"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Step 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Step 1",
+											"value": {
+												"ttArg": "item1"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "item1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Step 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Step 2",
+											"value": {
+												"ttArg": "item2"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "item2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Step 3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Step 3",
+											"value": {
+												"ttArg": "item3"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "item3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "onboarding-checklist",
+									"title": "Setup Checklist",
+									"details": "Done count: {done}\nStep 1: {item1}\nStep 2: {item2}\nStep 3: {item3}\ncompleted1: {completed1}\ncompleted2: {completed2}\ncompleted3: {completed3}\ncompleted4: {completed4}"
 								},
 								"children": [
-									"{item4}"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -416,7 +481,7 @@
 		]
 	},
 	"previewBg": "#f9fafb",
-	"version": 1,
+	"version": 2,
 	"familyKey": "onboarding-checklist",
 	"source": {
 		"kind": "archetype",

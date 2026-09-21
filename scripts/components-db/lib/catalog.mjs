@@ -8,6 +8,7 @@ import { readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
+import { functionalDefinition } from './functionality.mjs';
 import { LIBRARIES, LIBRARY_IDS } from './tokens.mjs';
 
 // Tranche 1: the original 25 archetypes (×8 libraries ×5 variants = 1000).
@@ -159,8 +160,8 @@ export const buildCatalog = async () => {
 					errors.push(`${id}/${libraryId}[${index}]: slug '${def?.slug}' should be '${expectedSlug}'`);
 				}
 				definitions.push({
-					...def,
-					version: 1,
+					...functionalDefinition(def, lib, id, variant),
+					version: 2,
 					// familyKey groups the 8 library renditions of one functional
 					// component — /components shows one card per family with a
 					// designs click-through

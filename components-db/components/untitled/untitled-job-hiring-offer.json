@@ -3,7 +3,7 @@
 	"name": "Offer Summary Card",
 	"library": "untitled",
 	"category": "hiring",
-	"description": "Offer summary card in the Untitled UI style — role header with a level chip, Base/Equity/Bonus compensation rows in the library mono face, a start-date row, an expiry warning banner, and Accept plus Decline actions.",
+	"description": "Offer summary card in the Untitled UI style — role header with a level chip, Base/Equity/Bonus compensation rows in the library mono face, a start-date row, an expiry warning banner, and Accept plus Decline actions. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"hiring",
 		"offer",
@@ -59,26 +59,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"gap": "12px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#101828",
-				"background": "#ffffff",
-				"borderRadius": "8px",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#eaecf0",
-				"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -87,9 +89,19 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "flex-start",
-						"gap": "8px",
-						"justifyContent": "space-between"
+						"flexDirection": "column",
+						"width": "320px",
+						"boxSizing": "border-box",
+						"padding": "16px",
+						"gap": "12px",
+						"color": "#101828",
+						"background": "#ffffff",
+						"borderRadius": "8px",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#eaecf0",
+						"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -98,76 +110,154 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"minWidth": 0
+								"alignItems": "flex-start",
+								"gap": "8px",
+								"justifyContent": "space-between",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "16px",
-										"fontWeight": 600
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"minWidth": 0
 									}
 								},
 								"children": [
-									"{role}"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "16px",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"{role}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#475467"
+											}
+										},
+										"children": [
+											"Full-time · Sydney HQ"
+										]
+									}
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "4px",
+										"padding": "2px 8px",
+										"borderRadius": "999px",
 										"fontSize": "12px",
-										"color": "#475467"
+										"fontWeight": 600,
+										"lineHeight": 1.6,
+										"background": "#f9f5ff",
+										"color": "#6941c6",
+										"flexShrink": 0,
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"Full-time · Sydney HQ"
+									"{level}"
 								]
 							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"gap": "4px",
-								"padding": "2px 8px",
-								"borderRadius": "999px",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"lineHeight": 1.6,
-								"background": "#f9f5ff",
-								"color": "#6941c6",
-								"flexShrink": 0
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "0px"
 							}
 						},
 						"children": [
-							"{level}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "0px"
-					}
-				},
-				"children": [
-					{
-						"ttRepeat": {
-							"count": 3,
-							"max": 3,
-							"node": {
+							{
+								"ttRepeat": {
+									"count": 3,
+									"max": 3,
+									"node": {
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "space-between",
+												"gap": "8px",
+												"padding": "8px 0",
+												"borderTopWidth": "1px",
+												"borderTopStyle": "solid",
+												"borderTopColor": "#f2f4f7",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"color": "#475467"
+													}
+												},
+												"children": [
+													{
+														"ttMap": {
+															"arg": "n",
+															"values": {
+																"1": "Base salary",
+																"2": "Equity",
+																"3": "Signing bonus"
+															},
+															"default": ""
+														}
+													}
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600,
+														"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+													}
+												},
+												"children": [
+													{
+														"ttMap": {
+															"arg": "n",
+															"values": {
+																"1": "{base}",
+																"2": "0.25%",
+																"3": "$15,000"
+															},
+															"default": ""
+														}
+													}
+												]
+											}
+										]
+									}
+								}
+							},
+							{
 								"tag": "div",
 								"props": {
 									"style": {
@@ -178,7 +268,8 @@
 										"padding": "8px 0",
 										"borderTopWidth": "1px",
 										"borderTopStyle": "solid",
-										"borderTopColor": "#f2f4f7"
+										"borderTopColor": "#f2f4f7",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
@@ -191,17 +282,7 @@
 											}
 										},
 										"children": [
-											{
-												"ttMap": {
-													"arg": "n",
-													"values": {
-														"1": "Base salary",
-														"2": "Equity",
-														"3": "Signing bonus"
-													},
-													"default": ""
-												}
-											}
+											"Start date"
 										]
 									},
 									{
@@ -214,22 +295,12 @@
 											}
 										},
 										"children": [
-											{
-												"ttMap": {
-													"arg": "n",
-													"values": {
-														"1": "{base}",
-														"2": "0.25%",
-														"3": "$15,000"
-													},
-													"default": ""
-												}
-											}
+											"{start}"
 										]
 									}
 								]
 							}
-						}
+						]
 					},
 					{
 						"tag": "div",
@@ -237,205 +308,410 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "space-between",
+								"gap": "6px",
+								"padding": "6px 10px",
+								"borderRadius": "8px",
+								"background": "#fffaeb",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "svg",
+								"props": {
+									"width": 12,
+									"height": 12,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#b54708",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "path",
+										"props": {
+											"d": "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+										}
+									},
+									{
+										"tag": "line",
+										"props": {
+											"x1": 12,
+											"y1": 9,
+											"x2": 12,
+											"y2": 13
+										}
+									},
+									{
+										"tag": "line",
+										"props": {
+											"x1": 12,
+											"y1": 17,
+											"x2": 12.01,
+											"y2": 17
+										}
+									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "#b54708",
+										"fontWeight": 600
+									}
+								},
+								"children": [
+									"Offer expires in {expires}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
 								"gap": "8px",
-								"padding": "8px 0",
-								"borderTopWidth": "1px",
-								"borderTopStyle": "solid",
-								"borderTopColor": "#f2f4f7"
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"fontSize": "14px",
-										"color": "#475467"
-									}
-								},
-								"children": [
-									"Start date"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"gap": "6px",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "8px",
 										"fontWeight": 600,
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-									}
+										"fontSize": "14px",
+										"cursor": "pointer",
+										"flex": "1",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#7f56d9",
+													"success": "#12b76a",
+													"warning": "#f79009",
+													"danger": "#f04438",
+													"info": "#2e90fa",
+													"neutral": "#344054"
+												},
+												"default": "#7f56d9"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
 								},
 								"children": [
-									"{start}"
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "job-hiring-offer",
+									"title": "Offer Summary Card",
+									"details": "Role: {role}\nLevel: {level}\nBase salary: {base}\nStart date: {start}\nExpires in: {expires}"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"gap": "6px",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "8px",
+										"fontWeight": 600,
+										"fontSize": "14px",
+										"cursor": "pointer",
+										"background": "transparent",
+										"color": "#f04438",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "job-hiring-offer",
+									"title": "Offer Summary Card",
+									"details": "Role: {role}\nLevel: {level}\nBase salary: {base}\nStart date: {start}\nExpires in: {expires}"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Role ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Role",
+											"value": {
+												"ttArg": "role"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "role"
+										}
+									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Level ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Level",
+											"value": {
+												"ttArg": "level"
+											},
+											"maxLength": 6,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "level"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Base salary ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Base salary",
+											"value": {
+												"ttArg": "base"
+											},
+											"maxLength": 14,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "base"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Start date ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Start date",
+											"value": {
+												"ttArg": "start"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "start"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Expires in ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Expires in",
+											"value": {
+												"ttArg": "expires"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "expires"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "job-hiring-offer",
+									"title": "Offer Summary Card",
+									"details": "Role: {role}\nLevel: {level}\nBase salary: {base}\nStart date: {start}\nExpires in: {expires}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "6px",
-						"padding": "6px 10px",
-						"borderRadius": "8px",
-						"background": "#fffaeb"
-					}
-				},
+				"tag": "small",
 				"children": [
-					{
-						"tag": "svg",
-						"props": {
-							"width": 12,
-							"height": 12,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#b54708",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "path",
-								"props": {
-									"d": "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 12,
-									"y1": 9,
-									"x2": 12,
-									"y2": 13
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 12,
-									"y1": 17,
-									"x2": 12.01,
-									"y2": 17
-								}
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#b54708",
-								"fontWeight": 600
-							}
-						},
-						"children": [
-							"Offer expires in {expires}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "6px",
-								"height": "36px",
-								"padding": "0 14px",
-								"border": "none",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 600,
-								"fontSize": "14px",
-								"cursor": "pointer",
-								"flex": "1",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#7f56d9",
-											"success": "#12b76a",
-											"warning": "#f79009",
-											"danger": "#f04438",
-											"info": "#2e90fa",
-											"neutral": "#344054"
-										},
-										"default": "#7f56d9"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)"
-							}
-						},
-						"children": [
-							"Accept offer"
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "6px",
-								"height": "36px",
-								"padding": "0 14px",
-								"border": "none",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 600,
-								"fontSize": "14px",
-								"cursor": "pointer",
-								"background": "transparent",
-								"color": "#f04438"
-							}
-						},
-						"children": [
-							"Decline"
-						]
-					}
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "job-hiring-offer",
 	"source": {
 		"kind": "archetype",

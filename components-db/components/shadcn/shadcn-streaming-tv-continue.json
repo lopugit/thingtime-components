@@ -3,7 +3,7 @@
 	"name": "Continue Watching Tile",
 	"library": "shadcn",
 	"category": "entertainment",
-	"description": "Continue-watching tile in the shadcn/ui style — a 16:9 still with a centered play circle, a resume progress bar hugging the band's bottom edge, episode caption with time left, and an options kebab.",
+	"description": "Continue-watching tile in the shadcn/ui style — a 16:9 still with a centered play circle, a resume progress bar hugging the band's bottom edge, episode caption with time left, and an options kebab. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"streaming",
 		"continue",
@@ -47,24 +47,35 @@
 			"default": "23m",
 			"label": "Time left",
 			"maxLength": 10
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "mediaUrl",
+			"type": "string",
+			"default": "",
+			"label": "Media URL",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "260px",
-				"boxSizing": "border-box",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"borderRadius": "12px",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#f4f4f5",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -72,172 +83,317 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"position": "relative",
-						"aspectRatio": "16 / 9",
-						"background": "#71717a",
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #e4e4e7",
+						"borderRadius": "8px",
+						"background": "#ffffff",
+						"color": "#09090b",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "40px",
-								"height": "40px",
-								"borderRadius": "999px",
-								"background": "#ffffff",
-								"boxShadow": "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center"
-							}
-						},
+						"tag": "label",
 						"children": [
+							"Media URL",
 							{
-								"tag": "svg",
+								"tag": "input",
 								"props": {
-									"width": 16,
-									"height": 16,
-									"viewBox": "0 0 24 24",
-									"fill": "#09090b",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "polygon",
-										"props": {
-											"points": "8 5 19 12 8 19"
-										}
+									"type": "url",
+									"aria-label": "mediaUrl",
+									"value": {
+										"ttArg": "mediaUrl"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e4e4e7",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
-								]
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "mediaUrl"
+								}
 							}
 						]
 					},
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"position": "absolute",
-								"left": 0,
-								"right": 0,
-								"bottom": 0,
-								"height": "4px",
-								"background": "#a1a1aa"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
+						"ttIf": {
+							"arg": "mediaUrl",
+							"equals": "",
+							"then": null,
+							"else": {
+								"tag": "video",
 								"props": {
+									"src": "{mediaUrl}",
+									"controls": true,
 									"style": {
-										"height": "100%",
-										"width": "{percent}%",
-										"background": "#ef4444"
+										"width": "100%",
+										"maxHeight": "400px"
 									}
 								}
 							}
+						}
+					},
+					{
+						"tag": "small",
+						"children": [
+							"Add a playable media URL to play, pause, seek, adjust volume, and use fullscreen."
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"padding": "10px 12px",
-						"gap": "10px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"flex": 1,
-								"gap": "2px",
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
 								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "#09090b"
-									}
-								},
+								"tag": "label",
 								"children": [
-									"{title}"
+									"Media URL ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Media URL",
+											"value": {
+												"ttArg": "mediaUrl"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mediaUrl"
+										}
+									}
 								]
 							},
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "#71717a"
-									}
-								},
+								"tag": "label",
 								"children": [
-									"S{s}:E{e} · {left} left"
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
 								]
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "inline-flex",
-								"transform": "rotate(90deg)",
-								"flexShrink": 0
-							}
-						},
-						"children": [
+							},
 							{
-								"tag": "svg",
-								"props": {
-									"width": 16,
-									"height": 16,
-									"viewBox": "0 0 24 24",
-									"fill": "#71717a",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
+								"tag": "label",
 								"children": [
+									"Watched % ",
 									{
-										"tag": "circle",
+										"tag": "input",
 										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 1.6
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 19,
-											"cy": 12,
-											"r": 1.6
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 5,
-											"cy": 12,
-											"r": 1.6
+											"aria-label": "Watched %",
+											"value": {
+												"ttArg": "percent"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "percent"
 										}
 									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Season ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Season",
+											"value": {
+												"ttArg": "s"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "s"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Episode ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Episode",
+											"value": {
+												"ttArg": "e"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "e"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Time left ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Time left",
+											"value": {
+												"ttArg": "left"
+											},
+											"maxLength": 10,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "left"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "streaming-tv-continue",
+									"title": "Continue Watching Tile",
+									"details": "Title: {title}\nWatched %: {percent}\nSeason: {s}\nEpisode: {e}\nTime left: {left}\nMedia URL: {mediaUrl}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -245,7 +401,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "streaming-tv-continue",
 	"source": {
 		"kind": "archetype",

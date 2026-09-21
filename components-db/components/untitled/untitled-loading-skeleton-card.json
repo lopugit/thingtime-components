@@ -3,7 +3,7 @@
 	"name": "Skeleton Card",
 	"library": "untitled",
 	"category": "feedback",
-	"description": "Skeleton card placeholder in the Untitled UI style — avatar circle beside heading bars, body-line bars below, and an optional media block.",
+	"description": "Skeleton card placeholder in the Untitled UI style — avatar circle beside heading bars, body-line bars below, and an optional media block. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"loading",
 		"skeleton",
@@ -30,63 +30,61 @@
 			"label": "Body lines",
 			"min": 1,
 			"max": 5
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "260px",
-				"gap": "12px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#f2f4f7",
-				"borderRadius": "12px",
-				"padding": "16px",
-				"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			{
-				"ttIf": {
-					"arg": "showMedia",
-					"then": {
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "96px",
-								"borderRadius": "8px",
-								"background": "#f2f4f7"
-							}
-						}
-					}
-				}
-			},
 			{
 				"tag": "div",
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "12px"
+						"flexDirection": "column",
+						"width": "260px",
+						"gap": "12px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#f2f4f7",
+						"borderRadius": "12px",
+						"padding": "16px",
+						"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
 					{
 						"ttIf": {
-							"arg": "showAvatar",
+							"arg": "showMedia",
 							"then": {
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "40px",
-										"height": "40px",
-										"borderRadius": "999px",
-										"background": "#f2f4f7",
-										"flexShrink": 0
+										"height": "96px",
+										"borderRadius": "8px",
+										"background": "#f2f4f7"
 									}
 								}
 							}
@@ -97,20 +95,28 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "8px",
-								"flex": 1
+								"alignItems": "center",
+								"gap": "12px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "10px",
-										"width": "45%",
-										"borderRadius": "6px",
-										"background": "#f2f4f7"
+								"ttIf": {
+									"arg": "showAvatar",
+									"then": {
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "40px",
+												"height": "40px",
+												"borderRadius": "999px",
+												"background": "#f2f4f7",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
 									}
 								}
 							},
@@ -118,10 +124,81 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"height": "10px",
-										"width": "70%",
-										"borderRadius": "6px",
-										"background": "#f2f4f7"
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "8px",
+										"flex": 1
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"height": "10px",
+												"width": "45%",
+												"borderRadius": "6px",
+												"background": "#f2f4f7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"height": "10px",
+												"width": "70%",
+												"borderRadius": "6px",
+												"background": "#f2f4f7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "8px"
+							}
+						},
+						"children": [
+							{
+								"ttRepeat": {
+									"arg": "lines",
+									"max": 5,
+									"node": {
+										"tag": "div",
+										"props": {
+											"style": {
+												"height": "10px",
+												"borderRadius": "6px",
+												"background": "#f2f4f7",
+												"width": {
+													"ttMap": {
+														"arg": "n",
+														"values": {
+															"1": "100%",
+															"2": "94%",
+															"3": "82%",
+															"4": "64%",
+															"5": "52%"
+														},
+														"default": "75%"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
 									}
 								}
 							}
@@ -130,49 +207,147 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "8px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"ttRepeat": {
-							"arg": "lines",
-							"max": 5,
-							"node": {
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "10px",
-										"borderRadius": "6px",
-										"background": "#f2f4f7",
-										"width": {
-											"ttMap": {
-												"arg": "n",
-												"values": {
-													"1": "100%",
-													"2": "94%",
-													"3": "82%",
-													"4": "64%",
-													"5": "52%"
-												},
-												"default": "75%"
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Show avatar ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show avatar",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showAvatar"
 											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showAvatar"
 										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show media block ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show media block",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showMedia"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showMedia"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Body lines ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Body lines",
+											"value": {
+												"ttArg": "lines"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 5
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "lines"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "loading-skeleton-card",
+									"title": "Skeleton Card",
+									"details": "Show avatar: {showAvatar}\nShow media block: {showMedia}\nBody lines: {lines}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
-						}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "loading-skeleton-card",
 	"source": {
 		"kind": "archetype",

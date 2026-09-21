@@ -3,7 +3,7 @@
 	"name": "Chat List Row",
 	"library": "reactflow",
 	"category": "messaging",
-	"description": "Chat list contact row in the React Flow style — initials avatar with a presence dot, name and one-line preview, timestamp, and an unread pill that hides at zero.",
+	"description": "Chat list contact row in the React Flow style — initials avatar with a presence dot, name and one-line preview, timestamp, and an unread pill that hides at zero. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"chat",
 		"contact",
@@ -57,25 +57,28 @@
 			"default": "3",
 			"label": "Unread count",
 			"maxLength": 4
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"gap": "10px",
-				"padding": "10px 12px",
-				"width": "300px",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "5px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"boxShadow": "none"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -83,8 +86,20 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"position": "relative",
-						"flexShrink": 0
+						"display": "flex",
+						"alignItems": "center",
+						"gap": "10px",
+						"padding": "10px 12px",
+						"width": "300px",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#1a192b",
+						"borderRadius": "5px",
+						"boxShadow": "none",
+						"maxWidth": "100%",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
@@ -92,101 +107,61 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "40px",
-								"height": "40px",
-								"borderRadius": "999px",
-								"background": "#f4f4f5",
-								"color": "#3f3e4a",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "12px",
+								"position": "relative",
 								"flexShrink": 0
 							}
 						},
 						"children": [
-							"{initials}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"position": "absolute",
-								"right": "0",
-								"bottom": "0",
-								"width": "10px",
-								"height": "10px",
-								"borderRadius": "999px",
-								"background": {
-									"ttMap": {
-										"arg": "presence",
-										"values": {
-											"online": "#22c55e",
-											"away": "#eab308",
-											"busy": "#ff0072"
-										},
-										"default": "#22c55e"
-									}
-								},
-								"boxShadow": "0 0 0 2px #ffffff"
-							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"flex": 1,
-						"minWidth": 0,
-						"gap": "2px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px"
-							}
-						},
-						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "12px",
+										"width": "40px",
+										"height": "40px",
+										"borderRadius": "999px",
+										"background": "#f4f4f5",
+										"color": "#3f3e4a",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
 										"fontWeight": 600,
-										"color": "#1a192b",
-										"whiteSpace": "nowrap",
-										"overflow": "hidden",
-										"textOverflow": "ellipsis"
+										"fontSize": "12px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"{name}"
+									"{initials}"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "10px",
-										"color": "#6f6e77",
-										"flexShrink": 0
+										"position": "absolute",
+										"right": "0",
+										"bottom": "0",
+										"width": "10px",
+										"height": "10px",
+										"borderRadius": "999px",
+										"background": {
+											"ttMap": {
+												"arg": "presence",
+												"values": {
+													"online": "#22c55e",
+													"away": "#eab308",
+													"busy": "#ff0072"
+												},
+												"default": "#22c55e"
+											}
+										},
+										"boxShadow": "0 0 0 2px #ffffff",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
-								},
-								"children": [
-									"{time}"
-								]
+								}
 							}
 						]
 					},
@@ -195,63 +170,401 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px"
+								"flexDirection": "column",
+								"flex": 1,
+								"minWidth": 0,
+								"gap": "2px"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "12px",
-										"color": "#6f6e77",
-										"whiteSpace": "nowrap",
-										"overflow": "hidden",
-										"textOverflow": "ellipsis",
-										"minWidth": 0
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"gap": "8px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"{preview}"
-								]
-							},
-							{
-								"ttIf": {
-									"arg": "count",
-									"then": {
+									{
 										"tag": "span",
 										"props": {
 											"style": {
-												"display": "inline-flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"minWidth": "18px",
-												"height": "18px",
-												"padding": "0 5px",
-												"boxSizing": "border-box",
-												"borderRadius": "999px",
-												"background": "#ff0072",
-												"color": "#ffffff",
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"color": "#1a192b",
+												"whiteSpace": "nowrap",
+												"overflow": "hidden",
+												"textOverflow": "ellipsis"
+											}
+										},
+										"children": [
+											"{name}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
 												"fontSize": "10px",
-												"fontWeight": 700,
+												"color": "#6f6e77",
 												"flexShrink": 0
 											}
 										},
 										"children": [
-											"{count}"
+											"{time}"
 										]
 									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"gap": "8px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#6f6e77",
+												"whiteSpace": "nowrap",
+												"overflow": "hidden",
+												"textOverflow": "ellipsis",
+												"minWidth": 0
+											}
+										},
+										"children": [
+											"{preview}"
+										]
+									},
+									{
+										"ttIf": {
+											"arg": "count",
+											"then": {
+												"tag": "span",
+												"props": {
+													"style": {
+														"display": "inline-flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"minWidth": "18px",
+														"height": "18px",
+														"padding": "0 5px",
+														"boxSizing": "border-box",
+														"borderRadius": "999px",
+														"background": "#ff0072",
+														"color": "#ffffff",
+														"fontSize": "10px",
+														"fontWeight": 700,
+														"flexShrink": 0,
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													"{count}"
+												]
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Initials ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Initials",
+											"value": {
+												"ttArg": "initials"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "initials"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Last message ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Last message",
+											"value": {
+												"ttArg": "preview"
+											},
+											"maxLength": 80,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "preview"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Time ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Time",
+											"value": {
+												"ttArg": "time"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "time"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Presence ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Presence",
+											"value": {
+												"ttArg": "presence"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "online"
+												},
+												"children": [
+													"online"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "away"
+												},
+												"children": [
+													"away"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "busy"
+												},
+												"children": [
+													"busy"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "presence"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Unread count ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Unread count",
+											"value": {
+												"ttArg": "count"
+											},
+											"maxLength": 4,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "count"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "chat-contact",
+									"title": "Chat List Row",
+									"details": "Name: {name}\nInitials: {initials}\nLast message: {preview}\nTime: {time}\nPresence: {presence}\nUnread count: {count}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
 				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "chat-contact",
 	"source": {
 		"kind": "archetype",

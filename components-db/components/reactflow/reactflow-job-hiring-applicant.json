@@ -3,7 +3,7 @@
 	"name": "Applicant Row",
 	"library": "reactflow",
 	"category": "hiring",
-	"description": "Applicant pipeline row in the React Flow style — initials avatar, name with applied caption, stage chip tinted per pipeline stage, a stepped match-score ring, and a shortlist star toggle.",
+	"description": "Applicant pipeline row in the React Flow style — initials avatar, name with applied caption, stage chip tinted per pipeline stage, a stepped match-score ring, and a shortlist star toggle. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"hiring",
 		"applicant",
@@ -62,26 +62,28 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Shortlisted"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"width": "420px",
-				"boxSizing": "border-box",
-				"padding": "12px 14px",
-				"gap": "12px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#1a192b",
-				"background": "#ffffff",
-				"borderRadius": "5px",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "transparent",
-				"boxShadow": "0 0 0 0.5px #1a192b, 0 3px 10px rgba(26, 25, 43, 0.15)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -89,254 +91,574 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"width": "36px",
-						"height": "36px",
-						"borderRadius": "999px",
-						"background": "#f4f4f5",
-						"color": "#3f3e4a",
 						"display": "flex",
 						"alignItems": "center",
-						"justifyContent": "center",
-						"fontWeight": 600,
-						"fontSize": "10px",
-						"flexShrink": 0
-					}
-				},
-				"children": [
-					"{initials}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "2px",
-						"flex": "1",
-						"minWidth": 0
+						"width": "420px",
+						"boxSizing": "border-box",
+						"padding": "12px 14px",
+						"gap": "12px",
+						"color": "#1a192b",
+						"background": "#ffffff",
+						"borderRadius": "5px",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "transparent",
+						"boxShadow": "0 0 0 0.5px #1a192b, 0 3px 10px rgba(26, 25, 43, 0.15)",
+						"maxWidth": "100%",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600
+								"width": "36px",
+								"height": "36px",
+								"borderRadius": "999px",
+								"background": "#f4f4f5",
+								"color": "#3f3e4a",
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"fontWeight": 600,
+								"fontSize": "10px",
+								"flexShrink": 0,
+								"maxWidth": "100%",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{name}"
+							"{initials}"
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "2px",
+								"flex": "1",
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 600
+									}
+								},
+								"children": [
+									"{name}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "10px",
+										"color": "#6f6e77"
+									}
+								},
+								"children": [
+									"{role} · applied 2d ago"
+								]
+							}
 						]
 					},
 					{
 						"tag": "span",
 						"props": {
 							"style": {
-								"fontSize": "10px",
-								"color": "#6f6e77"
+								"ttMerge": [
+									{
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "4px",
+										"padding": "2px 8px",
+										"borderRadius": "3px",
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"lineHeight": 1.6,
+										"textTransform": "capitalize",
+										"flexShrink": 0,
+										"flexWrap": "wrap"
+									},
+									{
+										"ttMap": {
+											"arg": "stage",
+											"values": {
+												"screening": {
+													"background": "#f1ecfd",
+													"color": "#5b21b6"
+												},
+												"interview": {
+													"background": "#fefce8",
+													"color": "#a16207"
+												},
+												"offer": {
+													"background": "#f4f4f5",
+													"color": "#1a192b"
+												},
+												"hired": {
+													"background": "#f0fdf4",
+													"color": "#15803d"
+												}
+											}
+										}
+									}
+								]
 							}
 						},
 						"children": [
-							"{role} · applied 2d ago"
+							"{stage}"
 						]
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"ttMerge": [
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "5px",
+								"flexShrink": 0,
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
 							{
+								"tag": "svg",
+								"props": {
+									"width": 32,
+									"height": 32,
+									"viewBox": "0 0 36 36",
+									"fill": "none",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "circle",
+										"props": {
+											"cx": 18,
+											"cy": 18,
+											"r": 15.9,
+											"stroke": "#e2e2e5",
+											"strokeWidth": 3.5
+										}
+									},
+									{
+										"tag": "circle",
+										"props": {
+											"cx": 18,
+											"cy": 18,
+											"r": 15.9,
+											"stroke": "#ff0072",
+											"strokeWidth": 3.5,
+											"strokeLinecap": "round",
+											"style": {
+												"strokeDasharray": {
+													"ttMap": {
+														"arg": "score",
+														"values": {
+															"40": "40 100",
+															"55": "55 100",
+															"70": "70 100",
+															"85": "85 100",
+															"95": "95 100"
+														},
+														"default": "70 100"
+													}
+												},
+												"transform": "rotate(-90deg)",
+												"transformOrigin": "50% 50%"
+											}
+										}
+									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 700
+									}
+								},
+								"children": [
+									"{score}%"
+								]
+							}
+						]
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
 								"display": "inline-flex",
 								"alignItems": "center",
-								"gap": "4px",
-								"padding": "2px 8px",
+								"justifyContent": "center",
+								"width": "auto",
+								"height": "auto",
+								"padding": "8px 12px",
+								"border": "none",
 								"borderRadius": "3px",
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"lineHeight": 1.6,
-								"textTransform": "capitalize",
-								"flexShrink": 0
+								"background": "transparent",
+								"cursor": "pointer",
+								"flexShrink": 0,
+								"maxWidth": "100%",
+								"minWidth": 0,
+								"whiteSpace": "normal",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
 							},
-							{
-								"ttMap": {
-									"arg": "stage",
-									"values": {
-										"screening": {
-											"background": "#f1ecfd",
-											"color": "#5b21b6"
-										},
-										"interview": {
-											"background": "#fefce8",
-											"color": "#a16207"
-										},
-										"offer": {
-											"background": "#f4f4f5",
-											"color": "#1a192b"
-										},
-										"hired": {
-											"background": "#f0fdf4",
-											"color": "#15803d"
-										}
-									}
-								}
-							}
-						]
+							"aria-label": "{actionLabel}"
+						},
+						"children": [
+							"{actionLabel}"
+						],
+						"ttAction": "{actionKey}",
+						"ttActionInputs": {
+							"family": "job-hiring-applicant",
+							"title": "Applicant Row",
+							"details": "Name: {name}\nInitials: {initials}\nRole: {role}\nStage: {stage}\nMatch score: {score}\nShortlisted: {shortlisted}"
+						}
 					}
-				},
-				"children": [
-					"{stage}"
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "5px",
-						"flexShrink": 0
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "svg",
-						"props": {
-							"width": 32,
-							"height": 32,
-							"viewBox": "0 0 36 36",
-							"fill": "none",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "circle",
-								"props": {
-									"cx": 18,
-									"cy": 18,
-									"r": 15.9,
-									"stroke": "#e2e2e5",
-									"strokeWidth": 3.5
-								}
-							},
-							{
-								"tag": "circle",
-								"props": {
-									"cx": 18,
-									"cy": 18,
-									"r": 15.9,
-									"stroke": "#ff0072",
-									"strokeWidth": 3.5,
-									"strokeLinecap": "round",
-									"style": {
-										"strokeDasharray": {
-											"ttMap": {
-												"arg": "score",
-												"values": {
-													"40": "40 100",
-													"55": "55 100",
-													"70": "70 100",
-													"85": "85 100",
-													"95": "95 100"
-												},
-												"default": "70 100"
-											}
-										},
-										"transform": "rotate(-90deg)",
-										"transformOrigin": "50% 50%"
-									}
-								}
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"fontWeight": 700
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{score}%"
+							{
+								"tag": "label",
+								"children": [
+									"Name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Initials ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Initials",
+											"value": {
+												"ttArg": "initials"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "initials"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Role ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Role",
+											"value": {
+												"ttArg": "role"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "role"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Stage ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Stage",
+											"value": {
+												"ttArg": "stage"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "screening"
+												},
+												"children": [
+													"screening"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "interview"
+												},
+												"children": [
+													"interview"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "offer"
+												},
+												"children": [
+													"offer"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "hired"
+												},
+												"children": [
+													"hired"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "stage"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Match score ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Match score",
+											"value": {
+												"ttArg": "score"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "40"
+												},
+												"children": [
+													"40"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "55"
+												},
+												"children": [
+													"55"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "70"
+												},
+												"children": [
+													"70"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "85"
+												},
+												"children": [
+													"85"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "95"
+												},
+												"children": [
+													"95"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "score"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Shortlisted ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Shortlisted",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "shortlisted"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "shortlisted"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "job-hiring-applicant",
+									"title": "Applicant Row",
+									"details": "Name: {name}\nInitials: {initials}\nRole: {role}\nStage: {stage}\nMatch score: {score}\nShortlisted: {shortlisted}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"width": "28px",
-						"height": "28px",
-						"padding": "0",
-						"border": "none",
-						"borderRadius": "3px",
-						"background": "transparent",
-						"cursor": "pointer",
-						"flexShrink": 0
-					}
-				},
+				"tag": "small",
 				"children": [
-					{
-						"ttIf": {
-							"arg": "shortlisted",
-							"then": {
-								"tag": "svg",
-								"props": {
-									"width": 16,
-									"height": 16,
-									"viewBox": "0 0 24 24",
-									"fill": "#eab308",
-									"stroke": "#eab308",
-									"strokeWidth": 2,
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "polygon",
-										"props": {
-											"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
-										}
-									}
-								]
-							},
-							"else": {
-								"tag": "svg",
-								"props": {
-									"width": 16,
-									"height": 16,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#b1b1b7",
-									"strokeWidth": 2,
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "polygon",
-										"props": {
-											"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
-										}
-									}
-								]
-							}
-						}
-					}
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "job-hiring-applicant",
 	"source": {
 		"kind": "archetype",

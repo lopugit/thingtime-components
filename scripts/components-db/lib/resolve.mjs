@@ -136,8 +136,14 @@ const resolveNode = (template, scope, budget) => {
 	const out = {};
 	for (const [key, value] of Object.entries(template)) {
 		if (budget.left <= 0) break;
+		if (key === "ttAction" || key === "ttActionInputs") continue;
 		const resolved = resolveNode(value, scope, budget);
 		if (resolved !== undefined) out[key] = resolved;
+	}
+	if (typeof template.ttAction === 'string') {
+		const action = resolveNode(template.ttAction, scope, budget);
+		const inputs = resolveNode(template.ttActionInputs || {}, scope, budget);
+		if (action) out.props = { ...(out.props || {}), 'data-tt-action': action, 'data-tt-action-inputs': JSON.stringify(inputs || {}) };
 	}
 	return out;
 };

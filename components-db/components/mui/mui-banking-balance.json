@@ -3,7 +3,7 @@
 	"name": "Balance Card",
 	"library": "mui",
 	"category": "finance",
-	"description": "Account balance card in the Material UI style — total-balance caption over a large figure, a trend chip that flips success/danger with direction, masked account line and ghost Send / Top up actions.",
+	"description": "Account balance card in the Material UI style — total-balance caption over a large figure, a trend chip that flips success/danger with direction, masked account line and ghost Send / Top up actions. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"banking",
 		"balance",
@@ -37,182 +37,424 @@
 			"default": "4821",
 			"label": "Account last 4",
 			"maxLength": 6
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"boxSizing": "border-box",
-				"width": "320px",
-				"padding": "20px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "rgba(0, 0, 0, 0.12)",
-				"borderRadius": "8px",
-				"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-				"color": "rgba(0, 0, 0, 0.87)",
-				"gap": "8px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "12px",
-						"fontWeight": 500,
-						"color": "rgba(0, 0, 0, 0.6)",
-						"textTransform": "uppercase",
-						"letterSpacing": "0.06em"
-					}
-				},
-				"children": [
-					"Total balance"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "28px",
-						"fontWeight": 500,
-						"lineHeight": 1.1,
-						"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-						"color": "rgba(0, 0, 0, 0.87)"
-					}
-				},
-				"children": [
-					"{amount}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"ttMerge": [
-							{
-								"display": "inline-flex",
-								"alignItems": "center",
-								"alignSelf": "flex-start",
-								"padding": "3px 10px",
-								"borderRadius": "999px",
-								"fontSize": "12px",
-								"fontWeight": 600
-							},
-							{
-								"ttIf": {
-									"arg": "up",
-									"then": {
-										"background": "#edf7ed",
-										"color": "#1e4620"
-									},
-									"else": {
-										"background": "#fdeded",
-										"color": "#5f2120"
-									}
-								}
-							}
-						]
-					}
-				},
-				"children": [
-					{
-						"ttIf": {
-							"arg": "up",
-							"then": "+{change}% this month",
-							"else": "-{change}% this month"
-						}
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "13px",
-						"color": "rgba(0, 0, 0, 0.6)",
-						"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-					}
-				},
-				"children": [
-					"•••• {mask}"
-				]
-			},
 			{
 				"tag": "div",
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
+						"flexDirection": "column",
+						"boxSizing": "border-box",
+						"width": "320px",
+						"padding": "20px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "rgba(0, 0, 0, 0.12)",
+						"borderRadius": "8px",
+						"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+						"color": "rgba(0, 0, 0, 0.87)",
 						"gap": "8px",
-						"marginTop": "6px"
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "button",
+						"tag": "span",
 						"props": {
-							"type": "button",
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flex": 1,
-								"height": "30px",
-								"padding": "0 12px",
-								"border": "none",
-								"background": "transparent",
-								"borderRadius": "4px",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+								"fontSize": "12px",
 								"fontWeight": 500,
-								"fontSize": "13px",
-								"color": "#1976d2",
-								"cursor": "pointer",
+								"color": "rgba(0, 0, 0, 0.6)",
 								"textTransform": "uppercase",
-								"letterSpacing": "0.02857em"
+								"letterSpacing": "0.06em"
 							}
 						},
 						"children": [
-							"Send"
+							"Total balance"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "28px",
+								"fontWeight": 500,
+								"lineHeight": 1.1,
+								"color": "rgba(0, 0, 0, 0.87)"
+							}
+						},
+						"children": [
+							"{amount}"
 						]
 					},
 					{
 						"tag": "button",
 						"props": {
-							"type": "button",
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flex": 1,
-								"height": "30px",
-								"padding": "0 12px",
-								"border": "none",
-								"background": "transparent",
-								"borderRadius": "4px",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-								"fontWeight": 500,
-								"fontSize": "13px",
-								"color": "#1976d2",
-								"cursor": "pointer",
-								"textTransform": "uppercase",
-								"letterSpacing": "0.02857em"
+								"ttMerge": [
+									{
+										"display": "inline-flex",
+										"alignItems": "center",
+										"alignSelf": "flex-start",
+										"padding": "3px 10px",
+										"borderRadius": "999px",
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"flexWrap": "wrap"
+									},
+									{
+										"ttIf": {
+											"arg": "up",
+											"then": {
+												"background": "#edf7ed",
+												"color": "#1e4620"
+											},
+											"else": {
+												"background": "#fdeded",
+												"color": "#5f2120"
+											}
+										}
+									}
+								]
+							},
+							"type": "button",
+							"aria-label": "up",
+							"aria-pressed": {
+								"ttArg": "up"
 							}
 						},
 						"children": [
-							"Top up"
+							{
+								"ttIf": {
+									"arg": "up",
+									"then": "+{change}% this month",
+									"else": "-{change}% this month"
+								}
+							}
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "toggle",
+							"key": "up"
+						}
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "13px",
+								"color": "rgba(0, 0, 0, 0.6)",
+								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+							}
+						},
+						"children": [
+							"•••• {mask}"
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"marginTop": "6px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"flex": 1,
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"background": "transparent",
+										"borderRadius": "4px",
+										"fontWeight": 500,
+										"fontSize": "13px",
+										"color": "#1976d2",
+										"cursor": "pointer",
+										"textTransform": "uppercase",
+										"letterSpacing": "0.02857em",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "banking-balance",
+									"title": "Balance Card",
+									"details": "Amount: {amount}\nChange %: {change}\nTrending up: {up}\nAccount last 4: {mask}"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"flex": 1,
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"background": "transparent",
+										"borderRadius": "4px",
+										"fontWeight": 500,
+										"fontSize": "13px",
+										"color": "#1976d2",
+										"cursor": "pointer",
+										"textTransform": "uppercase",
+										"letterSpacing": "0.02857em",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "banking-balance",
+									"title": "Balance Card",
+									"details": "Amount: {amount}\nChange %: {change}\nTrending up: {up}\nAccount last 4: {mask}"
+								}
+							}
 						]
 					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Trending up ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Trending up",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "up"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "up"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Amount ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Amount",
+											"value": {
+												"ttArg": "amount"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "amount"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Change % ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Change %",
+											"value": {
+												"ttArg": "change"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "change"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Account last 4 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Account last 4",
+											"value": {
+												"ttArg": "mask"
+											},
+											"maxLength": 6,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mask"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "banking-balance",
+									"title": "Balance Card",
+									"details": "Amount: {amount}\nChange %: {change}\nTrending up: {up}\nAccount last 4: {mask}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "banking-balance",
 	"source": {
 		"kind": "archetype",

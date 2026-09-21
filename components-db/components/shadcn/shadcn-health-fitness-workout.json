@@ -3,7 +3,7 @@
 	"name": "Workout Summary",
 	"library": "shadcn",
 	"category": "health",
-	"description": "Workout summary card in the shadcn/ui style — a tinted activity icon tile (run, bike, or strength), a duration/distance/energy stat trio, a goal progress bar, and a quiet ghost restart action.",
+	"description": "Workout summary card in the shadcn/ui style — a tinted activity icon tile (run, bike, or strength), a duration/distance/energy stat trio, a goal progress bar, and a quiet ghost restart action. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"health",
 		"workout",
@@ -58,22 +58,28 @@
 			"label": "Goal %",
 			"min": 0,
 			"max": 100
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "256px",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"border": "1px solid #e4e4e7",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -82,9 +88,15 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "12px",
-						"marginBottom": "12px"
+						"flexDirection": "column",
+						"width": "256px",
+						"boxSizing": "border-box",
+						"padding": "16px",
+						"background": "#ffffff",
+						"border": "1px solid #e4e4e7",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -92,201 +104,39 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "40px",
-								"height": "40px",
-								"borderRadius": "8px",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0,
-								"background": {
-									"ttMap": {
-										"arg": "activity",
-										"values": {
-											"run": "#fef2f2",
-											"bike": "#f0fdf4",
-											"strength": "#eff6ff"
-										},
-										"default": "#fef2f2"
-									}
-								}
+								"gap": "12px",
+								"marginBottom": "12px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"ttMap": {
-									"arg": "activity",
-									"values": {
-										"run": {
-											"tag": "svg",
-											"props": {
-												"width": 20,
-												"height": 20,
-												"viewBox": "0 0 24 24",
-												"fill": "none",
-												"stroke": "#ef4444",
-												"strokeWidth": 2,
-												"strokeLinecap": "round",
-												"strokeLinejoin": "round",
-												"xmlns": "http://www.w3.org/2000/svg"
-											},
-											"children": [
-												{
-													"tag": "polygon",
-													"props": {
-														"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-													}
-												}
-											]
-										},
-										"bike": {
-											"tag": "svg",
-											"props": {
-												"width": 20,
-												"height": 20,
-												"viewBox": "0 0 24 24",
-												"fill": "none",
-												"stroke": "#16a34a",
-												"strokeWidth": 2,
-												"strokeLinecap": "round",
-												"strokeLinejoin": "round",
-												"xmlns": "http://www.w3.org/2000/svg"
-											},
-											"children": [
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 5.5,
-														"cy": 17.5,
-														"r": 3.5
-													}
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "40px",
+										"height": "40px",
+										"borderRadius": "8px",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"flexShrink": 0,
+										"background": {
+											"ttMap": {
+												"arg": "activity",
+												"values": {
+													"run": "#fef2f2",
+													"bike": "#f0fdf4",
+													"strength": "#eff6ff"
 												},
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 18.5,
-														"cy": 17.5,
-														"r": 3.5
-													}
-												},
-												{
-													"tag": "polyline",
-													"props": {
-														"points": "5.5 17.5 9 10 15 10 18.5 17.5"
-													}
-												},
-												{
-													"tag": "line",
-													"props": {
-														"x1": 9,
-														"y1": 10,
-														"x2": 7,
-														"y2": 6.5
-													}
-												}
-											]
-										},
-										"strength": {
-											"tag": "svg",
-											"props": {
-												"width": 20,
-												"height": 20,
-												"viewBox": "0 0 24 24",
-												"fill": "none",
-												"stroke": "#3b82f6",
-												"strokeWidth": 2,
-												"strokeLinecap": "round",
-												"strokeLinejoin": "round",
-												"xmlns": "http://www.w3.org/2000/svg"
-											},
-											"children": [
-												{
-													"tag": "line",
-													"props": {
-														"x1": 7.5,
-														"y1": 12,
-														"x2": 16.5,
-														"y2": 12
-													}
-												},
-												{
-													"tag": "rect",
-													"props": {
-														"x": 3,
-														"y": 7.5,
-														"width": 3.5,
-														"height": 9,
-														"rx": 1
-													}
-												},
-												{
-													"tag": "rect",
-													"props": {
-														"x": 17.5,
-														"y": 7.5,
-														"width": 3.5,
-														"height": 9,
-														"rx": 1
-													}
-												}
-											]
-										}
-									},
-									"default": {
-										"tag": "svg",
-										"props": {
-											"width": 20,
-											"height": 20,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#ef4444",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polygon",
-												"props": {
-													"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-												}
+												"default": "#fef2f2"
 											}
-										]
-									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "#09090b"
-									}
-								},
-								"children": [
-									"{title}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "#71717a"
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
@@ -294,63 +144,192 @@
 										"ttMap": {
 											"arg": "activity",
 											"values": {
-												"run": "Run",
-												"bike": "Ride",
-												"strength": "Strength"
+												"run": {
+													"tag": "svg",
+													"props": {
+														"width": 20,
+														"height": 20,
+														"viewBox": "0 0 24 24",
+														"fill": "none",
+														"stroke": "#ef4444",
+														"strokeWidth": 2,
+														"strokeLinecap": "round",
+														"strokeLinejoin": "round",
+														"xmlns": "http://www.w3.org/2000/svg"
+													},
+													"children": [
+														{
+															"tag": "polygon",
+															"props": {
+																"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+															}
+														}
+													]
+												},
+												"bike": {
+													"tag": "svg",
+													"props": {
+														"width": 20,
+														"height": 20,
+														"viewBox": "0 0 24 24",
+														"fill": "none",
+														"stroke": "#16a34a",
+														"strokeWidth": 2,
+														"strokeLinecap": "round",
+														"strokeLinejoin": "round",
+														"xmlns": "http://www.w3.org/2000/svg"
+													},
+													"children": [
+														{
+															"tag": "circle",
+															"props": {
+																"cx": 5.5,
+																"cy": 17.5,
+																"r": 3.5
+															}
+														},
+														{
+															"tag": "circle",
+															"props": {
+																"cx": 18.5,
+																"cy": 17.5,
+																"r": 3.5
+															}
+														},
+														{
+															"tag": "polyline",
+															"props": {
+																"points": "5.5 17.5 9 10 15 10 18.5 17.5"
+															}
+														},
+														{
+															"tag": "line",
+															"props": {
+																"x1": 9,
+																"y1": 10,
+																"x2": 7,
+																"y2": 6.5
+															}
+														}
+													]
+												},
+												"strength": {
+													"tag": "svg",
+													"props": {
+														"width": 20,
+														"height": 20,
+														"viewBox": "0 0 24 24",
+														"fill": "none",
+														"stroke": "#3b82f6",
+														"strokeWidth": 2,
+														"strokeLinecap": "round",
+														"strokeLinejoin": "round",
+														"xmlns": "http://www.w3.org/2000/svg"
+													},
+													"children": [
+														{
+															"tag": "line",
+															"props": {
+																"x1": 7.5,
+																"y1": 12,
+																"x2": 16.5,
+																"y2": 12
+															}
+														},
+														{
+															"tag": "rect",
+															"props": {
+																"x": 3,
+																"y": 7.5,
+																"width": 3.5,
+																"height": 9,
+																"rx": 1
+															}
+														},
+														{
+															"tag": "rect",
+															"props": {
+																"x": 17.5,
+																"y": 7.5,
+																"width": 3.5,
+																"height": 9,
+																"rx": 1
+															}
+														}
+													]
+												}
 											},
-											"default": "Run"
+											"default": {
+												"tag": "svg",
+												"props": {
+													"width": 20,
+													"height": 20,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "#ef4444",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polygon",
+														"props": {
+															"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+														}
+													}
+												]
+											}
 										}
 									}
 								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"gap": "10px",
-						"marginBottom": "12px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"flex": 1
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "#09090b"
-									}
-								},
-								"children": [
-									"{duration}"
-								]
 							},
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "12px",
-										"color": "#71717a"
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px"
 									}
 								},
 								"children": [
-									"Duration"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "#09090b"
+											}
+										},
+										"children": [
+											"{title}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#71717a"
+											}
+										},
+										"children": [
+											{
+												"ttMap": {
+													"arg": "activity",
+													"values": {
+														"run": "Run",
+														"bike": "Ride",
+														"strength": "Strength"
+													},
+													"default": "Run"
+												}
+											}
+										]
+									}
 								]
 							}
 						]
@@ -360,35 +339,124 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"flex": 1
+								"gap": "10px",
+								"marginBottom": "12px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "#09090b"
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"flex": 1
 									}
 								},
 								"children": [
-									"{distance}"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "#09090b"
+											}
+										},
+										"children": [
+											"{duration}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#71717a"
+											}
+										},
+										"children": [
+											"Duration"
+										]
+									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "12px",
-										"color": "#71717a"
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"flex": 1
 									}
 								},
 								"children": [
-									"Distance"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "#09090b"
+											}
+										},
+										"children": [
+											"{distance}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#71717a"
+											}
+										},
+										"children": [
+											"Distance"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"flex": 1
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "#09090b"
+											}
+										},
+										"children": [
+											"{kcal} kcal"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#71717a"
+											}
+										},
+										"children": [
+											"Energy"
+										]
+									}
 								]
 							}
 						]
@@ -398,25 +466,12 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"flex": 1
+								"justifyContent": "space-between",
+								"marginBottom": "4px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "#09090b"
-									}
-								},
-								"children": [
-									"{kcal} kcal"
-								]
-							},
 							{
 								"tag": "span",
 								"props": {
@@ -426,99 +481,364 @@
 									}
 								},
 								"children": [
-									"Energy"
+									"Weekly goal"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"color": "#09090b"
+									}
+								},
+								"children": [
+									"{progress}%"
 								]
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"justifyContent": "space-between",
-						"marginBottom": "4px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#71717a"
-							}
-						},
-						"children": [
-							"Weekly goal"
-						]
 					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": "#09090b"
-							}
-						},
-						"children": [
-							"{progress}%"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"height": "8px",
-						"borderRadius": "999px",
-						"background": "#f4f4f5",
-						"overflow": "hidden"
-					}
-				},
-				"children": [
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "{progress}%",
-								"height": "100%",
+								"height": "8px",
 								"borderRadius": "999px",
-								"background": "#18181b"
+								"background": "#f4f4f5",
+								"overflow": "hidden"
 							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "{progress}%",
+										"height": "100%",
+										"borderRadius": "999px",
+										"background": "#18181b",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								}
+							}
+						]
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
+								"alignSelf": "flex-start",
+								"marginTop": "10px",
+								"padding": "8px 12px",
+								"border": "none",
+								"borderRadius": "8px",
+								"background": "transparent",
+								"color": "#18181b",
+								"fontSize": "13px",
+								"fontWeight": 500,
+								"cursor": "pointer",
+								"width": "auto",
+								"height": "auto",
+								"minWidth": 0,
+								"whiteSpace": "normal",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							},
+							"aria-label": "{actionLabel}"
+						},
+						"children": [
+							"{actionLabel}"
+						],
+						"ttAction": "{actionKey}",
+						"ttActionInputs": {
+							"family": "health-fitness-workout",
+							"title": "Workout Summary",
+							"details": "Title: {title}\nActivity: {activity}\nDuration: {duration}\nDistance: {distance}\nEnergy (kcal): {kcal}\nGoal %: {progress}"
 						}
 					}
 				]
 			},
 			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"alignSelf": "flex-start",
-						"marginTop": "10px",
-						"padding": "6px 10px",
-						"border": "none",
-						"borderRadius": "8px",
-						"background": "transparent",
-						"color": "#18181b",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontSize": "13px",
-						"fontWeight": 500,
-						"cursor": "pointer"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"Start again"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Activity ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Activity",
+											"value": {
+												"ttArg": "activity"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "run"
+												},
+												"children": [
+													"run"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "bike"
+												},
+												"children": [
+													"bike"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "strength"
+												},
+												"children": [
+													"strength"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "activity"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Duration ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Duration",
+											"value": {
+												"ttArg": "duration"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "duration"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Distance ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Distance",
+											"value": {
+												"ttArg": "distance"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "distance"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Energy (kcal) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Energy (kcal)",
+											"value": {
+												"ttArg": "kcal"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "kcal"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Goal % ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Goal %",
+											"value": {
+												"ttArg": "progress"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "progress"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "health-fitness-workout",
+									"title": "Workout Summary",
+									"details": "Title: {title}\nActivity: {activity}\nDuration: {duration}\nDistance: {distance}\nEnergy (kcal): {kcal}\nGoal %: {progress}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "health-fitness-workout",
 	"source": {
 		"kind": "archetype",

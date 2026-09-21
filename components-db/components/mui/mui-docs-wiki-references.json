@@ -3,7 +3,7 @@
 	"name": "Doc References",
 	"library": "mui",
 	"category": "documentation",
-	"description": "Footnote reference block in the Material UI style — mono REFERENCES kicker over numbered link-colored citations with source captions, closed by a back-to-article chip.",
+	"description": "Footnote reference block in the Material UI style — mono REFERENCES kicker over numbered link-colored citations with source captions, closed by a back-to-article chip. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"docs",
 		"references",
@@ -32,186 +32,369 @@
 			"label": "References",
 			"min": 2,
 			"max": 3
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"background": "#ffffff",
-				"border": "1px solid rgba(0, 0, 0, 0.08)",
-				"borderRadius": "8px",
-				"padding": "16px",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-				"gap": "10px",
-				"minWidth": "300px",
-				"maxWidth": "420px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
+				"tag": "div",
 				"props": {
 					"style": {
-						"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-						"fontSize": "12px",
-						"fontWeight": 600,
-						"letterSpacing": "0.08em",
-						"color": "rgba(0, 0, 0, 0.38)"
-					}
-				},
-				"children": [
-					"REFERENCES"
-				]
-			},
-			{
-				"ttRepeat": {
-					"arg": "count",
-					"max": 3,
-					"node": {
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "flex-start",
-								"gap": "10px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "rgba(0, 0, 0, 0.38)",
-										"paddingTop": "2px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"[{n}]"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"gap": "2px"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "13px",
-												"fontWeight": 500,
-												"color": "#1976d2"
-											}
-										},
-										"children": [
-											{
-												"ttMap": {
-													"arg": "n",
-													"values": {
-														"1": "{refTitle}",
-														"2": "HTTP caching primer",
-														"3": "Semantic line breaks"
-													},
-													"default": "{refTitle}"
-												}
-											}
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"color": "rgba(0, 0, 0, 0.6)"
-											}
-										},
-										"children": [
-											{
-												"ttMap": {
-													"arg": "n",
-													"values": {
-														"1": "{refSource}",
-														"2": "developer.mozilla.org",
-														"3": "sembr.org"
-													},
-													"default": "{refSource}"
-												}
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				}
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"display": "inline-flex",
-						"alignItems": "center",
-						"gap": "6px",
-						"alignSelf": "flex-start",
-						"padding": "3px 10px",
-						"borderRadius": "999px",
-						"background": "#fafafa",
-						"border": "1px solid rgba(0, 0, 0, 0.12)",
-						"fontSize": "12px",
-						"fontWeight": 500,
-						"color": "rgba(0, 0, 0, 0.6)",
-						"boxShadow": "none"
+						"display": "flex",
+						"flexDirection": "column",
+						"background": "#ffffff",
+						"border": "1px solid rgba(0, 0, 0, 0.08)",
+						"borderRadius": "8px",
+						"padding": "16px",
+						"gap": "10px",
+						"minWidth": 0,
+						"maxWidth": "420px"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
+						"tag": "span",
 						"props": {
-							"width": 12,
-							"height": 12,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "currentColor",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+								"fontSize": "12px",
+								"fontWeight": 600,
+								"letterSpacing": "0.08em",
+								"color": "rgba(0, 0, 0, 0.38)"
+							}
+						},
+						"children": [
+							"REFERENCES"
+						]
+					},
+					{
+						"ttRepeat": {
+							"arg": "count",
+							"max": 3,
+							"node": {
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "flex-start",
+										"gap": "10px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"color": "rgba(0, 0, 0, 0.38)",
+												"paddingTop": "2px",
+												"flexShrink": 0
+											}
+										},
+										"children": [
+											"[{n}]"
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"flexDirection": "column",
+												"gap": "2px"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "13px",
+														"fontWeight": 500,
+														"color": "#1976d2"
+													}
+												},
+												"children": [
+													{
+														"ttMap": {
+															"arg": "n",
+															"values": {
+																"1": "{refTitle}",
+																"2": "HTTP caching primer",
+																"3": "Semantic line breaks"
+															},
+															"default": "{refTitle}"
+														}
+													}
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"color": "rgba(0, 0, 0, 0.6)"
+													}
+												},
+												"children": [
+													{
+														"ttMap": {
+															"arg": "n",
+															"values": {
+																"1": "{refSource}",
+																"2": "developer.mozilla.org",
+																"3": "sembr.org"
+															},
+															"default": "{refSource}"
+														}
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"display": "inline-flex",
+								"alignItems": "center",
+								"gap": "6px",
+								"alignSelf": "flex-start",
+								"padding": "3px 10px",
+								"borderRadius": "999px",
+								"background": "#fafafa",
+								"border": "1px solid rgba(0, 0, 0, 0.12)",
+								"fontSize": "12px",
+								"fontWeight": 500,
+								"color": "rgba(0, 0, 0, 0.6)",
+								"boxShadow": "none",
+								"flexWrap": "wrap"
+							}
 						},
 						"children": [
 							{
-								"tag": "line",
+								"tag": "svg",
 								"props": {
-									"x1": 12,
-									"y1": 19,
-									"x2": 12,
-									"y2": 5
-								}
+									"width": 12,
+									"height": 12,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "currentColor",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "line",
+										"props": {
+											"x1": 12,
+											"y1": 19,
+											"x2": 12,
+											"y2": 5
+										}
+									},
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "5 12 12 5 19 12"
+										}
+									}
+								]
+							},
+							"Back to article"
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"First title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "First title",
+											"value": {
+												"ttArg": "refTitle"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "refTitle"
+										}
+									}
+								]
 							},
 							{
-								"tag": "polyline",
+								"tag": "label",
+								"children": [
+									"First source ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "First source",
+											"value": {
+												"ttArg": "refSource"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "refSource"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"References ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "References",
+											"value": {
+												"ttArg": "count"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 2,
+											"max": 3
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "count"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
 								"props": {
-									"points": "5 12 12 5 19 12"
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "docs-wiki-references",
+									"title": "Doc References",
+									"details": "First title: {refTitle}\nFirst source: {refSource}\nReferences: {count}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
-					},
-					"Back to article"
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "docs-wiki-references",
 	"source": {
 		"kind": "archetype",

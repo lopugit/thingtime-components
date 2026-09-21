@@ -3,7 +3,7 @@
 	"name": "Inline Code",
 	"library": "bootstrap",
 	"category": "data-display",
-	"description": "Sentence with an inline code chip in the Bootstrap style — monospace snippet on the library's surface wash with its tightest corner radius.",
+	"description": "Sentence with an inline code chip in the Bootstrap style — monospace snippet on the library's surface wash with its tightest corner radius. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"code",
 		"inline",
@@ -37,55 +37,245 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Bordered chip"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "span",
+		"tag": "div",
 		"props": {
 			"style": {
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"fontSize": "16px",
-				"color": "#212529",
-				"lineHeight": 1.7
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			"{before} ",
 			{
-				"tag": "code",
+				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #dee2e6",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "#212529",
+						"minWidth": 0,
+						"maxWidth": "100%"
+					}
+				},
+				"children": [
+					{
+						"tag": "pre",
+						"props": {
+							"style": {
+								"whiteSpace": "pre-wrap",
+								"overflowWrap": "anywhere"
+							}
+						},
+						"children": [
 							{
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "14px",
-								"color": "#212529",
+								"tag": "code",
+								"children": [
+									"{code}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
+								"padding": "8px 12px",
+								"borderRadius": "6px",
+								"border": "1px solid #dee2e6",
 								"background": "#f8f9fa",
-								"padding": "2px 6px",
-								"borderRadius": "4px"
+								"cursor": "pointer"
+							}
+						},
+						"children": [
+							"Copy code"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "copy",
+							"value": "{code}"
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Text before ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Text before",
+											"value": {
+												"ttArg": "before"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "before"
+										}
+									}
+								]
 							},
 							{
-								"ttIf": {
-									"arg": "bordered",
-									"then": {
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6"
+								"tag": "label",
+								"children": [
+									"Code ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Code",
+											"value": {
+												"ttArg": "code"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "code"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Text after ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Text after",
+											"value": {
+												"ttArg": "after"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "after"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									},
-									"else": {}
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "code-block-inline",
+									"title": "Inline Code",
+									"details": "Text before: {before}\nCode: {code}\nText after: {after}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				},
-				"children": [
-					"{code}"
 				]
-			},
-			" {after}"
+			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "code-block-inline",
 	"source": {
 		"kind": "archetype",

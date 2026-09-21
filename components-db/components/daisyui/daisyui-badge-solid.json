@@ -3,7 +3,7 @@
 	"name": "Solid Badge",
 	"library": "daisyui",
 	"category": "data-display",
-	"description": "Filled status badge in the daisyUI style — solid tone background with contrast text on the library's native badge corners.",
+	"description": "Filled status badge in the daisyUI style — solid tone background with contrast text on the library's native badge corners. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"badge",
 		"status",
@@ -40,79 +40,200 @@
 			],
 			"default": "sm",
 			"label": "Size"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "span",
+		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"display": "inline-flex",
-						"alignItems": "center",
-						"gap": "6px",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontWeight": 600,
-						"lineHeight": 1.4,
-						"borderRadius": "999px"
-					},
-					{
-						"ttMap": {
-							"arg": "size",
-							"values": {
-								"sm": {
-									"fontSize": "12px",
-									"padding": "2px 8px"
-								},
-								"md": {
-									"fontSize": "14px",
-									"padding": "4px 10px"
-								}
-							},
-							"default": {
-								"fontSize": "12px",
-								"padding": "2px 8px"
-							}
-						}
-					},
-					{
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#570df8",
-									"success": "#00a96e",
-									"warning": "#ffbe00",
-									"danger": "#ff5861",
-									"info": "#00b6ff",
-									"neutral": "#2a323c"
-								},
-								"default": "#570df8"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#ffffff",
-									"success": "#ffffff",
-									"warning": "#382800",
-									"danger": "#ffffff",
-									"info": "#ffffff",
-									"neutral": "#ffffff"
-								},
-								"default": "#ffffff"
-							}
-						}
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			"{label}"
+			{
+				"tag": "span",
+				"props": {
+					"style": {
+						"ttMerge": [
+							{
+								"display": "inline-flex",
+								"alignItems": "center",
+								"gap": "6px",
+								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+								"fontWeight": 600,
+								"lineHeight": 1.4,
+								"borderRadius": "999px",
+								"flexWrap": "wrap"
+							},
+							{
+								"ttMap": {
+									"arg": "size",
+									"values": {
+										"sm": {
+											"fontSize": "12px",
+											"padding": "2px 8px"
+										},
+										"md": {
+											"fontSize": "14px",
+											"padding": "4px 10px"
+										}
+									},
+									"default": {
+										"fontSize": "12px",
+										"padding": "2px 8px"
+									}
+								}
+							},
+							{
+								"background": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#570df8",
+											"success": "#00a96e",
+											"warning": "#ffbe00",
+											"danger": "#ff5861",
+											"info": "#00b6ff",
+											"neutral": "#2a323c"
+										},
+										"default": "#570df8"
+									}
+								},
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#ffffff",
+											"success": "#ffffff",
+											"warning": "#382800",
+											"danger": "#ffffff",
+											"info": "#ffffff",
+											"neutral": "#ffffff"
+										},
+										"default": "#ffffff"
+									}
+								}
+							}
+						]
+					}
+				},
+				"children": [
+					"{label}"
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "badge-solid",
+									"title": "Solid Badge",
+									"details": "Label: {label}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "badge-solid",
 	"source": {
 		"kind": "archetype",

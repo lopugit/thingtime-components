@@ -3,7 +3,7 @@
 	"name": "Text Input",
 	"library": "reactflow",
 	"category": "forms",
-	"description": "Plain single-line text field in the React Flow style — label, placeholder and helper hint on the library's control height and radius.",
+	"description": "Plain single-line text field in the React Flow style — label, placeholder and helper hint on the library's control height and radius. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"input",
 		"text",
@@ -42,99 +42,296 @@
 			"default": "We will never share it.",
 			"label": "Hint",
 			"maxLength": 80
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "260px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "label",
+				"tag": "div",
 				"props": {
 					"style": {
-						"fontSize": "12px",
-						"fontWeight": 500,
-						"color": "#1a192b",
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+						"display": "flex",
+						"flexDirection": "column",
+						"gap": "6px",
+						"width": "260px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
-					"{label}"
+					{
+						"tag": "label",
+						"props": {
+							"style": {
+								"fontSize": "12px",
+								"fontWeight": 500,
+								"color": "#1a192b"
+							}
+						},
+						"children": [
+							"{label}"
+						]
+					},
+					{
+						"tag": "input",
+						"props": {
+							"type": "text",
+							"placeholder": "{placeholder}",
+							"style": {
+								"ttMerge": [
+									{
+										"width": "100%",
+										"padding": "0 12px",
+										"border": "1px solid #e2e2e5",
+										"borderRadius": "5px",
+										"background": "#ffffff",
+										"color": "#1a192b",
+										"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+										"outline": "none",
+										"boxSizing": "border-box",
+										"maxWidth": "100%"
+									},
+									{
+										"ttMap": {
+											"arg": "size",
+											"values": {
+												"sm": {
+													"height": "24px",
+													"fontSize": "12px"
+												},
+												"md": {
+													"height": "30px",
+													"fontSize": "12px"
+												},
+												"lg": {
+													"height": "38px",
+													"fontSize": "14px"
+												}
+											},
+											"default": {
+												"height": "30px",
+												"fontSize": "12px"
+											}
+										}
+									}
+								]
+							},
+							"value": {
+								"ttArg": "entry1"
+							},
+							"aria-label": "{placeholder}",
+							"maxLength": 500
+						},
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "entry1"
+						}
+					},
+					{
+						"ttIf": {
+							"arg": "hint",
+							"then": {
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "10px",
+										"color": "#6f6e77"
+									}
+								},
+								"children": [
+									"{hint}"
+								]
+							}
+						}
+					}
 				]
 			},
 			{
-				"tag": "input",
-				"props": {
-					"type": "text",
-					"placeholder": "{placeholder}",
-					"style": {
-						"ttMerge": [
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
 							{
-								"width": "100%",
-								"padding": "0 12px",
-								"border": "1px solid #e2e2e5",
-								"borderRadius": "5px",
-								"background": "#ffffff",
-								"color": "#1a192b",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"outline": "none",
-								"boxSizing": "border-box"
+								"tag": "label",
+								"children": [
+									"entry1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "entry1",
+											"value": {
+												"ttArg": "entry1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
+										}
+									}
+								]
 							},
 							{
-								"ttMap": {
-									"arg": "size",
-									"values": {
-										"sm": {
-											"height": "24px",
-											"fontSize": "12px"
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"md": {
-											"height": "30px",
-											"fontSize": "12px"
-										},
-										"lg": {
-											"height": "38px",
-											"fontSize": "14px"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
 										}
-									},
-									"default": {
-										"height": "30px",
-										"fontSize": "12px"
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Hint ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Hint",
+											"value": {
+												"ttArg": "hint"
+											},
+											"maxLength": 80,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "hint"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "input-text",
+									"title": "Text Input",
+									"details": "Label: {label}\nHint: {hint}\nentry1: {entry1}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				}
-			},
-			{
-				"ttIf": {
-					"arg": "hint",
-					"then": {
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "10px",
-								"color": "#6f6e77"
-							}
-						},
-						"children": [
-							"{hint}"
-						]
-					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "input-text",
 	"source": {
 		"kind": "archetype",

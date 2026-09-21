@@ -3,7 +3,7 @@
 	"name": "Event Countdown",
 	"library": "mui",
 	"category": "forms",
-	"description": "Event countdown in the Material UI style — days, hours and minutes as big numbers in quiet tiles with unit captions, above the event name.",
+	"description": "Event countdown in the Material UI style — days, hours and minutes as big numbers in quiet tiles with unit captions, above the event name. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"countdown",
 		"timer",
@@ -38,27 +38,36 @@
 			"default": "45",
 			"label": "Minutes",
 			"maxLength": 2
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "seconds",
+			"type": "number",
+			"default": 60,
+			"min": 1,
+			"max": 604800,
+			"label": "Duration in seconds"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"alignItems": "center",
-				"gap": "10px",
-				"width": "fit-content",
-				"padding": "16px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "rgba(0, 0, 0, 0.12)",
-				"borderRadius": "8px",
-				"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-				"position": "relative",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -66,156 +75,283 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid rgba(0, 0, 0, 0.12)",
+						"borderRadius": "4px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"width": "56px",
-								"height": "56px",
-								"background": "#fafafa",
-								"borderRadius": "4px"
-							}
-						},
+						"tag": "h3",
 						"children": [
+							"{event}"
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							"Duration in seconds",
 							{
-								"tag": "span",
+								"tag": "input",
 								"props": {
+									"type": "number",
+									"aria-label": "seconds",
+									"value": {
+										"ttArg": "seconds"
+									},
 									"style": {
-										"fontSize": "20px",
-										"fontWeight": 500,
-										"color": "rgba(0, 0, 0, 0.87)"
-									}
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"min": 1,
+									"max": 604800
 								},
-								"children": [
-									"{days}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "rgba(0, 0, 0, 0.6)"
-									}
-								},
-								"children": [
-									"days"
-								]
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "seconds"
+								}
 							}
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "tt-countdown",
 						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"width": "56px",
-								"height": "56px",
-								"background": "#fafafa",
-								"borderRadius": "4px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "20px",
-										"fontWeight": 500,
-										"color": "rgba(0, 0, 0, 0.87)"
-									}
-								},
-								"children": [
-									"{hours}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "rgba(0, 0, 0, 0.6)"
-									}
-								},
-								"children": [
-									"hours"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"width": "56px",
-								"height": "56px",
-								"background": "#fafafa",
-								"borderRadius": "4px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "20px",
-										"fontWeight": 500,
-										"color": "rgba(0, 0, 0, 0.87)"
-									}
-								},
-								"children": [
-									"{mins}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "rgba(0, 0, 0, 0.6)"
-									}
-								},
-								"children": [
-									"mins"
-								]
-							}
-						]
+							"value": "{seconds}"
+						}
 					}
 				]
 			},
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "13px",
-						"fontWeight": 500,
-						"color": "rgba(0, 0, 0, 0.6)"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"{event}"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Duration in seconds ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Duration in seconds",
+											"value": {
+												"ttArg": "seconds"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 604800
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "seconds"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Event name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Event name",
+											"value": {
+												"ttArg": "event"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "event"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Days ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Days",
+											"value": {
+												"ttArg": "days"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "days"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Hours ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Hours",
+											"value": {
+												"ttArg": "hours"
+											},
+											"maxLength": 2,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "hours"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Minutes ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Minutes",
+											"value": {
+												"ttArg": "mins"
+											},
+											"maxLength": 2,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mins"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "date-time-countdown",
+									"title": "Event Countdown",
+									"details": "Event name: {event}\nDays: {days}\nHours: {hours}\nMinutes: {mins}\nDuration in seconds: {seconds}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "date-time-countdown",
 	"source": {
 		"kind": "archetype",

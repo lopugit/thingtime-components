@@ -3,7 +3,7 @@
 	"name": "Macros Card",
 	"library": "reactflow",
 	"category": "health",
-	"description": "Nutrition macros card in the React Flow style — a big calorie figure with its goal caption, three fixed-tone macro bars (protein, carbs, fat), and a water tracker row of repeat-driven filled glasses.",
+	"description": "Nutrition macros card in the React Flow style — a big calorie figure with its goal caption, three fixed-tone macro bars (protein, carbs, fat), and a water tracker row of repeat-driven filled glasses. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"health",
 		"nutrition",
@@ -41,275 +41,45 @@
 			"label": "Glasses",
 			"min": 0,
 			"max": 8
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "236px",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"background": "#ffffff",
-				"border": "1px solid #1a192b",
-				"borderRadius": "3px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "24px",
-						"fontWeight": 600,
-						"color": "#1a192b",
-						"lineHeight": 1.15
-					}
-				},
-				"children": [
-					"{kcal}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "10px",
-						"color": "#6f6e77",
-						"marginTop": "2px"
-					}
-				},
-				"children": [
-					"of {goal} kcal goal"
-				]
-			},
-			{
 				"tag": "div",
 				"props": {
 					"style": {
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "4px",
-						"marginTop": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"justifyContent": "space-between",
-								"fontSize": "10px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"color": "#6f6e77"
-									}
-								},
-								"children": [
-									"Protein"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"color": "#1a192b",
-										"fontWeight": 600
-									}
-								},
-								"children": [
-									"{protein}g"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "6px",
-								"borderRadius": "2px",
-								"background": "#f4f4f5",
-								"overflow": "hidden"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "72%",
-										"height": "100%",
-										"borderRadius": "2px",
-										"background": "#22c55e"
-									}
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "4px",
-						"marginTop": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"justifyContent": "space-between",
-								"fontSize": "10px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"color": "#6f6e77"
-									}
-								},
-								"children": [
-									"Carbs"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"color": "#1a192b",
-										"fontWeight": 600
-									}
-								},
-								"children": [
-									"218g"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "6px",
-								"borderRadius": "2px",
-								"background": "#f4f4f5",
-								"overflow": "hidden"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "54%",
-										"height": "100%",
-										"borderRadius": "2px",
-										"background": "#eab308"
-									}
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "4px",
-						"marginTop": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"justifyContent": "space-between",
-								"fontSize": "10px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"color": "#6f6e77"
-									}
-								},
-								"children": [
-									"Fat"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"color": "#1a192b",
-										"fontWeight": 600
-									}
-								},
-								"children": [
-									"64g"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "6px",
-								"borderRadius": "2px",
-								"background": "#f4f4f5",
-								"overflow": "hidden"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "38%",
-										"height": "100%",
-										"borderRadius": "2px",
-										"background": "#784be8"
-									}
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"justifyContent": "space-between",
-						"marginTop": "14px"
+						"width": "236px",
+						"boxSizing": "border-box",
+						"padding": "16px",
+						"background": "#ffffff",
+						"border": "1px solid #1a192b",
+						"borderRadius": "3px",
+						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -317,68 +87,101 @@
 						"tag": "span",
 						"props": {
 							"style": {
-								"fontSize": "10px",
-								"color": "#6f6e77"
-							}
-						},
-						"children": [
-							"Water"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "10px",
+								"fontSize": "24px",
 								"fontWeight": 600,
-								"color": "#1a192b"
+								"color": "#1a192b",
+								"lineHeight": 1.15
 							}
 						},
 						"children": [
-							"{glasses} of 8"
+							"{kcal}"
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"position": "relative",
-						"height": "12px",
-						"marginTop": "6px"
-					}
-				},
-				"children": [
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "10px",
+								"color": "#6f6e77",
+								"marginTop": "2px"
+							}
+						},
+						"children": [
+							"of {goal} kcal goal"
+						]
+					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"position": "absolute",
-								"top": "0",
-								"left": "0",
 								"display": "flex",
-								"gap": "6px"
+								"flexDirection": "column",
+								"gap": "4px",
+								"marginTop": "10px"
 							}
 						},
 						"children": [
 							{
-								"ttRepeat": {
-									"count": 8,
-									"max": 8,
-									"node": {
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"justifyContent": "space-between",
+										"fontSize": "10px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
 										"tag": "span",
 										"props": {
 											"style": {
-												"width": "12px",
-												"height": "12px",
-												"borderRadius": "999px",
-												"background": "#e2e2e5",
-												"flexShrink": 0
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Protein"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"color": "#1a192b",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"{protein}g"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "6px",
+										"borderRadius": "2px",
+										"background": "#f4f4f5",
+										"overflow": "hidden"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "72%",
+												"height": "100%",
+												"borderRadius": "2px",
+												"background": "#22c55e",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											}
 										}
 									}
-								}
+								]
 							}
 						]
 					},
@@ -386,30 +189,457 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"position": "absolute",
-								"top": "0",
-								"left": "0",
 								"display": "flex",
-								"gap": "6px"
+								"flexDirection": "column",
+								"gap": "4px",
+								"marginTop": "10px"
 							}
 						},
 						"children": [
 							{
-								"ttRepeat": {
-									"arg": "glasses",
-									"max": 8,
-									"node": {
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"justifyContent": "space-between",
+										"fontSize": "10px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
 										"tag": "span",
 										"props": {
 											"style": {
-												"width": "12px",
-												"height": "12px",
-												"borderRadius": "999px",
-												"background": "#784be8",
-												"flexShrink": 0
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Carbs"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"color": "#1a192b",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"218g"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "6px",
+										"borderRadius": "2px",
+										"background": "#f4f4f5",
+										"overflow": "hidden"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "54%",
+												"height": "100%",
+												"borderRadius": "2px",
+												"background": "#eab308",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											}
 										}
 									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "4px",
+								"marginTop": "10px"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"justifyContent": "space-between",
+										"fontSize": "10px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Fat"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"color": "#1a192b",
+												"fontWeight": 600
+											}
+										},
+										"children": [
+											"64g"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "6px",
+										"borderRadius": "2px",
+										"background": "#f4f4f5",
+										"overflow": "hidden"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "38%",
+												"height": "100%",
+												"borderRadius": "2px",
+												"background": "#784be8",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"justifyContent": "space-between",
+								"marginTop": "14px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "10px",
+										"color": "#6f6e77"
+									}
+								},
+								"children": [
+									"Water"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"color": "#1a192b"
+									}
+								},
+								"children": [
+									"{glasses} of 8"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"position": "relative",
+								"height": "12px",
+								"marginTop": "6px"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"position": "absolute",
+										"top": "0",
+										"left": "0",
+										"display": "flex",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttRepeat": {
+											"count": 8,
+											"max": 8,
+											"node": {
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "12px",
+														"height": "12px",
+														"borderRadius": "999px",
+														"background": "#e2e2e5",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											}
+										}
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"position": "absolute",
+										"top": "0",
+										"left": "0",
+										"display": "flex",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttRepeat": {
+											"arg": "glasses",
+											"max": 8,
+											"node": {
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "12px",
+														"height": "12px",
+														"borderRadius": "999px",
+														"background": "#784be8",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Calories ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Calories",
+											"value": {
+												"ttArg": "kcal"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "kcal"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Goal ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Goal",
+											"value": {
+												"ttArg": "goal"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "goal"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Protein (g) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Protein (g)",
+											"value": {
+												"ttArg": "protein"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 400
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "protein"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Glasses ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Glasses",
+											"value": {
+												"ttArg": "glasses"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 8
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "glasses"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "health-fitness-nutrition",
+									"title": "Macros Card",
+									"details": "Calories: {kcal}\nGoal: {goal}\nProtein (g): {protein}\nGlasses: {glasses}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -418,7 +648,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "health-fitness-nutrition",
 	"source": {
 		"kind": "archetype",

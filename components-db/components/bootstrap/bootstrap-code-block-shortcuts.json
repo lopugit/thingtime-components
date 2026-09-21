@@ -3,7 +3,7 @@
 	"name": "Keyboard Shortcuts",
 	"library": "bootstrap",
 	"category": "data-display",
-	"description": "Keyboard-shortcut list in the Bootstrap style — action labels beside kbd-style bordered monospace key chips on the library's corner and border tokens.",
+	"description": "Keyboard-shortcut list in the Bootstrap style — action labels beside kbd-style bordered monospace key chips on the library's corner and border tokens. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"code",
 		"keyboard",
@@ -38,22 +38,28 @@
 			"default": "K",
 			"label": "Second key",
 			"maxLength": 8
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#dee2e6",
-				"borderRadius": "6px",
-				"overflow": "hidden",
-				"background": "#ffffff",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"minWidth": "280px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -62,61 +68,46 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"padding": "10px 14px",
-						"background": "#f8f9fa",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "solid",
-						"borderBottomColor": "#e9ecef"
+						"flexDirection": "column",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#dee2e6",
+						"borderRadius": "6px",
+						"overflow": "hidden",
+						"background": "#ffffff",
+						"minWidth": 0
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"color": "#6c757d"
+								"display": "flex",
+								"alignItems": "center",
+								"padding": "10px 14px",
+								"background": "#f8f9fa",
+								"borderBottomWidth": "1px",
+								"borderBottomStyle": "solid",
+								"borderBottomColor": "#e9ecef",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{title}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"padding": "10px 14px",
-						"gap": "12px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"color": "#212529"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 500,
+										"color": "#6c757d"
+									}
+								},
+								"children": [
+									"{title}"
+								]
 							}
-						},
-						"children": [
-							"{action}"
 						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1
-							}
-						}
 					},
 					{
 						"tag": "div",
@@ -124,7 +115,9 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "4px"
+								"padding": "10px 14px",
+								"gap": "12px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -132,92 +125,91 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"minWidth": "20px",
-										"height": "22px",
-										"padding": "0 5px",
-										"boxSizing": "border-box",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "#6c757d",
-										"background": "#f8f9fa",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderBottomWidth": "2px",
-										"borderRadius": "4px"
+										"fontSize": "14px",
+										"fontWeight": 500,
+										"color": "#212529"
 									}
 								},
 								"children": [
-									"{key1}"
+									"{action}"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"display": "inline-flex",
+										"flex": 1
+									}
+								}
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
 										"alignItems": "center",
-										"justifyContent": "center",
-										"minWidth": "20px",
-										"height": "22px",
-										"padding": "0 5px",
-										"boxSizing": "border-box",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "#6c757d",
-										"background": "#f8f9fa",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderBottomWidth": "2px",
-										"borderRadius": "4px"
+										"gap": "4px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"{key2}"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"minWidth": "20px",
+												"height": "22px",
+												"padding": "0 5px",
+												"boxSizing": "border-box",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"color": "#6c757d",
+												"background": "#f8f9fa",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderBottomWidth": "2px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"{key1}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"minWidth": "20px",
+												"height": "22px",
+												"padding": "0 5px",
+												"boxSizing": "border-box",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"color": "#6c757d",
+												"background": "#f8f9fa",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderBottomWidth": "2px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"{key2}"
+										]
+									}
 								]
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"padding": "10px 14px",
-						"gap": "12px",
-						"borderTopWidth": "1px",
-						"borderTopStyle": "solid",
-						"borderTopColor": "#e9ecef"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"color": "#212529"
-							}
-						},
-						"children": [
-							"Search files"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1
-							}
-						}
 					},
 					{
 						"tag": "div",
@@ -225,7 +217,12 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "4px"
+								"padding": "10px 14px",
+								"gap": "12px",
+								"borderTopWidth": "1px",
+								"borderTopStyle": "solid",
+								"borderTopColor": "#e9ecef",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -233,92 +230,91 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"minWidth": "20px",
-										"height": "22px",
-										"padding": "0 5px",
-										"boxSizing": "border-box",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "#6c757d",
-										"background": "#f8f9fa",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderBottomWidth": "2px",
-										"borderRadius": "4px"
+										"fontSize": "14px",
+										"fontWeight": 500,
+										"color": "#212529"
 									}
 								},
 								"children": [
-									"⌘"
+									"Search files"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"display": "inline-flex",
+										"flex": 1
+									}
+								}
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
 										"alignItems": "center",
-										"justifyContent": "center",
-										"minWidth": "20px",
-										"height": "22px",
-										"padding": "0 5px",
-										"boxSizing": "border-box",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "#6c757d",
-										"background": "#f8f9fa",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderBottomWidth": "2px",
-										"borderRadius": "4px"
+										"gap": "4px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"P"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"minWidth": "20px",
+												"height": "22px",
+												"padding": "0 5px",
+												"boxSizing": "border-box",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"color": "#6c757d",
+												"background": "#f8f9fa",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderBottomWidth": "2px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"⌘"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"minWidth": "20px",
+												"height": "22px",
+												"padding": "0 5px",
+												"boxSizing": "border-box",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"color": "#6c757d",
+												"background": "#f8f9fa",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderBottomWidth": "2px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"P"
+										]
+									}
 								]
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"padding": "10px 14px",
-						"gap": "12px",
-						"borderTopWidth": "1px",
-						"borderTopStyle": "solid",
-						"borderTopColor": "#e9ecef"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"color": "#212529"
-							}
-						},
-						"children": [
-							"Toggle theme"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1
-							}
-						}
 					},
 					{
 						"tag": "div",
@@ -326,7 +322,12 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "4px"
+								"padding": "10px 14px",
+								"gap": "12px",
+								"borderTopWidth": "1px",
+								"borderTopStyle": "solid",
+								"borderTopColor": "#e9ecef",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -334,92 +335,91 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"minWidth": "20px",
-										"height": "22px",
-										"padding": "0 5px",
-										"boxSizing": "border-box",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "#6c757d",
-										"background": "#f8f9fa",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderBottomWidth": "2px",
-										"borderRadius": "4px"
+										"fontSize": "14px",
+										"fontWeight": 500,
+										"color": "#212529"
 									}
 								},
 								"children": [
-									"⌘"
+									"Toggle theme"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"display": "inline-flex",
+										"flex": 1
+									}
+								}
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
 										"alignItems": "center",
-										"justifyContent": "center",
-										"minWidth": "20px",
-										"height": "22px",
-										"padding": "0 5px",
-										"boxSizing": "border-box",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "#6c757d",
-										"background": "#f8f9fa",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderBottomWidth": "2px",
-										"borderRadius": "4px"
+										"gap": "4px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"J"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"minWidth": "20px",
+												"height": "22px",
+												"padding": "0 5px",
+												"boxSizing": "border-box",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"color": "#6c757d",
+												"background": "#f8f9fa",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderBottomWidth": "2px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"⌘"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"minWidth": "20px",
+												"height": "22px",
+												"padding": "0 5px",
+												"boxSizing": "border-box",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"color": "#6c757d",
+												"background": "#f8f9fa",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderBottomWidth": "2px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"J"
+										]
+									}
 								]
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"padding": "10px 14px",
-						"gap": "12px",
-						"borderTopWidth": "1px",
-						"borderTopStyle": "solid",
-						"borderTopColor": "#e9ecef"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"color": "#212529"
-							}
-						},
-						"children": [
-							"Save changes"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1
-							}
-						}
 					},
 					{
 						"tag": "div",
@@ -427,7 +427,12 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "4px"
+								"padding": "10px 14px",
+								"gap": "12px",
+								"borderTopWidth": "1px",
+								"borderTopStyle": "solid",
+								"borderTopColor": "#e9ecef",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -435,53 +440,274 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"minWidth": "20px",
-										"height": "22px",
-										"padding": "0 5px",
-										"boxSizing": "border-box",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "#6c757d",
-										"background": "#f8f9fa",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderBottomWidth": "2px",
-										"borderRadius": "4px"
+										"fontSize": "14px",
+										"fontWeight": 500,
+										"color": "#212529"
 									}
 								},
 								"children": [
-									"⌘"
+									"Save changes"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"display": "inline-flex",
+										"flex": 1
+									}
+								}
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
 										"alignItems": "center",
-										"justifyContent": "center",
-										"minWidth": "20px",
-										"height": "22px",
-										"padding": "0 5px",
-										"boxSizing": "border-box",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"color": "#6c757d",
-										"background": "#f8f9fa",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"borderBottomWidth": "2px",
-										"borderRadius": "4px"
+										"gap": "4px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"S"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"minWidth": "20px",
+												"height": "22px",
+												"padding": "0 5px",
+												"boxSizing": "border-box",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"color": "#6c757d",
+												"background": "#f8f9fa",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderBottomWidth": "2px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"⌘"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"minWidth": "20px",
+												"height": "22px",
+												"padding": "0 5px",
+												"boxSizing": "border-box",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"color": "#6c757d",
+												"background": "#f8f9fa",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"borderBottomWidth": "2px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"S"
+										]
+									}
 								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"First action ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "First action",
+											"value": {
+												"ttArg": "action"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "action"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"First key ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "First key",
+											"value": {
+												"ttArg": "key1"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "key1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Second key ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Second key",
+											"value": {
+												"ttArg": "key2"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "key2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "code-block-shortcuts",
+									"title": "Keyboard Shortcuts",
+									"details": "Title: {title}\nFirst action: {action}\nFirst key: {key1}\nSecond key: {key2}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -489,7 +715,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "code-block-shortcuts",
 	"source": {
 		"kind": "archetype",

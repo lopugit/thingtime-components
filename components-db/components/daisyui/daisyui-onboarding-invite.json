@@ -3,7 +3,7 @@
 	"name": "Invite Teammates Card",
 	"library": "daisyui",
 	"category": "onboarding",
-	"description": "Invite-teammates card in the daisyUI style — an email field beside a tone invite button, above two pending invites with avatar circles, warning-wash Pending chips and tone resend links.",
+	"description": "Invite-teammates card in the daisyUI style — an email field beside a tone invite button, above two pending invites with avatar circles, warning-wash Pending chips and tone resend links. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"onboarding",
 		"invite",
@@ -45,25 +45,34 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e5e6e6",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"boxSizing": "border-box",
-				"width": "300px",
-				"gap": "12px",
-				"padding": "18px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -73,131 +82,17 @@
 					"style": {
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "2px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "18px",
-								"fontWeight": 700,
-								"color": "#1f2937"
-							}
-						},
-						"children": [
-							"Invite teammates"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#6b7280"
-							}
-						},
-						"children": [
-							"They will get an email with a join link."
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "input",
-						"props": {
-							"type": "text",
-							"placeholder": "{placeholder}",
-							"style": {
-								"flex": 1,
-								"minWidth": 0,
-								"height": "32px",
-								"padding": "0 10px",
-								"boxSizing": "border-box",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#e5e6e6",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "14px",
-								"color": "#1f2937",
-								"background": "#ffffff",
-								"outline": "none"
-							}
-						}
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "6px",
-								"border": "none",
-								"borderRadius": "12px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 600,
-								"cursor": "pointer",
-								"height": "32px",
-								"padding": "0 12px",
-								"fontSize": "14px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#570df8",
-											"success": "#00a96e",
-											"warning": "#ffbe00",
-											"danger": "#ff5861",
-											"info": "#00b6ff",
-											"neutral": "#2a323c"
-										},
-										"default": "#570df8"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#382800",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"Invite"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "10px"
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e5e6e6",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"boxSizing": "border-box",
+						"width": "300px",
+						"gap": "12px",
+						"padding": "18px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -206,100 +101,98 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "8px"
+								"flexDirection": "column",
+								"gap": "2px"
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
+								"tag": "span",
 								"props": {
 									"style": {
-										"width": "24px",
-										"height": "24px",
-										"borderRadius": "999px",
-										"background": "#f2f2f2",
-										"color": "#6b7280",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0
+										"fontSize": "18px",
+										"fontWeight": 700,
+										"color": "#1f2937"
 									}
 								},
 								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "path",
-												"props": {
-													"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 12,
-													"cy": 7,
-													"r": 4
-												}
-											}
-										]
-									}
+									"Invite teammates"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "#6b7280"
+									}
+								},
+								"children": [
+									"They will get an email with a join link."
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "text",
+									"placeholder": "{placeholder}",
 									"style": {
 										"flex": 1,
 										"minWidth": 0,
+										"height": "32px",
+										"padding": "0 10px",
+										"boxSizing": "border-box",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#e5e6e6",
+										"borderRadius": "8px",
 										"fontSize": "14px",
 										"color": "#1f2937",
-										"overflow": "hidden",
-										"textOverflow": "ellipsis",
-										"whiteSpace": "nowrap"
-									}
+										"background": "#ffffff",
+										"outline": "none"
+									},
+									"value": {
+										"ttArg": "entry1"
+									},
+									"aria-label": "{placeholder}",
+									"maxLength": 500
 								},
-								"children": [
-									"{email1}"
-								]
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "entry1"
+								}
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"fontSize": "12px",
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"gap": "6px",
+										"border": "none",
+										"borderRadius": "12px",
 										"fontWeight": 600,
-										"padding": "2px 8px",
-										"borderRadius": "999px",
-										"background": "#fef9c3",
-										"color": "#854d0e",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"Pending"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"color": {
+										"cursor": "pointer",
+										"height": "auto",
+										"padding": "8px 12px",
+										"fontSize": "14px",
+										"background": {
 											"ttMap": {
 												"arg": "tone",
 												"values": {
@@ -313,13 +206,39 @@
 												"default": "#570df8"
 											}
 										},
-										"cursor": "pointer",
-										"flexShrink": 0
-									}
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#382800",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"flexShrink": 0,
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
 								},
 								"children": [
-									"Resend"
-								]
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "onboarding-invite",
+									"title": "Invite Teammates Card",
+									"details": "Invite 1: {email1}\nInvite 2: {email2}\nentry1: {entry1}"
+								}
 							}
 						]
 					},
@@ -328,8 +247,8 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "8px"
+								"flexDirection": "column",
+								"gap": "10px"
 							}
 						},
 						"children": [
@@ -337,111 +256,406 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "24px",
-										"height": "24px",
-										"borderRadius": "999px",
-										"background": "#f2f2f2",
-										"color": "#6b7280",
 										"display": "flex",
 										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0
+										"gap": "8px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
-										"tag": "svg",
+										"tag": "div",
 										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
+											"style": {
+												"width": "24px",
+												"height": "24px",
+												"borderRadius": "999px",
+												"background": "#f2f2f2",
+												"color": "#6b7280",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
 										},
 										"children": [
 											{
-												"tag": "path",
+												"tag": "svg",
 												"props": {
-													"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 12,
-													"cy": 7,
-													"r": 4
-												}
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "path",
+														"props": {
+															"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+														}
+													},
+													{
+														"tag": "circle",
+														"props": {
+															"cx": 12,
+															"cy": 7,
+															"r": 4
+														}
+													}
+												]
 											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"flex": 1,
+												"minWidth": 0,
+												"fontSize": "14px",
+												"color": "#1f2937",
+												"overflow": "hidden",
+												"textOverflow": "ellipsis",
+												"whiteSpace": "nowrap"
+											}
+										},
+										"children": [
+											"{email1}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"padding": "2px 8px",
+												"borderRadius": "999px",
+												"background": "#fef9c3",
+												"color": "#854d0e",
+												"flexShrink": 0
+											}
+										},
+										"children": [
+											"Pending"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"color": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#570df8",
+															"success": "#00a96e",
+															"warning": "#ffbe00",
+															"danger": "#ff5861",
+															"info": "#00b6ff",
+															"neutral": "#2a323c"
+														},
+														"default": "#570df8"
+													}
+												},
+												"flexShrink": 0
+											}
+										},
+										"children": [
+											"Resend"
 										]
 									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"flex": 1,
-										"minWidth": 0,
-										"fontSize": "14px",
-										"color": "#1f2937",
-										"overflow": "hidden",
-										"textOverflow": "ellipsis",
-										"whiteSpace": "nowrap"
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "8px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"{email2}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"padding": "2px 8px",
-										"borderRadius": "999px",
-										"background": "#fef9c3",
-										"color": "#854d0e",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"Pending"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#570df8",
-													"success": "#00a96e",
-													"warning": "#ffbe00",
-													"danger": "#ff5861",
-													"info": "#00b6ff",
-													"neutral": "#2a323c"
-												},
-												"default": "#570df8"
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "24px",
+												"height": "24px",
+												"borderRadius": "999px",
+												"background": "#f2f2f2",
+												"color": "#6b7280",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
 											}
 										},
-										"cursor": "pointer",
-										"flexShrink": 0
+										"children": [
+											{
+												"tag": "svg",
+												"props": {
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "path",
+														"props": {
+															"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+														}
+													},
+													{
+														"tag": "circle",
+														"props": {
+															"cx": 12,
+															"cy": 7,
+															"r": 4
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"flex": 1,
+												"minWidth": 0,
+												"fontSize": "14px",
+												"color": "#1f2937",
+												"overflow": "hidden",
+												"textOverflow": "ellipsis",
+												"whiteSpace": "nowrap"
+											}
+										},
+										"children": [
+											"{email2}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"padding": "2px 8px",
+												"borderRadius": "999px",
+												"background": "#fef9c3",
+												"color": "#854d0e",
+												"flexShrink": 0
+											}
+										},
+										"children": [
+											"Pending"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"color": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#570df8",
+															"success": "#00a96e",
+															"warning": "#ffbe00",
+															"danger": "#ff5861",
+															"info": "#00b6ff",
+															"neutral": "#2a323c"
+														},
+														"default": "#570df8"
+													}
+												},
+												"flexShrink": 0
+											}
+										},
+										"children": [
+											"Resend"
+										]
 									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"entry1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "entry1",
+											"value": {
+												"ttArg": "entry1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Invite 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Invite 1",
+											"value": {
+												"ttArg": "email1"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "email1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Invite 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Invite 2",
+											"value": {
+												"ttArg": "email2"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "email2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "onboarding-invite",
+									"title": "Invite Teammates Card",
+									"details": "Invite 1: {email1}\nInvite 2: {email2}\nentry1: {entry1}"
 								},
 								"children": [
-									"Resend"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -450,7 +664,7 @@
 		]
 	},
 	"previewBg": "#f2f2f2",
-	"version": 1,
+	"version": 2,
 	"familyKey": "onboarding-invite",
 	"source": {
 		"kind": "archetype",

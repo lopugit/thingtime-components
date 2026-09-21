@@ -3,7 +3,7 @@
 	"name": "Quiz Card",
 	"library": "bootstrap",
 	"category": "learning",
-	"description": "Quiz question card in the Bootstrap style — mono progress caption over a hairline meter, the question, three answer rows (one tone-ringed selection, one success flash on reveal), and a Next action.",
+	"description": "Quiz question card in the Bootstrap style — mono progress caption over a hairline meter, the question, three answer rows (one tone-ringed selection, one success flash on reveal), and a Next action. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"education",
 		"quiz",
@@ -53,25 +53,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#212529",
-				"background": "#ffffff",
-				"border": "1px solid #dee2e6",
-				"borderRadius": "8px",
-				"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-				"boxSizing": "border-box",
-				"overflow": "hidden",
-				"width": "300px",
-				"padding": "16px",
-				"gap": "12px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -81,34 +84,107 @@
 					"style": {
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "8px"
+						"color": "#212529",
+						"background": "#ffffff",
+						"border": "1px solid #dee2e6",
+						"borderRadius": "8px",
+						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+						"boxSizing": "border-box",
+						"overflow": "hidden",
+						"width": "300px",
+						"padding": "16px",
+						"gap": "12px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"letterSpacing": "0.08em",
-								"textTransform": "uppercase",
-								"color": "#6c757d",
-								"fontWeight": 600
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "8px"
 							}
 						},
 						"children": [
-							"Question {num} of {total}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "12px",
+										"letterSpacing": "0.08em",
+										"textTransform": "uppercase",
+										"color": "#6c757d",
+										"fontWeight": 600
+									}
+								},
+								"children": [
+									"Question {num} of {total}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "3px",
+										"background": "#e9ecef",
+										"borderRadius": "50rem",
+										"overflow": "hidden"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "calc({num} * 54px)",
+												"maxWidth": "100%",
+												"height": "100%",
+												"borderRadius": "50rem",
+												"background": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#0d6efd",
+															"success": "#198754",
+															"warning": "#ffc107",
+															"danger": "#dc3545",
+															"info": "#0dcaf0",
+															"neutral": "#6c757d"
+														},
+														"default": "#0d6efd"
+													}
+												},
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "18px",
+								"fontWeight": 500,
+								"lineHeight": 1.35
+							}
+						},
+						"children": [
+							"{question}"
 						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"height": "3px",
-								"background": "#e9ecef",
-								"borderRadius": "50rem",
-								"overflow": "hidden"
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "8px"
 							}
 						},
 						"children": [
@@ -116,10 +192,272 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "calc({num} * 54px)",
-										"maxWidth": "100%",
-										"height": "100%",
-										"borderRadius": "50rem",
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "10px",
+										"padding": "10px 12px",
+										"borderRadius": "6px",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#dee2e6",
+										"background": "#ffffff",
+										"fontSize": "14px",
+										"fontWeight": 500,
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "20px",
+												"height": "20px",
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"borderRadius": "4px",
+												"border": "1px solid #e9ecef",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"color": "#6c757d",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"A"
+										]
+									},
+									"Each product team"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "10px",
+										"padding": "10px 12px",
+										"borderRadius": "6px",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#0d6efd",
+													"success": "#198754",
+													"warning": "#ffc107",
+													"danger": "#dc3545",
+													"info": "#0dcaf0",
+													"neutral": "#6c757d"
+												},
+												"default": "#0d6efd"
+											}
+										},
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#cfe2ff",
+													"success": "#d1e7dd",
+													"warning": "#fff3cd",
+													"danger": "#f8d7da",
+													"info": "#cff4fc",
+													"neutral": "#e9ecef"
+												},
+												"default": "#cfe2ff"
+											}
+										},
+										"fontSize": "14px",
+										"fontWeight": 500,
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#052c65",
+													"success": "#0a3622",
+													"warning": "#664d03",
+													"danger": "#58151c",
+													"info": "#055160",
+													"neutral": "#495057"
+												},
+												"default": "#052c65"
+											}
+										},
+										"boxShadow": "0 0 0 0.25rem rgba(13, 110, 253, 0.25)",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "20px",
+												"height": "20px",
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"borderRadius": "4px",
+												"border": "1px solid #e9ecef",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"color": "#6c757d",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"B"
+										]
+									},
+									"The component library"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"style": {
+										"ttMerge": [
+											{
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "10px",
+												"padding": "10px 12px",
+												"borderRadius": "6px",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#dee2e6",
+												"background": "#ffffff",
+												"fontSize": "14px",
+												"fontWeight": 500,
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "reveal",
+													"then": {
+														"borderColor": "#198754",
+														"background": "#d1e7dd",
+														"color": "#0a3622"
+													}
+												}
+											}
+										]
+									},
+									"type": "button",
+									"aria-label": "C A shared token source",
+									"aria-pressed": {
+										"ttArg": "reveal"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "20px",
+												"height": "20px",
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"borderRadius": "4px",
+												"border": "1px solid #e9ecef",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"color": "#6c757d",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"C"
+										]
+									},
+									"A shared token source",
+									{
+										"ttIf": {
+											"arg": "reveal",
+											"then": {
+												"tag": "span",
+												"props": {
+													"style": {
+														"marginLeft": "auto",
+														"display": "inline-flex",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													{
+														"tag": "svg",
+														"props": {
+															"width": 14,
+															"height": 14,
+															"viewBox": "0 0 24 24",
+															"fill": "none",
+															"stroke": "#198754",
+															"strokeWidth": 2,
+															"strokeLinecap": "round",
+															"strokeLinejoin": "round",
+															"xmlns": "http://www.w3.org/2000/svg"
+														},
+														"children": [
+															{
+																"tag": "polyline",
+																"props": {
+																	"points": "20 6 9 17 4 12"
+																}
+															}
+														]
+													}
+												]
+											}
+										}
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "toggle",
+									"key": "reveal"
+								}
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "flex-end",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "6px",
+										"fontWeight": 400,
+										"fontSize": "14px",
+										"cursor": "pointer",
 										"background": {
 											"ttMap": {
 												"arg": "tone",
@@ -133,255 +471,38 @@
 												},
 												"default": "#0d6efd"
 											}
-										}
-									}
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "18px",
-						"fontWeight": 500,
-						"lineHeight": 1.35
-					}
-				},
-				"children": [
-					"{question}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px",
-								"padding": "10px 12px",
-								"borderRadius": "6px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#dee2e6",
-								"background": "#ffffff",
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"cursor": "pointer"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "20px",
-										"height": "20px",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"borderRadius": "4px",
-										"border": "1px solid #e9ecef",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"color": "#6c757d",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"A"
-								]
-							},
-							"Each product team"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px",
-								"padding": "10px 12px",
-								"borderRadius": "6px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#0d6efd",
-											"success": "#198754",
-											"warning": "#ffc107",
-											"danger": "#dc3545",
-											"info": "#0dcaf0",
-											"neutral": "#6c757d"
 										},
-										"default": "#0d6efd"
-									}
-								},
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#cfe2ff",
-											"success": "#d1e7dd",
-											"warning": "#fff3cd",
-											"danger": "#f8d7da",
-											"info": "#cff4fc",
-											"neutral": "#e9ecef"
-										},
-										"default": "#cfe2ff"
-									}
-								},
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"cursor": "pointer",
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#052c65",
-											"success": "#0a3622",
-											"warning": "#664d03",
-											"danger": "#58151c",
-											"info": "#055160",
-											"neutral": "#495057"
-										},
-										"default": "#052c65"
-									}
-								},
-								"boxShadow": "0 0 0 0.25rem rgba(13, 110, 253, 0.25)"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "20px",
-										"height": "20px",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"borderRadius": "4px",
-										"border": "1px solid #e9ecef",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"color": "#6c757d",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"B"
-								]
-							},
-							"The component library"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "10px",
-										"padding": "10px 12px",
-										"borderRadius": "6px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#dee2e6",
-										"background": "#ffffff",
-										"fontSize": "14px",
-										"fontWeight": 500,
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "reveal",
-											"then": {
-												"borderColor": "#198754",
-												"background": "#d1e7dd",
-												"color": "#0a3622"
-											}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "20px",
-										"height": "20px",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"borderRadius": "4px",
-										"border": "1px solid #e9ecef",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"color": "#6c757d",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"C"
-								]
-							},
-							"A shared token source",
-							{
-								"ttIf": {
-									"arg": "reveal",
-									"then": {
-										"tag": "span",
-										"props": {
-											"style": {
-												"marginLeft": "auto",
-												"display": "inline-flex"
-											}
-										},
-										"children": [
-											{
-												"tag": "svg",
-												"props": {
-													"width": 14,
-													"height": 14,
-													"viewBox": "0 0 24 24",
-													"fill": "none",
-													"stroke": "#198754",
-													"strokeWidth": 2,
-													"strokeLinecap": "round",
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#000000",
+													"danger": "#ffffff",
+													"info": "#000000",
+													"neutral": "#ffffff"
 												},
-												"children": [
-													{
-														"tag": "polyline",
-														"props": {
-															"points": "20 6 9 17 4 12"
-														}
-													}
-												]
+												"default": "#ffffff"
 											}
-										]
-									}
+										},
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "education-quiz",
+									"title": "Quiz Card",
+									"details": "Question: {question}\nQuestion number: {num}\nTotal questions: {total}\nReveal answer: {reveal}"
 								}
 							}
 						]
@@ -389,70 +510,188 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "flex-end"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "button",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
-							"type": "button",
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "31px",
-								"padding": "0 16px",
-								"border": "none",
-								"borderRadius": "6px",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 400,
-								"fontSize": "14px",
-								"cursor": "pointer",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#0d6efd",
-											"success": "#198754",
-											"warning": "#ffc107",
-											"danger": "#dc3545",
-											"info": "#0dcaf0",
-											"neutral": "#6c757d"
-										},
-										"default": "#0d6efd"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#000000",
-											"danger": "#ffffff",
-											"info": "#000000",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								}
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"Next"
+							{
+								"tag": "label",
+								"children": [
+									"Reveal answer ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Reveal answer",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "reveal"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "reveal"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Question ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Question",
+											"value": {
+												"ttArg": "question"
+											},
+											"maxLength": 120,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "question"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Question number ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Question number",
+											"value": {
+												"ttArg": "num"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 12
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "num"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Total questions ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Total questions",
+											"value": {
+												"ttArg": "total"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 12
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "total"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "education-quiz",
+									"title": "Quiz Card",
+									"details": "Question: {question}\nQuestion number: {num}\nTotal questions: {total}\nReveal answer: {reveal}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "education-quiz",
 	"source": {
 		"kind": "archetype",

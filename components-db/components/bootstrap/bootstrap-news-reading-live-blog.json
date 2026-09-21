@@ -3,7 +3,7 @@
 	"name": "Live Blog Feed",
 	"library": "bootstrap",
 	"category": "content",
-	"description": "Live blog feed in the Bootstrap style — a pulsing LIVE chip beside the event title over three time-pipped updates on a rail, the newest wearing a tone tint and a Just-now stamp, with a quiet load-earlier button underneath.",
+	"description": "Live blog feed in the Bootstrap style — a pulsing LIVE chip beside the event title over three time-pipped updates on a rail, the newest wearing a tone tint and a Just-now stamp, with a quiet load-earlier button underneath. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"news",
 		"live",
@@ -53,25 +53,28 @@
 			"default": "Turnout is on track to set a modern record.",
 			"label": "Update 3",
 			"maxLength": 140
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
-				"padding": "14px",
-				"gap": "10px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e9ecef",
-				"borderRadius": "8px",
-				"boxShadow": "none",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"boxSizing": "border-box"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -80,130 +83,18 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"gap": "6px",
-								"padding": "3px 9px",
-								"borderRadius": "50rem",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#cfe2ff",
-											"success": "#d1e7dd",
-											"warning": "#fff3cd",
-											"danger": "#f8d7da",
-											"info": "#cff4fc",
-											"neutral": "#e9ecef"
-										},
-										"default": "#cfe2ff"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#052c65",
-											"success": "#0a3622",
-											"warning": "#664d03",
-											"danger": "#58151c",
-											"info": "#055160",
-											"neutral": "#495057"
-										},
-										"default": "#052c65"
-									}
-								},
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "7px",
-										"height": "7px",
-										"borderRadius": "999px",
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#0d6efd",
-													"success": "#198754",
-													"warning": "#ffc107",
-													"danger": "#dc3545",
-													"info": "#0dcaf0",
-													"neutral": "#6c757d"
-												},
-												"default": "#0d6efd"
-											}
-										},
-										"boxShadow": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "0 0 0 3px #9ec5fe",
-													"success": "0 0 0 3px #a3cfbb",
-													"warning": "0 0 0 3px #ffe69c",
-													"danger": "0 0 0 3px #f1aeb5",
-													"info": "0 0 0 3px #9eeaf9",
-													"neutral": "0 0 0 3px #ced4da"
-												},
-												"default": "0 0 0 3px #9ec5fe"
-											}
-										}
-									}
-								}
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 800,
-										"letterSpacing": "0.08em"
-									}
-								},
-								"children": [
-									"LIVE"
-								]
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "18px",
-								"fontWeight": 500,
-								"color": "#212529",
-								"minWidth": 0,
-								"whiteSpace": "nowrap",
-								"overflow": "hidden",
-								"textOverflow": "ellipsis"
-							}
-						},
-						"children": [
-							"{event}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column"
+						"flexDirection": "column",
+						"width": "320px",
+						"padding": "14px",
+						"gap": "10px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e9ecef",
+						"borderRadius": "8px",
+						"boxShadow": "none",
+						"boxSizing": "border-box",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -212,8 +103,9 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "stretch",
-								"gap": "10px"
+								"alignItems": "center",
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -221,13 +113,41 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"display": "flex",
-										"flexDirection": "column",
+										"display": "inline-flex",
 										"alignItems": "center",
-										"width": "11px",
+										"gap": "6px",
+										"padding": "3px 9px",
+										"borderRadius": "50rem",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#cfe2ff",
+													"success": "#d1e7dd",
+													"warning": "#fff3cd",
+													"danger": "#f8d7da",
+													"info": "#cff4fc",
+													"neutral": "#e9ecef"
+												},
+												"default": "#cfe2ff"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#052c65",
+													"success": "#0a3622",
+													"warning": "#664d03",
+													"danger": "#58151c",
+													"info": "#055160",
+													"neutral": "#495057"
+												},
+												"default": "#052c65"
+											}
+										},
 										"flexShrink": 0,
-										"paddingTop": "5px",
-										"gap": "3px"
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
@@ -235,8 +155,8 @@
 										"tag": "span",
 										"props": {
 											"style": {
-												"width": "9px",
-												"height": "9px",
+												"width": "7px",
+												"height": "7px",
 												"borderRadius": "999px",
 												"background": {
 													"ttMap": {
@@ -256,17 +176,18 @@
 													"ttMap": {
 														"arg": "tone",
 														"values": {
-															"primary": "0 0 0 3px #cfe2ff",
-															"success": "0 0 0 3px #d1e7dd",
-															"warning": "0 0 0 3px #fff3cd",
-															"danger": "0 0 0 3px #f8d7da",
-															"info": "0 0 0 3px #cff4fc",
-															"neutral": "0 0 0 3px #e9ecef"
+															"primary": "0 0 0 3px #9ec5fe",
+															"success": "0 0 0 3px #a3cfbb",
+															"warning": "0 0 0 3px #ffe69c",
+															"danger": "0 0 0 3px #f1aeb5",
+															"info": "0 0 0 3px #9eeaf9",
+															"neutral": "0 0 0 3px #ced4da"
 														},
-														"default": "0 0 0 3px #cfe2ff"
+														"default": "0 0 0 3px #9ec5fe"
 													}
 												},
-												"flexShrink": 0
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											}
 										}
 									},
@@ -274,138 +195,300 @@
 										"tag": "span",
 										"props": {
 											"style": {
-												"width": "2px",
-												"flex": 1,
-												"background": "#e9ecef",
-												"borderRadius": "999px"
+												"fontSize": "12px",
+												"fontWeight": 800,
+												"letterSpacing": "0.08em"
 											}
-										}
+										},
+										"children": [
+											"LIVE"
+										]
 									}
 								]
 							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "18px",
+										"fontWeight": 500,
+										"color": "#212529",
+										"minWidth": 0,
+										"whiteSpace": "nowrap",
+										"overflow": "hidden",
+										"textOverflow": "ellipsis"
+									}
+								},
+								"children": [
+									"{event}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column"
+							}
+						},
+						"children": [
 							{
 								"tag": "div",
 								"props": {
 									"style": {
 										"display": "flex",
-										"flexDirection": "column",
-										"flex": 1,
-										"minWidth": 0,
-										"gap": "2px",
-										"padding": "7px 10px",
-										"marginBottom": "10px",
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#cfe2ff",
-													"success": "#d1e7dd",
-													"warning": "#fff3cd",
-													"danger": "#f8d7da",
-													"info": "#cff4fc",
-													"neutral": "#e9ecef"
-												},
-												"default": "#cfe2ff"
-											}
-										},
-										"borderRadius": "6px"
+										"alignItems": "stretch",
+										"gap": "10px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
-										"tag": "span",
+										"tag": "div",
 										"props": {
 											"style": {
-												"fontSize": "12px",
-												"fontWeight": 700,
-												"color": {
+												"display": "flex",
+												"flexDirection": "column",
+												"alignItems": "center",
+												"width": "11px",
+												"flexShrink": 0,
+												"paddingTop": "5px",
+												"gap": "3px",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "9px",
+														"height": "9px",
+														"borderRadius": "999px",
+														"background": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "#0d6efd",
+																	"success": "#198754",
+																	"warning": "#ffc107",
+																	"danger": "#dc3545",
+																	"info": "#0dcaf0",
+																	"neutral": "#6c757d"
+																},
+																"default": "#0d6efd"
+															}
+														},
+														"boxShadow": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "0 0 0 3px #cfe2ff",
+																	"success": "0 0 0 3px #d1e7dd",
+																	"warning": "0 0 0 3px #fff3cd",
+																	"danger": "0 0 0 3px #f8d7da",
+																	"info": "0 0 0 3px #cff4fc",
+																	"neutral": "0 0 0 3px #e9ecef"
+																},
+																"default": "0 0 0 3px #cfe2ff"
+															}
+														},
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "2px",
+														"flex": 1,
+														"background": "#e9ecef",
+														"borderRadius": "999px",
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"flexDirection": "column",
+												"flex": 1,
+												"minWidth": 0,
+												"gap": "2px",
+												"padding": "7px 10px",
+												"marginBottom": "10px",
+												"background": {
 													"ttMap": {
 														"arg": "tone",
 														"values": {
-															"primary": "#052c65",
-															"success": "#0a3622",
-															"warning": "#664d03",
-															"danger": "#58151c",
-															"info": "#055160",
-															"neutral": "#495057"
+															"primary": "#cfe2ff",
+															"success": "#d1e7dd",
+															"warning": "#fff3cd",
+															"danger": "#f8d7da",
+															"info": "#cff4fc",
+															"neutral": "#e9ecef"
 														},
-														"default": "#052c65"
+														"default": "#cfe2ff"
 													}
 												},
-												"textTransform": "uppercase",
-												"letterSpacing": "0.04em"
+												"borderRadius": "6px"
 											}
 										},
 										"children": [
-											"Just now"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#212529",
-												"lineHeight": 1.5
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"fontWeight": 700,
+														"color": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "#052c65",
+																	"success": "#0a3622",
+																	"warning": "#664d03",
+																	"danger": "#58151c",
+																	"info": "#055160",
+																	"neutral": "#495057"
+																},
+																"default": "#052c65"
+															}
+														},
+														"textTransform": "uppercase",
+														"letterSpacing": "0.04em"
+													}
+												},
+												"children": [
+													"Just now"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"color": "#212529",
+														"lineHeight": 1.5
+													}
+												},
+												"children": [
+													"{update1}"
+												]
 											}
-										},
-										"children": [
-											"{update1}"
 										]
 									}
 								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "stretch",
-								"gap": "10px"
-							}
-						},
-						"children": [
+							},
 							{
 								"tag": "div",
 								"props": {
 									"style": {
 										"display": "flex",
-										"flexDirection": "column",
-										"alignItems": "center",
-										"width": "11px",
-										"flexShrink": 0,
-										"paddingTop": "5px",
-										"gap": "3px"
+										"alignItems": "stretch",
+										"gap": "10px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
-										"tag": "span",
+										"tag": "div",
 										"props": {
 											"style": {
-												"width": "5px",
-												"height": "5px",
-												"borderRadius": "999px",
-												"borderWidth": "2px",
-												"borderStyle": "solid",
-												"borderColor": "#adb5bd",
-												"background": "#ffffff",
-												"flexShrink": 0
+												"display": "flex",
+												"flexDirection": "column",
+												"alignItems": "center",
+												"width": "11px",
+												"flexShrink": 0,
+												"paddingTop": "5px",
+												"gap": "3px",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											}
-										}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "5px",
+														"height": "5px",
+														"borderRadius": "999px",
+														"borderWidth": "2px",
+														"borderStyle": "solid",
+														"borderColor": "#adb5bd",
+														"background": "#ffffff",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "2px",
+														"flex": 1,
+														"background": "#e9ecef",
+														"borderRadius": "999px",
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											}
+										]
 									},
 									{
-										"tag": "span",
+										"tag": "div",
 										"props": {
 											"style": {
-												"width": "2px",
+												"display": "flex",
+												"flexDirection": "column",
 												"flex": 1,
-												"background": "#e9ecef",
-												"borderRadius": "999px"
+												"minWidth": 0,
+												"gap": "2px",
+												"paddingBottom": "12px"
 											}
-										}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"color": "#adb5bd"
+													}
+												},
+												"children": [
+													"18 min ago"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"color": "#6c757d",
+														"lineHeight": 1.5
+													}
+												},
+												"children": [
+													"{update2}"
+												]
+											}
+										]
 									}
 								]
 							},
@@ -414,37 +497,85 @@
 								"props": {
 									"style": {
 										"display": "flex",
-										"flexDirection": "column",
-										"flex": 1,
-										"minWidth": 0,
-										"gap": "2px",
-										"paddingBottom": "12px"
+										"alignItems": "stretch",
+										"gap": "10px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
-										"tag": "span",
+										"tag": "div",
 										"props": {
 											"style": {
-												"fontSize": "12px",
-												"color": "#adb5bd"
+												"display": "flex",
+												"flexDirection": "column",
+												"alignItems": "center",
+												"width": "11px",
+												"flexShrink": 0,
+												"paddingTop": "5px",
+												"gap": "3px",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											}
 										},
 										"children": [
-											"18 min ago"
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "5px",
+														"height": "5px",
+														"borderRadius": "999px",
+														"borderWidth": "2px",
+														"borderStyle": "solid",
+														"borderColor": "#adb5bd",
+														"background": "#ffffff",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											}
 										]
 									},
 									{
-										"tag": "span",
+										"tag": "div",
 										"props": {
 											"style": {
-												"fontSize": "14px",
-												"color": "#6c757d",
-												"lineHeight": 1.5
+												"display": "flex",
+												"flexDirection": "column",
+												"flex": 1,
+												"minWidth": 0,
+												"gap": "2px",
+												"paddingBottom": "0"
 											}
 										},
 										"children": [
-											"{update2}"
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"color": "#adb5bd"
+													}
+												},
+												"children": [
+													"42 min ago"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"color": "#6c757d",
+														"lineHeight": 1.5
+													}
+												},
+												"children": [
+													"{update3}"
+												]
+											}
 										]
 									}
 								]
@@ -452,113 +583,227 @@
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "button",
 						"props": {
+							"type": "button",
 							"style": {
-								"display": "flex",
-								"alignItems": "stretch",
-								"gap": "10px"
-							}
+								"height": "auto",
+								"border": "none",
+								"background": "transparent",
+								"color": "#0d6efd",
+								"fontWeight": 600,
+								"fontSize": "14px",
+								"cursor": "pointer",
+								"borderRadius": "6px",
+								"width": "auto",
+								"minWidth": 0,
+								"padding": "8px 12px",
+								"whiteSpace": "normal",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							},
+							"aria-label": "{actionLabel}"
 						},
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"alignItems": "center",
-										"width": "11px",
-										"flexShrink": 0,
-										"paddingTop": "5px",
-										"gap": "3px"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"width": "5px",
-												"height": "5px",
-												"borderRadius": "999px",
-												"borderWidth": "2px",
-												"borderStyle": "solid",
-												"borderColor": "#adb5bd",
-												"background": "#ffffff",
-												"flexShrink": 0
-											}
-										}
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"flex": 1,
-										"minWidth": 0,
-										"gap": "2px",
-										"paddingBottom": "0"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"color": "#adb5bd"
-											}
-										},
-										"children": [
-											"42 min ago"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#6c757d",
-												"lineHeight": 1.5
-											}
-										},
-										"children": [
-											"{update3}"
-										]
-									}
-								]
-							}
-						]
+							"{actionLabel}"
+						],
+						"ttAction": "{actionKey}",
+						"ttActionInputs": {
+							"family": "news-reading-live-blog",
+							"title": "Live Blog Feed",
+							"details": "Event: {event}\nNewest update: {update1}\nUpdate 2: {update2}\nUpdate 3: {update3}"
+						}
 					}
 				]
 			},
 			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"height": "32px",
-						"border": "none",
-						"background": "transparent",
-						"color": "#0d6efd",
-						"fontWeight": 600,
-						"fontSize": "14px",
-						"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"cursor": "pointer",
-						"borderRadius": "6px"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"Load earlier updates"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Event ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Event",
+											"value": {
+												"ttArg": "event"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "event"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Newest update ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Newest update",
+											"value": {
+												"ttArg": "update1"
+											},
+											"maxLength": 140,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "update1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Update 2 ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Update 2",
+											"value": {
+												"ttArg": "update2"
+											},
+											"maxLength": 140,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "update2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Update 3 ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Update 3",
+											"value": {
+												"ttArg": "update3"
+											},
+											"maxLength": 140,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "update3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "news-reading-live-blog",
+									"title": "Live Blog Feed",
+									"details": "Event: {event}\nNewest update: {update1}\nUpdate 2: {update2}\nUpdate 3: {update3}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "news-reading-live-blog",
 	"source": {
 		"kind": "archetype",

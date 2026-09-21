@@ -3,7 +3,7 @@
 	"name": "Numbered List",
 	"library": "bootstrap",
 	"category": "data-display",
-	"description": "Ordered list in the Bootstrap style — hand-styled number markers (pill chips) on a tone tint beside each row.",
+	"description": "Ordered list in the Bootstrap style — hand-styled number markers (pill chips) on a tone tint beside each row. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"list",
 		"numbered",
@@ -45,124 +45,302 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Dividers"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "ol",
+		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"listStyle": "none",
-						"margin": 0,
-						"padding": 0,
-						"width": "280px",
-						"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"color": "#212529",
-						"background": "#ffffff",
-						"borderRadius": "6px",
-						"overflow": "hidden"
-					},
-					{
-						"border": "1px solid #dee2e6",
-						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"ttRepeat": {
-					"arg": "count",
-					"max": 8,
-					"node": {
-						"tag": "li",
+				"tag": "ol",
+				"props": {
+					"style": {
+						"ttMerge": [
+							{
+								"listStyle": "none",
+								"margin": 0,
+								"padding": 0,
+								"width": "280px",
+								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+								"color": "#212529",
+								"background": "#ffffff",
+								"borderRadius": "6px",
+								"overflow": "hidden",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							},
+							{
+								"border": "1px solid #dee2e6",
+								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+							}
+						]
+					}
+				},
+				"children": [
+					{
+						"ttRepeat": {
+							"arg": "count",
+							"max": 8,
+							"node": {
+								"tag": "li",
+								"props": {
+									"style": {
+										"ttMerge": [
+											{
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "12px",
+												"padding": "10px 14px",
+												"fontSize": "16px",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "divided",
+													"then": {
+														"ttIf": {
+															"arg": "n",
+															"equals": 1,
+															"then": {},
+															"else": {
+																"borderTop": "1px solid #e9ecef"
+															}
+														}
+													},
+													"else": {}
+												}
+											}
+										]
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "24px",
+												"height": "24px",
+												"borderRadius": "50rem",
+												"background": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#cfe2ff",
+															"success": "#d1e7dd",
+															"warning": "#fff3cd",
+															"danger": "#f8d7da",
+															"info": "#cff4fc",
+															"neutral": "#e9ecef"
+														},
+														"default": "#cfe2ff"
+													}
+												},
+												"color": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#052c65",
+															"success": "#0a3622",
+															"warning": "#664d03",
+															"danger": "#58151c",
+															"info": "#055160",
+															"neutral": "#495057"
+														},
+														"default": "#052c65"
+													}
+												},
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"{n}"
+										]
+									},
+									"{item} {n}"
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "12px",
-										"padding": "10px 14px",
-										"fontSize": "16px"
-									},
-									{
-										"ttIf": {
-											"arg": "divided",
-											"then": {
-												"ttIf": {
-													"arg": "n",
-													"equals": 1,
-													"then": {},
-													"else": {
-														"borderTop": "1px solid #e9ecef"
-													}
-												}
-											},
-											"else": {}
-										}
-									}
-								]
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "24px",
-										"height": "24px",
-										"borderRadius": "50rem",
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#cfe2ff",
-													"success": "#d1e7dd",
-													"warning": "#fff3cd",
-													"danger": "#f8d7da",
-													"info": "#cff4fc",
-													"neutral": "#e9ecef"
-												},
-												"default": "#cfe2ff"
-											}
-										},
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#052c65",
-													"success": "#0a3622",
-													"warning": "#664d03",
-													"danger": "#58151c",
-													"info": "#055160",
-													"neutral": "#495057"
-												},
-												"default": "#052c65"
-											}
-										},
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"flexShrink": 0
-									}
-								},
+								"tag": "label",
 								"children": [
-									"{n}"
+									"Item label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Item label",
+											"value": {
+												"ttArg": "item"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "item"
+										}
+									}
 								]
 							},
-							"{item} {n}"
+							{
+								"tag": "label",
+								"children": [
+									"Rows ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Rows",
+											"value": {
+												"ttArg": "count"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 8
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "count"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Dividers ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Dividers",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "divided"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "divided"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "list-numbered",
+									"title": "Numbered List",
+									"details": "Item label: {item}\nRows: {count}\nDividers: {divided}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "list-numbered",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Bar Chart",
 	"library": "shadcn",
 	"category": "data-display",
-	"description": "Mini bar chart in the shadcn/ui style — six svg bars on a baseline inside library card chrome; the highlighted month fills with the solid tone, the rest with its soft wash.",
+	"description": "Mini bar chart in the shadcn/ui style — six svg bars on a baseline inside library card chrome; the highlighted month fills with the solid tone, the rest with its soft wash. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"chart",
 		"bar",
@@ -45,22 +45,28 @@
 			],
 			"default": "Apr",
 			"label": "Highlight"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "232px",
-				"boxSizing": "border-box",
-				"padding": "14px 16px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"border": "1px solid #e4e4e7",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -68,394 +74,594 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"marginBottom": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"fontWeight": 600,
-								"color": "#09090b"
-							}
-						},
-						"children": [
-							"{title}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "svg",
-				"props": {
-					"width": 200,
-					"height": 74,
-					"viewBox": "0 0 200 74",
-					"xmlns": "http://www.w3.org/2000/svg"
-				},
-				"children": [
-					{
-						"tag": "rect",
-						"props": {
-							"x": 0,
-							"y": 34,
-							"width": 30,
-							"height": 38,
-							"rx": 2,
-							"fill": {
-								"ttIf": {
-									"arg": "active",
-									"equals": "Jan",
-									"then": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#18181b",
-												"success": "#16a34a",
-												"warning": "#f59e0b",
-												"danger": "#ef4444",
-												"info": "#3b82f6",
-												"neutral": "#71717a"
-											},
-											"default": "#18181b"
-										}
-									},
-									"else": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#f4f4f5",
-												"success": "#f0fdf4",
-												"warning": "#fffbeb",
-												"danger": "#fef2f2",
-												"info": "#eff6ff",
-												"neutral": "#f4f4f5"
-											},
-											"default": "#f4f4f5"
-										}
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "rect",
-						"props": {
-							"x": 34,
-							"y": 16,
-							"width": 30,
-							"height": 56,
-							"rx": 2,
-							"fill": {
-								"ttIf": {
-									"arg": "active",
-									"equals": "Feb",
-									"then": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#18181b",
-												"success": "#16a34a",
-												"warning": "#f59e0b",
-												"danger": "#ef4444",
-												"info": "#3b82f6",
-												"neutral": "#71717a"
-											},
-											"default": "#18181b"
-										}
-									},
-									"else": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#f4f4f5",
-												"success": "#f0fdf4",
-												"warning": "#fffbeb",
-												"danger": "#fef2f2",
-												"info": "#eff6ff",
-												"neutral": "#f4f4f5"
-											},
-											"default": "#f4f4f5"
-										}
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "rect",
-						"props": {
-							"x": 68,
-							"y": 42,
-							"width": 30,
-							"height": 30,
-							"rx": 2,
-							"fill": {
-								"ttIf": {
-									"arg": "active",
-									"equals": "Mar",
-									"then": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#18181b",
-												"success": "#16a34a",
-												"warning": "#f59e0b",
-												"danger": "#ef4444",
-												"info": "#3b82f6",
-												"neutral": "#71717a"
-											},
-											"default": "#18181b"
-										}
-									},
-									"else": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#f4f4f5",
-												"success": "#f0fdf4",
-												"warning": "#fffbeb",
-												"danger": "#fef2f2",
-												"info": "#eff6ff",
-												"neutral": "#f4f4f5"
-											},
-											"default": "#f4f4f5"
-										}
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "rect",
-						"props": {
-							"x": 102,
-							"y": 6,
-							"width": 30,
-							"height": 66,
-							"rx": 2,
-							"fill": {
-								"ttIf": {
-									"arg": "active",
-									"equals": "Apr",
-									"then": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#18181b",
-												"success": "#16a34a",
-												"warning": "#f59e0b",
-												"danger": "#ef4444",
-												"info": "#3b82f6",
-												"neutral": "#71717a"
-											},
-											"default": "#18181b"
-										}
-									},
-									"else": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#f4f4f5",
-												"success": "#f0fdf4",
-												"warning": "#fffbeb",
-												"danger": "#fef2f2",
-												"info": "#eff6ff",
-												"neutral": "#f4f4f5"
-											},
-											"default": "#f4f4f5"
-										}
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "rect",
-						"props": {
-							"x": 136,
-							"y": 26,
-							"width": 30,
-							"height": 46,
-							"rx": 2,
-							"fill": {
-								"ttIf": {
-									"arg": "active",
-									"equals": "May",
-									"then": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#18181b",
-												"success": "#16a34a",
-												"warning": "#f59e0b",
-												"danger": "#ef4444",
-												"info": "#3b82f6",
-												"neutral": "#71717a"
-											},
-											"default": "#18181b"
-										}
-									},
-									"else": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#f4f4f5",
-												"success": "#f0fdf4",
-												"warning": "#fffbeb",
-												"danger": "#fef2f2",
-												"info": "#eff6ff",
-												"neutral": "#f4f4f5"
-											},
-											"default": "#f4f4f5"
-										}
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "rect",
-						"props": {
-							"x": 170,
-							"y": 0,
-							"width": 30,
-							"height": 72,
-							"rx": 2,
-							"fill": {
-								"ttIf": {
-									"arg": "active",
-									"equals": "Jun",
-									"then": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#18181b",
-												"success": "#16a34a",
-												"warning": "#f59e0b",
-												"danger": "#ef4444",
-												"info": "#3b82f6",
-												"neutral": "#71717a"
-											},
-											"default": "#18181b"
-										}
-									},
-									"else": {
-										"ttMap": {
-											"arg": "tone",
-											"values": {
-												"primary": "#f4f4f5",
-												"success": "#f0fdf4",
-												"warning": "#fffbeb",
-												"danger": "#fef2f2",
-												"info": "#eff6ff",
-												"neutral": "#f4f4f5"
-											},
-											"default": "#f4f4f5"
-										}
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "line",
-						"props": {
-							"x1": 0,
-							"y1": 73,
-							"x2": 200,
-							"y2": 73,
-							"stroke": "#e4e4e7",
-							"strokeWidth": 1
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
 						"display": "flex",
-						"marginTop": "6px",
-						"fontSize": "12px",
-						"color": "#71717a",
-						"textAlign": "center"
+						"flexDirection": "column",
+						"width": "232px",
+						"boxSizing": "border-box",
+						"padding": "14px 16px",
+						"background": "#ffffff",
+						"border": "1px solid #e4e4e7",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"flex": 1
+								"marginBottom": "10px"
 							}
 						},
 						"children": [
-							"Jan"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "13px",
+										"fontWeight": 600,
+										"color": "#09090b"
+									}
+								},
+								"children": [
+									"{title}"
+								]
+							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "svg",
 						"props": {
-							"style": {
-								"flex": 1
-							}
+							"width": 200,
+							"height": 74,
+							"viewBox": "0 0 200 74",
+							"xmlns": "http://www.w3.org/2000/svg"
 						},
 						"children": [
-							"Feb"
+							{
+								"tag": "rect",
+								"props": {
+									"x": 0,
+									"y": 34,
+									"width": 30,
+									"height": 38,
+									"rx": 2,
+									"fill": {
+										"ttIf": {
+											"arg": "active",
+											"equals": "Jan",
+											"then": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#18181b",
+														"success": "#16a34a",
+														"warning": "#f59e0b",
+														"danger": "#ef4444",
+														"info": "#3b82f6",
+														"neutral": "#71717a"
+													},
+													"default": "#18181b"
+												}
+											},
+											"else": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#f4f4f5",
+														"success": "#f0fdf4",
+														"warning": "#fffbeb",
+														"danger": "#fef2f2",
+														"info": "#eff6ff",
+														"neutral": "#f4f4f5"
+													},
+													"default": "#f4f4f5"
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								"tag": "rect",
+								"props": {
+									"x": 34,
+									"y": 16,
+									"width": 30,
+									"height": 56,
+									"rx": 2,
+									"fill": {
+										"ttIf": {
+											"arg": "active",
+											"equals": "Feb",
+											"then": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#18181b",
+														"success": "#16a34a",
+														"warning": "#f59e0b",
+														"danger": "#ef4444",
+														"info": "#3b82f6",
+														"neutral": "#71717a"
+													},
+													"default": "#18181b"
+												}
+											},
+											"else": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#f4f4f5",
+														"success": "#f0fdf4",
+														"warning": "#fffbeb",
+														"danger": "#fef2f2",
+														"info": "#eff6ff",
+														"neutral": "#f4f4f5"
+													},
+													"default": "#f4f4f5"
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								"tag": "rect",
+								"props": {
+									"x": 68,
+									"y": 42,
+									"width": 30,
+									"height": 30,
+									"rx": 2,
+									"fill": {
+										"ttIf": {
+											"arg": "active",
+											"equals": "Mar",
+											"then": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#18181b",
+														"success": "#16a34a",
+														"warning": "#f59e0b",
+														"danger": "#ef4444",
+														"info": "#3b82f6",
+														"neutral": "#71717a"
+													},
+													"default": "#18181b"
+												}
+											},
+											"else": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#f4f4f5",
+														"success": "#f0fdf4",
+														"warning": "#fffbeb",
+														"danger": "#fef2f2",
+														"info": "#eff6ff",
+														"neutral": "#f4f4f5"
+													},
+													"default": "#f4f4f5"
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								"tag": "rect",
+								"props": {
+									"x": 102,
+									"y": 6,
+									"width": 30,
+									"height": 66,
+									"rx": 2,
+									"fill": {
+										"ttIf": {
+											"arg": "active",
+											"equals": "Apr",
+											"then": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#18181b",
+														"success": "#16a34a",
+														"warning": "#f59e0b",
+														"danger": "#ef4444",
+														"info": "#3b82f6",
+														"neutral": "#71717a"
+													},
+													"default": "#18181b"
+												}
+											},
+											"else": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#f4f4f5",
+														"success": "#f0fdf4",
+														"warning": "#fffbeb",
+														"danger": "#fef2f2",
+														"info": "#eff6ff",
+														"neutral": "#f4f4f5"
+													},
+													"default": "#f4f4f5"
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								"tag": "rect",
+								"props": {
+									"x": 136,
+									"y": 26,
+									"width": 30,
+									"height": 46,
+									"rx": 2,
+									"fill": {
+										"ttIf": {
+											"arg": "active",
+											"equals": "May",
+											"then": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#18181b",
+														"success": "#16a34a",
+														"warning": "#f59e0b",
+														"danger": "#ef4444",
+														"info": "#3b82f6",
+														"neutral": "#71717a"
+													},
+													"default": "#18181b"
+												}
+											},
+											"else": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#f4f4f5",
+														"success": "#f0fdf4",
+														"warning": "#fffbeb",
+														"danger": "#fef2f2",
+														"info": "#eff6ff",
+														"neutral": "#f4f4f5"
+													},
+													"default": "#f4f4f5"
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								"tag": "rect",
+								"props": {
+									"x": 170,
+									"y": 0,
+									"width": 30,
+									"height": 72,
+									"rx": 2,
+									"fill": {
+										"ttIf": {
+											"arg": "active",
+											"equals": "Jun",
+											"then": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#18181b",
+														"success": "#16a34a",
+														"warning": "#f59e0b",
+														"danger": "#ef4444",
+														"info": "#3b82f6",
+														"neutral": "#71717a"
+													},
+													"default": "#18181b"
+												}
+											},
+											"else": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "#f4f4f5",
+														"success": "#f0fdf4",
+														"warning": "#fffbeb",
+														"danger": "#fef2f2",
+														"info": "#eff6ff",
+														"neutral": "#f4f4f5"
+													},
+													"default": "#f4f4f5"
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								"tag": "line",
+								"props": {
+									"x1": 0,
+									"y1": 73,
+									"x2": 200,
+									"y2": 73,
+									"stroke": "#e4e4e7",
+									"strokeWidth": 1
+								}
+							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"flex": 1
+								"display": "flex",
+								"marginTop": "6px",
+								"fontSize": "12px",
+								"color": "#71717a",
+								"textAlign": "center",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"Mar"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"flex": 1
+									}
+								},
+								"children": [
+									"Jan"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"flex": 1
+									}
+								},
+								"children": [
+									"Feb"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"flex": 1
+									}
+								},
+								"children": [
+									"Mar"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"flex": 1
+									}
+								},
+								"children": [
+									"Apr"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"flex": 1
+									}
+								},
+								"children": [
+									"May"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"flex": 1
+									}
+								},
+								"children": [
+									"Jun"
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"flex": 1
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"Apr"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Highlight ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Highlight",
+											"value": {
+												"ttArg": "active"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "Jan"
+												},
+												"children": [
+													"Jan"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Feb"
+												},
+												"children": [
+													"Feb"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Mar"
+												},
+												"children": [
+													"Mar"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Apr"
+												},
+												"children": [
+													"Apr"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "May"
+												},
+												"children": [
+													"May"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Jun"
+												},
+												"children": [
+													"Jun"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "data-viz-bar",
+									"title": "Bar Chart",
+									"details": "Title: {title}\nHighlight: {active}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"children": [
-							"May"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1
-							}
-						},
-						"children": [
-							"Jun"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "data-viz-bar",
 	"source": {
 		"kind": "archetype",

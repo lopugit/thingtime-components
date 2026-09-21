@@ -3,7 +3,7 @@
 	"name": "FAQ Accordion",
 	"library": "untitled",
 	"category": "support",
-	"description": "Help-center FAQ accordion in the Untitled UI style — three question rows with chevrons, the first expandable into its answer with a \"was this helpful\" yes/no ghost pair.",
+	"description": "Help-center FAQ accordion in the Untitled UI style — three question rows with chevrons, the first expandable into its answer with a \"was this helpful\" yes/no ghost pair. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"support",
 		"faq",
@@ -30,316 +30,201 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Expanded"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"background": "#ffffff",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "#eaecf0",
-						"borderRadius": "12px",
-						"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"color": "#101828",
-						"boxSizing": "border-box"
-					},
-					{
-						"display": "flex",
-						"flexDirection": "column",
-						"width": "320px",
-						"overflow": "hidden"
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "div",
+				"tag": "details",
 				"props": {
 					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "0px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #eaecf0",
+						"borderRadius": "8px",
+						"background": "#ffffff",
+						"color": "#101828",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
+						"tag": "summary",
+						"children": [
+							"{question}"
+						]
+					},
+					{
+						"tag": "p",
+						"children": [
+							"{answer}"
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "10px",
-								"padding": "12px 14px"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"color": "#101828"
-									}
-								},
+								"tag": "label",
 								"children": [
-									"{question}"
+									"Question ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Question",
+											"value": {
+												"ttArg": "question"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "question"
+										}
+									}
 								]
 							},
 							{
-								"ttIf": {
-									"arg": "expanded",
-									"then": {
-										"tag": "svg",
-										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#475467",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "6 9 12 15 18 9"
-												}
-											}
-										]
-									},
-									"else": {
-										"tag": "svg",
-										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#475467",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "9 6 15 12 9 18"
-												}
-											}
-										]
-									}
-								}
-							}
-						]
-					},
-					{
-						"ttIf": {
-							"arg": "expanded",
-							"then": {
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"padding": "0 14px 12px",
-										"gap": "10px"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Answer ",
 									{
-										"tag": "span",
+										"tag": "textarea",
 										"props": {
-											"style": {
-												"fontSize": "14px",
-												"color": "#475467",
-												"lineHeight": 1.6
-											}
-										},
-										"children": [
-											"{answer}"
-										]
-									},
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"display": "flex",
-												"alignItems": "center",
-												"gap": "4px"
-											}
-										},
-										"children": [
-											{
-												"tag": "span",
-												"props": {
-													"style": {
-														"fontSize": "12px",
-														"color": "#98a2b3",
-														"fontWeight": 500
-													}
-												},
-												"children": [
-													"Was this helpful?"
-												]
+											"aria-label": "Answer",
+											"value": {
+												"ttArg": "answer"
 											},
-											{
-												"tag": "button",
-												"props": {
-													"type": "button",
-													"style": {
-														"background": "transparent",
-														"border": "none",
-														"cursor": "pointer",
-														"padding": "4px 8px",
-														"borderRadius": "8px",
-														"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-														"fontSize": "12px",
-														"fontWeight": 600,
-														"color": "#475467"
-													}
-												},
-												"children": [
-													"Yes"
-												]
+											"maxLength": 240,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											},
-											{
-												"tag": "button",
-												"props": {
-													"type": "button",
-													"style": {
-														"background": "transparent",
-														"border": "none",
-														"cursor": "pointer",
-														"padding": "4px 8px",
-														"borderRadius": "8px",
-														"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-														"fontSize": "12px",
-														"fontWeight": 600,
-														"color": "#475467"
-													}
-												},
-												"children": [
-													"No"
-												]
-											}
-										]
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "answer"
+										}
 									}
 								]
-							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px",
-						"padding": "12px 14px",
-						"borderTopWidth": "1px",
-						"borderTopStyle": "solid",
-						"borderTopColor": "#f2f4f7"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#101828"
-							}
-						},
-						"children": [
-							"Can I export my data?"
-						]
-					},
-					{
-						"tag": "svg",
-						"props": {
-							"width": 16,
-							"height": 16,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#98a2b3",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
+							},
 							{
-								"tag": "polyline",
-								"props": {
-									"points": "9 6 15 12 9 18"
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px",
-						"padding": "12px 14px",
-						"borderTopWidth": "1px",
-						"borderTopStyle": "solid",
-						"borderTopColor": "#f2f4f7"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#101828"
-							}
-						},
-						"children": [
-							"Where do I manage billing?"
-						]
-					},
-					{
-						"tag": "svg",
-						"props": {
-							"width": 16,
-							"height": 16,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#98a2b3",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
+								"tag": "label",
+								"children": [
+									"Expanded ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Expanded",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "expanded"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "expanded"
+										}
+									}
+								]
+							},
 							{
-								"tag": "polyline",
+								"tag": "button",
 								"props": {
-									"points": "9 6 15 12 9 18"
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "support-help-faq",
+									"title": "FAQ Accordion",
+									"details": "Question: {question}\nAnswer: {answer}\nExpanded: {expanded}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -348,7 +233,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "support-help-faq",
 	"source": {
 		"kind": "archetype",

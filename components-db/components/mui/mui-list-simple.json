@@ -3,7 +3,7 @@
 	"name": "Simple List",
 	"library": "mui",
 	"category": "data-display",
-	"description": "Plain text list rows in the Material UI style — hairline separators, library-native type, with toggleable dividers and outer border.",
+	"description": "Plain text list rows in the Material UI style — hairline separators, library-native type, with toggleable dividers and outer border. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"list",
 		"rows",
@@ -37,82 +37,258 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Border"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "ul",
+		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"listStyle": "none",
-						"margin": 0,
-						"padding": 0,
-						"width": "280px",
-						"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-						"color": "rgba(0, 0, 0, 0.87)",
-						"background": "#ffffff",
-						"borderRadius": "4px",
-						"overflow": "hidden"
-					},
-					{
-						"ttIf": {
-							"arg": "bordered",
-							"then": {
-								"border": "1px solid rgba(0, 0, 0, 0.12)",
-								"boxShadow": "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)"
-							},
-							"else": {}
-						}
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"ttRepeat": {
-					"arg": "count",
-					"max": 8,
-					"node": {
-						"tag": "li",
+				"tag": "ul",
+				"props": {
+					"style": {
+						"ttMerge": [
+							{
+								"listStyle": "none",
+								"margin": 0,
+								"padding": 0,
+								"width": "280px",
+								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+								"color": "rgba(0, 0, 0, 0.87)",
+								"background": "#ffffff",
+								"borderRadius": "4px",
+								"overflow": "hidden",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							},
+							{
+								"ttIf": {
+									"arg": "bordered",
+									"then": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"boxShadow": "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)"
+									},
+									"else": {}
+								}
+							}
+						]
+					}
+				},
+				"children": [
+					{
+						"ttRepeat": {
+							"arg": "count",
+							"max": 8,
+							"node": {
+								"tag": "li",
+								"props": {
+									"style": {
+										"ttMerge": [
+											{
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "12px",
+												"padding": "10px 14px",
+												"fontSize": "14px",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "divided",
+													"then": {
+														"ttIf": {
+															"arg": "n",
+															"equals": 1,
+															"then": {},
+															"else": {
+																"borderTop": "1px solid rgba(0, 0, 0, 0.08)"
+															}
+														}
+													},
+													"else": {}
+												}
+											}
+										]
+									}
+								},
+								"children": [
+									"{item} {n}"
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "12px",
-										"padding": "10px 14px",
-										"fontSize": "14px"
-									},
-									{
-										"ttIf": {
-											"arg": "divided",
-											"then": {
-												"ttIf": {
-													"arg": "n",
-													"equals": 1,
-													"then": {},
-													"else": {
-														"borderTop": "1px solid rgba(0, 0, 0, 0.08)"
-													}
-												}
-											},
-											"else": {}
-										}
-									}
-								]
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{item} {n}"
+							{
+								"tag": "label",
+								"children": [
+									"Item label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Item label",
+											"value": {
+												"ttArg": "item"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "item"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Rows ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Rows",
+											"value": {
+												"ttArg": "count"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 8
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "count"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Dividers ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Dividers",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "divided"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "divided"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "list-simple",
+									"title": "Simple List",
+									"details": "Item label: {item}\nRows: {count}\nDividers: {divided}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "list-simple",
 	"source": {
 		"kind": "archetype",

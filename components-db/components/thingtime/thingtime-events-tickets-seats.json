@@ -3,7 +3,7 @@
 	"name": "Seat Map",
 	"library": "thingtime",
 	"category": "events",
-	"description": "Seat picker in the Thingtime style — a stage band over four rows of eight seats (soft available, faint taken), the chosen row-and-seat pair rendered as a ringed tone seat with a matching chip and legend.",
+	"description": "Seat picker in the Thingtime style — a stage band over four rows of eight seats (soft available, faint taken), the chosen row-and-seat pair rendered as a ringed tone seat with a matching chip and legend. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"seats",
 		"seat-map",
@@ -52,26 +52,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#33333c",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#ececef",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-				"boxSizing": "border-box",
-				"width": "280px",
-				"padding": "14px",
-				"gap": "10px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -80,100 +82,19 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 700
-							}
-						},
-						"children": [
-							"{section}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"gap": "4px",
-								"padding": "2px 8px",
-								"borderRadius": "999px",
-								"fontSize": "11px",
-								"fontWeight": 600,
-								"lineHeight": 1.4,
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#f5f5f7",
-											"success": "#eafaf1",
-											"warning": "#fdf6e5",
-											"danger": "#fdeceb",
-											"info": "#fdeaf3",
-											"neutral": "#f5f5f7"
-										},
-										"default": "#f5f5f7"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#16161a",
-											"success": "#1f7a4a",
-											"warning": "#9a6c12",
-											"danger": "#a83238",
-											"info": "#a32d6a",
-											"neutral": "#5a5a66"
-										},
-										"default": "#16161a"
-									}
-								}
-							}
-						},
-						"children": [
-							"{row}{seat}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"padding": "4px 0",
-						"textAlign": "center",
-						"fontSize": "11px",
-						"fontWeight": 700,
-						"letterSpacing": "2px",
-						"textTransform": "uppercase",
-						"borderRadius": "9px",
-						"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)",
-						"color": "#16161a"
-					}
-				},
-				"children": [
-					"Stage"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"position": "relative",
-						"alignSelf": "center",
-						"display": "flex",
 						"flexDirection": "column",
-						"gap": "6px"
+						"color": "#33333c",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#ececef",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
+						"boxSizing": "border-box",
+						"width": "280px",
+						"padding": "14px",
+						"gap": "10px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -183,309 +104,101 @@
 							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"gap": "6px"
+								"justifyContent": "space-between",
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"ttRepeat": {
-									"count": 8,
-									"max": 8,
-									"node": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"ttMerge": [
-													{
-														"width": "16px",
-														"height": "16px",
-														"borderRadius": "7px",
-														"boxSizing": "border-box"
-													},
-													{
-														"ttMap": {
-															"arg": "n",
-															"values": {
-																"3": {
-																	"background": "#b6b6c0"
-																},
-																"6": {
-																	"background": "#b6b6c0"
-																}
-															},
-															"default": {
-																"background": "#f5f5f7",
-																"border": "1px solid #ececef"
-															}
-														}
-													}
-												]
-											}
-										}
-									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px"
-							}
-						},
-						"children": [
-							{
-								"ttRepeat": {
-									"count": 8,
-									"max": 8,
-									"node": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"ttMerge": [
-													{
-														"width": "16px",
-														"height": "16px",
-														"borderRadius": "7px",
-														"boxSizing": "border-box"
-													},
-													{
-														"ttMap": {
-															"arg": "n",
-															"values": {
-																"1": {
-																	"background": "#b6b6c0"
-																},
-																"8": {
-																	"background": "#b6b6c0"
-																}
-															},
-															"default": {
-																"background": "#f5f5f7",
-																"border": "1px solid #ececef"
-															}
-														}
-													}
-												]
-											}
-										}
-									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px"
-							}
-						},
-						"children": [
-							{
-								"ttRepeat": {
-									"count": 8,
-									"max": 8,
-									"node": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"ttMerge": [
-													{
-														"width": "16px",
-														"height": "16px",
-														"borderRadius": "7px",
-														"boxSizing": "border-box"
-													},
-													{
-														"ttMap": {
-															"arg": "n",
-															"values": {
-																"4": {
-																	"background": "#b6b6c0"
-																},
-																"5": {
-																	"background": "#b6b6c0"
-																}
-															},
-															"default": {
-																"background": "#f5f5f7",
-																"border": "1px solid #ececef"
-															}
-														}
-													}
-												]
-											}
-										}
-									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px"
-							}
-						},
-						"children": [
-							{
-								"ttRepeat": {
-									"count": 8,
-									"max": 8,
-									"node": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"ttMerge": [
-													{
-														"width": "16px",
-														"height": "16px",
-														"borderRadius": "7px",
-														"boxSizing": "border-box"
-													},
-													{
-														"ttMap": {
-															"arg": "n",
-															"values": {
-																"2": {
-																	"background": "#b6b6c0"
-																},
-																"7": {
-																	"background": "#b6b6c0"
-																}
-															},
-															"default": {
-																"background": "#f5f5f7",
-																"border": "1px solid #ececef"
-															}
-														}
-													}
-												]
-											}
-										}
-									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"position": "absolute",
-								"top": {
-									"ttMap": {
-										"arg": "row",
-										"values": {
-											"A": "0px",
-											"B": "22px",
-											"C": "44px",
-											"D": "66px"
-										},
-										"default": "22px"
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "14px",
+										"fontWeight": 700
 									}
 								},
-								"left": "calc(({seat} - 1) * 22px)",
-								"width": "16px",
-								"height": "16px",
-								"borderRadius": "7px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#16161a",
-											"success": "#2f9e63",
-											"warning": "#d99a1f",
-											"danger": "#d5484f",
-											"info": "#d53f8c",
-											"neutral": "#9a9aa6"
+								"children": [
+									"{section}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "4px",
+										"padding": "2px 8px",
+										"borderRadius": "999px",
+										"fontSize": "11px",
+										"fontWeight": 600,
+										"lineHeight": 1.4,
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#f5f5f7",
+													"success": "#eafaf1",
+													"warning": "#fdf6e5",
+													"danger": "#fdeceb",
+													"info": "#fdeaf3",
+													"neutral": "#f5f5f7"
+												},
+												"default": "#f5f5f7"
+											}
 										},
-										"default": "#16161a"
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#16161a",
+													"success": "#1f7a4a",
+													"warning": "#9a6c12",
+													"danger": "#a83238",
+													"info": "#a32d6a",
+													"neutral": "#5a5a66"
+												},
+												"default": "#16161a"
+											}
+										},
+										"flexWrap": "wrap"
 									}
 								},
-								"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)"
+								"children": [
+									"{row}{seat}"
+								]
 							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "12px",
-						"fontSize": "11px",
-						"color": "#9a9aa6"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "5px"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "10px",
-										"height": "10px",
-										"borderRadius": "7px",
-										"background": "#f5f5f7",
-										"border": "1px solid #ececef"
-									}
-								}
-							},
-							"Open"
 						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "5px"
+								"padding": "4px 0",
+								"textAlign": "center",
+								"fontSize": "11px",
+								"fontWeight": 700,
+								"letterSpacing": "2px",
+								"textTransform": "uppercase",
+								"borderRadius": "9px",
+								"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)",
+								"color": "#16161a"
 							}
 						},
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "10px",
-										"height": "10px",
-										"borderRadius": "7px",
-										"background": "#b6b6c0"
-									}
-								}
-							},
-							"Taken"
+							"Stage"
 						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
+								"position": "relative",
+								"alignSelf": "center",
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "5px"
+								"flexDirection": "column",
+								"gap": "6px"
 							}
 						},
 						"children": [
@@ -493,8 +206,226 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "10px",
-										"height": "10px",
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttRepeat": {
+											"count": 8,
+											"max": 8,
+											"node": {
+												"tag": "div",
+												"props": {
+													"style": {
+														"ttMerge": [
+															{
+																"width": "16px",
+																"height": "16px",
+																"borderRadius": "7px",
+																"boxSizing": "border-box"
+															},
+															{
+																"ttMap": {
+																	"arg": "n",
+																	"values": {
+																		"3": {
+																			"background": "#b6b6c0"
+																		},
+																		"6": {
+																			"background": "#b6b6c0"
+																		}
+																	},
+																	"default": {
+																		"background": "#f5f5f7",
+																		"border": "1px solid #ececef"
+																	}
+																}
+															}
+														]
+													}
+												}
+											}
+										}
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttRepeat": {
+											"count": 8,
+											"max": 8,
+											"node": {
+												"tag": "div",
+												"props": {
+													"style": {
+														"ttMerge": [
+															{
+																"width": "16px",
+																"height": "16px",
+																"borderRadius": "7px",
+																"boxSizing": "border-box"
+															},
+															{
+																"ttMap": {
+																	"arg": "n",
+																	"values": {
+																		"1": {
+																			"background": "#b6b6c0"
+																		},
+																		"8": {
+																			"background": "#b6b6c0"
+																		}
+																	},
+																	"default": {
+																		"background": "#f5f5f7",
+																		"border": "1px solid #ececef"
+																	}
+																}
+															}
+														]
+													}
+												}
+											}
+										}
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttRepeat": {
+											"count": 8,
+											"max": 8,
+											"node": {
+												"tag": "div",
+												"props": {
+													"style": {
+														"ttMerge": [
+															{
+																"width": "16px",
+																"height": "16px",
+																"borderRadius": "7px",
+																"boxSizing": "border-box"
+															},
+															{
+																"ttMap": {
+																	"arg": "n",
+																	"values": {
+																		"4": {
+																			"background": "#b6b6c0"
+																		},
+																		"5": {
+																			"background": "#b6b6c0"
+																		}
+																	},
+																	"default": {
+																		"background": "#f5f5f7",
+																		"border": "1px solid #ececef"
+																	}
+																}
+															}
+														]
+													}
+												}
+											}
+										}
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttRepeat": {
+											"count": 8,
+											"max": 8,
+											"node": {
+												"tag": "div",
+												"props": {
+													"style": {
+														"ttMerge": [
+															{
+																"width": "16px",
+																"height": "16px",
+																"borderRadius": "7px",
+																"boxSizing": "border-box"
+															},
+															{
+																"ttMap": {
+																	"arg": "n",
+																	"values": {
+																		"2": {
+																			"background": "#b6b6c0"
+																		},
+																		"7": {
+																			"background": "#b6b6c0"
+																		}
+																	},
+																	"default": {
+																		"background": "#f5f5f7",
+																		"border": "1px solid #ececef"
+																	}
+																}
+															}
+														]
+													}
+												}
+											}
+										}
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"position": "absolute",
+										"top": {
+											"ttMap": {
+												"arg": "row",
+												"values": {
+													"A": "0px",
+													"B": "22px",
+													"C": "44px",
+													"D": "66px"
+												},
+												"default": "22px"
+											}
+										},
+										"left": "calc(({seat} - 1) * 22px)",
+										"width": "16px",
+										"height": "16px",
 										"borderRadius": "7px",
 										"background": {
 											"ttMap": {
@@ -509,18 +440,330 @@
 												},
 												"default": "#16161a"
 											}
-										}
+										},
+										"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
 								}
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "12px",
+								"fontSize": "11px",
+								"color": "#9a9aa6",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "5px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "10px",
+												"height": "10px",
+												"borderRadius": "7px",
+												"background": "#f5f5f7",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									"Open"
+								]
 							},
-							"Yours"
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "5px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "10px",
+												"height": "10px",
+												"borderRadius": "7px",
+												"background": "#b6b6c0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									"Taken"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "5px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "10px",
+												"height": "10px",
+												"borderRadius": "7px",
+												"background": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#16161a",
+															"success": "#2f9e63",
+															"warning": "#d99a1f",
+															"danger": "#d5484f",
+															"info": "#d53f8c",
+															"neutral": "#9a9aa6"
+														},
+														"default": "#16161a"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									"Yours"
+								]
+							}
 						]
 					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Section ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Section",
+											"value": {
+												"ttArg": "section"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "section"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Row ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Row",
+											"value": {
+												"ttArg": "row"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "A"
+												},
+												"children": [
+													"A"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "B"
+												},
+												"children": [
+													"B"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "C"
+												},
+												"children": [
+													"C"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "D"
+												},
+												"children": [
+													"D"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "row"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Seat ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Seat",
+											"value": {
+												"ttArg": "seat"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 8
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "seat"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "events-tickets-seats",
+									"title": "Seat Map",
+									"details": "Section: {section}\nRow: {row}\nSeat: {seat}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "events-tickets-seats",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Spending Breakdown",
 	"library": "bootstrap",
 	"category": "finance",
-	"description": "Spending breakdown in the Bootstrap style — month caption with a large total above soft tone tracks whose solid fills chart each category share, amounts right-aligned per row.",
+	"description": "Spending breakdown in the Bootstrap style — month caption with a large total above soft tone tracks whose solid fills chart each category share, amounts right-aligned per row. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"banking",
 		"spending",
@@ -39,26 +39,28 @@
 			"label": "Top percent",
 			"min": 0,
 			"max": 100
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"boxSizing": "border-box",
-				"width": "320px",
-				"padding": "20px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#dee2e6",
-				"borderRadius": "8px",
-				"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#212529",
-				"gap": "14px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -68,47 +70,18 @@
 					"style": {
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "2px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"color": "#6c757d"
-							}
-						},
-						"children": [
-							"{month} spending"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "24px",
-								"fontWeight": 500,
-								"lineHeight": 1.1,
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"color": "#212529"
-							}
-						},
-						"children": [
-							"{total}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "6px"
+						"boxSizing": "border-box",
+						"width": "320px",
+						"padding": "20px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#dee2e6",
+						"borderRadius": "8px",
+						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+						"color": "#212529",
+						"gap": "14px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -117,8 +90,8 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between"
+								"flexDirection": "column",
+								"gap": "2px"
 							}
 						},
 						"children": [
@@ -126,27 +99,27 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "14px",
+										"fontSize": "12px",
 										"fontWeight": 500,
-										"color": "#212529"
+										"color": "#6c757d"
 									}
 								},
 								"children": [
-									"{category}"
+									"{month} spending"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"color": "#6c757d",
-										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+										"fontSize": "24px",
+										"fontWeight": 500,
+										"lineHeight": 1.1,
+										"color": "#212529"
 									}
 								},
 								"children": [
-									"$684.20"
+									"{total}"
 								]
 							}
 						]
@@ -155,9 +128,9 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"height": "8px",
-								"borderRadius": "50rem",
-								"background": "#cfe2ff"
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "6px"
 							}
 						},
 						"children": [
@@ -165,11 +138,479 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"height": "8px",
-										"width": "{percent}%",
-										"borderRadius": "50rem",
-										"background": "#0d6efd"
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"flexWrap": "wrap"
 									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 500,
+												"color": "#212529"
+											}
+										},
+										"children": [
+											"{category}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600,
+												"color": "#6c757d"
+											}
+										},
+										"children": [
+											"$684.20"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "8px",
+										"borderRadius": "50rem",
+										"background": "#cfe2ff"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"height": "8px",
+												"width": "{percent}%",
+												"borderRadius": "50rem",
+												"background": "#0d6efd",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "6px"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 500,
+												"color": "#212529"
+											}
+										},
+										"children": [
+											"Transport"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600,
+												"color": "#6c757d"
+											}
+										},
+										"children": [
+											"$213.50"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "8px",
+										"borderRadius": "50rem",
+										"background": "#cff4fc"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"height": "8px",
+												"width": "38%",
+												"borderRadius": "50rem",
+												"background": "#0dcaf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "6px"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 500,
+												"color": "#212529"
+											}
+										},
+										"children": [
+											"Dining"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600,
+												"color": "#6c757d"
+											}
+										},
+										"children": [
+											"$318.90"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "8px",
+										"borderRadius": "50rem",
+										"background": "#fff3cd"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"height": "8px",
+												"width": "52%",
+												"borderRadius": "50rem",
+												"background": "#ffc107",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "6px"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 500,
+												"color": "#212529"
+											}
+										},
+										"children": [
+											"Utilities"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600,
+												"color": "#6c757d"
+											}
+										},
+										"children": [
+											"$142.00"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "8px",
+										"borderRadius": "50rem",
+										"background": "#d1e7dd"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"height": "8px",
+												"width": "24%",
+												"borderRadius": "50rem",
+												"background": "#198754",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Month ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Month",
+											"value": {
+												"ttArg": "month"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "month"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Total ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Total",
+											"value": {
+												"ttArg": "total"
+											},
+											"maxLength": 14,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "total"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Top category ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Top category",
+											"value": {
+												"ttArg": "category"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "category"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Top percent ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Top percent",
+											"value": {
+												"ttArg": "percent"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "percent"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "banking-spending",
+									"title": "Spending Breakdown",
+									"details": "Month: {month}\nTotal: {total}\nTop category: {category}\nTop percent: {percent}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -177,230 +618,14 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "6px"
-					}
-				},
+				"tag": "small",
 				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 500,
-										"color": "#212529"
-									}
-								},
-								"children": [
-									"Transport"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"color": "#6c757d",
-										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
-									}
-								},
-								"children": [
-									"$213.50"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "8px",
-								"borderRadius": "50rem",
-								"background": "#cff4fc"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "8px",
-										"width": "38%",
-										"borderRadius": "50rem",
-										"background": "#0dcaf0"
-									}
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "6px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 500,
-										"color": "#212529"
-									}
-								},
-								"children": [
-									"Dining"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"color": "#6c757d",
-										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
-									}
-								},
-								"children": [
-									"$318.90"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "8px",
-								"borderRadius": "50rem",
-								"background": "#fff3cd"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "8px",
-										"width": "52%",
-										"borderRadius": "50rem",
-										"background": "#ffc107"
-									}
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "6px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 500,
-										"color": "#212529"
-									}
-								},
-								"children": [
-									"Utilities"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"color": "#6c757d",
-										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
-									}
-								},
-								"children": [
-									"$142.00"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "8px",
-								"borderRadius": "50rem",
-								"background": "#d1e7dd"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "8px",
-										"width": "24%",
-										"borderRadius": "50rem",
-										"background": "#198754"
-									}
-								}
-							}
-						]
-					}
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "banking-spending",
 	"source": {
 		"kind": "archetype",

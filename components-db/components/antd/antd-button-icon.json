@@ -3,7 +3,7 @@
 	"name": "Icon Button",
 	"library": "antd",
 	"category": "buttons",
-	"description": "Button with a leading icon in the Ant Design style — a plus glyph beside the label, optional icon-only square mode.",
+	"description": "Button with a leading icon in the Ant Design style — a plus glyph beside the label, optional icon-only square mode. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"button",
 		"action",
@@ -42,130 +42,232 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Disabled"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "button",
+		"tag": "div",
 		"props": {
-			"type": "button",
 			"style": {
-				"ttMerge": [
-					{
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"gap": "8px",
-						"border": "none",
-						"borderRadius": "6px",
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontWeight": 400,
-						"cursor": "pointer"
-					},
-					{
-						"height": "32px",
-						"fontSize": "14px",
-						"padding": {
-							"ttIf": {
-								"arg": "iconOnly",
-								"then": "0",
-								"else": "0 16px"
-							}
-						},
-						"width": {
-							"ttIf": {
-								"arg": "iconOnly",
-								"then": "32px",
-								"else": "auto"
-							}
-						},
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#1677ff",
-									"success": "#52c41a",
-									"warning": "#faad14",
-									"danger": "#ff4d4f",
-									"info": "#1677ff",
-									"neutral": "rgba(0, 0, 0, 0.88)"
-								},
-								"default": "#1677ff"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#ffffff",
-									"success": "#ffffff",
-									"warning": "#ffffff",
-									"danger": "#ffffff",
-									"info": "#ffffff",
-									"neutral": "#ffffff"
-								},
-								"default": "#ffffff"
-							}
-						},
-						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)"
-					},
-					{
-						"ttIf": {
-							"arg": "disabled",
-							"then": {
-								"opacity": 0.5,
-								"cursor": "not-allowed"
-							},
-							"else": {}
-						}
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "svg",
+				"tag": "button",
 				"props": {
-					"width": 16,
-					"height": 16,
-					"viewBox": "0 0 24 24",
-					"fill": "none",
-					"stroke": "currentColor",
-					"strokeWidth": 2,
-					"strokeLinecap": "round",
-					"strokeLinejoin": "round",
-					"xmlns": "http://www.w3.org/2000/svg"
+					"type": "button",
+					"style": {
+						"ttMerge": [
+							{
+								"display": "inline-flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"gap": "8px",
+								"border": "none",
+								"borderRadius": "6px",
+								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+								"fontWeight": 400,
+								"cursor": "pointer",
+								"flexWrap": "wrap"
+							},
+							{
+								"height": "32px",
+								"fontSize": "14px",
+								"padding": {
+									"ttIf": {
+										"arg": "iconOnly",
+										"then": "0",
+										"else": "0 16px"
+									}
+								},
+								"width": {
+									"ttIf": {
+										"arg": "iconOnly",
+										"then": "32px",
+										"else": "auto"
+									}
+								},
+								"background": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#1677ff",
+											"success": "#52c41a",
+											"warning": "#faad14",
+											"danger": "#ff4d4f",
+											"info": "#1677ff",
+											"neutral": "rgba(0, 0, 0, 0.88)"
+										},
+										"default": "#1677ff"
+									}
+								},
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#ffffff",
+											"success": "#ffffff",
+											"warning": "#ffffff",
+											"danger": "#ffffff",
+											"info": "#ffffff",
+											"neutral": "#ffffff"
+										},
+										"default": "#ffffff"
+									}
+								},
+								"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							},
+							{
+								"ttIf": {
+									"arg": "disabled",
+									"then": {
+										"opacity": 0.5,
+										"cursor": "not-allowed"
+									},
+									"else": {}
+								}
+							},
+							{
+								"width": "auto",
+								"height": "auto",
+								"minWidth": 0,
+								"padding": "8px 12px",
+								"whiteSpace": "normal",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							}
+						]
+					},
+					"disabled": {
+						"ttArg": "disabled"
+					},
+					"aria-label": "{actionLabel}"
 				},
 				"children": [
-					{
-						"tag": "line",
-						"props": {
-							"x1": 12,
-							"y1": 5,
-							"x2": 12,
-							"y2": 19
-						}
-					},
-					{
-						"tag": "line",
-						"props": {
-							"x1": 5,
-							"y1": 12,
-							"x2": 19,
-							"y2": 12
-						}
-					}
-				]
+					"{actionLabel}"
+				],
+				"ttAction": "{actionKey}",
+				"ttActionInputs": {
+					"family": "button-icon",
+					"title": "Icon Button",
+					"details": "Label: {label}"
+				}
 			},
 			{
-				"ttIf": {
-					"arg": "iconOnly",
-					"then": "",
-					"else": "{label}"
-				}
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "button-icon",
+									"title": "Icon Button",
+									"details": "Label: {label}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "button-icon",
 	"source": {
 		"kind": "archetype",
