@@ -5,12 +5,12 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 854 nodes · 2564 edges · 58 communities (53 shown, 5 thin omitted)
+- 854 nodes · 2555 edges · 58 communities (53 shown, 5 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0406cf2e`
+- Built from commit: `f29cf741`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -109,11 +109,11 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.07
-Nodes (36): out, nodes(), resolved(), walk(), archetypeScope, checkOnly, dbRoot, flags (+28 more)
+Nodes (35): out, nodes(), walk(), archetypeScope, checkOnly, dbRoot, flags, repoRoot (+27 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.05
-Nodes (33): ALERT_TONES, alertRadius(), archetype, baseAlert(), toneIcon(), sizeMap(), archetype, chevron() (+25 more)
+Cohesion: 0.13
+Nodes (14): archetype, auditLine(), auditTile(), auditTime(), cardShadow(), cardStyle(), ghostBtn(), permGlyph() (+6 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.07
@@ -128,16 +128,16 @@ Cohesion: 0.13
 Nodes (22): accent(), archetype, bikeIcon(), buttonBase(), chipRadius(), ghostButton(), infoChip(), miniPill() (+14 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.11
-Nodes (12): archetype, dotSizeMap, archetype, imagePlaceholder(), archetype, skeletonBar(), spinnerSvg(), archetype (+4 more)
+Cohesion: 0.13
+Nodes (11): archetype, dotSizeMap, archetype, imagePlaceholder(), archetype, archetype, skeletonBar(), spinnerSvg() (+3 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.19
-Nodes (10): accentOn(), accentSolid(), archetype, cardChrome(), cardShadow(), pinIcon(), slotChip(), slotRow() (+2 more)
+Cohesion: 0.22
+Nodes (9): ALERT_TONES, alertRadius(), archetype, baseAlert(), toneIcon(), sizeMap(), statusColor(), strengthColor() (+1 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.17
-Nodes (4): archetype, archetype, featureCheckRow(), textArg()
+Nodes (4): archetype, archetype, dot(), textArg()
 
 ### Community 8 - "Community 8"
 Cohesion: 0.13
@@ -148,8 +148,8 @@ Cohesion: 0.15
 Nodes (15): accent(), archetype, bracketPair(), chip(), chipRadius(), ellipsis, formDot(), formDots() (+7 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.22
-Nodes (13): archetype, badgeRadius(), baseBadge(), commonArgs(), archetype, commonArgs(), disabledStyle, archetype (+5 more)
+Cohesion: 0.21
+Nodes (12): commonArgs(), archetype, commonArgs(), disabledStyle, archetype, bareInput(), kbdChip(), stepArgs() (+4 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.14
@@ -184,12 +184,12 @@ Cohesion: 0.19
 Nodes (11): archetype, boxGlyph(), chipRadius(), copyGlyph(), divider(), ghostBtn(), glyph(), monoChip() (+3 more)
 
 ### Community 19 - "Community 19"
-Cohesion: 0.07
-Nodes (31): archetype, bubbleBase(), bubbleRound(), composerSvg(), incomingBubble(), incomingRadius(), micIcon(), outgoingBubble() (+23 more)
+Cohesion: 0.05
+Nodes (39): archetype, bubbleBase(), bubbleRound(), composerSvg(), incomingBubble(), incomingRadius(), micIcon(), outgoingBubble() (+31 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.15
-Nodes (8): archetype, cursorArrow(), cursorAt(), histBtn(), STICKY_FOLDS, STICKY_WASHES, strokeSvg(), colorArg()
+Cohesion: 0.05
+Nodes (37): archetype, callout(), hairline(), headingInk(), kicker(), TOC_ITEMS, tocItem(), archetype (+29 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.20
@@ -200,28 +200,28 @@ Cohesion: 0.22
 Nodes (12): archetype, assetRow(), bookHeader(), bookRow(), CANDLES, candleSvg(), caption(), coinCircle() (+4 more)
 
 ### Community 23 - "Community 23"
-Cohesion: 0.21
-Nodes (10): archetype, areaGlyph(), bathGlyph(), bedGlyph(), chipRadius(), ctaBase(), ghostCta(), glyph() (+2 more)
+Cohesion: 0.22
+Nodes (5): archetype, buttonBase(), ghostButton(), monoChip(), toneButton()
 
 ### Community 24 - "Community 24"
 Cohesion: 0.06
-Nodes (36): archetype, buttonBase(), ghostButton(), monoChip(), toneButton(), solidFill(), toneFill(), archetype (+28 more)
+Nodes (47): solidFill(), toneFill(), segment(), archetype, BAR_HEIGHTS, card(), chartHeader(), DONUT_DASH (+39 more)
 
 ### Community 25 - "Community 25"
 Cohesion: 0.21
 Nodes (11): accountRow(), archetype, caption(), cardDot(), contactless(), ghostButton(), iconTile(), moneyFont() (+3 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.24
-Nodes (13): archetype, buttonReset, connector(), numberedDivider(), numberedStep(), pillTab(), segmentedTab(), STEP_DESCRIPTIONS (+5 more)
+Cohesion: 0.22
+Nodes (9): archetype, barFill(), barTrack(), fillBackground(), RING_STEPS, ringDashValues, sliderThumb(), sliderTrack() (+1 more)
 
 ### Community 27 - "Community 27"
 Cohesion: 0.22
 Nodes (10): archetype, chevron(), cropIcon(), editorSvg(), glyphTile(), onSoftOf(), rotateIcon(), softOf() (+2 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.26
-Nodes (10): archetype, comboOption(), fieldRadius(), groupHeader(), groupItem(), menuPanel(), openOption(), optionBase() (+2 more)
+Cohesion: 0.22
+Nodes (6): archetype, badgeRadius(), baseBadge(), archetype, featureCheckRow(), define()
 
 ### Community 29 - "Community 29"
 Cohesion: 0.27
@@ -244,8 +244,8 @@ Cohesion: 0.20
 Nodes (7): archetype, caption(), card(), cardShadow(), chip(), chipRadius(), rainbowStrip()
 
 ### Community 35 - "Community 35"
-Cohesion: 0.20
-Nodes (7): archetype, callout(), hairline(), headingInk(), kicker(), TOC_ITEMS, tocItem()
+Cohesion: 0.25
+Nodes (5): archetype, chevron(), navButton(), PRESETS, TIMES
 
 ### Community 36 - "Community 36"
 Cohesion: 0.29
@@ -268,12 +268,12 @@ Cohesion: 0.22
 Nodes (8): archetype, bodyText(), buttonBase(), cancelBtn(), closeBtn(), heading(), primaryBtn(), rainbowStrip()
 
 ### Community 41 - "support-help.mjs"
-Cohesion: 0.24
-Nodes (8): archetype, chatGlyph(), chipBase(), chipRadius(), faceSvg(), ghostButton(), MOUTHS, upper()
+Cohesion: 0.29
+Nodes (5): archetype, disabledStyle(), fieldRadius(), inputBase(), sizeMap()
 
 ### Community 42 - "merge"
-Cohesion: 0.50
-Nodes (4): segment(), dayCol(), toolTile(), merge()
+Cohesion: 0.33
+Nodes (4): archetype, chevronLeft(), currentCrumb(), separator()
 
 ### Community 43 - "Community 43"
 Cohesion: 0.50
@@ -312,8 +312,8 @@ Cohesion: 0.33
 Nodes (3): archetype, dividerIf(), separator()
 
 ### Community 55 - "Community 55"
-Cohesion: 0.12
-Nodes (14): archetype, chevronLeft(), currentCrumb(), separator(), archetype, baseChip(), chipRadius(), softLook() (+6 more)
+Cohesion: 0.33
+Nodes (6): archetype, baseChip(), chipRadius(), softLook(), solidLook(), icons
 
 ### Community 57 - "Community 57"
 Cohesion: 0.60
@@ -329,15 +329,15 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `el()` connect `Community 3` to `Community 0`, `Community 1`, `Community 2`, `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 11`, `Community 12`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 24`, `Community 25`, `Community 26`, `Community 27`, `Community 28`, `Community 30`, `Community 31`, `Community 32`, `Community 33`, `Community 34`, `Community 35`, `window-chrome.mjs`, `Community 38`, `Community 39`, `Community 40`, `support-help.mjs`, `merge`, `Community 44`, `Community 45`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
   _High betweenness centrality (0.471) - this node is a cross-community bridge._
-- **Why does `iff()` connect `Community 2` to `Community 0`, `Community 1`, `Community 3`, `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 12`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 24`, `Community 25`, `Community 27`, `Community 28`, `Community 31`, `Community 34`, `Community 35`, `window-chrome.mjs`, `Community 38`, `Community 39`, `support-help.mjs`, `Community 44`, `Community 45`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
+- **Why does `iff()` connect `Community 2` to `Community 0`, `Community 1`, `Community 3`, `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 12`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 24`, `Community 25`, `Community 26`, `Community 27`, `Community 28`, `Community 31`, `Community 34`, `Community 35`, `window-chrome.mjs`, `Community 38`, `Community 39`, `support-help.mjs`, `merge`, `Community 44`, `Community 45`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
   _High betweenness centrality (0.050) - this node is a cross-community bridge._
-- **Why does `toneMap()` connect `Community 24` to `Community 1`, `Community 2`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 25`, `Community 26`, `Community 27`, `Community 28`, `Community 30`, `Community 31`, `Community 32`, `Community 33`, `Community 34`, `Community 35`, `window-chrome.mjs`, `Community 38`, `Community 39`, `Community 40`, `support-help.mjs`, `merge`, `Community 44`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
+- **Why does `toneMap()` connect `Community 24` to `Community 1`, `Community 2`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 25`, `Community 26`, `Community 27`, `Community 28`, `Community 30`, `Community 31`, `Community 32`, `Community 33`, `Community 34`, `window-chrome.mjs`, `Community 38`, `Community 39`, `Community 40`, `merge`, `Community 44`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
   _High betweenness centrality (0.047) - this node is a cross-community bridge._
 - **What connects `out`, `repoRoot`, `dbRoot` to the rest of the system?**
   _142 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.07428571428571429 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06693877551020408 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.05353535353535353 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1323529411764706 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.06560283687943262 - nodes in this community are weakly interconnected._
