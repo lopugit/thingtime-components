@@ -14355,9 +14355,9 @@
     "semantic_hash": "eed7e06eab1eb8cd7cd1b1ddcfca4183"
   },
   "scripts/components-db/functionality.test.mjs": {
-    "mtime": 1789984097.5489612,
-    "ast_hash": "98884c4622d6761f1c3288d58c77b5ec",
-    "semantic_hash": "98884c4622d6761f1c3288d58c77b5ec"
+    "mtime": 1789985213.1674168,
+    "ast_hash": "512d327288c166910d60ba53db1dd9dd",
+    "semantic_hash": ""
   },
   "scripts/components-db/lib/capabilities.mjs": {
     "mtime": 1789984862.2187946,

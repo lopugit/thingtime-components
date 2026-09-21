@@ -25,7 +25,7 @@ test('every catalog rendition has an executable save control, valid fields and n
 		for (const node of nodes(tree, x => x.props?.['data-tt-action'] === 'demo-catalog-records-save')) {
 			const input = JSON.parse(node.props['data-tt-action-inputs']);
 			assert.ok(input.details.length <= 5000, `${def.slug}: oversized save`);
-			
+
 		}
 	}
 });

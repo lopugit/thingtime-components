@@ -1486,7 +1486,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_choice_controls_segment",
-      "community": 41,
+      "community": 42,
       "norm_label": "segment()"
     },
     {
@@ -2206,7 +2206,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki",
-      "community": 37,
+      "community": 35,
       "norm_label": "docs-wiki.mjs"
     },
     {
@@ -2216,7 +2216,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_chipradius",
-      "community": 37,
+      "community": 35,
       "norm_label": "chipradius()"
     },
     {
@@ -2226,7 +2226,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_headingink",
-      "community": 37,
+      "community": 35,
       "norm_label": "headingink()"
     },
     {
@@ -2236,7 +2236,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_linkcolor",
-      "community": 37,
+      "community": 35,
       "norm_label": "linkcolor()"
     },
     {
@@ -2246,7 +2246,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_kicker",
-      "community": 37,
+      "community": 35,
       "norm_label": "kicker()"
     },
     {
@@ -2256,7 +2256,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_card",
-      "community": 37,
+      "community": 35,
       "norm_label": "card()"
     },
     {
@@ -2266,7 +2266,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_hairline",
-      "community": 37,
+      "community": 35,
       "norm_label": "hairline()"
     },
     {
@@ -2276,7 +2276,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_toc_items",
-      "community": 37,
+      "community": 35,
       "norm_label": "toc_items"
     },
     {
@@ -2286,7 +2286,7 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_tocitem",
-      "community": 37,
+      "community": 35,
       "norm_label": "tocitem()"
     },
     {
@@ -2296,7 +2296,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_callout",
-      "community": 37,
+      "community": 35,
       "norm_label": "callout()"
     },
     {
@@ -2306,7 +2306,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_docs_wiki_archetype",
-      "community": 37,
+      "community": 35,
       "norm_label": "archetype"
     },
     {
@@ -5406,7 +5406,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule",
-      "community": 28,
+      "community": 6,
       "norm_label": "schedule.mjs"
     },
     {
@@ -5416,7 +5416,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_accentsolid",
-      "community": 28,
+      "community": 6,
       "norm_label": "accentsolid()"
     },
     {
@@ -5426,7 +5426,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_accenton",
-      "community": 28,
+      "community": 6,
       "norm_label": "accenton()"
     },
     {
@@ -5436,7 +5436,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_nowfill",
-      "community": 28,
+      "community": 6,
       "norm_label": "nowfill()"
     },
     {
@@ -5446,7 +5446,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_upper",
-      "community": 28,
+      "community": 6,
       "norm_label": "upper()"
     },
     {
@@ -5456,7 +5456,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_cardshadow",
-      "community": 28,
+      "community": 6,
       "norm_label": "cardshadow()"
     },
     {
@@ -5466,7 +5466,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_cardchrome",
-      "community": 28,
+      "community": 6,
       "norm_label": "cardchrome()"
     },
     {
@@ -5476,7 +5476,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_pinicon",
-      "community": 28,
+      "community": 6,
       "norm_label": "pinicon()"
     },
     {
@@ -5486,7 +5486,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_slotrow",
-      "community": 28,
+      "community": 6,
       "norm_label": "slotrow()"
     },
     {
@@ -5496,7 +5496,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_daycol",
-      "community": 41,
+      "community": 42,
       "norm_label": "daycol()"
     },
     {
@@ -5506,7 +5506,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_weekblock",
-      "community": 28,
+      "community": 6,
       "norm_label": "weekblock()"
     },
     {
@@ -5516,7 +5516,7 @@
       "source_location": "L140",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_slotchip",
-      "community": 28,
+      "community": 6,
       "norm_label": "slotchip()"
     },
     {
@@ -5526,7 +5526,7 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_struckchip",
-      "community": 28,
+      "community": 6,
       "norm_label": "struckchip()"
     },
     {
@@ -5536,7 +5536,7 @@
       "source_location": "L189",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_schedule_archetype",
-      "community": 28,
+      "community": 6,
       "norm_label": "archetype"
     },
     {
@@ -5786,7 +5786,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu",
-      "community": 35,
+      "community": 28,
       "norm_label": "select-menu.mjs"
     },
     {
@@ -5796,7 +5796,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_fieldradius",
-      "community": 35,
+      "community": 28,
       "norm_label": "fieldradius()"
     },
     {
@@ -5806,7 +5806,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_labelstyle",
-      "community": 35,
+      "community": 28,
       "norm_label": "labelstyle()"
     },
     {
@@ -5816,7 +5816,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_triggerbase",
-      "community": 35,
+      "community": 28,
       "norm_label": "triggerbase()"
     },
     {
@@ -5826,7 +5826,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_paddedmenu",
-      "community": 35,
+      "community": 28,
       "norm_label": "paddedmenu()"
     },
     {
@@ -5836,7 +5836,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_menupanel",
-      "community": 35,
+      "community": 28,
       "norm_label": "menupanel()"
     },
     {
@@ -5846,7 +5846,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_optionbase",
-      "community": 35,
+      "community": 28,
       "norm_label": "optionbase()"
     },
     {
@@ -5856,7 +5856,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_openoption",
-      "community": 35,
+      "community": 28,
       "norm_label": "openoption()"
     },
     {
@@ -5866,7 +5866,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_combooption",
-      "community": 35,
+      "community": 28,
       "norm_label": "combooption()"
     },
     {
@@ -5876,7 +5876,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_groupheader",
-      "community": 35,
+      "community": 28,
       "norm_label": "groupheader()"
     },
     {
@@ -5886,7 +5886,7 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_groupitem",
-      "community": 35,
+      "community": 28,
       "norm_label": "groupitem()"
     },
     {
@@ -5896,7 +5896,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_select_menu_archetype",
-      "community": 35,
+      "community": 28,
       "norm_label": "archetype"
     },
     {
@@ -6946,7 +6946,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help",
-      "community": 6,
+      "community": 41,
       "norm_label": "support-help.mjs"
     },
     {
@@ -6956,7 +6956,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help_chipradius",
-      "community": 6,
+      "community": 41,
       "norm_label": "chipradius()"
     },
     {
@@ -6966,7 +6966,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help_chipbase",
-      "community": 6,
+      "community": 41,
       "norm_label": "chipbase()"
     },
     {
@@ -6976,7 +6976,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help_cardbase",
-      "community": 6,
+      "community": 41,
       "norm_label": "cardbase()"
     },
     {
@@ -6986,7 +6986,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help_upper",
-      "community": 6,
+      "community": 41,
       "norm_label": "upper()"
     },
     {
@@ -6996,7 +6996,7 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help_ghostbutton",
-      "community": 6,
+      "community": 41,
       "norm_label": "ghostbutton()"
     },
     {
@@ -7006,7 +7006,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help_chatglyph",
-      "community": 6,
+      "community": 41,
       "norm_label": "chatglyph()"
     },
     {
@@ -7016,7 +7016,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help_facesvg",
-      "community": 6,
+      "community": 41,
       "norm_label": "facesvg()"
     },
     {
@@ -7026,7 +7026,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help_mouths",
-      "community": 6,
+      "community": 41,
       "norm_label": "mouths"
     },
     {
@@ -7036,7 +7036,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_support_help_archetype",
-      "community": 6,
+      "community": 41,
       "norm_label": "archetype"
     },
     {
@@ -7586,7 +7586,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_whiteboard_collab_tooltile",
-      "community": 41,
+      "community": 42,
       "norm_label": "tooltile()"
     },
     {
@@ -7616,7 +7616,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome",
-      "community": 42,
+      "community": 37,
       "norm_label": "window-chrome.mjs"
     },
     {
@@ -7626,7 +7626,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_ink",
-      "community": 42,
+      "community": 37,
       "norm_label": "ink()"
     },
     {
@@ -7636,7 +7636,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_frameshadow",
-      "community": 42,
+      "community": 37,
       "norm_label": "frameshadow()"
     },
     {
@@ -7646,7 +7646,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_canvasbg",
-      "community": 42,
+      "community": 37,
       "norm_label": "canvasbg()"
     },
     {
@@ -7656,7 +7656,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_trafficdot",
-      "community": 42,
+      "community": 37,
       "norm_label": "trafficdot()"
     },
     {
@@ -7666,7 +7666,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_trafficlights",
-      "community": 42,
+      "community": 37,
       "norm_label": "trafficlights()"
     },
     {
@@ -7676,7 +7676,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_chevronleft",
-      "community": 42,
+      "community": 37,
       "norm_label": "chevronleft()"
     },
     {
@@ -7686,7 +7686,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_frame",
-      "community": 42,
+      "community": 37,
       "norm_label": "frame()"
     },
     {
@@ -7696,7 +7696,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_rainbowstrip",
-      "community": 42,
+      "community": 37,
       "norm_label": "rainbowstrip()"
     },
     {
@@ -7706,7 +7706,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_skeletonline",
-      "community": 42,
+      "community": 37,
       "norm_label": "skeletonline()"
     },
     {
@@ -7716,7 +7716,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "scripts_components_db_lib_archetypes_window_chrome_archetype",
-      "community": 42,
+      "community": 37,
       "norm_label": "archetype"
     },
     {
@@ -8046,7 +8046,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "scripts_components_db_lib_helpers_merge",
-      "community": 41,
+      "community": 42,
       "norm_label": "merge()"
     },
     {
@@ -8590,104 +8590,6 @@
       "norm_label": "components db pipeline",
       "community_name": "Components DB Pipeline",
       "id": "scripts_components_db_readme_pipeline"
-    },
-    {
-      "label": "Thingtime Component Catalog",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 56,
-      "norm_label": "thingtime component catalog",
-      "community_name": "Community 56",
-      "id": "readme_component_catalog"
-    },
-    {
-      "label": "Components Database",
-      "file_type": "concept",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 59,
-      "norm_label": "components database",
-      "community_name": "Components Database",
-      "id": "readme_components_db"
-    },
-    {
-      "label": "Generator Validator Seeder Pipeline",
-      "file_type": "concept",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 61,
-      "norm_label": "generator validator seeder pipeline",
-      "community_name": "Generator Validator Seeder Pipeline",
-      "id": "readme_generator_validator_seeder_pipeline"
-    },
-    {
-      "label": "Thingtime Runtime",
-      "file_type": "concept",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": "https://github.com/lopugit/thingtime",
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 62,
-      "norm_label": "thingtime runtime",
-      "community_name": "Thingtime Runtime",
-      "id": "readme_thingtime_runtime"
-    },
-    {
-      "label": "Component Seed API",
-      "file_type": "concept",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 58,
-      "norm_label": "component seed api",
-      "community_name": "Component Seed API",
-      "id": "readme_component_seed_api"
-    },
-    {
-      "label": "Capability Manifest",
-      "file_type": "concept",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 52,
-      "norm_label": "capability manifest",
-      "community_name": "Community 52",
-      "id": "readme_capability_manifest"
-    },
-    {
-      "label": "Functional Catalog Version 2",
-      "file_type": "concept",
-      "source_file": "README.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 60,
-      "norm_label": "functional catalog version 2",
-      "community_name": "Functional Catalog Version 2",
-      "id": "readme_functional_catalog_v2"
     }
   ],
   "links": [
@@ -36165,5 +36067,5 @@
       "source_file": "README.md"
     }
   ],
-  "built_at_commit": "1f6a66d8d4599a11b0c192c06b6cb88037a83650"
+  "built_at_commit": "0406cf2eea6256242d4ce89f77ea96cf62ff8048"
 }

@@ -5,12 +5,12 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 861 nodes · 2564 edges · 65 communities (53 shown, 12 thin omitted)
+- 854 nodes · 2564 edges · 58 communities (53 shown, 5 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1f6a66d8`
+- Built from commit: `0406cf2e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -52,12 +52,12 @@
 - [[_COMMUNITY_Community 34|Community 34]]
 - [[_COMMUNITY_Community 35|Community 35]]
 - [[_COMMUNITY_Community 36|Community 36]]
-- [[_COMMUNITY_Community 37|Community 37]]
+- [[_COMMUNITY_window-chrome.mjs|window-chrome.mjs]]
 - [[_COMMUNITY_Community 38|Community 38]]
 - [[_COMMUNITY_Community 39|Community 39]]
 - [[_COMMUNITY_Community 40|Community 40]]
-- [[_COMMUNITY_Community 41|Community 41]]
-- [[_COMMUNITY_Community 42|Community 42]]
+- [[_COMMUNITY_support-help.mjs|support-help.mjs]]
+- [[_COMMUNITY_merge|merge]]
 - [[_COMMUNITY_Community 43|Community 43]]
 - [[_COMMUNITY_Community 44|Community 44]]
 - [[_COMMUNITY_Community 45|Community 45]]
@@ -67,17 +67,10 @@
 - [[_COMMUNITY_Community 49|Community 49]]
 - [[_COMMUNITY_Community 50|Community 50]]
 - [[_COMMUNITY_Community 51|Community 51]]
-- [[_COMMUNITY_Community 52|Community 52]]
 - [[_COMMUNITY_Community 53|Community 53]]
 - [[_COMMUNITY_Community 54|Community 54]]
 - [[_COMMUNITY_Community 55|Community 55]]
-- [[_COMMUNITY_Community 56|Community 56]]
 - [[_COMMUNITY_Community 57|Community 57]]
-- [[_COMMUNITY_Component Seed API|Component Seed API]]
-- [[_COMMUNITY_Components Database|Components Database]]
-- [[_COMMUNITY_Functional Catalog Version 2|Functional Catalog Version 2]]
-- [[_COMMUNITY_Generator Validator Seeder Pipeline|Generator Validator Seeder Pipeline]]
-- [[_COMMUNITY_Thingtime Runtime|Thingtime Runtime]]
 - [[_COMMUNITY_Component Archetypes|Component Archetypes]]
 - [[_COMMUNITY_Components DB Pipeline|Components DB Pipeline]]
 
@@ -112,7 +105,7 @@
 - **Component Catalog Generation Pipeline** — scripts_components_db_lib_tokens, scripts_components_db_lib_helpers, scripts_components_db_lib_archetypes, scripts_components_db_lib_catalog, scripts_components_db_lib_resolve, scripts_components_db_lib_validate, scripts_components_db_generate, components_db_index [EXTRACTED 0.95]
 - **Component Catalog Publication Flow** — readme_component_catalog, readme_components_db, readme_generator_validator_seeder_pipeline, readme_component_seed_api, readme_thingtime_runtime [EXTRACTED 0.95]
 
-## Communities (65 total, 12 thin omitted)
+## Communities (58 total, 5 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.07
@@ -139,8 +132,8 @@ Cohesion: 0.11
 Nodes (12): archetype, dotSizeMap, archetype, imagePlaceholder(), archetype, skeletonBar(), spinnerSvg(), archetype (+4 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.24
-Nodes (8): archetype, chatGlyph(), chipBase(), chipRadius(), faceSvg(), ghostButton(), MOUTHS, upper()
+Cohesion: 0.19
+Nodes (10): accentOn(), accentSolid(), archetype, cardChrome(), cardShadow(), pinIcon(), slotChip(), slotRow() (+2 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.17
@@ -227,8 +220,8 @@ Cohesion: 0.22
 Nodes (10): archetype, chevron(), cropIcon(), editorSvg(), glyphTile(), onSoftOf(), rotateIcon(), softOf() (+2 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.19
-Nodes (10): accentOn(), accentSolid(), archetype, cardChrome(), cardShadow(), pinIcon(), slotChip(), slotRow() (+2 more)
+Cohesion: 0.26
+Nodes (10): archetype, comboOption(), fieldRadius(), groupHeader(), groupItem(), menuPanel(), openOption(), optionBase() (+2 more)
 
 ### Community 29 - "Community 29"
 Cohesion: 0.27
@@ -251,16 +244,16 @@ Cohesion: 0.20
 Nodes (7): archetype, caption(), card(), cardShadow(), chip(), chipRadius(), rainbowStrip()
 
 ### Community 35 - "Community 35"
-Cohesion: 0.26
-Nodes (10): archetype, comboOption(), fieldRadius(), groupHeader(), groupItem(), menuPanel(), openOption(), optionBase() (+2 more)
+Cohesion: 0.20
+Nodes (7): archetype, callout(), hairline(), headingInk(), kicker(), TOC_ITEMS, tocItem()
 
 ### Community 36 - "Community 36"
 Cohesion: 0.29
 Nodes (6): Contributing components, Functional catalog, version 2, How Thingtime consumes this, Provenance, thingtime-components 🧩🌈, What's inside
 
-### Community 37 - "Community 37"
-Cohesion: 0.20
-Nodes (7): archetype, callout(), hairline(), headingInk(), kicker(), TOC_ITEMS, tocItem()
+### Community 37 - "window-chrome.mjs"
+Cohesion: 0.22
+Nodes (8): archetype, chevronLeft(), frame(), frameShadow(), rainbowStrip(), skeletonLine(), trafficDot(), trafficLights()
 
 ### Community 38 - "Community 38"
 Cohesion: 0.22
@@ -274,13 +267,13 @@ Nodes (7): archetype, folderTile(), gridGlyph(), listGlyph(), quietShadow(), sur
 Cohesion: 0.22
 Nodes (8): archetype, bodyText(), buttonBase(), cancelBtn(), closeBtn(), heading(), primaryBtn(), rainbowStrip()
 
-### Community 41 - "Community 41"
+### Community 41 - "support-help.mjs"
+Cohesion: 0.24
+Nodes (8): archetype, chatGlyph(), chipBase(), chipRadius(), faceSvg(), ghostButton(), MOUTHS, upper()
+
+### Community 42 - "merge"
 Cohesion: 0.50
 Nodes (4): segment(), dayCol(), toolTile(), merge()
-
-### Community 42 - "Community 42"
-Cohesion: 0.22
-Nodes (8): archetype, chevronLeft(), frame(), frameShadow(), rainbowStrip(), skeletonLine(), trafficDot(), trafficLights()
 
 ### Community 43 - "Community 43"
 Cohesion: 0.50
@@ -327,21 +320,21 @@ Cohesion: 0.60
 Nodes (4): archetype, emptyGlyph(), layeredGlyphs(), times()
 
 ## Knowledge Gaps
-- **149 isolated node(s):** `out`, `repoRoot`, `dbRoot`, `flags`, `archetypeScope` (+144 more)
+- **142 isolated node(s):** `out`, `repoRoot`, `dbRoot`, `flags`, `archetypeScope` (+137 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `el()` connect `Community 3` to `Community 0`, `Community 1`, `Community 2`, `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 11`, `Community 12`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 24`, `Community 25`, `Community 26`, `Community 27`, `Community 28`, `Community 30`, `Community 31`, `Community 32`, `Community 33`, `Community 34`, `Community 35`, `Community 37`, `Community 38`, `Community 39`, `Community 40`, `Community 41`, `Community 42`, `Community 44`, `Community 45`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
-  _High betweenness centrality (0.463) - this node is a cross-community bridge._
-- **Why does `iff()` connect `Community 2` to `Community 0`, `Community 1`, `Community 3`, `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 12`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 24`, `Community 25`, `Community 27`, `Community 28`, `Community 31`, `Community 34`, `Community 35`, `Community 37`, `Community 38`, `Community 39`, `Community 42`, `Community 44`, `Community 45`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
-  _High betweenness centrality (0.049) - this node is a cross-community bridge._
-- **Why does `toneMap()` connect `Community 24` to `Community 1`, `Community 2`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 25`, `Community 26`, `Community 27`, `Community 28`, `Community 30`, `Community 31`, `Community 32`, `Community 33`, `Community 34`, `Community 35`, `Community 37`, `Community 38`, `Community 39`, `Community 40`, `Community 41`, `Community 42`, `Community 44`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
-  _High betweenness centrality (0.046) - this node is a cross-community bridge._
+- **Why does `el()` connect `Community 3` to `Community 0`, `Community 1`, `Community 2`, `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 11`, `Community 12`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 24`, `Community 25`, `Community 26`, `Community 27`, `Community 28`, `Community 30`, `Community 31`, `Community 32`, `Community 33`, `Community 34`, `Community 35`, `window-chrome.mjs`, `Community 38`, `Community 39`, `Community 40`, `support-help.mjs`, `merge`, `Community 44`, `Community 45`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
+  _High betweenness centrality (0.471) - this node is a cross-community bridge._
+- **Why does `iff()` connect `Community 2` to `Community 0`, `Community 1`, `Community 3`, `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 12`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 24`, `Community 25`, `Community 27`, `Community 28`, `Community 31`, `Community 34`, `Community 35`, `window-chrome.mjs`, `Community 38`, `Community 39`, `support-help.mjs`, `Community 44`, `Community 45`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
+  _High betweenness centrality (0.050) - this node is a cross-community bridge._
+- **Why does `toneMap()` connect `Community 24` to `Community 1`, `Community 2`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 13`, `Community 14`, `Community 15`, `Community 16`, `Community 17`, `Community 18`, `Community 19`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 25`, `Community 26`, `Community 27`, `Community 28`, `Community 30`, `Community 31`, `Community 32`, `Community 33`, `Community 34`, `Community 35`, `window-chrome.mjs`, `Community 38`, `Community 39`, `Community 40`, `support-help.mjs`, `merge`, `Community 44`, `Community 46`, `Community 47`, `Community 48`, `Community 49`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 57`?**
+  _High betweenness centrality (0.047) - this node is a cross-community bridge._
 - **What connects `out`, `repoRoot`, `dbRoot` to the rest of the system?**
-  _149 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _142 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.07428571428571429 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
