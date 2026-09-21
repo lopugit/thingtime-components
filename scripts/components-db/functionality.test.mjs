@@ -50,3 +50,16 @@ test('native behaviors are used for media, dialog, countdown and selected values
 	const select = resolved(family('select-menu-closed'), { selection: 'Japan' });
 	assert.ok(nodes(select, x => x.props?.['data-tt-action-inputs']?.includes('Japan')).length);
 });
+test('multi-select choices remain independent and the saved record contains both states', () => {
+	const def = family('select-menu-multi');
+	const selected = resolved(def, { selectedA: false, selectedB: true });
+	const primary = selected.children[0];
+	assert.deepEqual(nodes(primary, x => x.tag === 'input' && x.props?.type === 'checkbox').map(x => x.props.checked), [false, true]);
+	assert.equal(nodes(primary, x => x.tag === 'button').length, 1);
+	assert.match(JSON.stringify(primary), /Remove Platform/);
+	assert.doesNotMatch(JSON.stringify(primary), /Remove Design/);
+	const save = nodes(selected, x => x.props?.['data-tt-action'] === 'demo-catalog-records-save')[0];
+	const details = JSON.parse(save.props['data-tt-action-inputs']).details;
+	assert.match(details, /First tag selected: false/);
+	assert.match(details, /Second tag selected: true/);
+});

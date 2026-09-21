@@ -91,6 +91,17 @@ export const functionalWidget = (def, lib, archetype, variant) => {
 		return el('div', { style }, choose(variant === 'radio-group' ? 'selected' : 'active', ['1', '2', '3'], ['{labelA}', '{labelB}', '{labelC}']));
 	}
 	if (archetype === 'select-menu') {
+		if (variant === 'multi') {
+			def.args = def.args.filter(spec => spec.name !== 'moreCount');
+			add('selectedA', 'boolean', true, { label: 'First tag selected' });
+			add('selectedB', 'boolean', true, { label: 'Second tag selected' });
+			def.description = `Multi-select field in the ${lib.label} style with independent choices and removable selected tags.`;
+			return el('div', { style },
+				el('fieldset', { style: { minWidth: 0, display: 'grid', gap: '8px' } }, el('legend', {}, '{label}'),
+					['A', 'B'].map(letter => checkbox(`selected${letter}`, `{tag${letter}}`))),
+				el('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' }, 'aria-label': 'Selected values' },
+					['A', 'B'].map(letter => iff(`selected${letter}`, button(`Remove {tag${letter}}`, { op: 'set', key: `selected${letter}`, value: false })))));
+		}
 		add('selection', 'string', def.args.find((spec) => spec.name === 'value')?.default || '');
 		const choices = def.args.filter((spec) => /^(option|result|item|tag)[A-C123]/.test(spec.name));
 		const values = choices.length ? choices.map((spec) => `{${spec.name}}`) : ['Australia', 'Canada', 'Japan', 'New Zealand', 'United Kingdom'];

@@ -3,7 +3,7 @@
 	"name": "Multi Select",
 	"library": "mui",
 	"category": "forms",
-	"description": "Multi-select field in the Material UI style — chosen values sit inside the field as removable tone-tinted tag chips, with an overflow \"+n\" chip and trailing chevron. Interactive controls and editable values; saves private Things through an Action.",
+	"description": "Multi-select field in the Material UI style with independent choices and removable selected tags. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"select",
@@ -34,14 +34,6 @@
 			"maxLength": 24
 		},
 		{
-			"name": "moreCount",
-			"type": "number",
-			"default": 2,
-			"label": "Overflow count",
-			"min": 0,
-			"max": 99
-		},
-		{
 			"name": "tone",
 			"type": "enum",
 			"values": [
@@ -70,9 +62,16 @@
 			"label": "Action label"
 		},
 		{
-			"name": "selection",
-			"type": "string",
-			"default": ""
+			"name": "selectedA",
+			"type": "boolean",
+			"default": true,
+			"label": "First tag selected"
+		},
+		{
+			"name": "selectedB",
+			"type": "boolean",
+			"default": true,
+			"label": "Second tag selected"
 		}
 	],
 	"render": {
@@ -101,59 +100,130 @@
 				},
 				"children": [
 					{
-						"tag": "label",
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"minWidth": 0,
+								"display": "grid",
+								"gap": "8px"
+							}
+						},
 						"children": [
-							"{label}",
 							{
-								"tag": "select",
-								"props": {
-									"value": {
-										"ttArg": "selection"
-									},
-									"aria-label": "Select an option",
-									"disabled": false
-								},
+								"tag": "legend",
+								"children": [
+									"{label}"
+								]
+							},
+							{
+								"tag": "label",
 								"children": [
 									{
-										"tag": "option",
+										"tag": "input",
 										"props": {
-											"value": ""
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "selectedA"
+											},
+											"aria-label": "{tagA}"
 										},
-										"children": [
-											"Choose…"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedA"
+										}
 									},
+									"{tagA}"
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
 									{
-										"tag": "option",
+										"tag": "input",
 										"props": {
-											"value": "{tagA}"
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "selectedB"
+											},
+											"aria-label": "{tagB}"
 										},
-										"children": [
-											"{tagA}"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedB"
+										}
 									},
-									{
-										"tag": "option",
-										"props": {
-											"value": "{tagB}"
-										},
-										"children": [
-											"{tagB}"
-										]
-									}
-								],
-								"ttAction": "$ui",
-								"ttActionInputs": {
-									"op": "set",
-									"key": "selection"
-								}
+									"{tagB}"
+								]
 							}
 						]
 					},
 					{
-						"tag": "p",
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexWrap": "wrap",
+								"gap": "6px"
+							},
+							"aria-label": "Selected values"
+						},
 						"children": [
-							"Selected: {selection}"
+							{
+								"ttIf": {
+									"arg": "selectedA",
+									"then": {
+										"tag": "button",
+										"props": {
+											"type": "button",
+											"style": {
+												"padding": "8px 12px",
+												"borderRadius": "4px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"background": "#fafafa",
+												"cursor": "pointer"
+											}
+										},
+										"children": [
+											"Remove {tagA}"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedA",
+											"value": false
+										}
+									}
+								}
+							},
+							{
+								"ttIf": {
+									"arg": "selectedB",
+									"then": {
+										"tag": "button",
+										"props": {
+											"type": "button",
+											"style": {
+												"padding": "8px 12px",
+												"borderRadius": "4px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"background": "#fafafa",
+												"cursor": "pointer"
+											}
+										},
+										"children": [
+											"Remove {tagB}"
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedB",
+											"value": false
+										}
+									}
+								}
+							}
 						]
 					}
 				]
@@ -181,29 +251,41 @@
 							{
 								"tag": "label",
 								"children": [
-									"selection ",
+									"First tag selected ",
 									{
 										"tag": "input",
 										"props": {
-											"aria-label": "selection",
-											"value": {
-												"ttArg": "selection"
-											},
-											"maxLength": 500,
-											"style": {
-												"width": "100%",
-												"minWidth": 0,
-												"padding": "8px",
-												"border": "1px solid rgba(0, 0, 0, 0.12)",
-												"maxWidth": "100%",
-												"boxSizing": "border-box"
-											},
-											"type": "text"
+											"aria-label": "First tag selected",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "selectedA"
+											}
 										},
 										"ttAction": "$ui",
 										"ttActionInputs": {
 											"op": "set",
-											"key": "selection"
+											"key": "selectedA"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Second tag selected ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Second tag selected",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "selectedB"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedB"
 										}
 									}
 								]
@@ -299,38 +381,6 @@
 								]
 							},
 							{
-								"tag": "label",
-								"children": [
-									"Overflow count ",
-									{
-										"tag": "input",
-										"props": {
-											"aria-label": "Overflow count",
-											"value": {
-												"ttArg": "moreCount"
-											},
-											"maxLength": 500,
-											"style": {
-												"width": "100%",
-												"minWidth": 0,
-												"padding": "8px",
-												"border": "1px solid rgba(0, 0, 0, 0.12)",
-												"maxWidth": "100%",
-												"boxSizing": "border-box"
-											},
-											"type": "number",
-											"min": 0,
-											"max": 99
-										},
-										"ttAction": "$ui",
-										"ttActionInputs": {
-											"op": "set",
-											"key": "moreCount"
-										}
-									}
-								]
-							},
-							{
 								"tag": "button",
 								"props": {
 									"type": "button",
@@ -352,7 +402,7 @@
 								"ttActionInputs": {
 									"family": "select-menu-multi",
 									"title": "Multi Select",
-									"details": "Label: {label}\nFirst tag: {tagA}\nSecond tag: {tagB}\nOverflow count: {moreCount}\nselection: {selection}"
+									"details": "Label: {label}\nFirst tag: {tagA}\nSecond tag: {tagB}\nFirst tag selected: {selectedA}\nSecond tag selected: {selectedB}"
 								},
 								"children": [
 									"{actionLabel}"
