@@ -3,7 +3,7 @@
 	"name": "Code Block",
 	"library": "reactflow",
 	"category": "data-display",
-	"description": "Highlighted code block in the React Flow style — filename header bar with a copy glyph, line-number gutter, and fake syntax colors drawn from the library palette.",
+	"description": "Highlighted code block in the React Flow style — filename header bar with a copy glyph, line-number gutter, and fake syntax colors drawn from the library palette. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"code",
 		"block",
@@ -30,22 +30,34 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Line numbers"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "code",
+			"type": "text",
+			"default": "const greeting = \"Hello, Thingtime\";",
+			"maxLength": 1000
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "5px",
-				"overflow": "hidden",
-				"background": "#ffffff",
-				"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-				"fontSize": "12px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -53,302 +65,229 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"padding": "8px 12px",
-						"gap": "8px",
-						"background": "#f4f4f5",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "solid",
-						"borderBottomColor": "#e2e2e5"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #1a192b",
+						"borderRadius": "5px",
+						"background": "#ffffff",
+						"color": "#1a192b",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "pre",
 						"props": {
 							"style": {
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"color": "#1a192b"
-							}
-						},
-						"children": [
-							"{filename}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1
-							}
-						}
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "5px",
-								"color": "#6f6e77",
-								"fontSize": "10px",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+								"whiteSpace": "pre-wrap",
+								"overflowWrap": "anywhere"
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
-								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
+								"tag": "code",
 								"children": [
-									{
-										"tag": "rect",
-										"props": {
-											"x": 9,
-											"y": 9,
-											"width": 13,
-											"height": 13,
-											"rx": 2
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-										}
-									}
+									"{code}"
 								]
-							},
-							"{copyLabel}"
+							}
 						]
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
+								"padding": "8px 12px",
+								"borderRadius": "3px",
+								"border": "1px solid #1a192b",
+								"background": "#f4f4f5",
+								"cursor": "pointer"
+							}
+						},
+						"children": [
+							"Copy code"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "copy",
+							"value": "{code}"
+						}
 					}
 				]
 			},
 			{
-				"tag": "pre",
-				"props": {
-					"style": {
-						"margin": 0,
-						"padding": "12px 14px",
-						"display": "flex",
-						"gap": "14px",
-						"overflowX": "auto",
-						"lineHeight": 1.7
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"ttIf": {
-							"arg": "lineNumbers",
-							"then": {
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"color": "#b1b1b7",
-										"textAlign": "right",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"children": [
-											"1"
-										]
-									},
-									{
-										"tag": "span",
-										"children": [
-											"2"
-										]
-									},
-									{
-										"tag": "span",
-										"children": [
-											"3"
-										]
-									},
-									{
-										"tag": "span",
-										"children": [
-											"4"
-										]
-									},
-									{
-										"tag": "span",
-										"children": [
-											"5"
-										]
-									}
-								]
-							}
-						}
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"color": "#1a192b"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
+								"tag": "label",
 								"children": [
+									"Filename ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
+											"aria-label": "Filename",
+											"value": {
+												"ttArg": "filename"
+											},
+											"maxLength": 40,
 											"style": {
-												"color": "#784be8"
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"import"
-										]
-									},
-									" { api } ",
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#784be8"
-											}
-										},
-										"children": [
-											"from"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#15803d"
-											}
-										},
-										"children": [
-											" './client'"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "filename"
+										}
 									}
 								]
 							},
 							{
-								"tag": "div",
+								"tag": "label",
 								"children": [
+									"Copy label ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
+											"aria-label": "Copy label",
+											"value": {
+												"ttArg": "copyLabel"
+											},
+											"maxLength": 16,
 											"style": {
-												"color": "#6f6e77",
-												"fontStyle": "italic"
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"// fetch the latest things"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "copyLabel"
+										}
 									}
 								]
 							},
 							{
-								"tag": "div",
+								"tag": "label",
 								"children": [
+									"Line numbers ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
-											"style": {
-												"color": "#784be8"
+											"aria-label": "Line numbers",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "lineNumbers"
 											}
 										},
-										"children": [
-											"const"
-										]
-									},
-									" res = ",
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#784be8"
-											}
-										},
-										"children": [
-											"await"
-										]
-									},
-									" api.get(",
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#15803d"
-											}
-										},
-										"children": [
-											"'/things'"
-										]
-									},
-									")"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "lineNumbers"
+										}
+									}
 								]
 							},
 							{
-								"tag": "div",
+								"tag": "label",
 								"children": [
+									"code ",
 									{
-										"tag": "span",
+										"tag": "textarea",
 										"props": {
+											"aria-label": "code",
+											"value": {
+												"ttArg": "code"
+											},
+											"maxLength": 500,
 											"style": {
-												"color": "#784be8"
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"const"
-										]
-									},
-									" names = res.map((t) => t.name)"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "code"
+										}
+									}
 								]
 							},
 							{
-								"tag": "div",
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "code-block-block",
+									"title": "Code Block",
+									"details": "Filename: {filename}\nCopy label: {copyLabel}\nLine numbers: {lineNumbers}\ncode: {code}"
+								},
 								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#784be8"
-											}
-										},
-										"children": [
-											"export"
-										]
-									},
-									" ",
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#784be8"
-											}
-										},
-										"children": [
-											"default"
-										]
-									},
-									" names"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -356,7 +295,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "code-block-block",
 	"source": {
 		"kind": "archetype",

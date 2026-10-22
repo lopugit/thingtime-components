@@ -3,7 +3,7 @@
 	"name": "Line Chart",
 	"library": "daisyui",
 	"category": "data-display",
-	"description": "Mini line chart in the daisyUI style — a tone-colored svg trend polyline with an optional translucent area fill, end-point dot, and min/max captions under the plot.",
+	"description": "Mini line chart in the daisyUI style — a tone-colored svg trend polyline with an optional translucent area fill, end-point dot, and min/max captions under the plot. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"chart",
 		"line",
@@ -51,22 +51,28 @@
 			"default": "High 86",
 			"label": "Max caption",
 			"maxLength": 16
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "232px",
-				"boxSizing": "border-box",
-				"padding": "14px 16px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"border": "1px solid #e5e6e6",
-				"borderRadius": "12px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -74,149 +80,345 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"marginBottom": "10px"
+						"display": "flex",
+						"flexDirection": "column",
+						"width": "232px",
+						"boxSizing": "border-box",
+						"padding": "14px 16px",
+						"background": "#ffffff",
+						"border": "1px solid #e5e6e6",
+						"borderRadius": "12px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "14px",
-								"fontWeight": 700,
-								"color": "#1f2937"
+								"marginBottom": "10px"
 							}
 						},
 						"children": [
-							"{title}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "svg",
-				"props": {
-					"width": 200,
-					"height": 80,
-					"viewBox": "0 0 160 64",
-					"xmlns": "http://www.w3.org/2000/svg"
-				},
-				"children": [
-					{
-						"ttIf": {
-							"arg": "area",
-							"then": {
-								"tag": "polygon",
+							{
+								"tag": "span",
 								"props": {
-									"points": "4,48 28,36 52,42 76,26 100,32 124,14 152,20 152,60 4,60",
+									"style": {
+										"fontSize": "14px",
+										"fontWeight": 700,
+										"color": "#1f2937"
+									}
+								},
+								"children": [
+									"{title}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "svg",
+						"props": {
+							"width": 200,
+							"height": 80,
+							"viewBox": "0 0 160 64",
+							"xmlns": "http://www.w3.org/2000/svg"
+						},
+						"children": [
+							{
+								"ttIf": {
+									"arg": "area",
+									"then": {
+										"tag": "polygon",
+										"props": {
+											"points": "4,48 28,36 52,42 76,26 100,32 124,14 152,20 152,60 4,60",
+											"fill": {
+												"ttMap": {
+													"arg": "tone",
+													"values": {
+														"primary": "rgba(87, 13, 248, 0.18)",
+														"success": "rgba(0, 169, 110, 0.18)",
+														"warning": "rgba(255, 190, 0, 0.18)",
+														"danger": "rgba(255, 88, 97, 0.18)",
+														"info": "rgba(0, 182, 255, 0.18)",
+														"neutral": "rgba(42, 50, 60, 0.18)"
+													},
+													"default": "rgba(87, 13, 248, 0.18)"
+												}
+											}
+										}
+									}
+								}
+							},
+							{
+								"tag": "line",
+								"props": {
+									"x1": 4,
+									"y1": 60,
+									"x2": 156,
+									"y2": 60,
+									"stroke": "#f2f2f2",
+									"strokeWidth": 1
+								}
+							},
+							{
+								"tag": "polyline",
+								"props": {
+									"points": "4,48 28,36 52,42 76,26 100,32 124,14 152,20",
+									"fill": "none",
+									"stroke": {
+										"ttMap": {
+											"arg": "tone",
+											"values": {
+												"primary": "#570df8",
+												"success": "#00a96e",
+												"warning": "#ffbe00",
+												"danger": "#ff5861",
+												"info": "#00b6ff",
+												"neutral": "#2a323c"
+											},
+											"default": "#570df8"
+										}
+									},
+									"strokeWidth": 2.5,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round"
+								}
+							},
+							{
+								"tag": "circle",
+								"props": {
+									"cx": 152,
+									"cy": 20,
+									"r": 3.5,
 									"fill": {
 										"ttMap": {
 											"arg": "tone",
 											"values": {
-												"primary": "rgba(87, 13, 248, 0.18)",
-												"success": "rgba(0, 169, 110, 0.18)",
-												"warning": "rgba(255, 190, 0, 0.18)",
-												"danger": "rgba(255, 88, 97, 0.18)",
-												"info": "rgba(0, 182, 255, 0.18)",
-												"neutral": "rgba(42, 50, 60, 0.18)"
+												"primary": "#570df8",
+												"success": "#00a96e",
+												"warning": "#ffbe00",
+												"danger": "#ff5861",
+												"info": "#00b6ff",
+												"neutral": "#2a323c"
 											},
-											"default": "rgba(87, 13, 248, 0.18)"
+											"default": "#570df8"
 										}
-									}
+									},
+									"stroke": "#ffffff",
+									"strokeWidth": 1.5
 								}
 							}
-						}
+						]
 					},
 					{
-						"tag": "line",
+						"tag": "div",
 						"props": {
-							"x1": 4,
-							"y1": 60,
-							"x2": 156,
-							"y2": 60,
-							"stroke": "#f2f2f2",
-							"strokeWidth": 1
-						}
-					},
-					{
-						"tag": "polyline",
-						"props": {
-							"points": "4,48 28,36 52,42 76,26 100,32 124,14 152,20",
-							"fill": "none",
-							"stroke": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#570df8",
-										"success": "#00a96e",
-										"warning": "#ffbe00",
-										"danger": "#ff5861",
-										"info": "#00b6ff",
-										"neutral": "#2a323c"
-									},
-									"default": "#570df8"
-								}
+							"style": {
+								"display": "flex",
+								"justifyContent": "space-between",
+								"marginTop": "4px",
+								"fontSize": "12px",
+								"color": "#6b7280",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"children": [
+									"{min}"
+								]
 							},
-							"strokeWidth": 2.5,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round"
-						}
-					},
-					{
-						"tag": "circle",
-						"props": {
-							"cx": 152,
-							"cy": 20,
-							"r": 3.5,
-							"fill": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#570df8",
-										"success": "#00a96e",
-										"warning": "#ffbe00",
-										"danger": "#ff5861",
-										"info": "#00b6ff",
-										"neutral": "#2a323c"
-									},
-									"default": "#570df8"
-								}
-							},
-							"stroke": "#ffffff",
-							"strokeWidth": 1.5
-						}
+							{
+								"tag": "span",
+								"children": [
+									"{max}"
+								]
+							}
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"justifyContent": "space-between",
-						"marginTop": "4px",
-						"fontSize": "12px",
-						"color": "#6b7280"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
+						"tag": "summary",
 						"children": [
-							"{min}"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
 						"children": [
-							"{max}"
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Area fill ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Area fill",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "area"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "area"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Min caption ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Min caption",
+											"value": {
+												"ttArg": "min"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "min"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Max caption ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Max caption",
+											"value": {
+												"ttArg": "max"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "max"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "data-viz-line",
+									"title": "Line Chart",
+									"details": "Title: {title}\nArea fill: {area}\nMin caption: {min}\nMax caption: {max}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "data-viz-line",
 	"source": {
 		"kind": "archetype",

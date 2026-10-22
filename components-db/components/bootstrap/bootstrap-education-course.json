@@ -3,7 +3,7 @@
 	"name": "Course Card",
 	"library": "bootstrap",
 	"category": "learning",
-	"description": "Course card in the Bootstrap style — tinted cover band with a book glyph, title and instructor, lesson/duration/level chips, and a progress bar with a Continue action.",
+	"description": "Course card in the Bootstrap style — tinted cover band with a book glyph, title and instructor, lesson/duration/level chips, and a progress bar with a Continue action. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"education",
 		"course",
@@ -65,21 +65,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#212529",
-				"background": "#ffffff",
-				"border": "1px solid #dee2e6",
-				"borderRadius": "8px",
-				"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-				"boxSizing": "border-box",
-				"overflow": "hidden",
-				"width": "300px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -87,219 +94,94 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"height": "84px",
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"backgroundColor": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#cfe2ff",
-									"success": "#d1e7dd",
-									"warning": "#fff3cd",
-									"danger": "#f8d7da",
-									"info": "#cff4fc",
-									"neutral": "#e9ecef"
-								},
-								"default": "#cfe2ff"
-							}
-						}
+						"color": "#212529",
+						"background": "#ffffff",
+						"border": "1px solid #dee2e6",
+						"borderRadius": "8px",
+						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+						"boxSizing": "border-box",
+						"overflow": "hidden",
+						"width": "300px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
+						"tag": "div",
 						"props": {
-							"width": 30,
-							"height": 30,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#0d6efd",
-										"success": "#198754",
-										"warning": "#ffc107",
-										"danger": "#dc3545",
-										"info": "#0dcaf0",
-										"neutral": "#6c757d"
-									},
-									"default": "#0d6efd"
-								}
-							},
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"height": "84px",
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"backgroundColor": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#cfe2ff",
+											"success": "#d1e7dd",
+											"warning": "#fff3cd",
+											"danger": "#f8d7da",
+											"info": "#cff4fc",
+											"neutral": "#e9ecef"
+										},
+										"default": "#cfe2ff"
+									}
+								},
+								"flexWrap": "wrap"
+							}
 						},
 						"children": [
 							{
-								"tag": "path",
+								"tag": "svg",
 								"props": {
-									"d": "M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
-								}
-							},
-							{
-								"tag": "path",
-								"props": {
-									"d": "M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-								}
+									"width": 30,
+									"height": 30,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": {
+										"ttMap": {
+											"arg": "tone",
+											"values": {
+												"primary": "#0d6efd",
+												"success": "#198754",
+												"warning": "#ffc107",
+												"danger": "#dc3545",
+												"info": "#0dcaf0",
+												"neutral": "#6c757d"
+											},
+											"default": "#0d6efd"
+										}
+									},
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "path",
+										"props": {
+											"d": "M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
+										}
+									},
+									{
+										"tag": "path",
+										"props": {
+											"d": "M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+										}
+									}
+								]
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"padding": "14px 16px 16px",
-						"gap": "10px"
-					}
-				},
-				"children": [
+					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
 								"flexDirection": "column",
-								"gap": "2px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "18px",
-										"fontWeight": 500
-									}
-								},
-								"children": [
-									"{title}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#6c757d"
-									}
-								},
-								"children": [
-									"by {instructor}"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px",
-								"flexWrap": "wrap"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"padding": "2px 8px",
-										"borderRadius": "50rem",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"whiteSpace": "nowrap",
-										"background": "#f8f9fa",
-										"color": "#6c757d"
-									}
-								},
-								"children": [
-									"{lessons} lessons"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"padding": "2px 8px",
-										"borderRadius": "50rem",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"whiteSpace": "nowrap",
-										"background": "#f8f9fa",
-										"color": "#6c757d"
-									}
-								},
-								"children": [
-									"6h 20m"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"padding": "2px 8px",
-										"borderRadius": "50rem",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"whiteSpace": "nowrap",
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#cfe2ff",
-													"success": "#d1e7dd",
-													"warning": "#fff3cd",
-													"danger": "#f8d7da",
-													"info": "#cff4fc",
-													"neutral": "#e9ecef"
-												},
-												"default": "#cfe2ff"
-											}
-										},
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#052c65",
-													"success": "#0a3622",
-													"warning": "#664d03",
-													"danger": "#58151c",
-													"info": "#055160",
-													"neutral": "#495057"
-												},
-												"default": "#052c65"
-											}
-										}
-									}
-								},
-								"children": [
-									"{level}"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
+								"padding": "14px 16px 16px",
 								"gap": "10px"
 							}
 						},
@@ -308,11 +190,145 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"flex": 1,
-										"height": "8px",
-										"background": "#e9ecef",
-										"borderRadius": "50rem",
-										"overflow": "hidden"
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "18px",
+												"fontWeight": 500
+											}
+										},
+										"children": [
+											"{title}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"color": "#6c757d"
+											}
+										},
+										"children": [
+											"by {instructor}"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"padding": "2px 8px",
+												"borderRadius": "50rem",
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"whiteSpace": "nowrap",
+												"background": "#f8f9fa",
+												"color": "#6c757d",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"{lessons} lessons"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"padding": "2px 8px",
+												"borderRadius": "50rem",
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"whiteSpace": "nowrap",
+												"background": "#f8f9fa",
+												"color": "#6c757d",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"6h 20m"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"padding": "2px 8px",
+												"borderRadius": "50rem",
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"whiteSpace": "nowrap",
+												"background": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#cfe2ff",
+															"success": "#d1e7dd",
+															"warning": "#fff3cd",
+															"danger": "#f8d7da",
+															"info": "#cff4fc",
+															"neutral": "#e9ecef"
+														},
+														"default": "#cfe2ff"
+													}
+												},
+												"color": {
+													"ttMap": {
+														"arg": "tone",
+														"values": {
+															"primary": "#052c65",
+															"success": "#0a3622",
+															"warning": "#664d03",
+															"danger": "#58151c",
+															"info": "#055160",
+															"neutral": "#495057"
+														},
+														"default": "#052c65"
+													}
+												},
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"{level}"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "10px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
@@ -320,99 +336,373 @@
 										"tag": "div",
 										"props": {
 											"style": {
-												"width": "{percent}%",
-												"height": "100%",
+												"flex": 1,
+												"height": "8px",
+												"background": "#e9ecef",
 												"borderRadius": "50rem",
-												"background": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#0d6efd",
-															"success": "#198754",
-															"warning": "#ffc107",
-															"danger": "#dc3545",
-															"info": "#0dcaf0",
-															"neutral": "#6c757d"
+												"overflow": "hidden"
+											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "{percent}%",
+														"height": "100%",
+														"borderRadius": "50rem",
+														"background": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "#0d6efd",
+																	"success": "#198754",
+																	"warning": "#ffc107",
+																	"danger": "#dc3545",
+																	"info": "#0dcaf0",
+																	"neutral": "#6c757d"
+																},
+																"default": "#0d6efd"
+															}
 														},
-														"default": "#0d6efd"
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
 													}
 												}
 											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"color": "#6c757d"
+											}
+										},
+										"children": [
+											"{percent}%"
+										]
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "6px",
+										"fontWeight": 400,
+										"fontSize": "14px",
+										"cursor": "pointer",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#0d6efd",
+													"success": "#198754",
+													"warning": "#ffc107",
+													"danger": "#dc3545",
+													"info": "#0dcaf0",
+													"neutral": "#6c757d"
+												},
+												"default": "#0d6efd"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#000000",
+													"danger": "#ffffff",
+													"info": "#000000",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"width": "auto",
+										"maxWidth": "100%",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "education-course",
+									"title": "Course Card",
+									"details": "Title: {title}\nInstructor: {instructor}\nLessons: {lessons}\nLevel: {level}\nPercent complete: {percent}"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
 										}
 									}
 								]
 							},
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"color": "#6c757d"
+								"tag": "label",
+								"children": [
+									"Instructor ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Instructor",
+											"value": {
+												"ttArg": "instructor"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "instructor"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Lessons ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Lessons",
+											"value": {
+												"ttArg": "lessons"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 999
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "lessons"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Level ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Level",
+											"value": {
+												"ttArg": "level"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "Beginner"
+												},
+												"children": [
+													"Beginner"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Intermediate"
+												},
+												"children": [
+													"Intermediate"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Advanced"
+												},
+												"children": [
+													"Advanced"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "level"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Percent complete ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Percent complete",
+											"value": {
+												"ttArg": "percent"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "percent"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "education-course",
+									"title": "Course Card",
+									"details": "Title: {title}\nInstructor: {instructor}\nLessons: {lessons}\nLevel: {level}\nPercent complete: {percent}"
 								},
 								"children": [
-									"{percent}%"
+									"{actionLabel}"
 								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "31px",
-								"padding": "0 16px",
-								"border": "none",
-								"borderRadius": "6px",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 400,
-								"fontSize": "14px",
-								"cursor": "pointer",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#0d6efd",
-											"success": "#198754",
-											"warning": "#ffc107",
-											"danger": "#dc3545",
-											"info": "#0dcaf0",
-											"neutral": "#6c757d"
-										},
-										"default": "#0d6efd"
-									}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
 								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#000000",
-											"danger": "#ffffff",
-											"info": "#000000",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"width": "100%"
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"children": [
-							"Continue"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "education-course",
 	"source": {
 		"kind": "archetype",

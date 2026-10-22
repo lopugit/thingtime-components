@@ -6,7 +6,7 @@
 import { defaultsFromArgs, resolveTemplate } from './resolve.mjs';
 
 export const ALLOWED_TAGS = new Set([
-	'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'img', 'button',
+	'tt-dialog', 'tt-countdown', 'tt-upload', 'details', 'summary', 'fieldset', 'legend', 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'img', 'button',
 	'ul', 'ol', 'li', 'section', 'article', 'header', 'footer', 'nav', 'aside',
 	'main', 'strong', 'em', 'small', 'code', 'pre', 'blockquote', 'hr', 'br',
 	'table', 'thead', 'tbody', 'tr', 'th', 'td', 'figure', 'figcaption', 'label',
@@ -15,7 +15,7 @@ export const ALLOWED_TAGS = new Set([
 ]);
 
 export const ALLOWED_PROPS = new Set([
-	'style', 'className', 'class', 'href', 'target', 'rel', 'src', 'alt', 'title',
+	'data-tt-action', 'data-tt-action-inputs', 'aria-label', 'aria-pressed', 'aria-expanded', 'aria-selected', 'name', 'min', 'max', 'step', 'maxLength', 'required', 'open', 'style', 'className', 'class', 'href', 'target', 'rel', 'src', 'alt', 'title',
 	'width', 'height', 'type', 'placeholder', 'value', 'checked', 'disabled',
 	'rows', 'cols', 'controls', 'loop', 'muted', 'poster', 'viewBox', 'fill',
 	'stroke', 'strokeWidth', 'strokeLinecap', 'strokeLinejoin', 'd', 'cx', 'cy',

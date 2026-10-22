@@ -3,7 +3,7 @@
 	"name": "Event Card",
 	"library": "daisyui",
 	"category": "events",
-	"description": "Event listing card in the daisyUI style — a tone-soft date square beside the title and venue, time and from-price chips, a going-avatars pair with an interested count, and a Get-tickets action.",
+	"description": "Event listing card in the daisyUI style — a tone-soft date square beside the title and venue, time and from-price chips, a going-avatars pair with an interested count, and a Get-tickets action. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"event",
 		"card",
@@ -59,26 +59,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#1f2937",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e5e6e6",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"boxSizing": "border-box",
-				"width": "320px",
-				"padding": "14px",
-				"gap": "12px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -87,8 +89,19 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "flex-start",
-						"gap": "12px"
+						"flexDirection": "column",
+						"color": "#1f2937",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e5e6e6",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"boxSizing": "border-box",
+						"width": "320px",
+						"padding": "14px",
+						"gap": "12px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -97,106 +110,84 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"width": "52px",
-								"height": "52px",
-								"flexShrink": 0,
-								"borderRadius": "12px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#eee6ff",
-											"success": "#dcfce7",
-											"warning": "#fef9c3",
-											"danger": "#ffe4e6",
-											"info": "#e0f2fe",
-											"neutral": "#f2f2f2"
-										},
-										"default": "#eee6ff"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#4506cb",
-											"success": "#00753d",
-											"warning": "#854d0e",
-											"danger": "#be123c",
-											"info": "#0369a1",
-											"neutral": "#2a323c"
-										},
-										"default": "#4506cb"
-									}
-								}
+								"alignItems": "flex-start",
+								"gap": "12px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "20px",
-										"fontWeight": 700,
-										"lineHeight": 1.1
+										"display": "flex",
+										"flexDirection": "column",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"width": "52px",
+										"height": "52px",
+										"flexShrink": 0,
+										"borderRadius": "12px",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#eee6ff",
+													"success": "#dcfce7",
+													"warning": "#fef9c3",
+													"danger": "#ffe4e6",
+													"info": "#e0f2fe",
+													"neutral": "#f2f2f2"
+												},
+												"default": "#eee6ff"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#4506cb",
+													"success": "#00753d",
+													"warning": "#854d0e",
+													"danger": "#be123c",
+													"info": "#0369a1",
+													"neutral": "#2a323c"
+												},
+												"default": "#4506cb"
+											}
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
 								},
 								"children": [
-									"{day}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"letterSpacing": "1px",
-										"textTransform": "uppercase"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "20px",
+												"fontWeight": 700,
+												"lineHeight": 1.1
+											}
+										},
+										"children": [
+											"{day}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"letterSpacing": "1px",
+												"textTransform": "uppercase"
+											}
+										},
+										"children": [
+											"{mon}"
+										]
 									}
-								},
-								"children": [
-									"{mon}"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"minWidth": 0
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "18px",
-										"fontWeight": 700
-									}
-								},
-								"children": [
-									"{title}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#6b7280"
-									}
-								},
-								"children": [
-									"{venue}"
 								]
 							},
 							{
@@ -204,9 +195,9 @@
 								"props": {
 									"style": {
 										"display": "flex",
-										"alignItems": "center",
-										"gap": "6px",
-										"marginTop": "6px"
+										"flexDirection": "column",
+										"gap": "2px",
+										"minWidth": 0
 									}
 								},
 								"children": [
@@ -214,207 +205,488 @@
 										"tag": "span",
 										"props": {
 											"style": {
-												"display": "inline-flex",
-												"alignItems": "center",
-												"gap": "4px",
-												"padding": "2px 8px",
-												"borderRadius": "999px",
-												"fontSize": "12px",
-												"fontWeight": 600,
-												"lineHeight": 1.4,
-												"background": "#f2f2f2",
-												"color": "#6b7280"
+												"fontSize": "18px",
+												"fontWeight": 700
 											}
 										},
 										"children": [
-											{
-												"tag": "svg",
-												"props": {
-													"width": 12,
-													"height": 12,
-													"viewBox": "0 0 24 24",
-													"fill": "none",
-													"stroke": "currentColor",
-													"strokeWidth": 2,
-													"strokeLinecap": "round",
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
-												},
-												"children": [
-													{
-														"tag": "circle",
-														"props": {
-															"cx": 12,
-															"cy": 12,
-															"r": 10
-														}
-													},
-													{
-														"tag": "polyline",
-														"props": {
-															"points": "12 6 12 12 16 14"
-														}
-													}
-												]
-											},
-											"7:30 PM"
+											"{title}"
 										]
 									},
 									{
 										"tag": "span",
 										"props": {
 											"style": {
-												"display": "inline-flex",
-												"alignItems": "center",
-												"gap": "4px",
-												"padding": "2px 8px",
-												"borderRadius": "999px",
-												"fontSize": "12px",
-												"fontWeight": 600,
-												"lineHeight": 1.4,
-												"background": "#f2f2f2",
+												"fontSize": "14px",
 												"color": "#6b7280"
 											}
 										},
 										"children": [
-											"From {price}"
+											"{venue}"
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "6px",
+												"marginTop": "6px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"display": "inline-flex",
+														"alignItems": "center",
+														"gap": "4px",
+														"padding": "2px 8px",
+														"borderRadius": "999px",
+														"fontSize": "12px",
+														"fontWeight": 600,
+														"lineHeight": 1.4,
+														"background": "#f2f2f2",
+														"color": "#6b7280",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													{
+														"tag": "svg",
+														"props": {
+															"width": 12,
+															"height": 12,
+															"viewBox": "0 0 24 24",
+															"fill": "none",
+															"stroke": "currentColor",
+															"strokeWidth": 2,
+															"strokeLinecap": "round",
+															"strokeLinejoin": "round",
+															"xmlns": "http://www.w3.org/2000/svg"
+														},
+														"children": [
+															{
+																"tag": "circle",
+																"props": {
+																	"cx": 12,
+																	"cy": 12,
+																	"r": 10
+																}
+															},
+															{
+																"tag": "polyline",
+																"props": {
+																	"points": "12 6 12 12 16 14"
+																}
+															}
+														]
+													},
+													"7:30 PM"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"display": "inline-flex",
+														"alignItems": "center",
+														"gap": "4px",
+														"padding": "2px 8px",
+														"borderRadius": "999px",
+														"fontSize": "12px",
+														"fontWeight": 600,
+														"lineHeight": 1.4,
+														"background": "#f2f2f2",
+														"color": "#6b7280",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													"From {price}"
+												]
+											}
 										]
 									}
 								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "22px",
+										"height": "22px",
+										"borderRadius": "999px",
+										"background": "#e0f2fe",
+										"color": "#0369a1",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "12px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"AK"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "22px",
+										"height": "22px",
+										"borderRadius": "999px",
+										"background": "#dcfce7",
+										"color": "#00753d",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "12px",
+										"flexShrink": 0,
+										"marginLeft": "-8px",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"MJ"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "4px",
+										"padding": "2px 8px",
+										"borderRadius": "999px",
+										"fontSize": "12px",
+										"fontWeight": 500,
+										"lineHeight": 1.4,
+										"background": "#f2f2f2",
+										"color": "#6b7280",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"+412 interested"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "12px",
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"cursor": "pointer",
+										"marginLeft": "auto",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#570df8",
+													"success": "#00a96e",
+													"warning": "#ffbe00",
+													"danger": "#ff5861",
+													"info": "#00b6ff",
+													"neutral": "#2a323c"
+												},
+												"default": "#570df8"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#382800",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "events-tickets-event",
+									"title": "Event Card",
+									"details": "Title: {title}\nVenue: {venue}\nDay: {day}\nMonth: {mon}\nFrom price: {price}"
+								}
 							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "22px",
-								"height": "22px",
-								"borderRadius": "999px",
-								"background": "#e0f2fe",
-								"color": "#0369a1",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "12px",
-								"flexShrink": 0
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"AK"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"width": "22px",
-								"height": "22px",
-								"borderRadius": "999px",
-								"background": "#dcfce7",
-								"color": "#00753d",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "12px",
-								"flexShrink": 0,
-								"marginLeft": "-8px"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"MJ"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"gap": "4px",
-								"padding": "2px 8px",
-								"borderRadius": "999px",
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"lineHeight": 1.4,
-								"background": "#f2f2f2",
-								"color": "#6b7280"
-							}
-						},
-						"children": [
-							"+412 interested"
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "32px",
-								"padding": "0 14px",
-								"border": "none",
-								"borderRadius": "12px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"cursor": "pointer",
-								"marginLeft": "auto",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#570df8",
-											"success": "#00a96e",
-											"warning": "#ffbe00",
-											"danger": "#ff5861",
-											"info": "#00b6ff",
-											"neutral": "#2a323c"
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"default": "#570df8"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Venue ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Venue",
+											"value": {
+												"ttArg": "venue"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "venue"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Day ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Day",
+											"value": {
+												"ttArg": "day"
+											},
+											"maxLength": 2,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Month ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Month",
+											"value": {
+												"ttArg": "mon"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mon"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"From price ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "From price",
+											"value": {
+												"ttArg": "price"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "price"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
 								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#382800",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "events-tickets-event",
+									"title": "Event Card",
+									"details": "Title: {title}\nVenue: {venue}\nDay: {day}\nMonth: {mon}\nFrom price: {price}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
-						},
-						"children": [
-							"Get tickets"
 						]
 					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "events-tickets-event",
 	"source": {
 		"kind": "archetype",

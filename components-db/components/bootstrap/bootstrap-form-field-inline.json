@@ -3,7 +3,7 @@
 	"name": "Inline Label Field",
 	"library": "bootstrap",
 	"category": "forms",
-	"description": "Horizontal form row in the Bootstrap style — fixed-width label beside a flexible input, in three control sizes.",
+	"description": "Horizontal form row in the Bootstrap style — fixed-width label beside a flexible input, in three control sizes. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"field",
@@ -41,105 +41,275 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Disabled"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"gap": "12px",
-				"width": "340px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
+				"tag": "div",
 				"props": {
 					"style": {
-						"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontSize": "14px",
-						"fontWeight": 500,
-						"color": "#212529",
-						"width": "104px",
-						"flexShrink": 0,
-						"textAlign": "right"
+						"display": "flex",
+						"alignItems": "center",
+						"gap": "12px",
+						"width": "340px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
-					"{label}"
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "14px",
+								"fontWeight": 500,
+								"color": "#212529",
+								"width": "104px",
+								"flexShrink": 0,
+								"textAlign": "right",
+								"maxWidth": "100%"
+							}
+						},
+						"children": [
+							"{label}"
+						]
+					},
+					{
+						"tag": "input",
+						"props": {
+							"type": "text",
+							"placeholder": "{placeholder}",
+							"style": {
+								"ttMerge": [
+									{
+										"height": "38px",
+										"padding": "0 12px",
+										"borderRadius": "6px",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#dee2e6",
+										"background": "#ffffff",
+										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+										"fontSize": "16px",
+										"color": "#212529",
+										"outline": "none",
+										"width": "100%",
+										"boxSizing": "border-box",
+										"boxShadow": "none",
+										"maxWidth": "100%"
+									},
+									{
+										"ttMap": {
+											"arg": "size",
+											"values": {
+												"sm": {
+													"height": "31px",
+													"fontSize": "14px"
+												},
+												"md": {
+													"height": "38px",
+													"fontSize": "16px"
+												},
+												"lg": {
+													"height": "48px",
+													"fontSize": "18px"
+												}
+											},
+											"default": {
+												"height": "38px",
+												"fontSize": "16px"
+											}
+										}
+									},
+									{
+										"width": "auto",
+										"flex": "1 1 auto"
+									},
+									{
+										"ttIf": {
+											"arg": "disabled",
+											"then": {
+												"background": "#f8f9fa",
+												"color": "#adb5bd",
+												"cursor": "not-allowed",
+												"opacity": 0.75
+											},
+											"else": {}
+										}
+									}
+								]
+							},
+							"value": {
+								"ttArg": "entry1"
+							},
+							"aria-label": "{placeholder}",
+							"maxLength": 500
+						},
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "entry1"
+						}
+					}
 				]
 			},
 			{
-				"tag": "input",
-				"props": {
-					"type": "text",
-					"placeholder": "{placeholder}",
-					"style": {
-						"ttMerge": [
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
 							{
-								"height": "38px",
-								"padding": "0 12px",
-								"borderRadius": "6px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#dee2e6",
-								"background": "#ffffff",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "16px",
-								"color": "#212529",
-								"outline": "none",
-								"width": "100%",
-								"boxSizing": "border-box",
-								"boxShadow": "none"
-							},
-							{
-								"ttMap": {
-									"arg": "size",
-									"values": {
-										"sm": {
-											"height": "31px",
-											"fontSize": "14px"
+								"tag": "label",
+								"children": [
+									"entry1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "entry1",
+											"value": {
+												"ttArg": "entry1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"md": {
-											"height": "38px",
-											"fontSize": "16px"
-										},
-										"lg": {
-											"height": "48px",
-											"fontSize": "18px"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
 										}
-									},
-									"default": {
-										"height": "38px",
-										"fontSize": "16px"
 									}
-								}
+								]
 							},
 							{
-								"width": "auto",
-								"flex": "1 1 auto"
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
 							},
 							{
-								"ttIf": {
-									"arg": "disabled",
-									"then": {
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
 										"background": "#f8f9fa",
-										"color": "#adb5bd",
-										"cursor": "not-allowed",
-										"opacity": 0.75
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									},
-									"else": {}
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "form-field-inline",
+									"title": "Inline Label Field",
+									"details": "Label: {label}\nentry1: {entry1}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "form-field-inline",
 	"source": {
 		"kind": "archetype",

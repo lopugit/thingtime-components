@@ -3,7 +3,7 @@
 	"name": "Mini Kanban Board",
 	"library": "thingtime",
 	"category": "project",
-	"description": "Miniature three-lane board in the Thingtime style — To do, Doing and Done lanes with tiny skeleton cards, the Doing lane highlighted with the library accent.",
+	"description": "Miniature three-lane board in the Thingtime style — To do, Doing and Done lanes with tiny skeleton cards, the Doing lane highlighted with the library accent. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"kanban",
 		"board",
@@ -31,23 +31,28 @@
 			"default": "Done",
 			"label": "Last lane",
 			"maxLength": 16
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "stretch",
-				"gap": "8px",
-				"width": "310px",
-				"boxSizing": "border-box",
-				"padding": "10px",
-				"background": "#ffffff",
-				"border": "1px solid #ececef",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -56,69 +61,17 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"flexDirection": "column",
-						"flex": "1",
-						"gap": "6px",
-						"padding": "8px",
-						"background": "#fafafb",
-						"border": "1px solid #f5f5f7",
-						"borderRadius": "12px",
-						"boxShadow": "none"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "11px",
-								"fontWeight": 700,
-								"color": "#9a9aa6"
-							}
-						},
-						"children": [
-							"{todo}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "16px",
-								"background": "#ffffff",
-								"border": "1px solid #ececef",
-								"borderRadius": "7px",
-								"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
-							}
-						}
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "16px",
-								"background": "#ffffff",
-								"border": "1px solid #ececef",
-								"borderRadius": "7px",
-								"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
-							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"flex": "1",
-						"gap": "6px",
-						"padding": "8px",
+						"alignItems": "stretch",
+						"gap": "8px",
+						"width": "310px",
+						"boxSizing": "border-box",
+						"padding": "10px",
 						"background": "#ffffff",
-						"border": "1.5px solid #16161a",
-						"borderRadius": "12px",
-						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+						"border": "1px solid #ececef",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
+						"maxWidth": "100%",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
@@ -126,97 +79,325 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"height": "3px",
-								"borderRadius": "999px",
-								"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
-							}
-						}
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "11px",
-								"fontWeight": 700,
-								"color": "#16161a"
+								"display": "flex",
+								"flexDirection": "column",
+								"flex": "1",
+								"gap": "6px",
+								"padding": "8px",
+								"background": "#fafafb",
+								"border": "1px solid #f5f5f7",
+								"borderRadius": "12px",
+								"boxShadow": "none"
 							}
 						},
 						"children": [
-							"{doing}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "11px",
+										"fontWeight": 700,
+										"color": "#9a9aa6"
+									}
+								},
+								"children": [
+									"{todo}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #ececef",
+										"borderRadius": "7px",
+										"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+									}
+								}
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #ececef",
+										"borderRadius": "7px",
+										"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+									}
+								}
+							}
 						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"height": "16px",
+								"display": "flex",
+								"flexDirection": "column",
+								"flex": "1",
+								"gap": "6px",
+								"padding": "8px",
 								"background": "#ffffff",
-								"border": "1px solid #ececef",
-								"borderRadius": "7px",
+								"border": "1.5px solid #16161a",
+								"borderRadius": "12px",
 								"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "3px",
+										"borderRadius": "999px",
+										"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
+									}
+								}
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "11px",
+										"fontWeight": 700,
+										"color": "#16161a"
+									}
+								},
+								"children": [
+									"{doing}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #ececef",
+										"borderRadius": "7px",
+										"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+									}
+								}
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #ececef",
+										"borderRadius": "7px",
+										"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+									}
+								}
+							}
+						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"height": "16px",
-								"background": "#ffffff",
-								"border": "1px solid #ececef",
-								"borderRadius": "7px",
-								"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+								"display": "flex",
+								"flexDirection": "column",
+								"flex": "1",
+								"gap": "6px",
+								"padding": "8px",
+								"background": "#fafafb",
+								"border": "1px solid #f5f5f7",
+								"borderRadius": "12px",
+								"boxShadow": "none"
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "11px",
+										"fontWeight": 700,
+										"color": "#9a9aa6"
+									}
+								},
+								"children": [
+									"{done}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #ececef",
+										"borderRadius": "7px",
+										"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+									}
+								}
+							}
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"flex": "1",
-						"gap": "6px",
-						"padding": "8px",
-						"background": "#fafafb",
-						"border": "1px solid #f5f5f7",
-						"borderRadius": "12px",
-						"boxShadow": "none"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "11px",
-								"fontWeight": 700,
-								"color": "#9a9aa6"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"{done}"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"height": "16px",
-								"background": "#ffffff",
-								"border": "1px solid #ececef",
-								"borderRadius": "7px",
-								"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"First lane ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "First lane",
+											"value": {
+												"ttArg": "todo"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "todo"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Middle lane ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Middle lane",
+											"value": {
+												"ttArg": "doing"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "doing"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Last lane ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Last lane",
+											"value": {
+												"ttArg": "done"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "done"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "kanban-board",
+									"title": "Mini Kanban Board",
+									"details": "First lane: {todo}\nMiddle lane: {doing}\nLast lane: {done}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "kanban-board",
 	"source": {
 		"kind": "archetype",

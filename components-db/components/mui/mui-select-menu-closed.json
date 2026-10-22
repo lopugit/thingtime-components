@@ -3,7 +3,7 @@
 	"name": "Select Input",
 	"library": "mui",
 	"category": "forms",
-	"description": "Closed select trigger in the Material UI style — labeled field with the chosen value on the left and a muted chevron on the right, in three control sizes.",
+	"description": "Closed select trigger in the Material UI style — labeled field with the chosen value on the left and a muted chevron on the right, in three control sizes. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"select",
@@ -41,119 +41,288 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Disabled"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "selection",
+			"type": "string",
+			"default": "Australia"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "260px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-						"fontSize": "13px",
-						"fontWeight": 500,
-						"color": "rgba(0, 0, 0, 0.87)"
-					}
-				},
-				"children": [
-					"{label}"
-				]
-			},
-			{
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
-							{
-								"height": "36px",
-								"padding": "0 12px",
-								"borderRadius": "4px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "rgba(0, 0, 0, 0.12)",
-								"background": "#ffffff",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.87)",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px",
-								"cursor": "pointer",
-								"boxSizing": "border-box",
-								"boxShadow": "none"
-							},
-							{
-								"ttMap": {
-									"arg": "size",
-									"values": {
-										"sm": {
-											"height": "30px",
-											"fontSize": "13px"
-										},
-										"md": {
-											"height": "36px",
-											"fontSize": "14px"
-										},
-										"lg": {
-											"height": "42px",
-											"fontSize": "16px"
-										}
-									},
-									"default": {
-										"height": "36px",
-										"fontSize": "14px"
-									}
-								}
-							},
-							{
-								"ttIf": {
-									"arg": "disabled",
-									"then": {
-										"background": "#fafafa",
-										"color": "rgba(0, 0, 0, 0.38)",
-										"cursor": "not-allowed"
-									},
-									"else": {}
-								}
-							}
-						]
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid rgba(0, 0, 0, 0.12)",
+						"borderRadius": "4px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "label",
 						"children": [
-							"{value}"
+							"{label}",
+							{
+								"tag": "select",
+								"props": {
+									"value": {
+										"ttArg": "selection"
+									},
+									"aria-label": "Select an option",
+									"disabled": {
+										"ttArg": "disabled"
+									}
+								},
+								"children": [
+									{
+										"tag": "option",
+										"props": {
+											"value": ""
+										},
+										"children": [
+											"Choose…"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "Australia"
+										},
+										"children": [
+											"Australia"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "Canada"
+										},
+										"children": [
+											"Canada"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "Japan"
+										},
+										"children": [
+											"Japan"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "New Zealand"
+										},
+										"children": [
+											"New Zealand"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "United Kingdom"
+										},
+										"children": [
+											"United Kingdom"
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selection"
+								}
+							}
 						]
 					},
 					{
-						"tag": "svg",
+						"tag": "p",
+						"children": [
+							"Selected: {selection}"
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
-							"width": 16,
-							"height": 16,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "rgba(0, 0, 0, 0.6)",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
 						},
 						"children": [
 							{
-								"tag": "polyline",
+								"tag": "label",
+								"children": [
+									"selection ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "selection",
+											"value": {
+												"ttArg": "selection"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selection"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Value",
+											"value": {
+												"ttArg": "value"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "value"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
 								"props": {
-									"points": "6 9 12 15 18 9"
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "select-menu-closed",
+									"title": "Select Input",
+									"details": "Label: {label}\nValue: {value}\nselection: {selection}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -162,7 +331,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "select-menu-closed",
 	"source": {
 		"kind": "archetype",

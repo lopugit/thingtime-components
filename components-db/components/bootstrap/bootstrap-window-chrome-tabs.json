@@ -3,7 +3,7 @@
 	"name": "Editor Tabs",
 	"library": "bootstrap",
 	"category": "mockups",
-	"description": "Editor tab strip in the Bootstrap style — an active file tab with a tone underline and close x, two resting tabs, an optional plus tab, and a breadcrumb path row.",
+	"description": "Editor tab strip in the Bootstrap style — an active file tab with a tone underline and close x, two resting tabs, an optional plus tab, and a breadcrumb path row. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"mockup",
 		"tabs",
@@ -45,24 +45,28 @@
 			"default": "src / components",
 			"label": "Breadcrumb path",
 			"maxLength": 40
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "340px",
 				"maxWidth": "100%",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#dee2e6",
-				"borderRadius": "8px",
-				"background": "#ffffff",
-				"overflow": "hidden",
-				"boxShadow": "0 .5rem 1rem rgba(0, 0, 0, .15)",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -71,13 +75,17 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "flex-end",
-						"gap": "2px",
-						"padding": "6px 8px 0",
-						"background": "#f8f9fa",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "solid",
-						"borderBottomColor": "#dee2e6"
+						"flexDirection": "column",
+						"width": "340px",
+						"maxWidth": "100%",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#dee2e6",
+						"borderRadius": "8px",
+						"background": "#ffffff",
+						"overflow": "hidden",
+						"boxShadow": "0 .5rem 1rem rgba(0, 0, 0, .15)",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
@@ -86,125 +94,58 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "8px",
-								"padding": "6px 10px",
-								"background": "#ffffff",
-								"borderTopLeftRadius": "4px",
-								"borderTopRightRadius": "4px",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": "#212529",
-								"flexShrink": 0,
-								"borderBottomWidth": "2px",
+								"alignItems": "flex-end",
+								"gap": "2px",
+								"padding": "6px 8px 0",
+								"background": "#f8f9fa",
+								"borderBottomWidth": "1px",
 								"borderBottomStyle": "solid",
-								"borderBottomColor": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#0d6efd",
-											"success": "#198754",
-											"warning": "#ffc107",
-											"danger": "#dc3545",
-											"info": "#0dcaf0",
-											"neutral": "#6c757d"
-										},
-										"default": "#0d6efd"
-									}
-								}
+								"borderBottomColor": "#dee2e6",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{file}",
 							{
-								"tag": "svg",
-								"props": {
-									"width": 10,
-									"height": 10,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#6c757d",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "line",
-										"props": {
-											"x1": 18,
-											"y1": 6,
-											"x2": 6,
-											"y2": 18
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 6,
-											"y1": 6,
-											"x2": 18,
-											"y2": 18
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px",
-								"padding": "6px 10px",
-								"fontSize": "12px",
-								"color": "#6c757d",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"index.ts"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px",
-								"padding": "6px 10px",
-								"fontSize": "12px",
-								"color": "#6c757d",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"styles.css"
-						]
-					},
-					{
-						"ttIf": {
-							"arg": "plusTab",
-							"then": {
 								"tag": "div",
 								"props": {
 									"style": {
 										"display": "flex",
 										"alignItems": "center",
-										"padding": "6px 8px",
-										"flexShrink": 0
+										"gap": "8px",
+										"padding": "6px 10px",
+										"background": "#ffffff",
+										"borderTopLeftRadius": "4px",
+										"borderTopRightRadius": "4px",
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"color": "#212529",
+										"flexShrink": 0,
+										"borderBottomWidth": "2px",
+										"borderBottomStyle": "solid",
+										"borderBottomColor": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#0d6efd",
+													"success": "#198754",
+													"warning": "#ffc107",
+													"danger": "#dc3545",
+													"info": "#0dcaf0",
+													"neutral": "#6c757d"
+												},
+												"default": "#0d6efd"
+											}
+										},
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
+									"{file}",
 									{
 										"tag": "svg",
 										"props": {
-											"width": 12,
-											"height": 12,
+											"width": 10,
+											"height": 10,
 											"viewBox": "0 0 24 24",
 											"fill": "none",
 											"stroke": "#6c757d",
@@ -217,83 +158,319 @@
 											{
 												"tag": "line",
 												"props": {
-													"x1": 12,
-													"y1": 5,
-													"x2": 12,
-													"y2": 19
+													"x1": 18,
+													"y1": 6,
+													"x2": 6,
+													"y2": 18
 												}
 											},
 											{
 												"tag": "line",
 												"props": {
-													"x1": 5,
-													"y1": 12,
-													"x2": 19,
-													"y2": 12
+													"x1": 6,
+													"y1": 6,
+													"x2": 18,
+													"y2": 18
 												}
 											}
 										]
 									}
 								]
-							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "6px",
-						"padding": "7px 10px",
-						"fontSize": "12px",
-						"color": "#6c757d",
-						"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-					}
-				},
-				"children": [
-					"{path}",
-					{
-						"tag": "svg",
-						"props": {
-							"width": 10,
-							"height": 10,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#adb5bd",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
+							},
 							{
-								"tag": "polyline",
+								"tag": "div",
 								"props": {
-									"points": "9 6 15 12 9 18"
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"padding": "6px 10px",
+										"fontSize": "12px",
+										"color": "#6c757d",
+										"flexShrink": 0,
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"index.ts"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"padding": "6px 10px",
+										"fontSize": "12px",
+										"color": "#6c757d",
+										"flexShrink": 0,
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"styles.css"
+								]
+							},
+							{
+								"ttIf": {
+									"arg": "plusTab",
+									"then": {
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"padding": "6px 8px",
+												"flexShrink": 0,
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "svg",
+												"props": {
+													"width": 12,
+													"height": 12,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "#6c757d",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "line",
+														"props": {
+															"x1": 12,
+															"y1": 5,
+															"x2": 12,
+															"y2": 19
+														}
+													},
+													{
+														"tag": "line",
+														"props": {
+															"x1": 5,
+															"y1": 12,
+															"x2": 19,
+															"y2": 12
+														}
+													}
+												]
+											}
+										]
+									}
 								}
 							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"color": "#212529",
-								"fontWeight": 600
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "6px",
+								"padding": "7px 10px",
+								"fontSize": "12px",
+								"color": "#6c757d",
+								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{file}"
+							"{path}",
+							{
+								"tag": "svg",
+								"props": {
+									"width": 10,
+									"height": 10,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#adb5bd",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "9 6 15 12 9 18"
+										}
+									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"color": "#212529",
+										"fontWeight": 600
+									}
+								},
+								"children": [
+									"{file}"
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Active file ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Active file",
+											"value": {
+												"ttArg": "file"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "file"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show + tab ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show + tab",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "plusTab"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "plusTab"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Breadcrumb path ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Breadcrumb path",
+											"value": {
+												"ttArg": "path"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "path"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "window-chrome-tabs",
+									"title": "Editor Tabs",
+									"details": "Active file: {file}\nShow + tab: {plusTab}\nBreadcrumb path: {path}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "window-chrome-tabs",
 	"source": {
 		"kind": "archetype",

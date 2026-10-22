@@ -3,7 +3,7 @@
 	"name": "Habit Tracker",
 	"library": "reactflow",
 	"category": "productivity",
-	"description": "Habit tracker card in the React Flow style — week caption with a streak chip, then three habit rows of seven day dots; the first habit's fill is a repeat-driven streak overlay.",
+	"description": "Habit tracker card in the React Flow style — week caption with a streak chip, then three habit rows of seven day dots; the first habit's fill is a repeat-driven streak overlay. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"habits",
 		"tracker",
@@ -31,26 +31,63 @@
 			"default": "This week",
 			"label": "Week caption",
 			"maxLength": 24
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "day1",
+			"type": "boolean",
+			"default": false
+		},
+		{
+			"name": "day2",
+			"type": "boolean",
+			"default": false
+		},
+		{
+			"name": "day3",
+			"type": "boolean",
+			"default": false
+		},
+		{
+			"name": "day4",
+			"type": "boolean",
+			"default": false
+		},
+		{
+			"name": "day5",
+			"type": "boolean",
+			"default": false
+		},
+		{
+			"name": "day6",
+			"type": "boolean",
+			"default": false
+		},
+		{
+			"name": "day7",
+			"type": "boolean",
+			"default": false
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"width": "300px",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "12px",
-				"background": "#ffffff",
-				"borderRadius": "8px",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e2e2e5",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#1a192b"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -58,281 +95,409 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #1a192b",
+						"borderRadius": "5px",
+						"background": "#ffffff",
+						"color": "#1a192b",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "10px",
-								"color": "#6f6e77",
-								"fontWeight": 600,
-								"textTransform": "uppercase",
-								"letterSpacing": "0.06em"
-							}
-						},
-						"children": [
-							"{caption}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"padding": "2px 8px",
-								"borderRadius": "3px",
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"background": "#f0fdf4",
-								"color": "#15803d"
-							}
-						},
-						"children": [
-							"{streak} day streak"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"minWidth": 0
-							}
-						},
+						"tag": "h3",
 						"children": [
 							"{habit}"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "day1"
+									},
+									"aria-label": "Mon"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "day1"
+								}
+							},
+							"Mon"
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "day2"
+									},
+									"aria-label": "Tue"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "day2"
+								}
+							},
+							"Tue"
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "day3"
+									},
+									"aria-label": "Wed"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "day3"
+								}
+							},
+							"Wed"
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "day4"
+									},
+									"aria-label": "Thu"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "day4"
+								}
+							},
+							"Thu"
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "day5"
+									},
+									"aria-label": "Fri"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "day5"
+								}
+							},
+							"Fri"
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "day6"
+									},
+									"aria-label": "Sat"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "day6"
+								}
+							},
+							"Sat"
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							{
+								"tag": "input",
+								"props": {
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "day7"
+									},
+									"aria-label": "Sun"
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "day7"
+								}
+							},
+							"Sun"
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"position": "relative",
-								"display": "flex",
-								"gap": "6px"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"ttRepeat": {
-									"count": 7,
-									"max": 7,
-									"node": {
-										"tag": "span",
-										"props": {
-											"style": {
-												"width": "14px",
-												"height": "14px",
-												"borderRadius": "999px",
-												"background": "#e2e2e5"
-											}
-										}
-									}
-								}
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"position": "absolute",
-										"top": "0",
-										"left": "0",
-										"display": "flex",
-										"gap": "6px"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"day1 ",
 									{
-										"ttRepeat": {
-											"arg": "streak",
-											"max": 7,
-											"node": {
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "14px",
-														"height": "14px",
-														"borderRadius": "999px",
-														"background": "#ff0072"
-													}
-												}
+										"tag": "input",
+										"props": {
+											"aria-label": "day1",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "day1"
 											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day1"
 										}
 									}
 								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"minWidth": 0
-							}
-						},
-						"children": [
-							"Meditate"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"gap": "6px"
-							}
-						},
-						"children": [
+							},
 							{
-								"ttRepeat": {
-									"count": 7,
-									"max": 7,
-									"node": {
-										"tag": "span",
+								"tag": "label",
+								"children": [
+									"day2 ",
+									{
+										"tag": "input",
 										"props": {
-											"style": {
-												"ttMerge": [
-													{
-														"width": "14px",
-														"height": "14px",
-														"borderRadius": "999px",
-														"background": "#e2e2e5"
-													},
-													{
-														"ttMap": {
-															"arg": "n",
-															"values": {
-																"1": {
-																	"background": "#ff0072"
-																},
-																"2": {
-																	"background": "#ff0072"
-																},
-																"4": {
-																	"background": "#ff0072"
-																},
-																"5": {
-																	"background": "#ff0072"
-																}
-															},
-															"default": {}
-														}
-													}
-												]
+											"aria-label": "day2",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "day2"
 											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day2"
 										}
 									}
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"minWidth": 0
-							}
-						},
-						"children": [
-							"Read 20 pages"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"gap": "6px"
-							}
-						},
-						"children": [
+								]
+							},
 							{
-								"ttRepeat": {
-									"count": 7,
-									"max": 7,
-									"node": {
-										"tag": "span",
+								"tag": "label",
+								"children": [
+									"day3 ",
+									{
+										"tag": "input",
 										"props": {
-											"style": {
-												"ttMerge": [
-													{
-														"width": "14px",
-														"height": "14px",
-														"borderRadius": "999px",
-														"background": "#e2e2e5"
-													},
-													{
-														"ttMap": {
-															"arg": "n",
-															"values": {
-																"2": {
-																	"background": "#ff0072"
-																},
-																"5": {
-																	"background": "#ff0072"
-																},
-																"7": {
-																	"background": "#ff0072"
-																}
-															},
-															"default": {}
-														}
-													}
-												]
+											"aria-label": "day3",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "day3"
 											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day3"
 										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"day4 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "day4",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "day4"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day4"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"day5 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "day5",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "day5"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day5"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"day6 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "day6",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "day6"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day6"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"day7 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "day7",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "day7"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day7"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Habit name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Habit name",
+											"value": {
+												"ttArg": "habit"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "habit"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "productivity-notes-habits",
+									"title": "Habit Tracker",
+									"details": "Habit name: {habit}\nday1: {day1}\nday2: {day2}\nday3: {day3}\nday4: {day4}\nday5: {day5}\nday6: {day6}\nday7: {day7}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -341,7 +506,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "productivity-notes-habits",
 	"source": {
 		"kind": "archetype",

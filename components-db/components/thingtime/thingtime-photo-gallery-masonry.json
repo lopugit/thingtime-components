@@ -3,7 +3,7 @@
 	"name": "Masonry Grid",
 	"library": "thingtime",
 	"category": "media",
-	"description": "Three-column masonry photo grid mock in the Thingtime style — placeholder tiles rotating through the tone washes with image glyphs, a photo-count header, and one hovered tile carrying a caption overlay and heart.",
+	"description": "Three-column masonry photo grid mock in the Thingtime style — placeholder tiles rotating through the tone washes with image glyphs, a photo-count header, and one hovered tile carrying a caption overlay and heart. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"photo",
 		"gallery",
@@ -49,238 +49,93 @@
 			],
 			"default": "regular",
 			"label": "Gap"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "imageUrl",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
+		},
+		{
+			"name": "rotation",
+			"type": "number",
+			"default": 0,
+			"min": 0,
+			"max": 360
+		},
+		{
+			"name": "exposure",
+			"type": "number",
+			"default": 100,
+			"min": 10,
+			"max": 200
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "280px",
-				"gap": "10px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "14px",
-						"fontWeight": 700,
-						"color": "#33333c"
-					}
-				},
-				"children": [
-					"{count} photos"
-				]
-			},
-			{
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"gap": {
-							"ttMap": {
-								"arg": "gap",
-								"values": {
-									"tight": "4px",
-									"regular": "10px"
-								}
-							}
-						},
-						"alignItems": "flex-start"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #ececef",
+						"borderRadius": "12px",
+						"background": "#ffffff",
+						"color": "#33333c",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"flex": "1 1 0",
-								"minWidth": "0",
-								"gap": {
-									"ttMap": {
-										"arg": "gap",
-										"values": {
-											"tight": "4px",
-											"regular": "10px"
-										}
-									}
-								}
-							}
-						},
+						"tag": "label",
 						"children": [
+							"Image URL",
 							{
-								"tag": "div",
+								"tag": "input",
 								"props": {
+									"type": "url",
+									"aria-label": "imageUrl",
+									"value": {
+										"ttArg": "imageUrl"
+									},
 									"style": {
-										"height": "76px",
-										"borderRadius": "12px",
-										"background": "#f5f5f7",
-										"color": "#16161a",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center"
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #ececef",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
 								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "rect",
-												"props": {
-													"x": 3,
-													"y": 3,
-													"width": 18,
-													"height": 18,
-													"rx": 2
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 8.5,
-													"cy": 8.5,
-													"r": 1.5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "21 15 16 10 5 21"
-												}
-											}
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "104px",
-										"borderRadius": "12px",
-										"background": "#fdeaf3",
-										"color": "#a32d6a",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center"
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "rect",
-												"props": {
-													"x": 3,
-													"y": 3,
-													"width": 18,
-													"height": 18,
-													"rx": 2
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 8.5,
-													"cy": 8.5,
-													"r": 1.5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "21 15 16 10 5 21"
-												}
-											}
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "64px",
-										"borderRadius": "12px",
-										"background": "#eafaf1",
-										"color": "#1f7a4a",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center"
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "rect",
-												"props": {
-													"x": 3,
-													"y": 3,
-													"width": 18,
-													"height": 18,
-													"rx": 2
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 8.5,
-													"cy": 8.5,
-													"r": 1.5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "21 15 16 10 5 21"
-												}
-											}
-										]
-									}
-								]
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "imageUrl"
+								}
 							}
 						]
 					},
@@ -288,404 +143,323 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"flex": "1 1 0",
-								"minWidth": "0",
-								"gap": {
-									"ttMap": {
-										"arg": "gap",
-										"values": {
-											"tight": "4px",
-											"regular": "10px"
-										}
-									}
-								}
+								"overflow": "hidden",
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"position": "relative",
-										"height": "112px",
-										"borderRadius": "12px",
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#f5f5f7",
-													"success": "#eafaf1",
-													"warning": "#fdf6e5",
-													"danger": "#fdeceb",
-													"info": "#fdeaf3",
-													"neutral": "#f5f5f7"
-												},
-												"default": "#fdf6e5"
-											}
-										},
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#16161a",
-													"success": "#1f7a4a",
-													"warning": "#9a6c12",
-													"danger": "#a83238",
-													"info": "#a32d6a",
-													"neutral": "#5a5a66"
-												},
-												"default": "#9a6c12"
-											}
-										},
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"overflow": "hidden"
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
+								"ttIf": {
+									"arg": "imageUrl",
+									"equals": "",
+									"then": {
+										"tag": "p",
 										"children": [
-											{
-												"tag": "rect",
-												"props": {
-													"x": 3,
-													"y": 3,
-													"width": 18,
-													"height": 18,
-													"rx": 2
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 8.5,
-													"cy": 8.5,
-													"r": 1.5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "21 15 16 10 5 21"
-												}
-											}
+											"Enter an image URL to view and adjust it."
 										]
 									},
-									{
-										"tag": "div",
+									"else": {
+										"tag": "img",
 										"props": {
+											"src": "{imageUrl}",
+											"alt": "{caption}",
 											"style": {
-												"position": "absolute",
-												"left": "0",
-												"right": "0",
-												"bottom": "0",
-												"padding": "6px 9px",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "space-between",
-												"background": "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%)"
+												"width": "100%",
+												"maxHeight": "400px",
+												"objectFit": "contain",
+												"filter": "brightness({exposure}%)",
+												"transform": "rotate({rotation}deg)"
 											}
-										},
-										"children": [
-											{
-												"tag": "span",
-												"props": {
-													"style": {
-														"fontSize": "11px",
-														"fontWeight": 600,
-														"color": "#ffffff"
-													}
-												},
-												"children": [
-													"{caption}"
-												]
-											},
-											{
-												"tag": "svg",
-												"props": {
-													"width": 12,
-													"height": 12,
-													"viewBox": "0 0 24 24",
-													"fill": "#ffffff",
-													"stroke": "#ffffff",
-													"strokeWidth": 2,
-													"strokeLinecap": "round",
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
-												},
-												"children": [
-													{
-														"tag": "path",
-														"props": {
-															"d": "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-														}
-													}
-												]
-											}
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "68px",
-										"borderRadius": "12px",
-										"background": "#eafaf1",
-										"color": "#1f7a4a",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center"
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "rect",
-												"props": {
-													"x": 3,
-													"y": 3,
-													"width": 18,
-													"height": 18,
-													"rx": 2
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 8.5,
-													"cy": 8.5,
-													"r": 1.5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "21 15 16 10 5 21"
-												}
-											}
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "92px",
-										"borderRadius": "12px",
-										"background": "#fdf6e5",
-										"color": "#9a6c12",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center"
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "rect",
-												"props": {
-													"x": 3,
-													"y": 3,
-													"width": 18,
-													"height": 18,
-													"rx": 2
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 8.5,
-													"cy": 8.5,
-													"r": 1.5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "21 15 16 10 5 21"
-												}
-											}
-										]
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"flex": "1 1 0",
-								"minWidth": "0",
-								"gap": {
-									"ttMap": {
-										"arg": "gap",
-										"values": {
-											"tight": "4px",
-											"regular": "10px"
 										}
 									}
 								}
 							}
+						]
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
+								"padding": "8px 12px",
+								"borderRadius": "9px",
+								"border": "1px solid #ececef",
+								"background": "#f5f5f7",
+								"cursor": "pointer"
+							}
+						},
+						"children": [
+							"Rotate image"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "cycle",
+							"key": "rotation",
+							"values": [
+								0,
+								90,
+								180,
+								270
+							]
+						}
+					},
+					{
+						"tag": "tt-dialog",
+						"props": {
+							"title": "Image viewer",
+							"name": "Open image viewer"
 						},
 						"children": [
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "96px",
-										"borderRadius": "12px",
-										"background": "#fdeceb",
-										"color": "#a83238",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center"
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
+								"ttIf": {
+									"arg": "imageUrl",
+									"equals": "",
+									"then": {
+										"tag": "p",
 										"children": [
-											{
-												"tag": "rect",
-												"props": {
-													"x": 3,
-													"y": 3,
-													"width": 18,
-													"height": 18,
-													"rx": 2
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 8.5,
-													"cy": 8.5,
-													"r": 1.5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "21 15 16 10 5 21"
-												}
-											}
+											"Enter an image URL to view and adjust it."
 										]
+									},
+									"else": {
+										"tag": "img",
+										"props": {
+											"src": "{imageUrl}",
+											"alt": "{caption}",
+											"style": {
+												"width": "100%",
+												"maxHeight": "400px",
+												"objectFit": "contain",
+												"filter": "brightness({exposure}%)",
+												"transform": "rotate({rotation}deg)"
+											}
+										}
+									}
+								}
+							}
+						]
+					},
+					{
+						"tag": "small",
+						"children": [
+							"Adjustments affect this preview. Save stores the image URL and settings in a private Thing."
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"imageUrl ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "imageUrl",
+											"value": {
+												"ttArg": "imageUrl"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "imageUrl"
+										}
 									}
 								]
 							},
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"height": "128px",
-										"borderRadius": "12px",
-										"background": "#f5f5f7",
-										"color": "#5a5a66",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"rotation ",
 									{
-										"tag": "svg",
+										"tag": "input",
 										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
+											"aria-label": "rotation",
+											"value": {
+												"ttArg": "rotation"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 360
 										},
-										"children": [
-											{
-												"tag": "rect",
-												"props": {
-													"x": 3,
-													"y": 3,
-													"width": 18,
-													"height": 18,
-													"rx": 2
-												}
-											},
-											{
-												"tag": "circle",
-												"props": {
-													"cx": 8.5,
-													"cy": 8.5,
-													"r": 1.5
-												}
-											},
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "21 15 16 10 5 21"
-												}
-											}
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "rotation"
+										}
 									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Photo count ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Photo count",
+											"value": {
+												"ttArg": "count"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "count"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Hover caption ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Hover caption",
+											"value": {
+												"ttArg": "caption"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "caption"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"exposure ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "exposure",
+											"value": {
+												"ttArg": "exposure"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 10,
+											"max": 200
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "exposure"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "photo-gallery-masonry",
+									"title": "Masonry Grid",
+									"details": "Photo count: {count}\nHover caption: {caption}\nimageUrl: {imageUrl}\nrotation: {rotation}\nexposure: {exposure}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -693,7 +467,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "photo-gallery-masonry",
 	"source": {
 		"kind": "archetype",

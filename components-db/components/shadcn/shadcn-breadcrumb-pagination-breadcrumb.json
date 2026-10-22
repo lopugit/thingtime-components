@@ -3,7 +3,7 @@
 	"name": "Breadcrumb",
 	"library": "shadcn",
 	"category": "navigation",
-	"description": "Three-level breadcrumb trail in the shadcn/ui style — muted ancestor crumbs, chevron separators, and a tone-colored current page.",
+	"description": "Three-level breadcrumb trail in the shadcn/ui style — muted ancestor crumbs, chevron separators, and a tone-colored current page. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"breadcrumb",
 		"navigation",
@@ -45,139 +45,321 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "nav",
+		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"fontSize": "13px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
+				"tag": "nav",
 				"props": {
 					"style": {
-						"color": "#71717a"
-					}
-				},
-				"children": [
-					"{root}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"display": "inline-flex",
+						"display": "flex",
 						"alignItems": "center",
-						"padding": "0 4px",
-						"color": "#a1a1aa"
+						"fontSize": "13px",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
+						"tag": "span",
 						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#a1a1aa",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"color": "#71717a"
+							}
 						},
 						"children": [
-							{
-								"tag": "polyline",
-								"props": {
-									"points": "9 6 15 12 9 18"
-								}
-							}
+							"{root}"
 						]
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"color": "#71717a"
-					}
-				},
-				"children": [
-					"{section}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"display": "inline-flex",
-						"alignItems": "center",
-						"padding": "0 4px",
-						"color": "#a1a1aa"
-					}
-				},
-				"children": [
+					},
 					{
-						"tag": "svg",
+						"tag": "span",
 						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#a1a1aa",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"display": "inline-flex",
+								"alignItems": "center",
+								"padding": "0 4px",
+								"color": "#a1a1aa",
+								"flexWrap": "wrap"
+							}
 						},
 						"children": [
 							{
-								"tag": "polyline",
+								"tag": "svg",
 								"props": {
-									"points": "9 6 15 12 9 18"
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#18181b",
-									"success": "#16a34a",
-									"warning": "#f59e0b",
-									"danger": "#ef4444",
-									"info": "#3b82f6",
-									"neutral": "#71717a"
+									"width": 14,
+									"height": 14,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#a1a1aa",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
 								},
-								"default": "#18181b"
+								"children": [
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "9 6 15 12 9 18"
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"color": "#71717a"
 							}
 						},
-						"fontWeight": 600
+						"children": [
+							"{section}"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"display": "inline-flex",
+								"alignItems": "center",
+								"padding": "0 4px",
+								"color": "#a1a1aa",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "svg",
+								"props": {
+									"width": 14,
+									"height": 14,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#a1a1aa",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "9 6 15 12 9 18"
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#18181b",
+											"success": "#16a34a",
+											"warning": "#f59e0b",
+											"danger": "#ef4444",
+											"info": "#3b82f6",
+											"neutral": "#71717a"
+										},
+										"default": "#18181b"
+									}
+								},
+								"fontWeight": 600
+							}
+						},
+						"children": [
+							"{page}"
+						]
 					}
-				},
+				]
+			},
+			{
+				"tag": "details",
 				"children": [
-					"{page}"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Root ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Root",
+											"value": {
+												"ttArg": "root"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "root"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Section ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Section",
+											"value": {
+												"ttArg": "section"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "section"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Current page ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Current page",
+											"value": {
+												"ttArg": "page"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "page"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "breadcrumb-pagination-breadcrumb",
+									"title": "Breadcrumb",
+									"details": "Root: {root}\nSection: {section}\nCurrent page: {page}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "breadcrumb-pagination-breadcrumb",
 	"source": {
 		"kind": "archetype",

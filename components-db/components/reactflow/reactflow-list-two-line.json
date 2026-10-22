@@ -3,7 +3,7 @@
 	"name": "Two-line List",
 	"library": "reactflow",
 	"category": "data-display",
-	"description": "Two-line list rows in the React Flow style — a weighted title over a muted subtitle, with optional trailing chevrons for navigation.",
+	"description": "Two-line list rows in the React Flow style — a weighted title over a muted subtitle, with optional trailing chevrons for navigation. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"list",
 		"two-line",
@@ -38,134 +38,340 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Chevrons"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "ul",
+		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"listStyle": "none",
-						"margin": 0,
-						"padding": 0,
-						"width": "280px",
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"color": "#1a192b",
-						"background": "#ffffff",
-						"borderRadius": "5px",
-						"overflow": "hidden"
-					},
-					{
-						"border": "1px solid #1a192b",
-						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"ttRepeat": {
-					"arg": "count",
-					"max": 6,
-					"node": {
-						"tag": "li",
-						"props": {
-							"style": {
-								"ttMerge": [
+				"tag": "ul",
+				"props": {
+					"style": {
+						"ttMerge": [
+							{
+								"listStyle": "none",
+								"margin": 0,
+								"padding": 0,
+								"width": "280px",
+								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+								"color": "#1a192b",
+								"background": "#ffffff",
+								"borderRadius": "5px",
+								"overflow": "hidden",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							},
+							{
+								"border": "1px solid #1a192b",
+								"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
+							}
+						]
+					}
+				},
+				"children": [
+					{
+						"ttRepeat": {
+							"arg": "count",
+							"max": 6,
+							"node": {
+								"tag": "li",
+								"props": {
+									"style": {
+										"ttMerge": [
+											{
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "12px",
+												"padding": "10px 14px",
+												"fontSize": "12px",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "n",
+													"equals": 1,
+													"then": {},
+													"else": {
+														"borderTop": "1px dashed #e2e2e5"
+													}
+												}
+											}
+										]
+									}
+								},
+								"children": [
 									{
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "12px",
-										"padding": "10px 14px",
-										"fontSize": "12px"
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"flexDirection": "column",
+												"gap": "2px",
+												"flexGrow": 1,
+												"minWidth": 0
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontWeight": 600,
+														"fontSize": "12px"
+													}
+												},
+												"children": [
+													"{title}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#6f6e77",
+														"fontSize": "12px"
+													}
+												},
+												"children": [
+													"{subtitle} · {n}h ago"
+												]
+											}
+										]
 									},
 									{
 										"ttIf": {
-											"arg": "n",
-											"equals": 1,
-											"then": {},
-											"else": {
-												"borderTop": "1px dashed #e2e2e5"
+											"arg": "chevrons",
+											"then": {
+												"tag": "svg",
+												"props": {
+													"width": 16,
+													"height": 16,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "#b1b1b7",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "9 6 15 12 9 18"
+														}
+													}
+												]
 											}
 										}
 									}
 								]
 							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
 						},
 						"children": [
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"gap": "2px",
-										"flexGrow": 1,
-										"minWidth": 0
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Title ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 40,
 											"style": {
-												"fontWeight": 600,
-												"fontSize": "12px"
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"{title}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77",
-												"fontSize": "12px"
-											}
-										},
-										"children": [
-											"{subtitle} · {n}h ago"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
 									}
 								]
 							},
 							{
-								"ttIf": {
-									"arg": "chevrons",
-									"then": {
-										"tag": "svg",
+								"tag": "label",
+								"children": [
+									"Subtitle ",
+									{
+										"tag": "input",
 										"props": {
-											"width": 16,
-											"height": 16,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#b1b1b7",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
+											"aria-label": "Subtitle",
+											"value": {
+												"ttArg": "subtitle"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "9 6 15 12 9 18"
-												}
-											}
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "subtitle"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Rows ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Rows",
+											"value": {
+												"ttArg": "count"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 6
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "count"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Chevrons ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Chevrons",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "chevrons"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "chevrons"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "list-two-line",
+									"title": "Two-line List",
+									"details": "Title: {title}\nSubtitle: {subtitle}\nRows: {count}\nChevrons: {chevrons}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "list-two-line",
 	"source": {
 		"kind": "archetype",

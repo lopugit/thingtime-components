@@ -3,7 +3,7 @@
 	"name": "Numbered Steps",
 	"library": "bootstrap",
 	"category": "navigation",
-	"description": "Numbered step list in the Bootstrap style — circled step numbers with titles and helper descriptions, the current step filled with the tone color.",
+	"description": "Numbered step list in the Bootstrap style — circled step numbers with titles and helper descriptions, the current step filled with the tone color. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"steps",
 		"stepper",
@@ -56,16 +56,46 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "panel1",
+			"type": "string",
+			"default": "Enter your account details.",
+			"maxLength": 500
+		},
+		{
+			"name": "panel2",
+			"type": "string",
+			"default": "Describe your profile.",
+			"maxLength": 500
+		},
+		{
+			"name": "panel3",
+			"type": "string",
+			"default": "Review and save your progress.",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "flex-start",
-				"width": "100%",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -73,9 +103,15 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "flex-start",
-						"gap": "10px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #dee2e6",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "#212529",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -83,573 +119,545 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"width": "30px",
-										"height": "30px",
-										"borderRadius": "50rem",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0,
-										"boxSizing": "border-box",
-										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"fontSize": "14px",
-										"fontWeight": 600
-									},
-									{
-										"ttMap": {
-											"arg": "current",
-											"values": {
-												"1": {
-													"background": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#0d6efd",
-																"success": "#198754",
-																"warning": "#ffc107",
-																"danger": "#dc3545",
-																"info": "#0dcaf0",
-																"neutral": "#6c757d"
-															},
-															"default": "#0d6efd"
-														}
-													},
-													"color": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#ffffff",
-																"success": "#ffffff",
-																"warning": "#000000",
-																"danger": "#ffffff",
-																"info": "#000000",
-																"neutral": "#ffffff"
-															},
-															"default": "#ffffff"
-														}
-													}
-												},
-												"2": {
-													"background": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#cfe2ff",
-																"success": "#d1e7dd",
-																"warning": "#fff3cd",
-																"danger": "#f8d7da",
-																"info": "#cff4fc",
-																"neutral": "#e9ecef"
-															},
-															"default": "#cfe2ff"
-														}
-													},
-													"color": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#052c65",
-																"success": "#0a3622",
-																"warning": "#664d03",
-																"danger": "#58151c",
-																"info": "#055160",
-																"neutral": "#495057"
-															},
-															"default": "#052c65"
-														}
-													},
-													"border": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "1px solid #9ec5fe",
-																"success": "1px solid #a3cfbb",
-																"warning": "1px solid #ffe69c",
-																"danger": "1px solid #f1aeb5",
-																"info": "1px solid #9eeaf9",
-																"neutral": "1px solid #ced4da"
-															},
-															"default": "1px solid #9ec5fe"
-														}
-													}
-												},
-												"3": {
-													"background": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#cfe2ff",
-																"success": "#d1e7dd",
-																"warning": "#fff3cd",
-																"danger": "#f8d7da",
-																"info": "#cff4fc",
-																"neutral": "#e9ecef"
-															},
-															"default": "#cfe2ff"
-														}
-													},
-													"color": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#052c65",
-																"success": "#0a3622",
-																"warning": "#664d03",
-																"danger": "#58151c",
-																"info": "#055160",
-																"neutral": "#495057"
-															},
-															"default": "#052c65"
-														}
-													},
-													"border": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "1px solid #9ec5fe",
-																"success": "1px solid #a3cfbb",
-																"warning": "1px solid #ffe69c",
-																"danger": "1px solid #f1aeb5",
-																"info": "1px solid #9eeaf9",
-																"neutral": "1px solid #ced4da"
-															},
-															"default": "1px solid #9ec5fe"
-														}
-													}
-												}
-											},
-											"default": {
-												"background": "#ffffff",
-												"border": "1px solid #dee2e6",
-												"color": "#6c757d"
-											}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							"1"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+								"flexWrap": "wrap",
+								"gap": "6px"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"ttMerge": [
-											{
-												"fontSize": "16px",
-												"fontWeight": 500
-											},
-											{
-												"ttMap": {
-													"arg": "current",
-													"values": {
-														"1": {
-															"color": "#212529"
-														},
-														"2": {
-															"color": "#212529"
-														},
-														"3": {
-															"color": "#212529"
-														}
-													},
-													"default": {
-														"color": "#6c757d"
-													}
-												}
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #dee2e6",
+										"background": {
+											"ttIf": {
+												"arg": "current",
+												"equals": "1",
+												"then": "#0d6efd",
+												"else": "#f8f9fa"
 											}
-										]
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "current",
+												"equals": "1",
+												"then": "#ffffff",
+												"else": "#212529"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "current",
+											"equals": "1",
+											"then": true,
+											"else": false
+										}
 									}
 								},
 								"children": [
 									"{step1}"
-								]
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "current",
+									"value": "1"
+								}
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"fontSize": "12px",
-										"color": "#6c757d"
-									}
-								},
-								"children": [
-									"Tell us the basics"
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"flex": 1,
-						"height": "1px",
-						"background": "#e9ecef",
-						"margin": "15px 6px 0"
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-start",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"width": "30px",
-										"height": "30px",
-										"borderRadius": "50rem",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0,
-										"boxSizing": "border-box",
-										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"fontSize": "14px",
-										"fontWeight": 600
-									},
-									{
-										"ttMap": {
-											"arg": "current",
-											"values": {
-												"1": {
-													"background": "#ffffff",
-													"border": "1px solid #dee2e6",
-													"color": "#6c757d"
-												},
-												"2": {
-													"background": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#0d6efd",
-																"success": "#198754",
-																"warning": "#ffc107",
-																"danger": "#dc3545",
-																"info": "#0dcaf0",
-																"neutral": "#6c757d"
-															},
-															"default": "#0d6efd"
-														}
-													},
-													"color": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#ffffff",
-																"success": "#ffffff",
-																"warning": "#000000",
-																"danger": "#ffffff",
-																"info": "#000000",
-																"neutral": "#ffffff"
-															},
-															"default": "#ffffff"
-														}
-													}
-												},
-												"3": {
-													"background": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#cfe2ff",
-																"success": "#d1e7dd",
-																"warning": "#fff3cd",
-																"danger": "#f8d7da",
-																"info": "#cff4fc",
-																"neutral": "#e9ecef"
-															},
-															"default": "#cfe2ff"
-														}
-													},
-													"color": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#052c65",
-																"success": "#0a3622",
-																"warning": "#664d03",
-																"danger": "#58151c",
-																"info": "#055160",
-																"neutral": "#495057"
-															},
-															"default": "#052c65"
-														}
-													},
-													"border": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "1px solid #9ec5fe",
-																"success": "1px solid #a3cfbb",
-																"warning": "1px solid #ffe69c",
-																"danger": "1px solid #f1aeb5",
-																"info": "1px solid #9eeaf9",
-																"neutral": "1px solid #ced4da"
-															},
-															"default": "1px solid #9ec5fe"
-														}
-													}
-												}
-											},
-											"default": {
-												"background": "#ffffff",
-												"border": "1px solid #dee2e6",
-												"color": "#6c757d"
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #dee2e6",
+										"background": {
+											"ttIf": {
+												"arg": "current",
+												"equals": "2",
+												"then": "#0d6efd",
+												"else": "#f8f9fa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "current",
+												"equals": "2",
+												"then": "#ffffff",
+												"else": "#212529"
 											}
 										}
-									}
-								]
-							}
-						},
-						"children": [
-							"2"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
-											{
-												"fontSize": "16px",
-												"fontWeight": 500
-											},
-											{
-												"ttMap": {
-													"arg": "current",
-													"values": {
-														"1": {
-															"color": "#6c757d"
-														},
-														"2": {
-															"color": "#212529"
-														},
-														"3": {
-															"color": "#212529"
-														}
-													},
-													"default": {
-														"color": "#6c757d"
-													}
-												}
-											}
-										]
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "current",
+											"equals": "2",
+											"then": true,
+											"else": false
+										}
 									}
 								},
 								"children": [
 									"{step2}"
-								]
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "current",
+									"value": "2"
+								}
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"fontSize": "12px",
-										"color": "#6c757d"
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #dee2e6",
+										"background": {
+											"ttIf": {
+												"arg": "current",
+												"equals": "3",
+												"then": "#0d6efd",
+												"else": "#f8f9fa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "current",
+												"equals": "3",
+												"then": "#ffffff",
+												"else": "#212529"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "current",
+											"equals": "3",
+											"then": true,
+											"else": false
+										}
 									}
 								},
 								"children": [
-									"Configure the details"
+									"{step3}"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "current",
+									"value": "3"
+								}
+							}
+						]
+					},
+					{
+						"tag": "section",
+						"children": [
+							{
+								"tag": "h3",
+								"children": [
+									{
+										"ttMap": {
+											"arg": "current",
+											"values": {
+												"1": "{step1}",
+												"2": "{step2}",
+												"3": "{step3}"
+											}
+										}
+									}
 								]
+							},
+							{
+								"ttMap": {
+									"arg": "current",
+									"values": {
+										"1": {
+											"tag": "input",
+											"props": {
+												"type": "text",
+												"aria-label": "panel1",
+												"value": {
+													"ttArg": "panel1"
+												},
+												"style": {
+													"width": "100%",
+													"minWidth": 0,
+													"padding": "8px",
+													"border": "1px solid #dee2e6",
+													"maxWidth": "100%",
+													"boxSizing": "border-box"
+												}
+											},
+											"ttAction": "$ui",
+											"ttActionInputs": {
+												"op": "set",
+												"key": "panel1"
+											}
+										},
+										"2": {
+											"tag": "input",
+											"props": {
+												"type": "text",
+												"aria-label": "panel2",
+												"value": {
+													"ttArg": "panel2"
+												},
+												"style": {
+													"width": "100%",
+													"minWidth": 0,
+													"padding": "8px",
+													"border": "1px solid #dee2e6",
+													"maxWidth": "100%",
+													"boxSizing": "border-box"
+												}
+											},
+											"ttAction": "$ui",
+											"ttActionInputs": {
+												"op": "set",
+												"key": "panel2"
+											}
+										},
+										"3": {
+											"tag": "input",
+											"props": {
+												"type": "text",
+												"aria-label": "panel3",
+												"value": {
+													"ttArg": "panel3"
+												},
+												"style": {
+													"width": "100%",
+													"minWidth": 0,
+													"padding": "8px",
+													"border": "1px solid #dee2e6",
+													"maxWidth": "100%",
+													"boxSizing": "border-box"
+												}
+											},
+											"ttAction": "$ui",
+											"ttActionInputs": {
+												"op": "set",
+												"key": "panel3"
+											}
+										}
+									}
+								}
 							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"flex": 1,
-						"height": "1px",
-						"background": "#e9ecef",
-						"margin": "15px 6px 0"
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-start",
-						"gap": "10px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"width": "30px",
-										"height": "30px",
-										"borderRadius": "50rem",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0,
-										"boxSizing": "border-box",
-										"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"fontSize": "14px",
-										"fontWeight": 600
-									},
-									{
-										"ttMap": {
-											"arg": "current",
-											"values": {
-												"1": {
-													"background": "#ffffff",
-													"border": "1px solid #dee2e6",
-													"color": "#6c757d"
-												},
-												"2": {
-													"background": "#ffffff",
-													"border": "1px solid #dee2e6",
-													"color": "#6c757d"
-												},
-												"3": {
-													"background": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#0d6efd",
-																"success": "#198754",
-																"warning": "#ffc107",
-																"danger": "#dc3545",
-																"info": "#0dcaf0",
-																"neutral": "#6c757d"
-															},
-															"default": "#0d6efd"
-														}
-													},
-													"color": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#ffffff",
-																"success": "#ffffff",
-																"warning": "#000000",
-																"danger": "#ffffff",
-																"info": "#000000",
-																"neutral": "#ffffff"
-															},
-															"default": "#ffffff"
-														}
-													}
-												}
-											},
-											"default": {
-												"background": "#ffffff",
-												"border": "1px solid #dee2e6",
-												"color": "#6c757d"
-											}
-										}
-									}
-								]
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"3"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"ttMerge": [
+								"tag": "label",
+								"children": [
+									"Current step ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Current step",
+											"value": {
+												"ttArg": "current"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
 											{
-												"fontSize": "16px",
-												"fontWeight": 500
+												"tag": "option",
+												"props": {
+													"value": "1"
+												},
+												"children": [
+													"1"
+												]
 											},
 											{
-												"ttMap": {
-													"arg": "current",
-													"values": {
-														"1": {
-															"color": "#6c757d"
-														},
-														"2": {
-															"color": "#6c757d"
-														},
-														"3": {
-															"color": "#212529"
-														}
-													},
-													"default": {
-														"color": "#6c757d"
-													}
-												}
+												"tag": "option",
+												"props": {
+													"value": "2"
+												},
+												"children": [
+													"2"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "3"
+												},
+												"children": [
+													"3"
+												]
 											}
-										]
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "current"
+										}
 									}
-								},
-								"children": [
-									"{step3}"
 								]
 							},
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "#6c757d"
+								"tag": "label",
+								"children": [
+									"panel1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "panel1",
+											"value": {
+												"ttArg": "panel1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "panel1"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"panel2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "panel2",
+											"value": {
+												"ttArg": "panel2"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "panel2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"panel3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "panel3",
+											"value": {
+												"ttArg": "panel3"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "panel3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Step 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Step 1",
+											"value": {
+												"ttArg": "step1"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "step1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Step 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Step 2",
+											"value": {
+												"ttArg": "step2"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "step2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Step 3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Step 3",
+											"value": {
+												"ttArg": "step3"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "step3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "tabs-steps-steps-numbered",
+									"title": "Numbered Steps",
+									"details": "Step 1: {step1}\nStep 2: {step2}\nStep 3: {step3}\nCurrent step: {current}\npanel1: {panel1}\npanel2: {panel2}\npanel3: {panel3}"
 								},
 								"children": [
-									"Review and launch"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -657,7 +665,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "tabs-steps-steps-numbered",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "VPN Status Card",
 	"library": "thingtime",
 	"category": "security",
-	"description": "VPN status card in the Thingtime style — shield outline and status dot flipping success/warning/muted, a server row with a change ghost, up/down speed captions, and a big status-driven toggle.",
+	"description": "VPN status card in the Thingtime style — shield outline and status dot flipping success/warning/muted, a server row with a change ghost, up/down speed captions, and a big status-driven toggle. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"security",
 		"vpn",
@@ -43,25 +43,28 @@
 			"default": "86",
 			"label": "Up Mbps",
 			"maxLength": 8
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#ececef",
-				"borderRadius": "16px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-				"boxSizing": "border-box",
-				"width": "290px",
-				"padding": "16px",
-				"gap": "14px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -69,56 +72,224 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"height": "4px",
-						"borderRadius": "999px",
-						"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "12px"
+						"flexDirection": "column",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#ececef",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
+						"boxSizing": "border-box",
+						"width": "290px",
+						"padding": "16px",
+						"gap": "14px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
+						"tag": "div",
 						"props": {
-							"width": 28,
-							"height": 28,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": {
-								"ttMap": {
-									"arg": "status",
-									"values": {
-										"connected": "#2f9e63",
-										"connecting": "#d99a1f",
-										"disconnected": "#b6b6c0"
-									},
-									"default": "#2f9e63"
-								}
-							},
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"height": "4px",
+								"borderRadius": "999px",
+								"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
+							}
+						}
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "12px",
+								"flexWrap": "wrap"
+							}
 						},
 						"children": [
 							{
-								"tag": "path",
+								"tag": "svg",
 								"props": {
-									"d": "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
-								}
+									"width": 28,
+									"height": 28,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": {
+										"ttMap": {
+											"arg": "status",
+											"values": {
+												"connected": "#2f9e63",
+												"connecting": "#d99a1f",
+												"disconnected": "#b6b6c0"
+											},
+											"default": "#2f9e63"
+										}
+									},
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "path",
+										"props": {
+											"d": "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+										}
+									},
+									{
+										"tag": "polyline",
+										"props": {
+											"points": "9 12 11 14 15 10"
+										}
+									}
+								]
 							},
 							{
-								"tag": "polyline",
+								"tag": "div",
 								"props": {
-									"points": "9 12 11 14 15 10"
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"flex": 1,
+										"minWidth": 0
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "6px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"width": "8px",
+														"height": "8px",
+														"borderRadius": "999px",
+														"background": {
+															"ttMap": {
+																"arg": "status",
+																"values": {
+																	"connected": "#2f9e63",
+																	"connecting": "#d99a1f",
+																	"disconnected": "#b6b6c0"
+																},
+																"default": "#2f9e63"
+															}
+														},
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "16px",
+														"fontWeight": 700,
+														"color": "#33333c",
+														"textTransform": "capitalize"
+													}
+												},
+												"children": [
+													"{status}"
+												]
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "11px",
+												"color": "#9a9aa6"
+											}
+										},
+										"children": [
+											"Private connection"
+										]
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"style": {
+										"width": "48px",
+										"height": "28px",
+										"borderRadius": "999px",
+										"padding": "3px",
+										"boxSizing": "border-box",
+										"background": {
+											"ttMap": {
+												"arg": "status",
+												"values": {
+													"connected": "#2f9e63",
+													"connecting": "#d99a1f",
+													"disconnected": "#ececef"
+												},
+												"default": "#2f9e63"
+											}
+										},
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": {
+											"ttIf": {
+												"arg": "status",
+												"equals": "disconnected",
+												"then": "flex-start",
+												"else": "flex-end"
+											}
+										},
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"flexWrap": "wrap"
+									},
+									"type": "button",
+									"aria-label": "status",
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "status",
+											"equals": "disconnected",
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "22px",
+												"height": "22px",
+												"borderRadius": "999px",
+												"background": "#ffffff",
+												"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "status",
+									"value": "disconnected"
 								}
 							}
 						]
@@ -128,10 +299,12 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"flex": 1,
-								"minWidth": 0
+								"alignItems": "center",
+								"gap": "10px",
+								"background": "#f5f5f7",
+								"borderRadius": "12px",
+								"padding": "8px 12px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -140,8 +313,10 @@
 								"props": {
 									"style": {
 										"display": "flex",
-										"alignItems": "center",
-										"gap": "6px"
+										"flexDirection": "column",
+										"gap": "1px",
+										"flex": 1,
+										"minWidth": 0
 									}
 								},
 								"children": [
@@ -149,51 +324,63 @@
 										"tag": "span",
 										"props": {
 											"style": {
-												"width": "8px",
-												"height": "8px",
-												"borderRadius": "999px",
-												"background": {
-													"ttMap": {
-														"arg": "status",
-														"values": {
-															"connected": "#2f9e63",
-															"connecting": "#d99a1f",
-															"disconnected": "#b6b6c0"
-														},
-														"default": "#2f9e63"
-													}
-												},
-												"flexShrink": 0
+												"fontSize": "11px",
+												"color": "#b6b6c0",
+												"fontWeight": 600,
+												"textTransform": "uppercase",
+												"letterSpacing": "0.05em"
 											}
-										}
+										},
+										"children": [
+											"Server"
+										]
 									},
 									{
 										"tag": "span",
 										"props": {
 											"style": {
-												"fontSize": "16px",
-												"fontWeight": 700,
-												"color": "#33333c",
-												"textTransform": "capitalize"
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"color": "#33333c"
 											}
 										},
 										"children": [
-											"{status}"
+											"{location}"
 										]
 									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
+										"background": "transparent",
+										"border": "none",
+										"color": "#d53f8c",
 										"fontSize": "11px",
-										"color": "#9a9aa6"
-									}
+										"fontWeight": 600,
+										"cursor": "pointer",
+										"padding": "8px 12px",
+										"borderRadius": "9px",
+										"whiteSpace": "normal",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
 								},
 								"children": [
-									"Private connection"
-								]
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "security-privacy-vpn",
+									"title": "VPN Status Card",
+									"details": "Status: {status}\nServer location: {location}\nDown Mbps: {down}\nUp Mbps: {up}"
+								}
 							}
 						]
 					},
@@ -201,46 +388,250 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "48px",
-								"height": "28px",
-								"borderRadius": "999px",
-								"padding": "3px",
-								"boxSizing": "border-box",
-								"background": {
-									"ttMap": {
-										"arg": "status",
-										"values": {
-											"connected": "#2f9e63",
-											"connecting": "#d99a1f",
-											"disconnected": "#ececef"
-										},
-										"default": "#2f9e63"
-									}
-								},
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": {
-									"ttIf": {
-										"arg": "status",
-										"equals": "disconnected",
-										"then": "flex-start",
-										"else": "flex-end"
-									}
-								},
-								"flexShrink": 0
+								"gap": "14px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
+								"tag": "span",
 								"props": {
 									"style": {
-										"width": "22px",
-										"height": "22px",
-										"borderRadius": "999px",
-										"background": "#ffffff",
-										"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "11px",
+										"color": "#9a9aa6"
 									}
+								},
+								"children": [
+									"↓ {down} Mbps"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "11px",
+										"color": "#9a9aa6"
+									}
+								},
+								"children": [
+									"↑ {up} Mbps"
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Status ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Status",
+											"value": {
+												"ttArg": "status"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "connected"
+												},
+												"children": [
+													"connected"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "connecting"
+												},
+												"children": [
+													"connecting"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "disconnected"
+												},
+												"children": [
+													"disconnected"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "status"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Server location ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Server location",
+											"value": {
+												"ttArg": "location"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "location"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Down Mbps ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Down Mbps",
+											"value": {
+												"ttArg": "down"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "down"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Up Mbps ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Up Mbps",
+											"value": {
+												"ttArg": "up"
+											},
+											"maxLength": 8,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "up"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "security-privacy-vpn",
+									"title": "VPN Status Card",
+									"details": "Status: {status}\nServer location: {location}\nDown Mbps: {down}\nUp Mbps: {up}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -248,124 +639,14 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px",
-						"background": "#f5f5f7",
-						"borderRadius": "12px",
-						"padding": "8px 12px"
-					}
-				},
+				"tag": "small",
 				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "1px",
-								"flex": 1,
-								"minWidth": 0
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "11px",
-										"color": "#b6b6c0",
-										"fontWeight": 600,
-										"textTransform": "uppercase",
-										"letterSpacing": "0.05em"
-									}
-								},
-								"children": [
-									"Server"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"color": "#33333c"
-									}
-								},
-								"children": [
-									"{location}"
-								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"background": "transparent",
-								"border": "none",
-								"color": "#d53f8c",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "11px",
-								"fontWeight": 600,
-								"cursor": "pointer",
-								"padding": "4px 8px",
-								"borderRadius": "9px",
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"Change"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "14px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "11px",
-								"color": "#9a9aa6"
-							}
-						},
-						"children": [
-							"↓ {down} Mbps"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "11px",
-								"color": "#9a9aa6"
-							}
-						},
-						"children": [
-							"↑ {up} Mbps"
-						]
-					}
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "security-privacy-vpn",
 	"source": {
 		"kind": "archetype",

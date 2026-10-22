@@ -3,7 +3,7 @@
 	"name": "Skeleton Text",
 	"library": "shadcn",
 	"category": "feedback",
-	"description": "Skeleton paragraph placeholder in the shadcn/ui style — grey bars of varying widths standing in for text lines while content loads.",
+	"description": "Skeleton paragraph placeholder in the shadcn/ui style — grey bars of varying widths standing in for text lines while content loads. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"loading",
 		"skeleton",
@@ -35,68 +35,194 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Rounded"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "10px",
-				"width": "240px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"ttRepeat": {
-					"arg": "lines",
-					"max": 6,
-					"node": {
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": {
-									"ttMap": {
-										"arg": "size",
-										"values": {
-											"sm": "8px",
-											"md": "10px",
-											"lg": "14px"
+				"tag": "div",
+				"props": {
+					"style": {
+						"display": "flex",
+						"flexDirection": "column",
+						"gap": "10px",
+						"width": "240px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
+					}
+				},
+				"children": [
+					{
+						"ttRepeat": {
+							"arg": "lines",
+							"max": 6,
+							"node": {
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": {
+											"ttMap": {
+												"arg": "size",
+												"values": {
+													"sm": "8px",
+													"md": "10px",
+													"lg": "14px"
+												},
+												"default": "10px"
+											}
 										},
-										"default": "10px"
-									}
-								},
-								"borderRadius": {
-									"ttIf": {
-										"arg": "rounded",
-										"then": "999px",
-										"else": "6px"
-									}
-								},
-								"background": "#f4f4f5",
-								"width": {
-									"ttMap": {
-										"arg": "n",
-										"values": {
-											"1": "100%",
-											"2": "92%",
-											"3": "61%",
-											"4": "87%",
-											"5": "74%",
-											"6": "48%"
+										"borderRadius": {
+											"ttIf": {
+												"arg": "rounded",
+												"then": "999px",
+												"else": "6px"
+											}
 										},
-										"default": "80%"
+										"background": "#f4f4f5",
+										"width": {
+											"ttMap": {
+												"arg": "n",
+												"values": {
+													"1": "100%",
+													"2": "92%",
+													"3": "61%",
+													"4": "87%",
+													"5": "74%",
+													"6": "48%"
+												},
+												"default": "80%"
+											}
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
 								}
 							}
 						}
 					}
-				}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Lines ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Lines",
+											"value": {
+												"ttArg": "lines"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 6
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "lines"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "loading-skeleton-text",
+									"title": "Skeleton Text",
+									"details": "Lines: {lines}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "loading-skeleton-text",
 	"source": {
 		"kind": "archetype",

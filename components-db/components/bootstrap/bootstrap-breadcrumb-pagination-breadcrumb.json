@@ -3,7 +3,7 @@
 	"name": "Breadcrumb",
 	"library": "bootstrap",
 	"category": "navigation",
-	"description": "Three-level breadcrumb trail in the Bootstrap style — muted ancestor crumbs, slash separators, and a tone-colored current page.",
+	"description": "Three-level breadcrumb trail in the Bootstrap style — muted ancestor crumbs, slash separators, and a tone-colored current page. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"breadcrumb",
 		"navigation",
@@ -45,95 +45,275 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "nav",
+		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"fontSize": "14px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
+				"tag": "nav",
 				"props": {
 					"style": {
-						"color": "#6c757d"
+						"display": "flex",
+						"alignItems": "center",
+						"fontSize": "14px",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
-					"{root}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"color": "#adb5bd",
-						"padding": "0 8px",
-						"fontSize": "14px"
-					}
-				},
-				"children": [
-					"/"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"color": "#6c757d"
-					}
-				},
-				"children": [
-					"{section}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"color": "#adb5bd",
-						"padding": "0 8px",
-						"fontSize": "14px"
-					}
-				},
-				"children": [
-					"/"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#0d6efd",
-									"success": "#198754",
-									"warning": "#ffc107",
-									"danger": "#dc3545",
-									"info": "#0dcaf0",
-									"neutral": "#6c757d"
-								},
-								"default": "#0d6efd"
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"color": "#6c757d"
 							}
 						},
-						"fontWeight": 500
+						"children": [
+							"{root}"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"color": "#adb5bd",
+								"padding": "0 8px",
+								"fontSize": "14px"
+							}
+						},
+						"children": [
+							"/"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"color": "#6c757d"
+							}
+						},
+						"children": [
+							"{section}"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"color": "#adb5bd",
+								"padding": "0 8px",
+								"fontSize": "14px"
+							}
+						},
+						"children": [
+							"/"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#0d6efd",
+											"success": "#198754",
+											"warning": "#ffc107",
+											"danger": "#dc3545",
+											"info": "#0dcaf0",
+											"neutral": "#6c757d"
+										},
+										"default": "#0d6efd"
+									}
+								},
+								"fontWeight": 500
+							}
+						},
+						"children": [
+							"{page}"
+						]
 					}
-				},
+				]
+			},
+			{
+				"tag": "details",
 				"children": [
-					"{page}"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Root ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Root",
+											"value": {
+												"ttArg": "root"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "root"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Section ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Section",
+											"value": {
+												"ttArg": "section"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "section"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Current page ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Current page",
+											"value": {
+												"ttArg": "page"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "page"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "breadcrumb-pagination-breadcrumb",
+									"title": "Breadcrumb",
+									"details": "Root: {root}\nSection: {section}\nCurrent page: {page}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "breadcrumb-pagination-breadcrumb",
 	"source": {
 		"kind": "archetype",

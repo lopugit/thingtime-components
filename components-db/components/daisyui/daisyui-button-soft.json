@@ -3,7 +3,7 @@
 	"name": "Soft Button",
 	"library": "daisyui",
 	"category": "buttons",
-	"description": "Tinted button in the daisyUI style — soft tone wash background with the deeper tone for the label.",
+	"description": "Tinted button in the daisyUI style — soft tone wash background with the deeper tone for the label. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"button",
 		"action",
@@ -48,100 +48,240 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Disabled"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "button",
+		"tag": "div",
 		"props": {
-			"type": "button",
 			"style": {
-				"ttMerge": [
-					{
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"gap": "8px",
-						"border": "none",
-						"borderRadius": "12px",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontWeight": 600,
-						"cursor": "pointer"
-					},
-					{
-						"ttMap": {
-							"arg": "size",
-							"values": {
-								"sm": {
-									"height": "32px",
-									"padding": "0 12px",
-									"fontSize": "14px"
-								},
-								"md": {
-									"height": "48px",
-									"padding": "0 16px",
-									"fontSize": "14px"
-								},
-								"lg": {
-									"height": "56px",
-									"padding": "0 20px",
-									"fontSize": "18px"
-								}
-							},
-							"default": {
-								"height": "48px",
-								"padding": "0 16px",
-								"fontSize": "14px"
-							}
-						}
-					},
-					{
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#eee6ff",
-									"success": "#dcfce7",
-									"warning": "#fef9c3",
-									"danger": "#ffe4e6",
-									"info": "#e0f2fe",
-									"neutral": "#f2f2f2"
-								},
-								"default": "#eee6ff"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#4506cb",
-									"success": "#00753d",
-									"warning": "#854d0e",
-									"danger": "#be123c",
-									"info": "#0369a1",
-									"neutral": "#2a323c"
-								},
-								"default": "#4506cb"
-							}
-						}
-					},
-					{
-						"ttIf": {
-							"arg": "disabled",
-							"then": {
-								"opacity": 0.5,
-								"cursor": "not-allowed"
-							},
-							"else": {}
-						}
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			"{label}"
+			{
+				"tag": "button",
+				"props": {
+					"type": "button",
+					"style": {
+						"ttMerge": [
+							{
+								"display": "inline-flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"gap": "8px",
+								"border": "none",
+								"borderRadius": "12px",
+								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+								"fontWeight": 600,
+								"cursor": "pointer",
+								"flexWrap": "wrap"
+							},
+							{
+								"ttMap": {
+									"arg": "size",
+									"values": {
+										"sm": {
+											"height": "32px",
+											"padding": "0 12px",
+											"fontSize": "14px"
+										},
+										"md": {
+											"height": "48px",
+											"padding": "0 16px",
+											"fontSize": "14px"
+										},
+										"lg": {
+											"height": "56px",
+											"padding": "0 20px",
+											"fontSize": "18px"
+										}
+									},
+									"default": {
+										"height": "48px",
+										"padding": "0 16px",
+										"fontSize": "14px"
+									}
+								}
+							},
+							{
+								"background": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#eee6ff",
+											"success": "#dcfce7",
+											"warning": "#fef9c3",
+											"danger": "#ffe4e6",
+											"info": "#e0f2fe",
+											"neutral": "#f2f2f2"
+										},
+										"default": "#eee6ff"
+									}
+								},
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#4506cb",
+											"success": "#00753d",
+											"warning": "#854d0e",
+											"danger": "#be123c",
+											"info": "#0369a1",
+											"neutral": "#2a323c"
+										},
+										"default": "#4506cb"
+									}
+								}
+							},
+							{
+								"ttIf": {
+									"arg": "disabled",
+									"then": {
+										"opacity": 0.5,
+										"cursor": "not-allowed"
+									},
+									"else": {}
+								}
+							},
+							{
+								"width": "auto",
+								"height": "auto",
+								"minWidth": 0,
+								"padding": "8px 12px",
+								"whiteSpace": "normal",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							}
+						]
+					},
+					"disabled": {
+						"ttArg": "disabled"
+					},
+					"aria-label": "{actionLabel}"
+				},
+				"children": [
+					"{actionLabel}"
+				],
+				"ttAction": "{actionKey}",
+				"ttActionInputs": {
+					"family": "button-soft",
+					"title": "Soft Button",
+					"details": "Label: {label}"
+				}
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "button-soft",
+									"title": "Soft Button",
+									"details": "Label: {label}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "button-soft",
 	"source": {
 		"kind": "archetype",

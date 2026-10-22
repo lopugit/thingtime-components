@@ -3,7 +3,7 @@
 	"name": "Booking Summary Card",
 	"library": "thingtime",
 	"category": "scheduling",
-	"description": "Booking summary card in the Thingtime style — host avatar and name over the meeting title with a tone duration chip, a date-and-time slot panel, a confirm button beside a ghost reschedule and a mono powered-by caption.",
+	"description": "Booking summary card in the Thingtime style — host avatar and name over the meeting title with a tone duration chip, a date-and-time slot panel, a confirm button beside a ghost reschedule and a mono powered-by caption. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"booking",
 		"meeting",
@@ -60,25 +60,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
-				"gap": "12px",
-				"padding": "16px",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#ececef",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -87,8 +90,18 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
+						"flexDirection": "column",
+						"width": "320px",
+						"gap": "12px",
+						"padding": "16px",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#ececef",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -96,47 +109,100 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "36px",
-								"height": "36px",
-								"borderRadius": "999px",
-								"background": "#f5f5f7",
-								"color": "#9a9aa6",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "12px",
-								"flexShrink": 0
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
+								"tag": "div",
 								"props": {
-									"width": 18,
-									"height": 18,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"style": {
+										"width": "36px",
+										"height": "36px",
+										"borderRadius": "999px",
+										"background": "#f5f5f7",
+										"color": "#9a9aa6",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "12px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
 								},
 								"children": [
 									{
-										"tag": "path",
+										"tag": "svg",
 										"props": {
-											"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-										}
+											"width": 18,
+											"height": 18,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "path",
+												"props": {
+													"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 7,
+													"r": 4
+												}
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 700,
+												"color": "#33333c"
+											}
+										},
+										"children": [
+											"{host}"
+										]
 									},
 									{
-										"tag": "circle",
+										"tag": "span",
 										"props": {
-											"cx": 12,
-											"cy": 7,
-											"r": 4
-										}
+											"style": {
+												"fontSize": "11px",
+												"color": "#9a9aa6"
+											}
+										},
+										"children": [
+											"Host"
+										]
 									}
 								]
 							}
@@ -147,8 +213,10 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px"
+								"alignItems": "center",
+								"gap": "8px",
+								"justifyContent": "space-between",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -156,105 +224,121 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "14px",
+										"fontSize": "16px",
 										"fontWeight": 700,
 										"color": "#33333c"
 									}
 								},
 								"children": [
-									"{host}"
+									"{title}"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "4px",
+										"padding": "2px 8px",
+										"borderRadius": "999px",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#f5f5f7",
+													"success": "#eafaf1",
+													"warning": "#fdf6e5",
+													"danger": "#fdeceb",
+													"info": "#fdeaf3",
+													"neutral": "#f5f5f7"
+												},
+												"default": "#f5f5f7"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#16161a",
+													"success": "#1f7a4a",
+													"warning": "#9a6c12",
+													"danger": "#a83238",
+													"info": "#a32d6a",
+													"neutral": "#5a5a66"
+												},
+												"default": "#16161a"
+											}
+										},
 										"fontSize": "11px",
-										"color": "#9a9aa6"
+										"fontWeight": 600,
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"Host"
+									{
+										"tag": "svg",
+										"props": {
+											"width": 12,
+											"height": 12,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 10
+												}
+											},
+											{
+												"tag": "polyline",
+												"props": {
+													"points": "12 6 12 12 16 14"
+												}
+											}
+										]
+									},
+									"{duration} min"
 								]
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"justifyContent": "space-between"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "16px",
-								"fontWeight": 700,
-								"color": "#33333c"
-							}
-						},
-						"children": [
-							"{title}"
-						]
 					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"display": "inline-flex",
+								"display": "flex",
 								"alignItems": "center",
-								"gap": "4px",
-								"padding": "2px 8px",
-								"borderRadius": "999px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#f5f5f7",
-											"success": "#eafaf1",
-											"warning": "#fdf6e5",
-											"danger": "#fdeceb",
-											"info": "#fdeaf3",
-											"neutral": "#f5f5f7"
-										},
-										"default": "#f5f5f7"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#16161a",
-											"success": "#1f7a4a",
-											"warning": "#9a6c12",
-											"danger": "#a83238",
-											"info": "#a32d6a",
-											"neutral": "#5a5a66"
-										},
-										"default": "#16161a"
-									}
-								},
-								"fontSize": "11px",
-								"fontWeight": 600
+								"gap": "8px",
+								"padding": "10px 12px",
+								"borderRadius": "9px",
+								"background": "#f5f5f7",
+								"borderWidth": "1px",
+								"borderStyle": "solid",
+								"borderColor": "#f5f5f7",
+								"fontSize": "12px",
+								"fontWeight": 500,
+								"color": "#33333c",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
 								"tag": "svg",
 								"props": {
-									"width": 12,
-									"height": 12,
+									"width": 14,
+									"height": 14,
 									"viewBox": "0 0 24 24",
 									"fill": "none",
-									"stroke": "currentColor",
+									"stroke": "#9a9aa6",
 									"strokeWidth": 2,
 									"strokeLinecap": "round",
 									"strokeLinejoin": "round",
@@ -262,198 +346,393 @@
 								},
 								"children": [
 									{
-										"tag": "circle",
+										"tag": "rect",
 										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
+											"x": 3,
+											"y": 4,
+											"width": 18,
+											"height": 18,
+											"rx": 2
 										}
 									},
 									{
-										"tag": "polyline",
+										"tag": "line",
 										"props": {
-											"points": "12 6 12 12 16 14"
+											"x1": 16,
+											"y1": 2,
+											"x2": 16,
+											"y2": 6
+										}
+									},
+									{
+										"tag": "line",
+										"props": {
+											"x1": 8,
+											"y1": 2,
+											"x2": 8,
+											"y2": 6
+										}
+									},
+									{
+										"tag": "line",
+										"props": {
+											"x1": 3,
+											"y1": 10,
+											"x2": 21,
+											"y2": 10
 										}
 									}
 								]
 							},
-							"{duration} min"
+							"{date} · {time}"
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"padding": "10px 12px",
-						"borderRadius": "9px",
-						"background": "#f5f5f7",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "#f5f5f7",
-						"fontSize": "12px",
-						"fontWeight": 500,
-						"color": "#33333c"
-					}
-				},
-				"children": [
+					},
 					{
-						"tag": "svg",
+						"tag": "div",
 						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#9a9aa6",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"flexWrap": "wrap"
+							}
 						},
 						"children": [
 							{
-								"tag": "rect",
+								"tag": "button",
 								"props": {
-									"x": 3,
-									"y": 4,
-									"width": 18,
-									"height": 18,
-									"rx": 2
+									"type": "button",
+									"style": {
+										"flex": 1,
+										"height": "auto",
+										"border": "none",
+										"borderRadius": "12px",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#16161a",
+													"success": "#2f9e63",
+													"warning": "#d99a1f",
+													"danger": "#d5484f",
+													"info": "#d53f8c",
+													"neutral": "#9a9aa6"
+												},
+												"default": "#16161a"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"cursor": "pointer",
+										"width": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "schedule-booking",
+									"title": "Booking Summary Card",
+									"details": "Host: {host}\nMeeting title: {title}\nDuration (min): {duration}\nDate: {date}\nTime: {time}"
 								}
 							},
 							{
-								"tag": "line",
+								"tag": "button",
 								"props": {
-									"x1": 16,
-									"y1": 2,
-									"x2": 16,
-									"y2": 6
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 8,
-									"y1": 2,
-									"x2": 8,
-									"y2": 6
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 3,
-									"y1": 10,
-									"x2": 21,
-									"y2": 10
+									"type": "button",
+									"style": {
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "12px",
+										"background": "transparent",
+										"color": "#9a9aa6",
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"cursor": "pointer",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "schedule-booking",
+									"title": "Booking Summary Card",
+									"details": "Host: {host}\nMeeting title: {title}\nDuration (min): {duration}\nDate: {date}\nTime: {time}"
 								}
 							}
 						]
 					},
-					"{date} · {time}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
 					{
-						"tag": "button",
+						"tag": "span",
 						"props": {
-							"type": "button",
 							"style": {
-								"flex": 1,
-								"height": "36px",
-								"border": "none",
-								"borderRadius": "12px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#16161a",
-											"success": "#2f9e63",
-											"warning": "#d99a1f",
-											"danger": "#d5484f",
-											"info": "#d53f8c",
-											"neutral": "#9a9aa6"
-										},
-										"default": "#16161a"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"cursor": "pointer"
+								"fontSize": "11px",
+								"color": "#b6b6c0",
+								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+								"textAlign": "center"
 							}
 						},
 						"children": [
-							"Confirm"
+							"Powered by Thingtime"
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "button",
+						"tag": "fieldset",
 						"props": {
-							"type": "button",
 							"style": {
-								"height": "36px",
-								"padding": "0 12px",
-								"border": "none",
-								"borderRadius": "12px",
-								"background": "transparent",
-								"color": "#9a9aa6",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"cursor": "pointer"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"Reschedule"
+							{
+								"tag": "label",
+								"children": [
+									"Host ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Host",
+											"value": {
+												"ttArg": "host"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "host"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Meeting title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Meeting title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Duration (min) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Duration (min)",
+											"value": {
+												"ttArg": "duration"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 5,
+											"max": 240
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "duration"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Date ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Date",
+											"value": {
+												"ttArg": "date"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "date"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Time ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Time",
+											"value": {
+												"ttArg": "time"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "time"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "schedule-booking",
+									"title": "Booking Summary Card",
+									"details": "Host: {host}\nMeeting title: {title}\nDuration (min): {duration}\nDate: {date}\nTime: {time}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "11px",
-						"color": "#b6b6c0",
-						"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-						"textAlign": "center"
-					}
-				},
+				"tag": "small",
 				"children": [
-					"Powered by Thingtime"
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "schedule-booking",
 	"source": {
 		"kind": "archetype",

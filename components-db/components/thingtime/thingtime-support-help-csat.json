@@ -3,7 +3,7 @@
 	"name": "CSAT Prompt",
 	"library": "thingtime",
 	"category": "support",
-	"description": "Post-chat satisfaction prompt in the Thingtime style — five smiley-scale face buttons from terrible to great with the selected one ringed, an optional comment field, and a tone submit button.",
+	"description": "Post-chat satisfaction prompt in the Thingtime style — five smiley-scale face buttons from terrible to great with the selected one ringed, an optional comment field, and a tone submit button. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"support",
 		"csat",
@@ -51,32 +51,34 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"background": "#ffffff",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "#ececef",
-						"borderRadius": "16px",
-						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"color": "#33333c",
-						"boxSizing": "border-box"
-					},
-					{
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "12px",
-						"width": "300px",
-						"padding": "16px"
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -84,575 +86,739 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "2px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "16px",
-								"fontWeight": 700,
-								"color": "#33333c"
-							}
-						},
-						"children": [
-							"How did we do?"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "11px",
-								"color": "#9a9aa6"
-							}
-						},
-						"children": [
-							"Rate your chat with {agent}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "4px"
-					}
-				},
-				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
-									{
-										"width": "40px",
-										"height": "40px",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"background": "#ffffff",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#ececef",
-										"borderRadius": "999px",
-										"cursor": "pointer",
-										"padding": "0"
-									},
-									{
-										"ttIf": {
-											"arg": "rating",
-											"equals": "terrible",
-											"then": {
-												"borderColor": "#16161a",
-												"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
-												"background": "#f5f5f7"
-											},
-											"else": {}
-										}
-									}
-								]
-							}
-						},
-						"children": [
+						"ttMerge": [
 							{
-								"tag": "svg",
-								"props": {
-									"width": 22,
-									"height": 22,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#9a9aa6",
-									"strokeWidth": 1.8,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 8.8,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 15.2,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M7.8 16.4s1.6-2.6 4.2-2.6 4.2 2.6 4.2 2.6"
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
-									{
-										"width": "40px",
-										"height": "40px",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"background": "#ffffff",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#ececef",
-										"borderRadius": "999px",
-										"cursor": "pointer",
-										"padding": "0"
-									},
-									{
-										"ttIf": {
-											"arg": "rating",
-											"equals": "bad",
-											"then": {
-												"borderColor": "#16161a",
-												"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
-												"background": "#f5f5f7"
-											},
-											"else": {}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 22,
-									"height": 22,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#9a9aa6",
-									"strokeWidth": 1.8,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 8.8,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 15.2,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M8.6 15.6s1.3-1.4 3.4-1.4 3.4 1.4 3.4 1.4"
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
-									{
-										"width": "40px",
-										"height": "40px",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"background": "#ffffff",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#ececef",
-										"borderRadius": "999px",
-										"cursor": "pointer",
-										"padding": "0"
-									},
-									{
-										"ttIf": {
-											"arg": "rating",
-											"equals": "okay",
-											"then": {
-												"borderColor": "#16161a",
-												"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
-												"background": "#f5f5f7"
-											},
-											"else": {}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 22,
-									"height": 22,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#9a9aa6",
-									"strokeWidth": 1.8,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 8.8,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 15.2,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 8.6,
-											"y1": 15,
-											"x2": 15.4,
-											"y2": 15
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
-									{
-										"width": "40px",
-										"height": "40px",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"background": "#ffffff",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#ececef",
-										"borderRadius": "999px",
-										"cursor": "pointer",
-										"padding": "0"
-									},
-									{
-										"ttIf": {
-											"arg": "rating",
-											"equals": "good",
-											"then": {
-												"borderColor": "#16161a",
-												"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
-												"background": "#f5f5f7"
-											},
-											"else": {}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 22,
-									"height": 22,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#9a9aa6",
-									"strokeWidth": 1.8,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 8.8,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 15.2,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M8.6 14.2s1.3 1.4 3.4 1.4 3.4-1.4 3.4-1.4"
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
-									{
-										"width": "40px",
-										"height": "40px",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"background": "#ffffff",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#ececef",
-										"borderRadius": "999px",
-										"cursor": "pointer",
-										"padding": "0"
-									},
-									{
-										"ttIf": {
-											"arg": "rating",
-											"equals": "great",
-											"then": {
-												"borderColor": "#16161a",
-												"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
-												"background": "#f5f5f7"
-											},
-											"else": {}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 22,
-									"height": 22,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#9a9aa6",
-									"strokeWidth": 1.8,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 8.8,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 15.2,
-											"cy": 9.6,
-											"r": 1.1,
-											"fill": "#9a9aa6",
-											"stroke": "none"
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M7.8 13.6s1.6 2.6 4.2 2.6 4.2-2.6 4.2-2.6"
-										}
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"ttIf": {
-					"arg": "comment",
-					"then": {
-						"tag": "input",
-						"props": {
-							"type": "text",
-							"placeholder": "Add a comment (optional)",
-							"style": {
-								"width": "100%",
-								"boxSizing": "border-box",
-								"height": "28px",
-								"padding": "0 10px",
-								"borderRadius": "9px",
+								"background": "#ffffff",
 								"borderWidth": "1px",
 								"borderStyle": "solid",
 								"borderColor": "#ececef",
-								"background": "#f5f5f7",
+								"borderRadius": "16px",
+								"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
 								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "12px",
 								"color": "#33333c",
-								"outline": "none"
+								"boxSizing": "border-box"
+							},
+							{
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "12px",
+								"width": "300px",
+								"padding": "16px",
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
 							}
-						}
-					}
-				}
-			},
-			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"width": "100%",
-						"height": "28px",
-						"border": "none",
-						"borderRadius": "12px",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontWeight": 600,
-						"fontSize": "12px",
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#16161a",
-									"success": "#2f9e63",
-									"warning": "#d99a1f",
-									"danger": "#d5484f",
-									"info": "#d53f8c",
-									"neutral": "#9a9aa6"
-								},
-								"default": "#16161a"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#ffffff",
-									"success": "#ffffff",
-									"warning": "#ffffff",
-									"danger": "#ffffff",
-									"info": "#ffffff",
-									"neutral": "#ffffff"
-								},
-								"default": "#ffffff"
-							}
-						},
-						"cursor": "pointer"
+						]
 					}
 				},
 				"children": [
-					"Submit"
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "2px"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "16px",
+										"fontWeight": 700,
+										"color": "#33333c"
+									}
+								},
+								"children": [
+									"How did we do?"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "11px",
+										"color": "#9a9aa6"
+									}
+								},
+								"children": [
+									"Rate your chat with {agent}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"gap": "4px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"ttMerge": [
+											{
+												"width": "40px",
+												"height": "40px",
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"background": "#ffffff",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#ececef",
+												"borderRadius": "999px",
+												"cursor": "pointer",
+												"padding": "0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "rating",
+													"equals": "terrible",
+													"then": {
+														"borderColor": "#16161a",
+														"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
+														"background": "#f5f5f7"
+													},
+													"else": {}
+												}
+											}
+										]
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 22,
+											"height": 22,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#9a9aa6",
+											"strokeWidth": 1.8,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 10
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 8.8,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 15.2,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "path",
+												"props": {
+													"d": "M7.8 16.4s1.6-2.6 4.2-2.6 4.2 2.6 4.2 2.6"
+												}
+											}
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "rating",
+									"value": "terrible"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"ttMerge": [
+											{
+												"width": "40px",
+												"height": "40px",
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"background": "#ffffff",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#ececef",
+												"borderRadius": "999px",
+												"cursor": "pointer",
+												"padding": "0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "rating",
+													"equals": "bad",
+													"then": {
+														"borderColor": "#16161a",
+														"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
+														"background": "#f5f5f7"
+													},
+													"else": {}
+												}
+											}
+										]
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 22,
+											"height": 22,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#9a9aa6",
+											"strokeWidth": 1.8,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 10
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 8.8,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 15.2,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "path",
+												"props": {
+													"d": "M8.6 15.6s1.3-1.4 3.4-1.4 3.4 1.4 3.4 1.4"
+												}
+											}
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "rating",
+									"value": "bad"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"ttMerge": [
+											{
+												"width": "40px",
+												"height": "40px",
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"background": "#ffffff",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#ececef",
+												"borderRadius": "999px",
+												"cursor": "pointer",
+												"padding": "0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "rating",
+													"equals": "okay",
+													"then": {
+														"borderColor": "#16161a",
+														"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
+														"background": "#f5f5f7"
+													},
+													"else": {}
+												}
+											}
+										]
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 22,
+											"height": 22,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#9a9aa6",
+											"strokeWidth": 1.8,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 10
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 8.8,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 15.2,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 8.6,
+													"y1": 15,
+													"x2": 15.4,
+													"y2": 15
+												}
+											}
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "rating",
+									"value": "okay"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"ttMerge": [
+											{
+												"width": "40px",
+												"height": "40px",
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"background": "#ffffff",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#ececef",
+												"borderRadius": "999px",
+												"cursor": "pointer",
+												"padding": "0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "rating",
+													"equals": "good",
+													"then": {
+														"borderColor": "#16161a",
+														"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
+														"background": "#f5f5f7"
+													},
+													"else": {}
+												}
+											}
+										]
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 22,
+											"height": 22,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#9a9aa6",
+											"strokeWidth": 1.8,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 10
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 8.8,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 15.2,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "path",
+												"props": {
+													"d": "M8.6 14.2s1.3 1.4 3.4 1.4 3.4-1.4 3.4-1.4"
+												}
+											}
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "rating",
+									"value": "good"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"ttMerge": [
+											{
+												"width": "40px",
+												"height": "40px",
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"background": "#ffffff",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "#ececef",
+												"borderRadius": "999px",
+												"cursor": "pointer",
+												"padding": "0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "rating",
+													"equals": "great",
+													"then": {
+														"borderColor": "#16161a",
+														"boxShadow": "0 0 0 3px rgba(213, 63, 140, 0.15)",
+														"background": "#f5f5f7"
+													},
+													"else": {}
+												}
+											}
+										]
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 22,
+											"height": 22,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#9a9aa6",
+											"strokeWidth": 1.8,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 10
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 8.8,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 15.2,
+													"cy": 9.6,
+													"r": 1.1,
+													"fill": "#9a9aa6",
+													"stroke": "none"
+												}
+											},
+											{
+												"tag": "path",
+												"props": {
+													"d": "M7.8 13.6s1.6 2.6 4.2 2.6 4.2-2.6 4.2-2.6"
+												}
+											}
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "rating",
+									"value": "great"
+								}
+							}
+						]
+					},
+					{
+						"ttIf": {
+							"arg": "comment",
+							"then": {
+								"tag": "input",
+								"props": {
+									"type": "text",
+									"placeholder": "Add a comment (optional)",
+									"style": {
+										"width": "100%",
+										"boxSizing": "border-box",
+										"height": "28px",
+										"padding": "0 10px",
+										"borderRadius": "9px",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#ececef",
+										"background": "#f5f5f7",
+										"fontSize": "12px",
+										"color": "#33333c",
+										"outline": "none",
+										"maxWidth": "100%"
+									},
+									"value": {
+										"ttArg": "entry1"
+									},
+									"aria-label": "Add a comment (optional)",
+									"maxLength": 500
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "entry1"
+								}
+							}
+						}
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
+								"display": "inline-flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"width": "auto",
+								"height": "auto",
+								"border": "none",
+								"borderRadius": "12px",
+								"fontWeight": 600,
+								"fontSize": "12px",
+								"background": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#16161a",
+											"success": "#2f9e63",
+											"warning": "#d99a1f",
+											"danger": "#d5484f",
+											"info": "#d53f8c",
+											"neutral": "#9a9aa6"
+										},
+										"default": "#16161a"
+									}
+								},
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#ffffff",
+											"success": "#ffffff",
+											"warning": "#ffffff",
+											"danger": "#ffffff",
+											"info": "#ffffff",
+											"neutral": "#ffffff"
+										},
+										"default": "#ffffff"
+									}
+								},
+								"cursor": "pointer",
+								"maxWidth": "100%",
+								"minWidth": 0,
+								"padding": "8px 12px",
+								"whiteSpace": "normal",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
+							},
+							"aria-label": "{actionLabel}"
+						},
+						"children": [
+							"{actionLabel}"
+						],
+						"ttAction": "{actionKey}",
+						"ttActionInputs": {
+							"family": "support-help-csat",
+							"title": "CSAT Prompt",
+							"details": "Rating: {rating}\nentry1: {entry1}\nAgent: {agent}\nComment field: {comment}"
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "support-help-csat",
+									"title": "CSAT Prompt",
+									"details": "Rating: {rating}\nentry1: {entry1}\nAgent: {agent}\nComment field: {comment}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "support-help-csat",
 	"source": {
 		"kind": "archetype",

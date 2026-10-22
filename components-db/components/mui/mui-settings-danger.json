@@ -3,7 +3,7 @@
 	"name": "Danger Zone",
 	"library": "mui",
 	"category": "settings",
-	"description": "Danger-zone settings card in the Material UI style — danger-tinted border and header, warning copy, a confirm-phrase field mock, and an outline-danger delete button beside a ghost cancel, with Material uppercase button labels.",
+	"description": "Danger-zone settings card in the Material UI style — danger-tinted border and header, warning copy, a confirm-phrase field mock, and an outline-danger delete button beside a ghost cancel, with Material uppercase button labels. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"settings",
 		"danger",
@@ -31,133 +31,388 @@
 			"default": "acme/workspace",
 			"label": "Confirm phrase",
 			"maxLength": 40
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
+		},
+		{
+			"name": "uiDismissed",
+			"type": "boolean",
+			"default": false
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#ef9a9a",
-				"borderRadius": "4px",
-				"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-				"overflow": "hidden"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"padding": "10px 14px",
-						"background": "#fdeded"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
+				"ttIf": {
+					"arg": "uiDismissed",
+					"then": {
+						"tag": "button",
 						"props": {
-							"style": {
-								"fontSize": "13px",
-								"fontWeight": 500,
-								"color": "#5f2120"
-							}
+							"type": "button"
 						},
 						"children": [
-							"{heading}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"padding": "12px 14px",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "rgba(0, 0, 0, 0.6)",
-								"lineHeight": 1.5
-							}
-						},
-						"children": [
-							"{warning}"
-						]
-					},
-					{
-						"tag": "input",
-						"props": {
-							"type": "text",
-							"placeholder": "Type {phrase} to confirm",
-							"style": {
-								"height": "30px",
-								"boxSizing": "border-box",
-								"width": "100%",
-								"padding": "0 10px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "rgba(0, 0, 0, 0.12)",
-								"borderRadius": "4px",
-								"background": "#ffffff",
-								"color": "rgba(0, 0, 0, 0.87)",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-								"fontSize": "13px",
-								"outline": "none"
-							}
+							"Show again"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "uiDismissed",
+							"value": false
 						}
 					},
-					{
+					"else": {
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "8px"
+								"flexDirection": "column",
+								"width": "320px",
+								"boxSizing": "border-box",
+								"background": "#ffffff",
+								"borderWidth": "1px",
+								"borderStyle": "solid",
+								"borderColor": "#ef9a9a",
+								"borderRadius": "4px",
+								"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+								"overflow": "hidden",
+								"maxWidth": "100%"
 							}
 						},
 						"children": [
 							{
-								"tag": "button",
+								"tag": "div",
 								"props": {
-									"type": "button",
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"height": "30px",
-										"padding": "0 12px",
-										"borderRadius": "4px",
-										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-										"fontSize": "13px",
-										"fontWeight": 500,
-										"cursor": "pointer",
-										"textTransform": "uppercase",
-										"letterSpacing": "0.02857em",
-										"background": "transparent",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#d32f2f",
-										"color": "#d32f2f"
+										"padding": "10px 14px",
+										"background": "#fdeded"
 									}
 								},
 								"children": [
-									"Delete workspace"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 500,
+												"color": "#5f2120"
+											}
+										},
+										"children": [
+											"{heading}"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"padding": "12px 14px",
+										"gap": "10px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "rgba(0, 0, 0, 0.6)",
+												"lineHeight": 1.5
+											}
+										},
+										"children": [
+											"{warning}"
+										]
+									},
+									{
+										"tag": "input",
+										"props": {
+											"type": "text",
+											"placeholder": "Type {phrase} to confirm",
+											"style": {
+												"height": "30px",
+												"boxSizing": "border-box",
+												"width": "100%",
+												"padding": "0 10px",
+												"borderWidth": "1px",
+												"borderStyle": "solid",
+												"borderColor": "rgba(0, 0, 0, 0.12)",
+												"borderRadius": "4px",
+												"background": "#ffffff",
+												"color": "rgba(0, 0, 0, 0.87)",
+												"fontSize": "13px",
+												"outline": "none",
+												"maxWidth": "100%"
+											},
+											"value": {
+												"ttArg": "entry1"
+											},
+											"aria-label": "Type {phrase} to confirm",
+											"maxLength": 500
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
+										}
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "8px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "button",
+												"props": {
+													"type": "button",
+													"style": {
+														"display": "inline-flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"height": "auto",
+														"padding": "8px 12px",
+														"borderRadius": "4px",
+														"fontSize": "13px",
+														"fontWeight": 500,
+														"cursor": "pointer",
+														"textTransform": "uppercase",
+														"letterSpacing": "0.02857em",
+														"background": "transparent",
+														"borderWidth": "1px",
+														"borderStyle": "solid",
+														"borderColor": "#d32f2f",
+														"color": "#d32f2f",
+														"width": "auto",
+														"minWidth": 0,
+														"whiteSpace": "normal",
+														"maxWidth": "100%",
+														"boxSizing": "border-box",
+														"flexWrap": "wrap"
+													},
+													"aria-label": "{actionLabel}"
+												},
+												"children": [
+													"{actionLabel}"
+												],
+												"ttAction": "{actionKey}",
+												"ttActionInputs": {
+													"family": "settings-danger",
+													"title": "Danger Zone",
+													"details": "Heading: {heading}\nWarning copy: {warning}\nConfirm phrase: {phrase}\nentry1: {entry1}"
+												}
+											},
+											{
+												"tag": "button",
+												"props": {
+													"type": "button",
+													"style": {
+														"display": "inline-flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"height": "30px",
+														"padding": "0 12px",
+														"borderRadius": "4px",
+														"fontSize": "13px",
+														"fontWeight": 500,
+														"cursor": "pointer",
+														"textTransform": "uppercase",
+														"letterSpacing": "0.02857em",
+														"background": "transparent",
+														"border": "none",
+														"color": "rgba(0, 0, 0, 0.6)",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													"Cancel"
+												],
+												"ttAction": "$ui",
+												"ttActionInputs": {
+													"op": "set",
+													"key": "uiDismissed",
+													"value": true
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				}
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"entry1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "entry1",
+											"value": {
+												"ttArg": "entry1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Heading ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Heading",
+											"value": {
+												"ttArg": "heading"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "heading"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Warning copy ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Warning copy",
+											"value": {
+												"ttArg": "warning"
+											},
+											"maxLength": 160,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "warning"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Confirm phrase ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Confirm phrase",
+											"value": {
+												"ttArg": "phrase"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "phrase"
+										}
+									}
 								]
 							},
 							{
@@ -165,26 +420,41 @@
 								"props": {
 									"type": "button",
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"height": "30px",
-										"padding": "0 12px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
 										"borderRadius": "4px",
-										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-										"fontSize": "13px",
-										"fontWeight": 500,
-										"cursor": "pointer",
-										"textTransform": "uppercase",
-										"letterSpacing": "0.02857em",
-										"background": "transparent",
-										"border": "none",
-										"color": "rgba(0, 0, 0, 0.6)"
-									}
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "settings-danger",
+									"title": "Danger Zone",
+									"details": "Heading: {heading}\nWarning copy: {warning}\nConfirm phrase: {phrase}\nentry1: {entry1}"
 								},
 								"children": [
-									"Cancel"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -192,7 +462,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "settings-danger",
 	"source": {
 		"kind": "archetype",

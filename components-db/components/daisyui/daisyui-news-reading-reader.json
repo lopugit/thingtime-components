@@ -3,7 +3,7 @@
 	"name": "Reader Controls",
 	"library": "daisyui",
 	"category": "content",
-	"description": "Reader controls bar in the daisyUI style — A− and A+ steppers around a mono px readout, line-width segments, light/sepia/dark theme dots with an accent ring on the active one, and a percent-read progress sliver.",
+	"description": "Reader controls bar in the daisyUI style — A− and A+ steppers around a mono px readout, line-width segments, light/sepia/dark theme dots with an accent ring on the active one, and a percent-read progress sliver. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"news",
 		"reader",
@@ -49,25 +49,28 @@
 			"label": "Percent read",
 			"min": 0,
 			"max": 100
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"width": "360px",
-				"padding": "10px 12px",
-				"gap": "10px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#f2f2f2",
-				"borderRadius": "16px",
-				"boxShadow": "none",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"boxSizing": "border-box"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -77,414 +80,680 @@
 					"style": {
 						"display": "flex",
 						"alignItems": "center",
-						"gap": "6px",
-						"flexShrink": 0
+						"width": "360px",
+						"padding": "10px 12px",
+						"gap": "10px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#f2f2f2",
+						"borderRadius": "16px",
+						"boxShadow": "none",
+						"boxSizing": "border-box",
+						"maxWidth": "100%",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
 					{
-						"tag": "button",
+						"tag": "div",
 						"props": {
-							"type": "button",
 							"style": {
-								"width": "26px",
-								"height": "26px",
-								"display": "inline-flex",
+								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"border": "none",
-								"borderRadius": "8px",
-								"background": "#f2f2f2",
-								"color": "#1f2937",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 700,
-								"fontSize": "12px",
-								"cursor": "pointer",
-								"padding": "0",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"A−"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": "#1f2937",
-								"minWidth": "34px",
-								"textAlign": "center"
-							}
-						},
-						"children": [
-							"{size}px"
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"width": "26px",
-								"height": "26px",
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"border": "none",
-								"borderRadius": "8px",
-								"background": "#f2f2f2",
-								"color": "#1f2937",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 700,
-								"fontSize": "14px",
-								"cursor": "pointer",
-								"padding": "0",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"A+"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"width": "1px",
-						"height": "22px",
-						"background": "#f2f2f2",
-						"flexShrink": 0
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "2px",
-						"padding": "2px",
-						"background": "#f2f2f2",
-						"borderRadius": "8px",
-						"flexShrink": 0
-					}
-				},
-				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"width": "26px",
-								"height": "22px",
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"border": "none",
-								"padding": "0",
-								"cursor": "pointer",
-								"borderRadius": "8px",
-								"background": {
-									"ttIf": {
-										"arg": "lineWidth",
-										"equals": "narrow",
-										"then": "#ffffff",
-										"else": "transparent"
-									}
-								},
-								"boxShadow": {
-									"ttIf": {
-										"arg": "lineWidth",
-										"equals": "narrow",
-										"then": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-										"else": "none"
-									}
-								}
+								"gap": "6px",
+								"flexShrink": 0,
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"width": "8px",
-										"height": "3px",
-										"borderRadius": "999px",
-										"background": {
-											"ttIf": {
-												"arg": "lineWidth",
-												"equals": "narrow",
-												"then": "#570df8",
-												"else": "#9ca3af"
-											}
-										}
-									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"width": "26px",
-								"height": "22px",
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"border": "none",
-								"padding": "0",
-								"cursor": "pointer",
-								"borderRadius": "8px",
-								"background": {
-									"ttIf": {
-										"arg": "lineWidth",
-										"equals": "normal",
-										"then": "#ffffff",
-										"else": "transparent"
-									}
+										"width": "auto",
+										"height": "auto",
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"border": "none",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"color": "#1f2937",
+										"fontWeight": 700,
+										"fontSize": "12px",
+										"cursor": "pointer",
+										"padding": "8px 12px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
 								},
-								"boxShadow": {
-									"ttIf": {
-										"arg": "lineWidth",
-										"equals": "normal",
-										"then": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-										"else": "none"
-									}
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "news-reading-reader",
+									"title": "Reader Controls",
+									"details": "Line width: {lineWidth}\nTheme: {theme}\nPercent read: {percent}"
 								}
-							}
-						},
-						"children": [
+							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"width": "13px",
-										"height": "3px",
-										"borderRadius": "999px",
-										"background": {
-											"ttIf": {
-												"arg": "lineWidth",
-												"equals": "normal",
-												"then": "#570df8",
-												"else": "#9ca3af"
-											}
-										}
-									}
-								}
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"width": "26px",
-								"height": "22px",
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"border": "none",
-								"padding": "0",
-								"cursor": "pointer",
-								"borderRadius": "8px",
-								"background": {
-									"ttIf": {
-										"arg": "lineWidth",
-										"equals": "wide",
-										"then": "#ffffff",
-										"else": "transparent"
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"color": "#1f2937",
+										"minWidth": "34px",
+										"textAlign": "center"
 									}
 								},
-								"boxShadow": {
-									"ttIf": {
-										"arg": "lineWidth",
-										"equals": "wide",
-										"then": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-										"else": "none"
-									}
-								}
-							}
-						},
-						"children": [
+								"children": [
+									"{size}px"
+								]
+							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"width": "18px",
-										"height": "3px",
-										"borderRadius": "999px",
-										"background": {
-											"ttIf": {
-												"arg": "lineWidth",
-												"equals": "wide",
-												"then": "#570df8",
-												"else": "#9ca3af"
-											}
-										}
-									}
+										"width": "auto",
+										"height": "auto",
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"border": "none",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"color": "#1f2937",
+										"fontWeight": 700,
+										"fontSize": "14px",
+										"cursor": "pointer",
+										"padding": "8px 12px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "news-reading-reader",
+									"title": "Reader Controls",
+									"details": "Line width: {lineWidth}\nTheme: {theme}\nPercent read: {percent}"
 								}
 							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"width": "1px",
-						"height": "22px",
-						"background": "#f2f2f2",
-						"flexShrink": 0
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "7px",
-						"flexShrink": 0
-					}
-				},
-				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"width": "18px",
-								"height": "18px",
-								"borderRadius": "999px",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#e5e6e6",
-								"cursor": "pointer",
-								"padding": "0",
-								"flexShrink": 0,
-								"boxShadow": {
-									"ttIf": {
-										"arg": "theme",
-										"equals": "light",
-										"then": "0 0 0 2px #ffffff, 0 0 0 4px #570df8",
-										"else": "none"
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"width": "18px",
-								"height": "18px",
-								"borderRadius": "999px",
-								"background": "#f0e6d2",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#ddceac",
-								"cursor": "pointer",
-								"padding": "0",
-								"flexShrink": 0,
-								"boxShadow": {
-									"ttIf": {
-										"arg": "theme",
-										"equals": "sepia",
-										"then": "0 0 0 2px #ffffff, 0 0 0 4px #570df8",
-										"else": "none"
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"width": "18px",
-								"height": "18px",
-								"borderRadius": "999px",
-								"background": "#1f2937",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#1f2937",
-								"cursor": "pointer",
-								"padding": "0",
-								"flexShrink": 0,
-								"boxShadow": {
-									"ttIf": {
-										"arg": "theme",
-										"equals": "dark",
-										"then": "0 0 0 2px #ffffff, 0 0 0 4px #570df8",
-										"else": "none"
-									}
-								}
-							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"flex": 1,
-						"minWidth": "58px",
-						"gap": "4px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#6b7280",
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"{percent}% read"
 						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"height": "4px",
-								"borderRadius": "999px",
+								"width": "1px",
+								"height": "22px",
 								"background": "#f2f2f2",
-								"overflow": "hidden"
+								"flexShrink": 0,
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							}
+						}
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "2px",
+								"padding": "2px",
+								"background": "#f2f2f2",
+								"borderRadius": "8px",
+								"flexShrink": 0,
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"width": "26px",
+										"height": "22px",
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"border": "none",
+										"padding": "0",
+										"cursor": "pointer",
+										"borderRadius": "8px",
+										"background": {
+											"ttIf": {
+												"arg": "lineWidth",
+												"equals": "narrow",
+												"then": "#ffffff",
+												"else": "transparent"
+											}
+										},
+										"boxShadow": {
+											"ttIf": {
+												"arg": "lineWidth",
+												"equals": "narrow",
+												"then": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+												"else": "none"
+											}
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "8px",
+												"height": "3px",
+												"borderRadius": "999px",
+												"background": {
+													"ttIf": {
+														"arg": "lineWidth",
+														"equals": "narrow",
+														"then": "#570df8",
+														"else": "#9ca3af"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "lineWidth",
+									"value": "narrow"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"width": "26px",
+										"height": "22px",
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"border": "none",
+										"padding": "0",
+										"cursor": "pointer",
+										"borderRadius": "8px",
+										"background": {
+											"ttIf": {
+												"arg": "lineWidth",
+												"equals": "normal",
+												"then": "#ffffff",
+												"else": "transparent"
+											}
+										},
+										"boxShadow": {
+											"ttIf": {
+												"arg": "lineWidth",
+												"equals": "normal",
+												"then": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+												"else": "none"
+											}
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "13px",
+												"height": "3px",
+												"borderRadius": "999px",
+												"background": {
+													"ttIf": {
+														"arg": "lineWidth",
+														"equals": "normal",
+														"then": "#570df8",
+														"else": "#9ca3af"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "lineWidth",
+									"value": "normal"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"width": "26px",
+										"height": "22px",
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"border": "none",
+										"padding": "0",
+										"cursor": "pointer",
+										"borderRadius": "8px",
+										"background": {
+											"ttIf": {
+												"arg": "lineWidth",
+												"equals": "wide",
+												"then": "#ffffff",
+												"else": "transparent"
+											}
+										},
+										"boxShadow": {
+											"ttIf": {
+												"arg": "lineWidth",
+												"equals": "wide",
+												"then": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+												"else": "none"
+											}
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "18px",
+												"height": "3px",
+												"borderRadius": "999px",
+												"background": {
+													"ttIf": {
+														"arg": "lineWidth",
+														"equals": "wide",
+														"then": "#570df8",
+														"else": "#9ca3af"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "lineWidth",
+									"value": "wide"
+								}
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"width": "1px",
+								"height": "22px",
+								"background": "#f2f2f2",
+								"flexShrink": 0,
+								"maxWidth": "100%",
+								"boxSizing": "border-box"
+							}
+						}
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "7px",
+								"flexShrink": 0,
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"width": "18px",
+										"height": "18px",
+										"borderRadius": "999px",
+										"background": "#ffffff",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#e5e6e6",
+										"cursor": "pointer",
+										"padding": "0",
+										"flexShrink": 0,
+										"boxShadow": {
+											"ttIf": {
+												"arg": "theme",
+												"equals": "light",
+												"then": "0 0 0 2px #ffffff, 0 0 0 4px #570df8",
+												"else": "none"
+											}
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "theme",
+									"value": "light"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"width": "18px",
+										"height": "18px",
+										"borderRadius": "999px",
+										"background": "#f0e6d2",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#ddceac",
+										"cursor": "pointer",
+										"padding": "0",
+										"flexShrink": 0,
+										"boxShadow": {
+											"ttIf": {
+												"arg": "theme",
+												"equals": "sepia",
+												"then": "0 0 0 2px #ffffff, 0 0 0 4px #570df8",
+												"else": "none"
+											}
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "theme",
+									"value": "sepia"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"width": "18px",
+										"height": "18px",
+										"borderRadius": "999px",
+										"background": "#1f2937",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#1f2937",
+										"cursor": "pointer",
+										"padding": "0",
+										"flexShrink": 0,
+										"boxShadow": {
+											"ttIf": {
+												"arg": "theme",
+												"equals": "dark",
+												"then": "0 0 0 2px #ffffff, 0 0 0 4px #570df8",
+												"else": "none"
+											}
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "theme",
+									"value": "dark"
+								}
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"flex": 1,
+								"minWidth": "58px",
+								"gap": "4px"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "#6b7280",
+										"whiteSpace": "nowrap"
+									}
+								},
+								"children": [
+									"{percent}% read"
+								]
+							},
+							{
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "{percent}%",
-										"height": "100%",
+										"height": "4px",
 										"borderRadius": "999px",
-										"background": "#570df8"
+										"background": "#f2f2f2",
+										"overflow": "hidden"
 									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "{percent}%",
+												"height": "100%",
+												"borderRadius": "999px",
+												"background": "#570df8",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Theme ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Theme",
+											"value": {
+												"ttArg": "theme"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "light"
+												},
+												"children": [
+													"light"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "sepia"
+												},
+												"children": [
+													"sepia"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "dark"
+												},
+												"children": [
+													"dark"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "theme"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Percent read ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Percent read",
+											"value": {
+												"ttArg": "percent"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "percent"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "news-reading-reader",
+									"title": "Reader Controls",
+									"details": "Line width: {lineWidth}\nTheme: {theme}\nPercent read: {percent}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -493,7 +762,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "news-reading-reader",
 	"source": {
 		"kind": "archetype",

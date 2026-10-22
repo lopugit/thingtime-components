@@ -3,7 +3,7 @@
 	"name": "Labeled Progress",
 	"library": "bootstrap",
 	"category": "forms",
-	"description": "Progress bar with a caption row in the Bootstrap style — task label on the left, live percent readout on the right, tone-colored fill below.",
+	"description": "Progress bar with a caption row in the Bootstrap style — task label on the left, live percent readout on the right, tone-colored fill below. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"progress",
 		"label",
@@ -45,17 +45,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Show percent"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "240px",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -63,84 +74,203 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #dee2e6",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "#212529",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"color": "#212529"
-							}
-						},
+						"tag": "label",
 						"children": [
-							"{label}"
-						]
-					},
-					{
-						"ttIf": {
-							"arg": "showPercent",
-							"then": {
-								"tag": "span",
+							"percent: {percent}%",
+							{
+								"tag": "input",
 								"props": {
+									"type": "range",
+									"aria-label": "percent",
+									"value": {
+										"ttArg": "percent"
+									},
 									"style": {
-										"fontSize": "14px",
-										"color": "#6c757d"
-									}
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #dee2e6",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"min": 0,
+									"max": 100,
+									"step": 1
 								},
-								"children": [
-									"{percent}%"
-								]
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "percent"
+								}
 							}
-						}
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"height": "8px",
-						"background": "#e9ecef",
-						"borderRadius": "50rem",
-						"overflow": "hidden"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"width": "{percent}%",
-								"height": "100%",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#0d6efd",
-											"success": "#198754",
-											"warning": "#ffc107",
-											"danger": "#dc3545",
-											"info": "#0dcaf0",
-											"neutral": "#6c757d"
-										},
-										"default": "#0d6efd"
-									}
-								},
-								"borderRadius": "50rem"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Percent ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Percent",
+											"value": {
+												"ttArg": "percent"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "percent"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show percent ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show percent",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showPercent"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showPercent"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "slider-progress-progress-label",
+									"title": "Labeled Progress",
+									"details": "Label: {label}\nPercent: {percent}\nShow percent: {showPercent}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "slider-progress-progress-label",
 	"source": {
 		"kind": "archetype",

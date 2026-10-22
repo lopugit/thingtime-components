@@ -3,7 +3,7 @@
 	"name": "Progress Ring",
 	"library": "untitled",
 	"category": "forms",
-	"description": "Circular progress ring in the Untitled UI style — an svg track circle with a tone-colored arc (strokeDasharray per 10% step) and a centered percent label.",
+	"description": "Circular progress ring in the Untitled UI style — an svg track circle with a tone-colored arc (strokeDasharray per 10% step) and a centered percent label. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"progress",
 		"ring",
@@ -60,166 +60,279 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Show label"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"position": "relative",
-				"width": {
-					"ttMap": {
-						"arg": "size",
-						"values": {
-							"sm": "44px",
-							"md": "56px",
-							"lg": "72px"
-						},
-						"default": "56px"
-					}
-				},
-				"height": {
-					"ttMap": {
-						"arg": "size",
-						"values": {
-							"sm": "44px",
-							"md": "56px",
-							"lg": "72px"
-						},
-						"default": "56px"
-					}
-				},
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "svg",
+				"tag": "div",
 				"props": {
-					"width": {
-						"ttMap": {
-							"arg": "size",
-							"values": {
-								"sm": 44,
-								"md": 56,
-								"lg": 72
-							},
-							"default": 56
-						}
-					},
-					"height": {
-						"ttMap": {
-							"arg": "size",
-							"values": {
-								"sm": 44,
-								"md": 56,
-								"lg": 72
-							},
-							"default": 56
-						}
-					},
-					"viewBox": "0 0 48 48",
-					"fill": "none",
-					"xmlns": "http://www.w3.org/2000/svg",
 					"style": {
-						"display": "block",
-						"transform": "rotate(-90deg)"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #eaecf0",
+						"borderRadius": "8px",
+						"background": "#ffffff",
+						"color": "#101828",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "circle",
-						"props": {
-							"cx": 24,
-							"cy": 24,
-							"r": 20,
-							"stroke": "#f2f4f7",
-							"strokeWidth": 4
-						}
-					},
-					{
-						"tag": "circle",
-						"props": {
-							"cx": 24,
-							"cy": 24,
-							"r": 20,
-							"stroke": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#7f56d9",
-										"success": "#12b76a",
-										"warning": "#f79009",
-										"danger": "#f04438",
-										"info": "#2e90fa",
-										"neutral": "#344054"
+						"tag": "label",
+						"children": [
+							"percent: {percent}%",
+							{
+								"tag": "input",
+								"props": {
+									"type": "range",
+									"aria-label": "percent",
+									"value": {
+										"ttArg": "percent"
 									},
-									"default": "#7f56d9"
-								}
-							},
-							"strokeWidth": 4,
-							"strokeLinecap": "round",
-							"style": {
-								"strokeDasharray": {
-									"ttMap": {
-										"arg": "percent",
-										"values": {
-											"0": "0.00 125.66",
-											"10": "12.57 125.66",
-											"20": "25.13 125.66",
-											"30": "37.70 125.66",
-											"40": "50.27 125.66",
-											"50": "62.83 125.66",
-											"60": "75.40 125.66",
-											"70": "87.96 125.66",
-											"80": "100.53 125.66",
-											"90": "113.10 125.66",
-											"100": "125.66 125.66"
-										},
-										"default": "87.96 125.66"
-									}
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #eaecf0",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"min": 0,
+									"max": 100,
+									"step": 1
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "percent"
 								}
 							}
-						}
+						]
 					}
 				]
 			},
 			{
-				"ttIf": {
-					"arg": "showLabel",
-					"then": {
-						"tag": "span",
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"position": "absolute",
-								"inset": 0,
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontSize": {
-									"ttMap": {
-										"arg": "size",
-										"values": {
-											"sm": "12px",
-											"md": "14px",
-											"lg": "16px"
-										},
-										"default": "14px"
-									}
-								},
-								"fontWeight": 600,
-								"color": "#101828"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{percent}%"
+							{
+								"tag": "label",
+								"children": [
+									"Percent ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Percent",
+											"value": {
+												"ttArg": "percent"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "0"
+												},
+												"children": [
+													"0"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "10"
+												},
+												"children": [
+													"10"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "20"
+												},
+												"children": [
+													"20"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "30"
+												},
+												"children": [
+													"30"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "40"
+												},
+												"children": [
+													"40"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "50"
+												},
+												"children": [
+													"50"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "60"
+												},
+												"children": [
+													"60"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "70"
+												},
+												"children": [
+													"70"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "80"
+												},
+												"children": [
+													"80"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "90"
+												},
+												"children": [
+													"90"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "100"
+												},
+												"children": [
+													"100"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "percent"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "slider-progress-ring",
+									"title": "Progress Ring",
+									"details": "Percent: {percent}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "slider-progress-ring",
 	"source": {
 		"kind": "archetype",

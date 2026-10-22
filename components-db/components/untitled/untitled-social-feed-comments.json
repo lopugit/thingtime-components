@@ -3,7 +3,7 @@
 	"name": "Comment Thread",
 	"library": "untitled",
 	"category": "social",
-	"description": "Comment thread in the Untitled UI style — a parent comment with like and reply actions, one thread-railed nested reply, a view-more-replies link, and a composer mock at the bottom.",
+	"description": "Comment thread in the Untitled UI style — a parent comment with like and reply actions, one thread-railed nested reply, a view-more-replies link, and a composer mock at the bottom. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"social",
 		"comments",
@@ -51,25 +51,34 @@
 			"default": "Add a comment…",
 			"label": "Composer placeholder",
 			"maxLength": 40
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
-				"padding": "14px",
-				"gap": "10px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#f2f4f7",
-				"borderRadius": "12px",
-				"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"boxSizing": "border-box"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -78,8 +87,18 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "flex-start",
-						"gap": "10px"
+						"flexDirection": "column",
+						"width": "320px",
+						"padding": "14px",
+						"gap": "10px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#f2f4f7",
+						"borderRadius": "12px",
+						"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
+						"boxSizing": "border-box",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -87,61 +106,10 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "32px",
-								"height": "32px",
-								"borderRadius": "999px",
-								"background": "#f2f4f7",
-								"color": "#344054",
 								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "14px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 15,
-									"height": 15,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "path",
-										"props": {
-											"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 7,
-											"r": 4
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"flex": 1,
-								"minWidth": 0,
-								"gap": "4px"
+								"alignItems": "flex-start",
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -149,60 +117,64 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"display": "flex",
-										"alignItems": "baseline",
-										"gap": "6px"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"fontWeight": 600,
-												"color": "#101828"
-											}
-										},
-										"children": [
-											"{name}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"color": "#98a2b3"
-											}
-										},
-										"children": [
-											"2h"
-										]
-									}
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#101828",
-										"lineHeight": 1.5
-									}
-								},
-								"children": [
-									"{comment}"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
+										"width": "32px",
+										"height": "32px",
+										"borderRadius": "999px",
+										"background": "#f2f4f7",
+										"color": "#344054",
 										"display": "flex",
 										"alignItems": "center",
-										"gap": "14px",
-										"color": "#475467"
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "14px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 15,
+											"height": 15,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "path",
+												"props": {
+													"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 7,
+													"r": 4
+												}
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"flex": 1,
+										"minWidth": 0,
+										"gap": "4px"
 									}
 								},
 								"children": [
@@ -211,30 +183,108 @@
 										"props": {
 											"style": {
 												"display": "flex",
-												"alignItems": "center",
-												"gap": "4px"
+												"alignItems": "baseline",
+												"gap": "6px",
+												"flexWrap": "wrap"
 											}
 										},
 										"children": [
 											{
-												"tag": "svg",
+												"tag": "span",
 												"props": {
-													"width": 13,
-													"height": 13,
-													"viewBox": "0 0 24 24",
-													"fill": "none",
-													"stroke": "currentColor",
-													"strokeWidth": 2,
-													"strokeLinecap": "round",
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600,
+														"color": "#101828"
+													}
+												},
+												"children": [
+													"{name}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"color": "#98a2b3"
+													}
+												},
+												"children": [
+													"2h"
+												]
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"color": "#101828",
+												"lineHeight": 1.5
+											}
+										},
+										"children": [
+											"{comment}"
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "14px",
+												"color": "#475467",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"display": "flex",
+														"alignItems": "center",
+														"gap": "4px",
+														"flexWrap": "wrap"
+													}
 												},
 												"children": [
 													{
-														"tag": "path",
+														"tag": "svg",
 														"props": {
-															"d": "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-														}
+															"width": 13,
+															"height": 13,
+															"viewBox": "0 0 24 24",
+															"fill": "none",
+															"stroke": "currentColor",
+															"strokeWidth": 2,
+															"strokeLinecap": "round",
+															"strokeLinejoin": "round",
+															"xmlns": "http://www.w3.org/2000/svg"
+														},
+														"children": [
+															{
+																"tag": "path",
+																"props": {
+																	"d": "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+																}
+															}
+														]
+													},
+													{
+														"tag": "span",
+														"props": {
+															"style": {
+																"fontSize": "12px",
+																"fontWeight": 600
+															}
+														},
+														"children": [
+															"24"
+														]
 													}
 												]
 											},
@@ -247,7 +297,140 @@
 													}
 												},
 												"children": [
-													"24"
+													"Reply"
+												]
+											}
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "flex-start",
+								"gap": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "2px",
+										"alignSelf": "stretch",
+										"marginLeft": "15px",
+										"borderRadius": "999px",
+										"background": "#f2f4f7",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								}
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "24px",
+										"height": "24px",
+										"borderRadius": "999px",
+										"background": "#f2f4f7",
+										"color": "#344054",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "14px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 12,
+											"height": 12,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "path",
+												"props": {
+													"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 7,
+													"r": 4
+												}
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"flex": 1,
+										"minWidth": 0,
+										"gap": "2px"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "baseline",
+												"gap": "6px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "14px",
+														"fontWeight": 600,
+														"color": "#101828"
+													}
+												},
+												"children": [
+													"{replyName}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"color": "#98a2b3"
+													}
+												},
+												"children": [
+													"1h"
 												]
 											}
 										]
@@ -256,102 +439,28 @@
 										"tag": "span",
 										"props": {
 											"style": {
-												"fontSize": "12px",
-												"fontWeight": 600
+												"fontSize": "14px",
+												"color": "#101828",
+												"lineHeight": 1.5
 											}
 										},
 										"children": [
-											"Reply"
+											"{reply}"
 										]
 									}
 								]
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-start",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "2px",
-								"alignSelf": "stretch",
-								"marginLeft": "15px",
-								"borderRadius": "999px",
-								"background": "#f2f4f7",
-								"flexShrink": 0
-							}
-						}
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "24px",
-								"height": "24px",
-								"borderRadius": "999px",
-								"background": "#f2f4f7",
-								"color": "#344054",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "14px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "path",
-										"props": {
-											"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 7,
-											"r": 4
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"flex": 1,
-								"minWidth": 0,
-								"gap": "2px"
+								"gap": "8px",
+								"marginLeft": "42px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -359,184 +468,381 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"display": "flex",
-										"alignItems": "baseline",
-										"gap": "6px"
+										"width": "22px",
+										"height": "1px",
+										"background": "#eaecf0",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "14px",
-												"fontWeight": 600,
-												"color": "#101828"
-											}
-										},
-										"children": [
-											"{replyName}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"fontSize": "12px",
-												"color": "#98a2b3"
-											}
-										},
-										"children": [
-											"1h"
-										]
-									}
-								]
+								}
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "14px",
-										"color": "#101828",
-										"lineHeight": 1.5
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"color": "#7f56d9"
 									}
 								},
 								"children": [
-									"{reply}"
+									"View {more} more replies"
 								]
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"marginLeft": "42px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "22px",
-								"height": "1px",
-								"background": "#eaecf0"
-							}
-						}
 					},
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": "#7f56d9"
-							}
-						},
-						"children": [
-							"View {more} more replies"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"paddingTop": "8px",
-						"borderTopWidth": "1px",
-						"borderTopStyle": "solid",
-						"borderTopColor": "#f2f4f7"
-					}
-				},
-				"children": [
-					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "28px",
-								"height": "28px",
-								"borderRadius": "999px",
-								"background": "#f2f4f7",
-								"color": "#344054",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "14px",
-								"flexShrink": 0
+								"gap": "8px",
+								"paddingTop": "8px",
+								"borderTopWidth": "1px",
+								"borderTopStyle": "solid",
+								"borderTopColor": "#f2f4f7",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
+								"tag": "div",
 								"props": {
-									"width": 13,
-									"height": 13,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"style": {
+										"width": "28px",
+										"height": "28px",
+										"borderRadius": "999px",
+										"background": "#f2f4f7",
+										"color": "#344054",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "14px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
 								},
 								"children": [
 									{
-										"tag": "path",
+										"tag": "svg",
 										"props": {
-											"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 7,
-											"r": 4
-										}
+											"width": 13,
+											"height": 13,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "path",
+												"props": {
+													"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 7,
+													"r": 4
+												}
+											}
+										]
 									}
 								]
+							},
+							{
+								"tag": "input",
+								"props": {
+									"type": "text",
+									"placeholder": "{placeholder}",
+									"style": {
+										"flex": 1,
+										"minWidth": 0,
+										"height": "34px",
+										"boxSizing": "border-box",
+										"padding": "0 12px",
+										"background": "#f9fafb",
+										"color": "#101828",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#eaecf0",
+										"borderRadius": "999px",
+										"fontSize": "14px",
+										"outline": "none"
+									},
+									"value": {
+										"ttArg": "entry1"
+									},
+									"aria-label": "{placeholder}",
+									"maxLength": 500
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "entry1"
+								}
 							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "input",
+						"tag": "fieldset",
 						"props": {
-							"type": "text",
-							"placeholder": "{placeholder}",
 							"style": {
-								"flex": 1,
-								"minWidth": 0,
-								"height": "34px",
-								"boxSizing": "border-box",
-								"padding": "0 12px",
-								"background": "#f9fafb",
-								"color": "#101828",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#eaecf0",
-								"borderRadius": "999px",
-								"fontSize": "14px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"outline": "none"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"entry1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "entry1",
+											"value": {
+												"ttArg": "entry1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Comment ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Comment",
+											"value": {
+												"ttArg": "comment"
+											},
+											"maxLength": 200,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "comment"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Reply name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Reply name",
+											"value": {
+												"ttArg": "replyName"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "replyName"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Reply ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Reply",
+											"value": {
+												"ttArg": "reply"
+											},
+											"maxLength": 120,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "reply"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"More replies ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "More replies",
+											"value": {
+												"ttArg": "more"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "more"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "social-feed-comments",
+									"title": "Comment Thread",
+									"details": "Name: {name}\nComment: {comment}\nReply name: {replyName}\nReply: {reply}\nMore replies: {more}\nentry1: {entry1}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "social-feed-comments",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Chat Thread",
 	"library": "antd",
 	"category": "messaging",
-	"description": "Short alternating conversation in the Ant Design style — a date divider chip, incoming bubbles with an initials avatar, and tone-solid replies aligned to the right.",
+	"description": "Short alternating conversation in the Ant Design style — a date divider chip, incoming bubbles with an initials avatar, and tone-solid replies aligned to the right. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"chat",
 		"thread",
@@ -52,17 +52,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "8px",
-				"width": "300px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -71,37 +82,11 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"background": "#fafafa",
-								"color": "rgba(0, 0, 0, 0.45)",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"padding": "2px 10px",
-								"borderRadius": "999px"
-							}
-						},
-						"children": [
-							"{divider}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-end",
+						"flexDirection": "column",
 						"gap": "8px",
-						"alignSelf": "flex-start"
+						"width": "300px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
@@ -109,21 +94,84 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "28px",
-								"height": "28px",
-								"borderRadius": "999px",
-								"background": "#fafafa",
-								"color": "rgba(0, 0, 0, 0.65)",
 								"display": "flex",
 								"alignItems": "center",
 								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "12px",
-								"flexShrink": 0
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{initials}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"background": "#fafafa",
+										"color": "rgba(0, 0, 0, 0.45)",
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"padding": "2px 10px",
+										"borderRadius": "999px"
+									}
+								},
+								"children": [
+									"{divider}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "flex-end",
+								"gap": "8px",
+								"alignSelf": "flex-start",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "28px",
+										"height": "28px",
+										"borderRadius": "999px",
+										"background": "#fafafa",
+										"color": "rgba(0, 0, 0, 0.65)",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "12px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"{initials}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"padding": "8px 12px",
+										"maxWidth": "220px",
+										"fontSize": "14px",
+										"lineHeight": 1.45,
+										"background": "#fafafa",
+										"color": "rgba(0, 0, 0, 0.88)",
+										"borderRadius": "6px 6px 6px 4px"
+									}
+								},
+								"children": [
+									"{incoming}"
+								]
+							}
 						]
 					},
 					{
@@ -134,91 +182,95 @@
 								"maxWidth": "220px",
 								"fontSize": "14px",
 								"lineHeight": 1.45,
-								"background": "#fafafa",
-								"color": "rgba(0, 0, 0, 0.88)",
-								"borderRadius": "6px 6px 6px 4px"
+								"background": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#1677ff",
+											"success": "#52c41a",
+											"warning": "#faad14",
+											"danger": "#ff4d4f",
+											"info": "#1677ff",
+											"neutral": "rgba(0, 0, 0, 0.88)"
+										},
+										"default": "#1677ff"
+									}
+								},
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#ffffff",
+											"success": "#ffffff",
+											"warning": "#ffffff",
+											"danger": "#ffffff",
+											"info": "#ffffff",
+											"neutral": "#ffffff"
+										},
+										"default": "#ffffff"
+									}
+								},
+								"borderRadius": "6px 6px 4px 6px",
+								"alignSelf": "flex-end"
 							}
 						},
 						"children": [
-							"{incoming}"
+							"{outgoing}"
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"padding": "8px 12px",
-						"maxWidth": "220px",
-						"fontSize": "14px",
-						"lineHeight": 1.45,
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#1677ff",
-									"success": "#52c41a",
-									"warning": "#faad14",
-									"danger": "#ff4d4f",
-									"info": "#1677ff",
-									"neutral": "rgba(0, 0, 0, 0.88)"
-								},
-								"default": "#1677ff"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#ffffff",
-									"success": "#ffffff",
-									"warning": "#ffffff",
-									"danger": "#ffffff",
-									"info": "#ffffff",
-									"neutral": "#ffffff"
-								},
-								"default": "#ffffff"
-							}
-						},
-						"borderRadius": "6px 6px 4px 6px",
-						"alignSelf": "flex-end"
-					}
-				},
-				"children": [
-					"{outgoing}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-end",
-						"gap": "8px",
-						"alignSelf": "flex-start"
-					}
-				},
-				"children": [
+					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "28px",
-								"height": "28px",
-								"borderRadius": "999px",
-								"background": "#fafafa",
-								"color": "rgba(0, 0, 0, 0.65)",
 								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "12px",
-								"flexShrink": 0
+								"alignItems": "flex-end",
+								"gap": "8px",
+								"alignSelf": "flex-start",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{initials}"
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "28px",
+										"height": "28px",
+										"borderRadius": "999px",
+										"background": "#fafafa",
+										"color": "rgba(0, 0, 0, 0.65)",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "12px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"{initials}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"padding": "8px 12px",
+										"maxWidth": "220px",
+										"fontSize": "14px",
+										"lineHeight": 1.45,
+										"background": "#fafafa",
+										"color": "rgba(0, 0, 0, 0.88)",
+										"borderRadius": "6px 6px 6px 4px"
+									}
+								},
+								"children": [
+									"Perfect — bringing snacks."
+								]
+							}
 						]
 					},
 					{
@@ -229,64 +281,238 @@
 								"maxWidth": "220px",
 								"fontSize": "14px",
 								"lineHeight": 1.45,
-								"background": "#fafafa",
-								"color": "rgba(0, 0, 0, 0.88)",
-								"borderRadius": "6px 6px 6px 4px"
+								"background": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#1677ff",
+											"success": "#52c41a",
+											"warning": "#faad14",
+											"danger": "#ff4d4f",
+											"info": "#1677ff",
+											"neutral": "rgba(0, 0, 0, 0.88)"
+										},
+										"default": "#1677ff"
+									}
+								},
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#ffffff",
+											"success": "#ffffff",
+											"warning": "#ffffff",
+											"danger": "#ffffff",
+											"info": "#ffffff",
+											"neutral": "#ffffff"
+										},
+										"default": "#ffffff"
+									}
+								},
+								"borderRadius": "6px 6px 4px 6px",
+								"alignSelf": "flex-end"
 							}
 						},
 						"children": [
-							"Perfect — bringing snacks."
+							"Legend."
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"padding": "8px 12px",
-						"maxWidth": "220px",
-						"fontSize": "14px",
-						"lineHeight": 1.45,
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#1677ff",
-									"success": "#52c41a",
-									"warning": "#faad14",
-									"danger": "#ff4d4f",
-									"info": "#1677ff",
-									"neutral": "rgba(0, 0, 0, 0.88)"
-								},
-								"default": "#1677ff"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#ffffff",
-									"success": "#ffffff",
-									"warning": "#ffffff",
-									"danger": "#ffffff",
-									"info": "#ffffff",
-									"neutral": "#ffffff"
-								},
-								"default": "#ffffff"
-							}
-						},
-						"borderRadius": "6px 6px 4px 6px",
-						"alignSelf": "flex-end"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"Legend."
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Date divider ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Date divider",
+											"value": {
+												"ttArg": "divider"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "divider"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Avatar initials ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Avatar initials",
+											"value": {
+												"ttArg": "initials"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "initials"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"First message ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "First message",
+											"value": {
+												"ttArg": "incoming"
+											},
+											"maxLength": 120,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "incoming"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Reply ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Reply",
+											"value": {
+												"ttArg": "outgoing"
+											},
+											"maxLength": 120,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "outgoing"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "chat-thread",
+									"title": "Chat Thread",
+									"details": "Date divider: {divider}\nAvatar initials: {initials}\nFirst message: {incoming}\nReply: {outgoing}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "chat-thread",
 	"source": {
 		"kind": "archetype",

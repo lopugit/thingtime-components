@@ -3,7 +3,7 @@
 	"name": "Results Summary",
 	"library": "antd",
 	"category": "navigation",
-	"description": "Results summary pager in the Ant Design style — \"Showing X–Y of Z\" with emphasized counts beside tone-colored prev/next chevron buttons.",
+	"description": "Results summary pager in the Ant Design style — \"Showing X–Y of Z\" with emphasized counts beside tone-colored prev/next chevron buttons. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"pagination",
 		"navigation",
@@ -45,179 +45,592 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "page",
+			"type": "string",
+			"default": "1"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"gap": "16px",
-				"justifyContent": "space-between",
-				"width": "320px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
+				"tag": "div",
 				"props": {
 					"style": {
-						"fontSize": "13px",
-						"color": "rgba(0, 0, 0, 0.45)"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #d9d9d9",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.88)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					"Showing ",
 					{
-						"tag": "strong",
+						"tag": "div",
 						"props": {
 							"style": {
-								"color": "rgba(0, 0, 0, 0.88)",
-								"fontWeight": 600
+								"display": "flex",
+								"flexWrap": "wrap",
+								"gap": "6px"
 							}
 						},
 						"children": [
-							"{from}–{to}"
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "1",
+												"then": "#1677ff",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "1",
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "page",
+											"equals": "1",
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"1"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "page",
+									"value": "1"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "2",
+												"then": "#1677ff",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "2",
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "page",
+											"equals": "2",
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"2"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "page",
+									"value": "2"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "3",
+												"then": "#1677ff",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "3",
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "page",
+											"equals": "3",
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"3"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "page",
+									"value": "3"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "4",
+												"then": "#1677ff",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "4",
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "page",
+											"equals": "4",
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"4"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "page",
+									"value": "4"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "5",
+												"then": "#1677ff",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "page",
+												"equals": "5",
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "page",
+											"equals": "5",
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"5"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "page",
+									"value": "5"
+								}
+							}
 						]
 					},
-					" of ",
 					{
-						"tag": "strong",
-						"props": {
-							"style": {
-								"color": "rgba(0, 0, 0, 0.88)",
-								"fontWeight": 600
-							}
-						},
+						"tag": "p",
 						"children": [
-							"{total}"
+							"Page {page}"
+						]
+					},
+					{
+						"tag": "ul",
+						"children": [
+							{
+								"ttMap": {
+									"arg": "page",
+									"values": {
+										"1": [
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 1"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 2"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 3"
+												]
+											}
+										],
+										"2": [
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 4"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 5"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 6"
+												]
+											}
+										],
+										"3": [
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 7"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 8"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 9"
+												]
+											}
+										],
+										"4": [
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 10"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 11"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 12"
+												]
+											}
+										],
+										"5": [
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 13"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 14"
+												]
+											},
+											{
+												"tag": "li",
+												"children": [
+													"Sample record 15"
+												]
+											}
+										]
+									}
+								}
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"width": "24px",
-								"height": "24px",
-								"borderRadius": "6px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#d9d9d9",
-								"background": "#ffffff",
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1677ff",
-											"success": "#52c41a",
-											"warning": "#faad14",
-											"danger": "#ff4d4f",
-											"info": "#1677ff",
-											"neutral": "rgba(0, 0, 0, 0.88)"
-										},
-										"default": "#1677ff"
-									}
-								},
-								"cursor": "pointer"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 16,
-									"height": 16,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "polyline",
-										"props": {
-											"points": "15 6 9 12 15 18"
-										}
-									}
-								]
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "button",
+						"tag": "fieldset",
 						"props": {
-							"type": "button",
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"width": "24px",
-								"height": "24px",
-								"borderRadius": "6px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#d9d9d9",
-								"background": "#ffffff",
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1677ff",
-											"success": "#52c41a",
-											"warning": "#faad14",
-											"danger": "#ff4d4f",
-											"info": "#1677ff",
-											"neutral": "rgba(0, 0, 0, 0.88)"
-										},
-										"default": "#1677ff"
-									}
-								},
-								"cursor": "pointer"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
-								"props": {
-									"width": 16,
-									"height": 16,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
+								"tag": "label",
 								"children": [
+									"page ",
 									{
-										"tag": "polyline",
+										"tag": "input",
 										"props": {
-											"points": "9 6 15 12 9 18"
+											"aria-label": "page",
+											"value": {
+												"ttArg": "page"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "page"
 										}
 									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"From ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "From",
+											"value": {
+												"ttArg": "from"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "from"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"To ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "To",
+											"value": {
+												"ttArg": "to"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "to"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Total ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Total",
+											"value": {
+												"ttArg": "total"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "total"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "breadcrumb-pagination-summary",
+									"title": "Results Summary",
+									"details": "From: {from}\nTo: {to}\nTotal: {total}\npage: {page}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -225,7 +638,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "breadcrumb-pagination-summary",
 	"source": {
 		"kind": "archetype",

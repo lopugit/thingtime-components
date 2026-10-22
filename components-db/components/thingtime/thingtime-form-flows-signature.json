@@ -3,7 +3,7 @@
 	"name": "Signature Pad",
 	"library": "thingtime",
 	"category": "forms",
-	"description": "Signature capture block in the Thingtime style — a dashed pad with an inked squiggle over the baseline rule, Clear action, and an adopt-signature checkbox.",
+	"description": "Signature capture block in the Thingtime style — a dashed pad with an inked squiggle over the baseline rule, Clear action, and an adopt-signature checkbox. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"signature",
@@ -36,27 +36,34 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Adopt signature"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "signature",
+			"type": "string",
+			"default": "",
+			"maxLength": 200
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "14px",
-				"width": "340px",
 				"maxWidth": "100%",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#ececef",
-				"borderRadius": "16px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#33333c",
-				"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)"
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -64,145 +71,51 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #ececef",
+						"borderRadius": "12px",
+						"background": "#ffffff",
+						"color": "#33333c",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 700,
-								"color": "#16161a"
-							}
-						},
+						"tag": "label",
 						"children": [
-							"{label}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "11px",
-								"color": "#9a9aa6"
-							}
-						},
-						"children": [
-							"{date}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"alignItems": "center",
-						"justifyContent": "flex-end",
-						"gap": "6px",
-						"height": "120px",
-						"padding": "10px 14px",
-						"boxSizing": "border-box",
-						"background": "#f5f5f7",
-						"borderWidth": "1px",
-						"borderStyle": "dashed",
-						"borderColor": "#ececef",
-						"borderRadius": "12px"
-					}
-				},
-				"children": [
-					{
-						"ttIf": {
-							"arg": "signed",
-							"then": {
-								"tag": "svg",
-								"props": {
-									"width": 180,
-									"height": 56,
-									"viewBox": "0 0 180 56",
-									"fill": "none",
-									"stroke": "#16161a",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "path",
-										"props": {
-											"d": "M8 40 C 24 6 40 50 58 28 C 70 14 78 44 96 32 C 112 22 118 44 138 24 C 150 12 160 34 172 20"
-										}
-									}
-								]
-							},
-							"else": ""
-						}
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "8px",
-								"width": "100%"
-							}
-						},
-						"children": [
+							"Typed signature draft",
 							{
-								"tag": "span",
+								"tag": "input",
 								"props": {
+									"type": "text",
+									"aria-label": "signature",
+									"value": {
+										"ttArg": "signature"
+									},
 									"style": {
-										"fontSize": "11px",
-										"fontWeight": 600,
-										"color": "#b6b6c0"
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #ececef",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
 								},
-								"children": [
-									"X"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"flex": "1",
-										"height": "1px",
-										"background": "#ececef"
-									}
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "signature"
 								}
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between"
-					}
-				},
-				"children": [
+					},
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "11px",
-								"color": "#9a9aa6"
-							}
-						},
+						"tag": "p",
 						"children": [
-							"Sign above"
+							"{signature}"
 						]
 					},
 					{
@@ -210,117 +123,231 @@
 						"props": {
 							"type": "button",
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "36px",
-								"padding": "0 12px",
-								"background": "transparent",
-								"border": "none",
-								"borderRadius": "12px",
-								"color": "#16161a",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 600,
-								"fontSize": "14px",
+								"padding": "8px 12px",
+								"borderRadius": "9px",
+								"border": "1px solid #ececef",
+								"background": "#f5f5f7",
 								"cursor": "pointer"
 							}
 						},
 						"children": [
-							"Clear"
+							"Clear signature"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "signature",
+							"value": ""
+						}
+					},
+					{
+						"tag": "small",
+						"children": [
+							"A saved draft only. This does not sign an agreement."
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"width": "18px",
-										"height": "18px",
-										"boxSizing": "border-box",
-										"borderRadius": "7px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0
-									},
-									{
-										"ttIf": {
-											"arg": "adopt",
-											"then": {
-												"background": "#16161a",
-												"borderColor": "#16161a"
-											},
-											"else": {
-												"background": "#ffffff",
-												"borderColor": "#ececef"
-											}
-										}
-									}
-								]
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"ttIf": {
-									"arg": "adopt",
-									"then": {
-										"tag": "svg",
+								"tag": "label",
+								"children": [
+									"signature ",
+									{
+										"tag": "input",
 										"props": {
-											"width": 12,
-											"height": 12,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#ffffff",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
+											"aria-label": "signature",
+											"value": {
+												"ttArg": "signature"
+											},
+											"maxLength": 200,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "signature"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Date ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Date",
+											"value": {
+												"ttArg": "date"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "date"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Signed ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Signed",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "signed"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "signed"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Adopt signature ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Adopt signature",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "adopt"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "adopt"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "form-flows-signature",
+									"title": "Signature Pad",
+									"details": "Label: {label}\nDate: {date}\nSigned: {signed}\nAdopt signature: {adopt}\nsignature: {signature}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#33333c"
-							}
-						},
-						"children": [
-							"Adopt as my default signature"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "form-flows-signature",
 	"source": {
 		"kind": "archetype",

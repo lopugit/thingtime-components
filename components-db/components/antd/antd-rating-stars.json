@@ -3,7 +3,7 @@
 	"name": "Star Rating",
 	"library": "antd",
 	"category": "data-display",
-	"description": "Five-star rating row in the Ant Design style — the filled count is arg-driven through a calc-clipped overlay, so fractional scores like 3.5 fill half a star in the tone color.",
+	"description": "Five-star rating row in the Ant Design style — the filled count is arg-driven through a calc-clipped overlay, so fractional scores like 3.5 fill half a star in the tone color. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"rating",
 		"stars",
@@ -38,16 +38,28 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Show value"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"alignItems": "center",
-				"gap": "10px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -55,8 +67,15 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"position": "relative",
-						"display": "inline-flex"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #d9d9d9",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.88)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -65,146 +84,367 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "0px"
+								"flexWrap": "wrap",
+								"gap": "6px"
 							}
 						},
 						"children": [
 							{
-								"ttRepeat": {
-									"count": 5,
-									"max": 5,
-									"node": {
-										"tag": "svg",
-										"props": {
-											"width": 20,
-											"height": 20,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "rgba(0, 0, 0, 0.25)",
-											"strokeWidth": 2,
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polygon",
-												"props": {
-													"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
-												}
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 1,
+												"then": "#1677ff",
+												"else": "#fafafa"
 											}
-										]
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 1,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "stars",
+											"equals": 1,
+											"then": true,
+											"else": false
+										}
 									}
+								},
+								"children": [
+									"1 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "stars",
+									"value": 1
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 2,
+												"then": "#1677ff",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 2,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "stars",
+											"equals": 2,
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"2 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "stars",
+									"value": 2
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 3,
+												"then": "#1677ff",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 3,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "stars",
+											"equals": 3,
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"3 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "stars",
+									"value": 3
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 4,
+												"then": "#1677ff",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 4,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "stars",
+											"equals": 4,
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"4 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "stars",
+									"value": 4
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"border": "1px solid #d9d9d9",
+										"background": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 5,
+												"then": "#1677ff",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "stars",
+												"equals": 5,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.88)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "stars",
+											"equals": 5,
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"5 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "stars",
+									"value": 5
 								}
 							}
 						]
 					},
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"position": "absolute",
-								"top": "0px",
-								"left": "0px",
-								"height": "100%",
-								"width": "calc({stars} * 20px)",
-								"overflow": "hidden",
-								"whiteSpace": "nowrap"
-							}
-						},
+						"tag": "p",
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "0px",
-										"width": "100px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									{
-										"ttRepeat": {
-											"count": 5,
-											"max": 5,
-											"node": {
-												"tag": "svg",
-												"props": {
-													"width": 20,
-													"height": 20,
-													"viewBox": "0 0 24 24",
-													"fill": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#1677ff",
-																"success": "#52c41a",
-																"warning": "#faad14",
-																"danger": "#ff4d4f",
-																"info": "#1677ff",
-																"neutral": "rgba(0, 0, 0, 0.88)"
-															},
-															"default": "#faad14"
-														}
-													},
-													"stroke": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#1677ff",
-																"success": "#52c41a",
-																"warning": "#faad14",
-																"danger": "#ff4d4f",
-																"info": "#1677ff",
-																"neutral": "rgba(0, 0, 0, 0.88)"
-															},
-															"default": "#faad14"
-														}
-													},
-													"strokeWidth": 2,
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
-												},
-												"children": [
-													{
-														"tag": "polygon",
-														"props": {
-															"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
-														}
-													}
-												]
-											}
-										}
-									}
-								]
-							}
+							"Your rating: {stars} / 5"
 						]
 					}
 				]
 			},
 			{
-				"ttIf": {
-					"arg": "showValue",
-					"then": {
-						"tag": "span",
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "13px",
-								"fontWeight": 600,
-								"color": "rgba(0, 0, 0, 0.45)"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{stars}/5"
+							{
+								"tag": "label",
+								"children": [
+									"Stars (0–5) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Stars (0–5)",
+											"value": {
+												"ttArg": "stars"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #d9d9d9",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 5
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "stars"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show value",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showValue"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showValue"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #d9d9d9",
+										"borderRadius": "6px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "rating-stars",
+									"title": "Star Rating",
+									"details": "Stars (0–5): {stars}\nShow value: {showValue}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "rating-stars",
 	"source": {
 		"kind": "archetype",

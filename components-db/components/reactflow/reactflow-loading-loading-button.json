@@ -3,7 +3,7 @@
 	"name": "Loading Button",
 	"library": "reactflow",
 	"category": "feedback",
-	"description": "Busy-state button in the React Flow style — an inline arc spinner beside the label, in solid or quiet tinted form.",
+	"description": "Busy-state button in the React Flow style — an inline arc spinner beside the label, in solid or quiet tinted form. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"loading",
 		"button",
@@ -48,164 +48,311 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Quiet (tinted)"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "button",
+		"tag": "div",
 		"props": {
-			"type": "button",
 			"style": {
-				"ttMerge": [
-					{
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"gap": "8px",
-						"border": "none",
-						"borderRadius": "5px",
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontWeight": 500,
-						"cursor": "wait",
-						"opacity": 0.9
-					},
-					{
-						"ttMap": {
-							"arg": "size",
-							"values": {
-								"sm": {
-									"height": "24px",
-									"padding": "0 12px",
-									"fontSize": "12px"
-								},
-								"md": {
-									"height": "30px",
-									"padding": "0 16px",
-									"fontSize": "12px"
-								},
-								"lg": {
-									"height": "38px",
-									"padding": "0 20px",
-									"fontSize": "14px"
-								}
-							},
-							"default": {
-								"height": "30px",
-								"padding": "0 16px",
-								"fontSize": "12px"
-							}
-						}
-					},
-					{
-						"background": {
-							"ttIf": {
-								"arg": "quiet",
-								"then": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#f4f4f5",
-											"success": "#f0fdf4",
-											"warning": "#fefce8",
-											"danger": "#ffe4f1",
-											"info": "#f1ecfd",
-											"neutral": "#f4f4f5"
-										},
-										"default": "#f4f4f5"
-									}
-								},
-								"else": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1a192b",
-											"success": "#22c55e",
-											"warning": "#eab308",
-											"danger": "#ff0072",
-											"info": "#784be8",
-											"neutral": "#6f6e77"
-										},
-										"default": "#1a192b"
-									}
-								}
-							}
-						},
-						"color": {
-							"ttIf": {
-								"arg": "quiet",
-								"then": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1a192b",
-											"success": "#15803d",
-											"warning": "#a16207",
-											"danger": "#c00055",
-											"info": "#5b21b6",
-											"neutral": "#3f3e4a"
-										},
-										"default": "#1a192b"
-									}
-								},
-								"else": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								}
-							}
-						},
-						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "svg",
+				"tag": "button",
 				"props": {
-					"width": 16,
-					"height": 16,
-					"viewBox": "0 0 24 24",
-					"fill": "none",
-					"xmlns": "http://www.w3.org/2000/svg"
+					"type": "button",
+					"style": {
+						"ttMerge": [
+							{
+								"display": "inline-flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"gap": "8px",
+								"border": "none",
+								"borderRadius": "5px",
+								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+								"fontWeight": 500,
+								"cursor": "wait",
+								"opacity": 0.9,
+								"flexWrap": "wrap"
+							},
+							{
+								"ttMap": {
+									"arg": "size",
+									"values": {
+										"sm": {
+											"height": "24px",
+											"padding": "0 12px",
+											"fontSize": "12px"
+										},
+										"md": {
+											"height": "30px",
+											"padding": "0 16px",
+											"fontSize": "12px"
+										},
+										"lg": {
+											"height": "38px",
+											"padding": "0 20px",
+											"fontSize": "14px"
+										}
+									},
+									"default": {
+										"height": "30px",
+										"padding": "0 16px",
+										"fontSize": "12px"
+									}
+								}
+							},
+							{
+								"background": {
+									"ttIf": {
+										"arg": "quiet",
+										"then": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#f4f4f5",
+													"success": "#f0fdf4",
+													"warning": "#fefce8",
+													"danger": "#ffe4f1",
+													"info": "#f1ecfd",
+													"neutral": "#f4f4f5"
+												},
+												"default": "#f4f4f5"
+											}
+										},
+										"else": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1a192b",
+													"success": "#22c55e",
+													"warning": "#eab308",
+													"danger": "#ff0072",
+													"info": "#784be8",
+													"neutral": "#6f6e77"
+												},
+												"default": "#1a192b"
+											}
+										}
+									}
+								},
+								"color": {
+									"ttIf": {
+										"arg": "quiet",
+										"then": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1a192b",
+													"success": "#15803d",
+													"warning": "#a16207",
+													"danger": "#c00055",
+													"info": "#5b21b6",
+													"neutral": "#3f3e4a"
+												},
+												"default": "#1a192b"
+											}
+										},
+										"else": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										}
+									}
+								},
+								"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
+							}
+						]
+					}
 				},
 				"children": [
 					{
-						"tag": "circle",
+						"tag": "svg",
 						"props": {
-							"cx": 12,
-							"cy": 12,
-							"r": 10,
-							"stroke": "currentColor",
-							"strokeWidth": 3,
-							"style": {
-								"opacity": 0.3
+							"width": 16,
+							"height": 16,
+							"viewBox": "0 0 24 24",
+							"fill": "none",
+							"xmlns": "http://www.w3.org/2000/svg"
+						},
+						"children": [
+							{
+								"tag": "circle",
+								"props": {
+									"cx": 12,
+									"cy": 12,
+									"r": 10,
+									"stroke": "currentColor",
+									"strokeWidth": 3,
+									"style": {
+										"opacity": 0.3
+									}
+								}
+							},
+							{
+								"tag": "path",
+								"props": {
+									"d": "M12 2a10 10 0 1 1-10 10",
+									"stroke": "currentColor",
+									"strokeWidth": 3,
+									"strokeLinecap": "round"
+								}
 							}
-						}
+						]
+					},
+					"{label}"
+				],
+				"ttAction": "$ui",
+				"ttActionInputs": {
+					"op": "toggle",
+					"key": "quiet"
+				}
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
 					},
 					{
-						"tag": "path",
+						"tag": "fieldset",
 						"props": {
-							"d": "M12 2a10 10 0 1 1-10 10",
-							"stroke": "currentColor",
-							"strokeWidth": 3,
-							"strokeLinecap": "round"
-						}
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Quiet (tinted) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Quiet (tinted)",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "quiet"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "quiet"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "loading-loading-button",
+									"title": "Loading Button",
+									"details": "Label: {label}\nQuiet (tinted): {quiet}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
 				]
-			},
-			"{label}"
+			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "loading-loading-button",
 	"source": {
 		"kind": "archetype",

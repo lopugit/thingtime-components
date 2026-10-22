@@ -3,7 +3,7 @@
 	"name": "Basic Card",
 	"library": "mui",
 	"category": "layout",
-	"description": "Simple padded content card in the Material UI style — tone-colored eyebrow, heading and muted body on one bordered library surface.",
+	"description": "Simple padded content card in the Material UI style — tone-colored eyebrow, heading and muted body on one bordered library surface. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"card",
 		"surface",
@@ -21,7 +21,8 @@
 			"name": "body",
 			"type": "text",
 			"default": "Cards group related content and actions onto one calm surface.",
-			"label": "Body"
+			"label": "Body",
+			"maxLength": 500
 		},
 		{
 			"name": "eyebrow",
@@ -43,90 +44,270 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "300px",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-				"background": "#ffffff",
-				"color": "rgba(0, 0, 0, 0.87)",
-				"border": "1px solid rgba(0, 0, 0, 0.12)",
-				"borderRadius": "4px",
-				"boxShadow": "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
-				"overflow": "hidden",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"gap": "8px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"ttIf": {
-					"arg": "eyebrow",
-					"then": {
+				"tag": "div",
+				"props": {
+					"style": {
+						"display": "flex",
+						"flexDirection": "column",
+						"width": "300px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"border": "1px solid rgba(0, 0, 0, 0.12)",
+						"borderRadius": "4px",
+						"boxShadow": "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+						"overflow": "hidden",
+						"boxSizing": "border-box",
+						"padding": "16px",
+						"gap": "8px",
+						"maxWidth": "100%"
+					}
+				},
+				"children": [
+					{
+						"ttIf": {
+							"arg": "eyebrow",
+							"then": {
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"textTransform": "uppercase",
+										"letterSpacing": "0.06em",
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1976d2",
+													"success": "#2e7d32",
+													"warning": "#ed6c02",
+													"danger": "#d32f2f",
+													"info": "#0288d1",
+													"neutral": "#616161"
+												},
+												"default": "#1976d2"
+											}
+										}
+									}
+								},
+								"children": [
+									"{eyebrow}"
+								]
+							}
+						}
+					},
+					{
 						"tag": "span",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"textTransform": "uppercase",
-								"letterSpacing": "0.06em",
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1976d2",
-											"success": "#2e7d32",
-											"warning": "#ed6c02",
-											"danger": "#d32f2f",
-											"info": "#0288d1",
-											"neutral": "#616161"
-										},
-										"default": "#1976d2"
-									}
-								}
+								"fontSize": "16px",
+								"fontWeight": 500,
+								"color": "rgba(0, 0, 0, 0.87)"
 							}
 						},
 						"children": [
-							"{eyebrow}"
+							"{title}"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "13px",
+								"color": "rgba(0, 0, 0, 0.6)",
+								"lineHeight": 1.5
+							}
+						},
+						"children": [
+							"{body}"
 						]
 					}
-				}
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "16px",
-						"fontWeight": 500,
-						"color": "rgba(0, 0, 0, 0.87)"
-					}
-				},
-				"children": [
-					"{title}"
 				]
 			},
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "13px",
-						"color": "rgba(0, 0, 0, 0.6)",
-						"lineHeight": 1.5
-					}
-				},
+				"tag": "details",
 				"children": [
-					"{body}"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Body ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Body",
+											"value": {
+												"ttArg": "body"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "body"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Eyebrow ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Eyebrow",
+											"value": {
+												"ttArg": "eyebrow"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "eyebrow"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "card-basic",
+									"title": "Basic Card",
+									"details": "Title: {title}\nBody: {body}\nEyebrow: {eyebrow}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "card-basic",
 	"source": {
 		"kind": "archetype",

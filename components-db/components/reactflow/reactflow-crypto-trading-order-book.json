@@ -3,7 +3,7 @@
 	"name": "Order Book",
 	"library": "reactflow",
 	"category": "finance",
-	"description": "Order book in the React Flow style — success bids and danger asks side by side, four ladder rows each with decreasing depth-bar backgrounds, Price/Size headers, and the live spread between the columns.",
+	"description": "Order book in the React Flow style — success bids and danger asks side by side, four ladder rows each with decreasing depth-bar backgrounds, Price/Size headers, and the live spread between the columns. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"crypto",
 		"order-book",
@@ -38,26 +38,28 @@
 			"default": "6.6",
 			"label": "Spread",
 			"maxLength": 8
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#1a192b",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"padding": "14px",
-				"boxSizing": "border-box",
-				"width": "312px",
-				"gap": "10px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -66,483 +68,711 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "6px"
+						"flexDirection": "column",
+						"color": "#1a192b",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#1a192b",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+						"padding": "14px",
+						"boxSizing": "border-box",
+						"width": "312px",
+						"gap": "10px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"width": "6px",
-								"height": "6px",
-								"borderRadius": "999px",
-								"background": "#22c55e"
-							}
-						}
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "6px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{pair}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"width": "6px",
+										"height": "6px",
+										"borderRadius": "999px",
+										"background": "#22c55e",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								}
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 600
+									}
+								},
+								"children": [
+									"{pair}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "stretch",
+								"gap": "4px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"flex": 1
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "0 8px",
+												"fontSize": "10px",
+												"color": "#b1b1b7",
+												"fontWeight": 600,
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"children": [
+													"Price"
+												]
+											},
+											{
+												"tag": "span",
+												"children": [
+													"Size"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "3px 8px",
+												"borderRadius": "2px",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "10px",
+												"background": "linear-gradient(to left, #f0fdf4 88%, transparent 88%)",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#15803d",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"{bid}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"0.84"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "3px 8px",
+												"borderRadius": "2px",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "10px",
+												"background": "linear-gradient(to left, #f0fdf4 64%, transparent 64%)",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#15803d",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"67,398.5"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"1.20"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "3px 8px",
+												"borderRadius": "2px",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "10px",
+												"background": "linear-gradient(to left, #f0fdf4 42%, transparent 42%)",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#15803d",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"67,391.0"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"0.42"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "3px 8px",
+												"borderRadius": "2px",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "10px",
+												"background": "linear-gradient(to left, #f0fdf4 22%, transparent 22%)",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#15803d",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"67,384.2"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"2.05"
+												]
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"padding": "0 6px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Spread"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "10px",
+												"fontWeight": 700
+											}
+										},
+										"children": [
+											"{spread}"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"flex": 1
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "0 8px",
+												"fontSize": "10px",
+												"color": "#b1b1b7",
+												"fontWeight": 600,
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"children": [
+													"Price"
+												]
+											},
+											{
+												"tag": "span",
+												"children": [
+													"Size"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "3px 8px",
+												"borderRadius": "2px",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "10px",
+												"background": "linear-gradient(to right, #ffe4f1 88%, transparent 88%)",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#c00055",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"{ask}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"0.62"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "3px 8px",
+												"borderRadius": "2px",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "10px",
+												"background": "linear-gradient(to right, #ffe4f1 64%, transparent 64%)",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#c00055",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"67,419.5"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"0.95"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "3px 8px",
+												"borderRadius": "2px",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "10px",
+												"background": "linear-gradient(to right, #ffe4f1 42%, transparent 42%)",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#c00055",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"67,426.1"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"1.48"
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"justifyContent": "space-between",
+												"padding": "3px 8px",
+												"borderRadius": "2px",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "10px",
+												"background": "linear-gradient(to right, #ffe4f1 22%, transparent 22%)",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#c00055",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"67,433.8"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"color": "#6f6e77"
+													}
+												},
+												"children": [
+													"0.71"
+												]
+											}
+										]
+									}
+								]
+							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "stretch",
-						"gap": "4px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"flex": 1
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "0 8px",
-										"fontSize": "10px",
-										"color": "#b1b1b7",
-										"fontWeight": 600
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"children": [
-											"Price"
-										]
-									},
-									{
-										"tag": "span",
-										"children": [
-											"Size"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "3px 8px",
-										"borderRadius": "2px",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "10px",
-										"background": "linear-gradient(to left, #f0fdf4 88%, transparent 88%)"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#15803d",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"{bid}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"0.84"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "3px 8px",
-										"borderRadius": "2px",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "10px",
-										"background": "linear-gradient(to left, #f0fdf4 64%, transparent 64%)"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#15803d",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"67,398.5"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"1.20"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "3px 8px",
-										"borderRadius": "2px",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "10px",
-										"background": "linear-gradient(to left, #f0fdf4 42%, transparent 42%)"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#15803d",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"67,391.0"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"0.42"
-										]
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "3px 8px",
-										"borderRadius": "2px",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "10px",
-										"background": "linear-gradient(to left, #f0fdf4 22%, transparent 22%)"
-									}
-								},
-								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#15803d",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"67,384.2"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"2.05"
-										]
-									}
-								]
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"padding": "0 6px"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "10px",
-										"color": "#6f6e77"
-									}
-								},
+								"tag": "label",
 								"children": [
-									"Spread"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "10px",
-										"fontWeight": 700
-									}
-								},
-								"children": [
-									"{spread}"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"flex": 1
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "0 8px",
-										"fontSize": "10px",
-										"color": "#b1b1b7",
-										"fontWeight": 600
-									}
-								},
-								"children": [
+									"Pair ",
 									{
-										"tag": "span",
-										"children": [
-											"Price"
-										]
-									},
-									{
-										"tag": "span",
-										"children": [
-											"Size"
-										]
+										"tag": "input",
+										"props": {
+											"aria-label": "Pair",
+											"value": {
+												"ttArg": "pair"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "pair"
+										}
 									}
 								]
 							},
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "3px 8px",
-										"borderRadius": "2px",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "10px",
-										"background": "linear-gradient(to right, #ffe4f1 88%, transparent 88%)"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Best bid ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
+											"aria-label": "Best bid",
+											"value": {
+												"ttArg": "bid"
+											},
+											"maxLength": 12,
 											"style": {
-												"color": "#c00055",
-												"fontWeight": 600
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"{ask}"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"0.62"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "bid"
+										}
 									}
 								]
 							},
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "3px 8px",
-										"borderRadius": "2px",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "10px",
-										"background": "linear-gradient(to right, #ffe4f1 64%, transparent 64%)"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Best ask ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
+											"aria-label": "Best ask",
+											"value": {
+												"ttArg": "ask"
+											},
+											"maxLength": 12,
 											"style": {
-												"color": "#c00055",
-												"fontWeight": 600
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"67,419.5"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"0.95"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "ask"
+										}
 									}
 								]
 							},
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "3px 8px",
-										"borderRadius": "2px",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "10px",
-										"background": "linear-gradient(to right, #ffe4f1 42%, transparent 42%)"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Spread ",
 									{
-										"tag": "span",
+										"tag": "input",
 										"props": {
+											"aria-label": "Spread",
+											"value": {
+												"ttArg": "spread"
+											},
+											"maxLength": 8,
 											"style": {
-												"color": "#c00055",
-												"fontWeight": 600
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"67,426.1"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"1.48"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "spread"
+										}
 									}
 								]
 							},
 							{
-								"tag": "div",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"display": "flex",
-										"justifyContent": "space-between",
-										"padding": "3px 8px",
-										"borderRadius": "2px",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "10px",
-										"background": "linear-gradient(to right, #ffe4f1 22%, transparent 22%)"
-									}
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "crypto-trading-order-book",
+									"title": "Order Book",
+									"details": "Pair: {pair}\nBest bid: {bid}\nBest ask: {ask}\nSpread: {spread}"
 								},
 								"children": [
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#c00055",
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"67,433.8"
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6f6e77"
-											}
-										},
-										"children": [
-											"0.71"
-										]
-									}
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
 				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "crypto-trading-order-book",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Hero Section",
 	"library": "bootstrap",
 	"category": "marketing",
-	"description": "Centered landing hero in the Bootstrap style — display heading, supporting subtext, and a solid + outline button pair on Bootstrap tone, radius, and type tokens.",
+	"description": "Centered landing hero in the Bootstrap style — display heading, supporting subtext, and a solid + outline button pair on Bootstrap tone, radius, and type tokens. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"marketing",
 		"hero",
@@ -52,157 +52,390 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "section",
+		"tag": "div",
 		"props": {
 			"style": {
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e9ecef",
-				"borderRadius": "8px",
-				"boxShadow": "0 .5rem 1rem rgba(0, 0, 0, .15)",
-				"padding": "44px 36px",
-				"display": "flex",
-				"flexDirection": "column",
-				"alignItems": "center",
-				"textAlign": "center",
-				"gap": "12px",
-				"maxWidth": "560px",
-				"boxSizing": "border-box"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
+				"tag": "section",
 				"props": {
 					"style": {
-						"fontSize": "30px",
-						"fontWeight": 500,
-						"color": "#212529",
-						"lineHeight": 1.15,
-						"letterSpacing": "-0.02em"
-					}
-				},
-				"children": [
-					"{heading}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "18px",
-						"color": "#6c757d",
-						"lineHeight": 1.55,
-						"maxWidth": "420px"
-					}
-				},
-				"children": [
-					"{subtext}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e9ecef",
+						"borderRadius": "8px",
+						"boxShadow": "0 .5rem 1rem rgba(0, 0, 0, .15)",
+						"padding": "44px 36px",
 						"display": "flex",
+						"flexDirection": "column",
 						"alignItems": "center",
-						"gap": "10px",
-						"marginTop": "8px",
-						"justifyContent": "center",
-						"flexWrap": "wrap"
+						"textAlign": "center",
+						"gap": "12px",
+						"maxWidth": "560px",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
 					{
-						"tag": "button",
+						"tag": "span",
 						"props": {
-							"type": "button",
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "8px",
-								"border": "none",
-								"height": "38px",
-								"padding": "0 18px",
-								"borderRadius": "6px",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 400,
-								"fontSize": "16px",
-								"cursor": "pointer",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#0d6efd",
-											"success": "#198754",
-											"warning": "#ffc107",
-											"danger": "#dc3545",
-											"info": "#0dcaf0",
-											"neutral": "#6c757d"
-										},
-										"default": "#0d6efd"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#000000",
-											"danger": "#ffffff",
-											"info": "#000000",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+								"fontSize": "30px",
+								"fontWeight": 500,
+								"color": "#212529",
+								"lineHeight": 1.15,
+								"letterSpacing": "-0.02em"
 							}
 						},
 						"children": [
-							"{primaryLabel}"
+							"{heading}"
 						]
 					},
 					{
-						"tag": "button",
+						"tag": "span",
 						"props": {
-							"type": "button",
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "8px",
-								"border": "none",
-								"height": "38px",
-								"padding": "0 18px",
-								"borderRadius": "6px",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 400,
-								"fontSize": "16px",
-								"cursor": "pointer",
-								"background": "transparent",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#dee2e6",
-								"color": "#212529"
+								"fontSize": "18px",
+								"color": "#6c757d",
+								"lineHeight": 1.55,
+								"maxWidth": "420px"
 							}
 						},
 						"children": [
-							"{secondaryLabel}"
+							"{subtext}"
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "10px",
+								"marginTop": "8px",
+								"justifyContent": "center",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"gap": "8px",
+										"border": "none",
+										"height": "auto",
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"fontWeight": 400,
+										"fontSize": "16px",
+										"cursor": "pointer",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#0d6efd",
+													"success": "#198754",
+													"warning": "#ffc107",
+													"danger": "#dc3545",
+													"info": "#0dcaf0",
+													"neutral": "#6c757d"
+												},
+												"default": "#0d6efd"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#000000",
+													"danger": "#ffffff",
+													"info": "#000000",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "marketing-hero",
+									"title": "Hero Section",
+									"details": "Heading: {heading}\nSubtext: {subtext}\nPrimary button: {primaryLabel}\nSecondary button: {secondaryLabel}"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"gap": "8px",
+										"border": "none",
+										"height": "auto",
+										"padding": "8px 12px",
+										"borderRadius": "6px",
+										"fontWeight": 400,
+										"fontSize": "16px",
+										"cursor": "pointer",
+										"background": "transparent",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#dee2e6",
+										"color": "#212529",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "marketing-hero",
+									"title": "Hero Section",
+									"details": "Heading: {heading}\nSubtext: {subtext}\nPrimary button: {primaryLabel}\nSecondary button: {secondaryLabel}"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Heading ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Heading",
+											"value": {
+												"ttArg": "heading"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "heading"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Subtext ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Subtext",
+											"value": {
+												"ttArg": "subtext"
+											},
+											"maxLength": 160,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "subtext"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Primary button ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Primary button",
+											"value": {
+												"ttArg": "primaryLabel"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "primaryLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Secondary button ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Secondary button",
+											"value": {
+												"ttArg": "secondaryLabel"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "secondaryLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "marketing-hero",
+									"title": "Hero Section",
+									"details": "Heading: {heading}\nSubtext: {subtext}\nPrimary button: {primaryLabel}\nSecondary button: {secondaryLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "marketing-hero",
 	"source": {
 		"kind": "archetype",

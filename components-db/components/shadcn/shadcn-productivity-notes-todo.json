@@ -3,7 +3,7 @@
 	"name": "Todo Checklist",
 	"library": "shadcn",
 	"category": "productivity",
-	"description": "Todo checklist card in the shadcn/ui style — list header with done count and thin progress bar, drag-handle task rows with struck completed items, a priority flag and a dashed add-task row.",
+	"description": "Todo checklist card in the shadcn/ui style — list header with done count and thin progress bar, drag-handle task rows with struck completed items, a priority flag and a dashed add-task row. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"todo",
 		"checklist",
@@ -37,26 +37,33 @@
 			"type": "number",
 			"default": 4,
 			"label": "Total count"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "completed",
+			"type": "boolean",
+			"default": false
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"width": "300px",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "12px",
-				"background": "#ffffff",
-				"borderRadius": "12px",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#f4f4f5",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#09090b"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -64,419 +71,256 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "10px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #e4e4e7",
+						"borderRadius": "8px",
+						"background": "#ffffff",
+						"color": "#09090b",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "16px",
-								"fontWeight": 600
-							}
-						},
+						"tag": "h3",
 						"children": [
 							"{list}"
 						]
 					},
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#71717a"
-							}
-						},
-						"children": [
-							"{done}/{total} done"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"height": "6px",
-						"borderRadius": "999px",
-						"background": "#f4f4f5",
-						"overflow": "hidden"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "6px",
-								"borderRadius": "999px",
-								"background": "#18181b",
-								"width": "calc({done} * 25%)"
-							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#a1a1aa",
-								"letterSpacing": "1px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"⋮⋮"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"width": "18px",
-								"height": "18px",
-								"borderRadius": "6px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0,
-								"boxSizing": "border-box",
-								"background": "#18181b"
-							}
-						},
+						"tag": "label",
 						"children": [
 							{
-								"tag": "svg",
+								"tag": "input",
 								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#fafafa",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"type": "checkbox",
+									"checked": {
+										"ttArg": "completed"
+									},
+									"aria-label": "{task}"
 								},
-								"children": [
-									{
-										"tag": "polyline",
-										"props": {
-											"points": "20 6 9 17 4 12"
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#71717a",
-								"textDecoration": "line-through",
-								"minWidth": 0
-							}
-						},
-						"children": [
-							"Clear inbox"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#a1a1aa",
-								"letterSpacing": "1px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"⋮⋮"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"width": "18px",
-								"height": "18px",
-								"borderRadius": "6px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0,
-								"boxSizing": "border-box",
-								"background": "#18181b"
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#fafafa",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "polyline",
-										"props": {
-											"points": "20 6 9 17 4 12"
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#71717a",
-								"textDecoration": "line-through",
-								"minWidth": 0
-							}
-						},
-						"children": [
-							"Stand-up notes"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#a1a1aa",
-								"letterSpacing": "1px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"⋮⋮"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"width": "18px",
-								"height": "18px",
-								"borderRadius": "6px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0,
-								"boxSizing": "border-box",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#e4e4e7",
-								"background": "#ffffff"
-							}
-						}
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#09090b",
-								"minWidth": 0
-							}
-						},
-						"children": [
-							"{task}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"padding": "2px 8px",
-								"borderRadius": "999px",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"background": "#fef2f2",
-								"color": "#b91c1c",
-								"marginLeft": "auto",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"High"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#a1a1aa",
-								"letterSpacing": "1px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"⋮⋮"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"width": "18px",
-								"height": "18px",
-								"borderRadius": "6px",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0,
-								"boxSizing": "border-box",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#e4e4e7",
-								"background": "#ffffff"
-							}
-						}
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#09090b",
-								"minWidth": 0
-							}
-						},
-						"children": [
-							"Water the plants"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"justifyContent": "center",
-						"height": "32px",
-						"borderWidth": "1px",
-						"borderStyle": "dashed",
-						"borderColor": "#e4e4e7",
-						"borderRadius": "8px",
-						"color": "#71717a",
-						"cursor": "pointer",
-						"fontSize": "13px",
-						"fontWeight": 500
-					}
-				},
-				"children": [
-					{
-						"tag": "svg",
-						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "currentColor",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "line",
-								"props": {
-									"x1": 12,
-									"y1": 5,
-									"x2": 12,
-									"y2": 19
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "completed"
 								}
 							},
+							"{task}"
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
 							{
-								"tag": "line",
+								"tag": "label",
+								"children": [
+									"completed ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "completed",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "completed"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "completed"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"List name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "List name",
+											"value": {
+												"ttArg": "list"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "list"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Open task ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Open task",
+											"value": {
+												"ttArg": "task"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "task"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Done count ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Done count",
+											"value": {
+												"ttArg": "done"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "done"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Total count ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Total count",
+											"value": {
+												"ttArg": "total"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "total"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
 								"props": {
-									"x1": 5,
-									"y1": 12,
-									"x2": 19,
-									"y2": 12
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "productivity-notes-todo",
+									"title": "Todo Checklist",
+									"details": "List name: {list}\nOpen task: {task}\nDone count: {done}\nTotal count: {total}\ncompleted: {completed}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
-					},
-					"Add task"
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "productivity-notes-todo",
 	"source": {
 		"kind": "archetype",

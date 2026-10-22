@@ -3,7 +3,7 @@
 	"name": "Customs Summary Card",
 	"library": "untitled",
 	"category": "logistics",
-	"description": "Customs summary in the Untitled UI style — contents, value and HS-code declaration rows, a duties estimate with info glyph, an optional restricted-item warning banner, plus confirm and edit actions.",
+	"description": "Customs summary in the Untitled UI style — contents, value and HS-code declaration rows, a duties estimate with info glyph, an optional restricted-item warning banner, plus confirm and edit actions. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"logistics",
 		"customs",
@@ -44,256 +44,52 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "14px",
-				"width": "320px",
 				"maxWidth": "100%",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#eaecf0",
-				"borderRadius": "12px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#101828",
-				"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)"
+				"minWidth": 0
 			}
 		},
 		"children": [
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "14px",
-						"fontWeight": 600,
-						"color": "#101828"
-					}
-				},
-				"children": [
-					"Customs declaration"
-				]
-			},
 			{
 				"tag": "div",
 				"props": {
 					"style": {
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "8px"
+						"gap": "14px",
+						"width": "320px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box",
+						"padding": "16px",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#eaecf0",
+						"borderRadius": "12px",
+						"color": "#101828",
+						"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)"
 					}
 				},
 				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "12px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#475467"
-									}
-								},
-								"children": [
-									"Contents"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"color": "#101828"
-									}
-								},
-								"children": [
-									"{contents}"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "12px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#475467"
-									}
-								},
-								"children": [
-									"Declared value"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"color": "#101828"
-									}
-								},
-								"children": [
-									"USD 1,240.00"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "12px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#475467"
-									}
-								},
-								"children": [
-									"HS code"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"color": "#101828",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-									}
-								},
-								"children": [
-									"8517.62"
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"height": "1px",
-						"background": "#f2f4f7"
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "12px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px"
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#475467",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 12,
-											"y1": 16,
-											"x2": 12,
-											"y2": 12
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 12,
-											"y1": 8,
-											"x2": 12.01,
-											"y2": 8
-										}
-									}
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#475467"
-									}
-								},
-								"children": [
-									"Estimated duties"
-								]
-							}
-						]
-					},
 					{
 						"tag": "span",
 						"props": {
@@ -304,65 +100,224 @@
 							}
 						},
 						"children": [
-							"{duties}"
+							"Customs declaration"
 						]
-					}
-				]
-			},
-			{
-				"ttIf": {
-					"arg": "restricted",
-					"then": {
+					},
+					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "flex-start",
-								"gap": "8px",
-								"padding": "10px 12px",
-								"borderRadius": "8px",
-								"background": "#fef3f2",
-								"color": "#b42318"
+								"flexDirection": "column",
+								"gap": "8px"
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
+								"tag": "div",
 								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"gap": "12px",
+										"flexWrap": "wrap"
+									}
 								},
 								"children": [
 									{
-										"tag": "path",
+										"tag": "span",
 										"props": {
-											"d": "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
-										}
+											"style": {
+												"fontSize": "14px",
+												"color": "#475467"
+											}
+										},
+										"children": [
+											"Contents"
+										]
 									},
 									{
-										"tag": "line",
+										"tag": "span",
 										"props": {
-											"x1": 12,
-											"y1": 9,
-											"x2": 12,
-											"y2": 13
-										}
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600,
+												"color": "#101828"
+											}
+										},
+										"children": [
+											"{contents}"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"gap": "12px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"color": "#475467"
+											}
+										},
+										"children": [
+											"Declared value"
+										]
 									},
 									{
-										"tag": "line",
+										"tag": "span",
 										"props": {
-											"x1": 12,
-											"y1": 17,
-											"x2": 12.01,
-											"y2": 17
-										}
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600,
+												"color": "#101828"
+											}
+										},
+										"children": [
+											"USD 1,240.00"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"gap": "12px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"color": "#475467"
+											}
+										},
+										"children": [
+											"HS code"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600,
+												"color": "#101828",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+											}
+										},
+										"children": [
+											"8517.62"
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"height": "1px",
+								"background": "#f2f4f7"
+							}
+						}
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"gap": "12px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 14,
+											"height": 14,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#475467",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 10
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 16,
+													"x2": 12,
+													"y2": 12
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 8,
+													"x2": 12.01,
+													"y2": 8
+												}
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"color": "#475467"
+											}
+										},
+										"children": [
+											"Estimated duties"
+										]
 									}
 								]
 							},
@@ -370,110 +325,362 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "12px",
-										"fontWeight": 500,
-										"lineHeight": 1.4
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"color": "#101828"
 									}
 								},
 								"children": [
-									"Restricted items flagged — additional screening applies before export."
+									"{duties}"
 								]
 							}
 						]
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
+					},
 					{
-						"tag": "button",
+						"ttIf": {
+							"arg": "restricted",
+							"then": {
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "flex-start",
+										"gap": "8px",
+										"padding": "10px 12px",
+										"borderRadius": "8px",
+										"background": "#fef3f2",
+										"color": "#b42318",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 14,
+											"height": 14,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "path",
+												"props": {
+													"d": "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 9,
+													"x2": 12,
+													"y2": 13
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 17,
+													"x2": 12.01,
+													"y2": 17
+												}
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 500,
+												"lineHeight": 1.4
+											}
+										},
+										"children": [
+											"Restricted items flagged — additional screening applies before export."
+										]
+									}
+								]
+							}
+						}
+					},
+					{
+						"tag": "div",
 						"props": {
-							"type": "button",
 							"style": {
-								"flex": 1,
-								"display": "inline-flex",
+								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "40px",
-								"padding": "0 14px",
-								"border": "none",
-								"borderRadius": "8px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#7f56d9",
-											"success": "#12b76a",
-											"warning": "#f79009",
-											"danger": "#f04438",
-											"info": "#2e90fa",
-											"neutral": "#344054"
-										},
-										"default": "#7f56d9"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 600,
-								"fontSize": "14px",
-								"cursor": "pointer",
-								"boxShadow": "none"
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"Confirm"
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"flex": 1,
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "8px",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#7f56d9",
+													"success": "#12b76a",
+													"warning": "#f79009",
+													"danger": "#f04438",
+													"info": "#2e90fa",
+													"neutral": "#344054"
+												},
+												"default": "#7f56d9"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"fontWeight": 600,
+										"fontSize": "14px",
+										"cursor": "pointer",
+										"boxShadow": "none",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "logistics-customs",
+									"title": "Customs Summary Card",
+									"details": "Contents: {contents}\nDuties estimate: {duties}\nRestricted items: {restricted}"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"background": "transparent",
+										"color": "#475467",
+										"borderRadius": "8px",
+										"fontWeight": 600,
+										"fontSize": "14px",
+										"cursor": "pointer",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "logistics-customs",
+									"title": "Customs Summary Card",
+									"details": "Contents: {contents}\nDuties estimate: {duties}\nRestricted items: {restricted}"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "button",
+						"tag": "fieldset",
 						"props": {
-							"type": "button",
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"gap": "6px",
-								"height": "36px",
-								"padding": "0 10px",
-								"border": "none",
-								"background": "transparent",
-								"color": "#475467",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontWeight": 600,
-								"fontSize": "14px",
-								"cursor": "pointer"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"Edit"
+							{
+								"tag": "label",
+								"children": [
+									"Contents ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Contents",
+											"value": {
+												"ttArg": "contents"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "contents"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Duties estimate ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Duties estimate",
+											"value": {
+												"ttArg": "duties"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "duties"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Restricted items ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Restricted items",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "restricted"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "restricted"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "logistics-customs",
+									"title": "Customs Summary Card",
+									"details": "Contents: {contents}\nDuties estimate: {duties}\nRestricted items: {restricted}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "logistics-customs",
 	"source": {
 		"kind": "archetype",

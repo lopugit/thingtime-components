@@ -3,7 +3,7 @@
 	"name": "Address Block",
 	"library": "shadcn",
 	"category": "forms",
-	"description": "Compact address form in the shadcn/ui style — street field, a city and postcode pair, a country select mock with chevron, and a use-as-billing checkbox row.",
+	"description": "Compact address form in the shadcn/ui style — street field, a city and postcode pair, a country select mock with chevron, and a use-as-billing checkbox row. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"address",
@@ -44,17 +44,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Use as billing"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "8px",
-				"width": "300px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -62,125 +73,130 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"boxSizing": "border-box",
-						"height": "36px",
-						"padding": "0 12px",
-						"background": "#ffffff",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "#e4e4e7",
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #e4e4e7",
 						"borderRadius": "8px",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontSize": "14px",
-						"color": "#09090b"
-					}
-				},
-				"children": [
-					"{street}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"boxSizing": "border-box",
-								"height": "36px",
-								"padding": "0 12px",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#e4e4e7",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "14px",
-								"color": "#09090b",
-								"flex": 1
-							}
-						},
-						"children": [
-							"{city}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"boxSizing": "border-box",
-								"height": "36px",
-								"padding": "0 12px",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#e4e4e7",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "14px",
-								"color": "#09090b",
-								"width": "90px"
-							}
-						},
-						"children": [
-							"{zip}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"boxSizing": "border-box",
-						"height": "36px",
-						"padding": "0 12px",
 						"background": "#ffffff",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "#e4e4e7",
-						"borderRadius": "8px",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontSize": "14px",
 						"color": "#09090b",
-						"justifyContent": "space-between"
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					"{country}",
 					{
-						"tag": "svg",
-						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#71717a",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
+						"tag": "label",
 						"children": [
+							"street",
 							{
-								"tag": "polyline",
+								"tag": "input",
 								"props": {
-									"points": "6 9 12 15 18 9"
+									"type": "text",
+									"aria-label": "street",
+									"value": {
+										"ttArg": "street"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e4e4e7",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "street"
+								}
+							}
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							"city",
+							{
+								"tag": "input",
+								"props": {
+									"type": "text",
+									"aria-label": "city",
+									"value": {
+										"ttArg": "city"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e4e4e7",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "city"
+								}
+							}
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							"zip",
+							{
+								"tag": "input",
+								"props": {
+									"type": "text",
+									"aria-label": "zip",
+									"value": {
+										"ttArg": "zip"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e4e4e7",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "zip"
+								}
+							}
+						]
+					},
+					{
+						"tag": "label",
+						"children": [
+							"country",
+							{
+								"tag": "input",
+								"props": {
+									"type": "text",
+									"aria-label": "country",
+									"value": {
+										"ttArg": "country"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e4e4e7",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "country"
 								}
 							}
 						]
@@ -188,92 +204,214 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"width": "16px",
-								"height": "16px",
-								"boxSizing": "border-box",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"borderRadius": "6px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": {
-									"ttIf": {
-										"arg": "billing",
-										"then": "#18181b",
-										"else": "#e4e4e7"
-									}
-								},
-								"background": {
-									"ttIf": {
-										"arg": "billing",
-										"then": "#18181b",
-										"else": "#ffffff"
-									}
-								},
-								"flexShrink": 0
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"ttIf": {
-									"arg": "billing",
-									"then": {
-										"tag": "svg",
+								"tag": "label",
+								"children": [
+									"Street ",
+									{
+										"tag": "input",
 										"props": {
-											"width": 11,
-											"height": 11,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "#fafafa",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
+											"aria-label": "Street",
+											"value": {
+												"ttArg": "street"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "street"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"City ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "City",
+											"value": {
+												"ttArg": "city"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "city"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Postcode ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Postcode",
+											"value": {
+												"ttArg": "zip"
+											},
+											"maxLength": 10,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "zip"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Country ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Country",
+											"value": {
+												"ttArg": "country"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "country"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Use as billing ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Use as billing",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "billing"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "billing"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "forms-advanced-address",
+									"title": "Address Block",
+									"details": "Street: {street}\nCity: {city}\nPostcode: {zip}\nCountry: {country}\nUse as billing: {billing}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#09090b"
-							}
-						},
-						"children": [
-							"Use as billing"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "forms-advanced-address",
 	"source": {
 		"kind": "archetype",

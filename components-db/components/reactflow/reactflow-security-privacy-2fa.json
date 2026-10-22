@@ -3,7 +3,7 @@
 	"name": "Two-Factor Setup Card",
 	"library": "reactflow",
 	"category": "security",
-	"description": "Two-factor setup card in the React Flow style — step caption, mock QR rect grid, mono secret chip with a copy ghost, paired verify-code box groups, and a can't-scan escape link.",
+	"description": "Two-factor setup card in the React Flow style — step caption, mock QR rect grid, mono secret chip with a copy ghost, paired verify-code box groups, and a can't-scan escape link. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"security",
 		"2fa",
@@ -36,356 +36,331 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Show help link"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "8px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"boxSizing": "border-box",
-				"width": "290px",
-				"padding": "18px",
-				"gap": "14px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "10px",
-						"color": "#6f6e77",
-						"fontWeight": 600,
-						"textTransform": "uppercase",
-						"letterSpacing": "0.06em"
-					}
-				},
-				"children": [
-					"Step {step} of 2 · Scan in your authenticator"
-				]
-			},
-			{
 				"tag": "div",
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center"
+						"flexDirection": "column",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#1a192b",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+						"boxSizing": "border-box",
+						"width": "290px",
+						"padding": "18px",
+						"gap": "14px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
+						"tag": "span",
 						"props": {
 							"style": {
-								"padding": "10px",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#e2e2e5",
-								"borderRadius": "5px",
-								"display": "flex"
+								"fontSize": "10px",
+								"color": "#6f6e77",
+								"fontWeight": 600,
+								"textTransform": "uppercase",
+								"letterSpacing": "0.06em"
 							}
 						},
 						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 64,
-									"height": 64,
-									"viewBox": "0 0 44 44",
-									"fill": "#1a192b",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "rect",
-										"props": {
-											"x": 2,
-											"y": 2,
-											"width": 12,
-											"height": 12,
-											"fill": "none",
-											"stroke": "#1a192b",
-											"strokeWidth": 2
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 6,
-											"y": 6,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 30,
-											"y": 2,
-											"width": 12,
-											"height": 12,
-											"fill": "none",
-											"stroke": "#1a192b",
-											"strokeWidth": 2
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 34,
-											"y": 6,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 2,
-											"y": 30,
-											"width": 12,
-											"height": 12,
-											"fill": "none",
-											"stroke": "#1a192b",
-											"strokeWidth": 2
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 6,
-											"y": 34,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 18,
-											"y": 4,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 26,
-											"y": 6,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 18,
-											"y": 12,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 24,
-											"y": 14,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 32,
-											"y": 18,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 4,
-											"y": 18,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 10,
-											"y": 22,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 18,
-											"y": 22,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 26,
-											"y": 26,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 34,
-											"y": 30,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 18,
-											"y": 32,
-											"width": 4,
-											"height": 4
-										}
-									},
-									{
-										"tag": "rect",
-										"props": {
-											"x": 26,
-											"y": 36,
-											"width": 4,
-											"height": 4
-										}
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px",
-						"justifyContent": "space-between",
-						"background": "#f4f4f5",
-						"borderRadius": "5px",
-						"padding": "8px 12px"
-					}
-				},
-				"children": [
-					{
-						"tag": "code",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "#1a192b",
-								"letterSpacing": "0.08em"
-							}
-						},
-						"children": [
-							"{secret}"
+							"Step {step} of 2 · Scan in your authenticator"
 						]
 					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"background": "transparent",
-								"border": "none",
-								"color": "#ff0072",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"cursor": "pointer",
-								"padding": "4px 8px",
-								"borderRadius": "3px",
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"Copy"
-						]
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "10px",
-						"color": "#6f6e77"
-					}
-				},
-				"children": [
-					"Then enter the 6-digit code to verify"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px",
-						"justifyContent": "center"
-					}
-				},
-				"children": [
 					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"gap": "6px"
+								"alignItems": "center",
+								"justifyContent": "center",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"ttRepeat": {
-									"arg": "boxes",
-									"max": 4,
-									"node": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "30px",
-												"height": "38px",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#1a192b",
-												"borderRadius": "3px",
-												"background": "#f4f4f5",
-												"boxSizing": "border-box"
-											}
-										}
+								"tag": "div",
+								"props": {
+									"style": {
+										"padding": "10px",
+										"background": "#ffffff",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#e2e2e5",
+										"borderRadius": "5px",
+										"display": "flex",
+										"flexWrap": "wrap"
 									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 64,
+											"height": 64,
+											"viewBox": "0 0 44 44",
+											"fill": "#1a192b",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "rect",
+												"props": {
+													"x": 2,
+													"y": 2,
+													"width": 12,
+													"height": 12,
+													"fill": "none",
+													"stroke": "#1a192b",
+													"strokeWidth": 2
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 6,
+													"y": 6,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 30,
+													"y": 2,
+													"width": 12,
+													"height": 12,
+													"fill": "none",
+													"stroke": "#1a192b",
+													"strokeWidth": 2
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 34,
+													"y": 6,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 2,
+													"y": 30,
+													"width": 12,
+													"height": 12,
+													"fill": "none",
+													"stroke": "#1a192b",
+													"strokeWidth": 2
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 6,
+													"y": 34,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 18,
+													"y": 4,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 26,
+													"y": 6,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 18,
+													"y": 12,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 24,
+													"y": 14,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 32,
+													"y": 18,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 4,
+													"y": 18,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 10,
+													"y": 22,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 18,
+													"y": 22,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 26,
+													"y": 26,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 34,
+													"y": 30,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 18,
+													"y": 32,
+													"width": 4,
+													"height": 4
+												}
+											},
+											{
+												"tag": "rect",
+												"props": {
+													"x": 26,
+													"y": 36,
+													"width": 4,
+													"height": 4
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "10px",
+								"justifyContent": "space-between",
+								"background": "#f4f4f5",
+								"borderRadius": "5px",
+								"padding": "8px 12px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "code",
+								"props": {
+									"style": {
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "12px",
+										"color": "#1a192b",
+										"letterSpacing": "0.08em"
+									}
+								},
+								"children": [
+									"{secret}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"background": "transparent",
+										"border": "none",
+										"color": "#ff0072",
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"cursor": "pointer",
+										"padding": "4px 8px",
+										"borderRadius": "3px",
+										"whiteSpace": "nowrap"
+									}
+								},
+								"children": [
+									"Copy"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "copy",
+									"value": "Step: {step}\nBoxes per group: {boxes}\nShow help link: {helpLink}"
 								}
 							}
 						]
@@ -394,12 +369,12 @@
 						"tag": "span",
 						"props": {
 							"style": {
-								"color": "#b1b1b7",
-								"fontSize": "12px"
+								"fontSize": "10px",
+								"color": "#6f6e77"
 							}
 						},
 						"children": [
-							"—"
+							"Then enter the 6-digit code to verify"
 						]
 					},
 					{
@@ -407,29 +382,258 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"gap": "6px"
+								"alignItems": "center",
+								"gap": "10px",
+								"justifyContent": "center",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"ttRepeat": {
-									"arg": "boxes",
-									"max": 4,
-									"node": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "30px",
-												"height": "38px",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#1a192b",
-												"borderRadius": "3px",
-												"background": "#f4f4f5",
-												"boxSizing": "border-box"
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttRepeat": {
+											"arg": "boxes",
+											"max": 4,
+											"node": {
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "30px",
+														"height": "38px",
+														"borderWidth": "1px",
+														"borderStyle": "solid",
+														"borderColor": "#1a192b",
+														"borderRadius": "3px",
+														"background": "#f4f4f5",
+														"boxSizing": "border-box",
+														"maxWidth": "100%"
+													}
+												}
 											}
 										}
 									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"color": "#b1b1b7",
+										"fontSize": "12px"
+									}
+								},
+								"children": [
+									"—"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttRepeat": {
+											"arg": "boxes",
+											"max": 4,
+											"node": {
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "30px",
+														"height": "38px",
+														"borderWidth": "1px",
+														"borderStyle": "solid",
+														"borderColor": "#1a192b",
+														"borderRadius": "3px",
+														"background": "#f4f4f5",
+														"boxSizing": "border-box",
+														"maxWidth": "100%"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"ttIf": {
+							"arg": "helpLink",
+							"then": {
+								"tag": "a",
+								"props": {
+									"href": "/things",
+									"style": {
+										"color": "#ff0072",
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"textDecoration": "none",
+										"textAlign": "center"
+									}
+								},
+								"children": [
+									"Can’t scan? Enter the key manually"
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Step ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Step",
+											"value": {
+												"ttArg": "step"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "step"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Boxes per group ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Boxes per group",
+											"value": {
+												"ttArg": "boxes"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "boxes"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show help link ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show help link",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "helpLink"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "helpLink"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "security-privacy-2fa",
+									"title": "Two-Factor Setup Card",
+									"details": "Step: {step}\nBoxes per group: {boxes}\nShow help link: {helpLink}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -437,30 +641,14 @@
 				]
 			},
 			{
-				"ttIf": {
-					"arg": "helpLink",
-					"then": {
-						"tag": "a",
-						"props": {
-							"href": "#",
-							"style": {
-								"color": "#ff0072",
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"textDecoration": "none",
-								"textAlign": "center"
-							}
-						},
-						"children": [
-							"Can’t scan? Enter the key manually"
-						]
-					}
-				}
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "security-privacy-2fa",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Bezier Edge",
 	"library": "bootstrap",
 	"category": "flow",
-	"description": "Two mini graph nodes joined by an svg bezier edge in the Bootstrap style — tone-colored curve with endpoint dots and an optional dashed stroke.",
+	"description": "Two mini graph nodes joined by an svg bezier edge in the Bootstrap style — tone-colored curve with endpoint dots and an optional dashed stroke. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"flow",
 		"edge",
@@ -45,167 +45,338 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Dashed"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"position": "relative",
-				"width": "260px",
-				"height": "120px",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "svg",
+				"tag": "div",
 				"props": {
-					"width": 260,
-					"height": 120,
-					"viewBox": "0 0 260 120",
-					"fill": "none",
-					"xmlns": "http://www.w3.org/2000/svg",
 					"style": {
-						"position": "absolute",
-						"top": "0",
-						"left": "0"
+						"position": "relative",
+						"width": "260px",
+						"height": "120px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "path",
+						"tag": "svg",
 						"props": {
-							"d": "M 84 30 C 138 30 122 90 176 90",
-							"stroke": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#0d6efd",
-										"success": "#198754",
-										"warning": "#ffc107",
-										"danger": "#dc3545",
-										"info": "#0dcaf0",
-										"neutral": "#6c757d"
+							"width": 260,
+							"height": 120,
+							"viewBox": "0 0 260 120",
+							"fill": "none",
+							"xmlns": "http://www.w3.org/2000/svg",
+							"style": {
+								"position": "absolute",
+								"top": "0",
+								"left": "0"
+							}
+						},
+						"children": [
+							{
+								"tag": "path",
+								"props": {
+									"d": "M 84 30 C 138 30 122 90 176 90",
+									"stroke": {
+										"ttMap": {
+											"arg": "tone",
+											"values": {
+												"primary": "#0d6efd",
+												"success": "#198754",
+												"warning": "#ffc107",
+												"danger": "#dc3545",
+												"info": "#0dcaf0",
+												"neutral": "#6c757d"
+											},
+											"default": "#6c757d"
+										}
 									},
-									"default": "#6c757d"
+									"strokeWidth": 1.5,
+									"style": {
+										"strokeDasharray": {
+											"ttIf": {
+												"arg": "dashed",
+												"then": "7 5",
+												"else": "none"
+											}
+										}
+									}
 								}
 							},
-							"strokeWidth": 1.5,
-							"style": {
-								"strokeDasharray": {
-									"ttIf": {
-										"arg": "dashed",
-										"then": "7 5",
-										"else": "none"
+							{
+								"tag": "circle",
+								"props": {
+									"cx": 84,
+									"cy": 30,
+									"r": 3,
+									"fill": {
+										"ttMap": {
+											"arg": "tone",
+											"values": {
+												"primary": "#0d6efd",
+												"success": "#198754",
+												"warning": "#ffc107",
+												"danger": "#dc3545",
+												"info": "#0dcaf0",
+												"neutral": "#6c757d"
+											},
+											"default": "#6c757d"
+										}
+									}
+								}
+							},
+							{
+								"tag": "circle",
+								"props": {
+									"cx": 176,
+									"cy": 90,
+									"r": 3,
+									"fill": {
+										"ttMap": {
+											"arg": "tone",
+											"values": {
+												"primary": "#0d6efd",
+												"success": "#198754",
+												"warning": "#ffc107",
+												"danger": "#dc3545",
+												"info": "#0dcaf0",
+												"neutral": "#6c757d"
+											},
+											"default": "#6c757d"
+										}
 									}
 								}
 							}
-						}
+						]
 					},
 					{
-						"tag": "circle",
+						"tag": "div",
 						"props": {
-							"cx": 84,
-							"cy": 30,
-							"r": 3,
-							"fill": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#0d6efd",
-										"success": "#198754",
-										"warning": "#ffc107",
-										"danger": "#dc3545",
-										"info": "#0dcaf0",
-										"neutral": "#6c757d"
-									},
-									"default": "#6c757d"
-								}
+							"style": {
+								"background": "#ffffff",
+								"borderWidth": "1px",
+								"borderStyle": "solid",
+								"borderColor": "#dee2e6",
+								"borderRadius": "6px",
+								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+								"boxSizing": "border-box",
+								"position": "absolute",
+								"width": "84px",
+								"padding": "8px 6px",
+								"textAlign": "center",
+								"fontSize": "12px",
+								"fontWeight": 500,
+								"color": "#212529",
+								"left": "0",
+								"top": "12px",
+								"maxWidth": "100%"
 							}
-						}
+						},
+						"children": [
+							"{fromLabel}"
+						]
 					},
 					{
-						"tag": "circle",
+						"tag": "div",
 						"props": {
-							"cx": 176,
-							"cy": 90,
-							"r": 3,
-							"fill": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#0d6efd",
-										"success": "#198754",
-										"warning": "#ffc107",
-										"danger": "#dc3545",
-										"info": "#0dcaf0",
-										"neutral": "#6c757d"
-									},
-									"default": "#6c757d"
-								}
+							"style": {
+								"background": "#ffffff",
+								"borderWidth": "1px",
+								"borderStyle": "solid",
+								"borderColor": "#dee2e6",
+								"borderRadius": "6px",
+								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+								"boxSizing": "border-box",
+								"position": "absolute",
+								"width": "84px",
+								"padding": "8px 6px",
+								"textAlign": "center",
+								"fontSize": "12px",
+								"fontWeight": 500,
+								"color": "#212529",
+								"right": "0",
+								"bottom": "12px",
+								"maxWidth": "100%"
 							}
-						}
+						},
+						"children": [
+							"{toLabel}"
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"background": "#ffffff",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "#dee2e6",
-						"borderRadius": "6px",
-						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-						"boxSizing": "border-box",
-						"position": "absolute",
-						"width": "84px",
-						"padding": "8px 6px",
-						"textAlign": "center",
-						"fontSize": "12px",
-						"fontWeight": 500,
-						"color": "#212529",
-						"left": "0",
-						"top": "12px"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"{fromLabel}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"background": "#ffffff",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "#dee2e6",
-						"borderRadius": "6px",
-						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-						"boxSizing": "border-box",
-						"position": "absolute",
-						"width": "84px",
-						"padding": "8px 6px",
-						"textAlign": "center",
-						"fontSize": "12px",
-						"fontWeight": 500,
-						"color": "#212529",
-						"right": "0",
-						"bottom": "12px"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"From label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "From label",
+											"value": {
+												"ttArg": "fromLabel"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "fromLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"To label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "To label",
+											"value": {
+												"ttArg": "toLabel"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "toLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Dashed ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Dashed",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "dashed"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "dashed"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "flow-edge",
+									"title": "Bezier Edge",
+									"details": "From label: {fromLabel}\nTo label: {toLabel}\nDashed: {dashed}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
-				},
-				"children": [
-					"{toLabel}"
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "flow-edge",
 	"source": {
 		"kind": "archetype",

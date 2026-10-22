@@ -3,7 +3,7 @@
 	"name": "Addon Input",
 	"library": "bootstrap",
 	"category": "forms",
-	"description": "Text field with a prefix addon segment in the Bootstrap style — a tinted https:// block divided from the input by the library border.",
+	"description": "Text field with a prefix addon segment in the Bootstrap style — a tinted https:// block divided from the input by the library border. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"input",
 		"addon",
@@ -43,115 +43,312 @@
 			],
 			"default": "md",
 			"label": "Size"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "280px",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "label",
-				"props": {
-					"style": {
-						"fontSize": "14px",
-						"fontWeight": 500,
-						"color": "#212529",
-						"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
-					}
-				},
-				"children": [
-					"{label}"
-				]
-			},
-			{
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
+						"display": "flex",
+						"flexDirection": "column",
+						"gap": "6px",
+						"width": "280px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
+					}
+				},
+				"children": [
+					{
+						"tag": "label",
+						"props": {
+							"style": {
+								"fontSize": "14px",
+								"fontWeight": 500,
+								"color": "#212529"
+							}
+						},
+						"children": [
+							"{label}"
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"ttMerge": [
+									{
+										"display": "flex",
+										"alignItems": "stretch",
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#ffffff",
+										"overflow": "hidden",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									{
+										"ttMap": {
+											"arg": "size",
+											"values": {
+												"sm": {
+													"height": "31px",
+													"fontSize": "14px"
+												},
+												"md": {
+													"height": "38px",
+													"fontSize": "16px"
+												},
+												"lg": {
+													"height": "48px",
+													"fontSize": "18px"
+												}
+											},
+											"default": {
+												"height": "38px",
+												"fontSize": "16px"
+											}
+										}
+									}
+								]
+							}
+						},
+						"children": [
 							{
-								"display": "flex",
-								"alignItems": "stretch",
-								"border": "1px solid #dee2e6",
-								"borderRadius": "6px",
-								"background": "#ffffff",
-								"overflow": "hidden",
-								"boxSizing": "border-box"
+								"tag": "span",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"padding": "0 12px",
+										"background": "#f8f9fa",
+										"borderRight": "1px solid #dee2e6",
+										"color": "#6c757d",
+										"flexShrink": 0,
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"{addon}"
+								]
 							},
 							{
-								"ttMap": {
-									"arg": "size",
-									"values": {
-										"sm": {
-											"height": "31px",
-											"fontSize": "14px"
-										},
-										"md": {
-											"height": "38px",
-											"fontSize": "16px"
-										},
-										"lg": {
-											"height": "48px",
-											"fontSize": "18px"
-										}
+								"tag": "input",
+								"props": {
+									"type": "text",
+									"placeholder": "{placeholder}",
+									"style": {
+										"flex": 1,
+										"minWidth": 0,
+										"border": "none",
+										"outline": "none",
+										"background": "transparent",
+										"padding": "0 12px",
+										"color": "#212529",
+										"fontSize": "inherit"
 									},
-									"default": {
-										"height": "38px",
-										"fontSize": "16px"
-									}
+									"value": {
+										"ttArg": "entry1"
+									},
+									"aria-label": "{placeholder}",
+									"maxLength": 500
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "entry1"
 								}
 							}
 						]
 					}
-				},
+				]
+			},
+			{
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"padding": "0 12px",
-								"background": "#f8f9fa",
-								"borderRight": "1px solid #dee2e6",
-								"color": "#6c757d",
-								"flexShrink": 0
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"{addon}"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "input",
+						"tag": "fieldset",
 						"props": {
-							"type": "text",
-							"placeholder": "{placeholder}",
 							"style": {
-								"flex": 1,
-								"minWidth": 0,
-								"border": "none",
-								"outline": "none",
-								"background": "transparent",
-								"padding": "0 12px",
-								"color": "#212529",
-								"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "inherit"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"entry1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "entry1",
+											"value": {
+												"ttArg": "entry1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Addon ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Addon",
+											"value": {
+												"ttArg": "addon"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "addon"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "input-addon",
+									"title": "Addon Input",
+									"details": "Label: {label}\nAddon: {addon}\nentry1: {entry1}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "input-addon",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Popover",
 	"library": "daisyui",
 	"category": "overlays",
-	"description": "Titled popover in the daisyUI style — elevated surface card anchored below its trigger with an arrow caret, heading, body copy, and an optional tone action button.",
+	"description": "Titled popover in the daisyUI style — elevated surface card anchored below its trigger with an arrow caret, heading, body copy, and an optional tone action button. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"popover",
 		"overlay",
@@ -22,7 +22,8 @@
 			"name": "body",
 			"type": "text",
 			"default": "Anyone with the link can see live updates. Manage access anytime from settings.",
-			"label": "Body"
+			"label": "Body",
+			"maxLength": 500
 		},
 		{
 			"name": "triggerLabel",
@@ -40,7 +41,7 @@
 		{
 			"name": "actionLabel",
 			"type": "string",
-			"default": "Copy link",
+			"default": "Save record",
 			"label": "Action label",
 			"maxLength": 24
 		},
@@ -57,197 +58,259 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"flexDirection": "column",
-				"alignItems": "flex-start",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "button",
+				"tag": "details",
 				"props": {
-					"type": "button",
 					"style": {
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"gap": "6px",
-						"height": "48px",
-						"padding": "0 14px",
-						"background": "#ffffff",
-						"color": "#1f2937",
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
 						"border": "1px solid #e5e6e6",
 						"borderRadius": "12px",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontSize": "14px",
-						"fontWeight": 600,
-						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-						"cursor": "pointer"
+						"background": "#ffffff",
+						"color": "#1f2937",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					"{triggerLabel}",
 					{
-						"tag": "svg",
-						"props": {
-							"width": 14,
-							"height": 14,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "currentColor",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
+						"tag": "summary",
+						"children": [
+							"{triggerLabel}"
+						]
+					},
+					{
+						"tag": "section",
 						"children": [
 							{
-								"tag": "polyline",
-								"props": {
-									"points": "6 9 12 15 18 9"
-								}
+								"tag": "h3",
+								"children": [
+									"{title}"
+								]
+							},
+							{
+								"tag": "p",
+								"children": [
+									"{body}"
+								]
+							},
+							{
+								"tag": "nav",
+								"children": [
+									{
+										"tag": "a",
+										"props": {
+											"href": "/things"
+										},
+										"children": [
+											"Open Things"
+										]
+									},
+									" · ",
+									{
+										"tag": "a",
+										"props": {
+											"href": "/builder"
+										},
+										"children": [
+											"Open builder"
+										]
+									}
+								]
 							}
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"alignItems": "flex-start",
-						"marginTop": "3px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"marginLeft": "18px"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": 0,
-										"height": 0,
-										"borderLeft": "6px solid transparent",
-										"borderRight": "6px solid transparent",
-										"borderBottom": "6px solid #e5e6e6"
-									}
-								}
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexDirection": "column",
+								"display": "grid",
 								"gap": "8px",
-								"width": "270px",
-								"padding": "14px 16px",
-								"background": "#ffffff",
-								"border": "1px solid #e5e6e6",
-								"borderRadius": "16px",
-								"boxShadow": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-								"color": "#1f2937"
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontWeight": 700,
-										"fontSize": "14px"
-									}
-								},
+								"tag": "label",
 								"children": [
-									"{title}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "14px",
-										"color": "#6b7280",
-										"lineHeight": 1.5
-									}
-								},
-								"children": [
-									"{body}"
-								]
-							},
-							{
-								"ttIf": {
-									"arg": "showAction",
-									"then": {
-										"tag": "button",
+									"Title ",
+									{
+										"tag": "input",
 										"props": {
-											"type": "button",
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 50,
 											"style": {
-												"alignSelf": "flex-start",
-												"display": "inline-flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"height": "32px",
-												"padding": "0 12px",
-												"border": "none",
-												"borderRadius": "8px",
-												"background": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#570df8",
-															"success": "#00a96e",
-															"warning": "#ffbe00",
-															"danger": "#ff5861",
-															"info": "#00b6ff",
-															"neutral": "#2a323c"
-														},
-														"default": "#570df8"
-													}
-												},
-												"color": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#ffffff",
-															"success": "#ffffff",
-															"warning": "#382800",
-															"danger": "#ffffff",
-															"info": "#ffffff",
-															"neutral": "#ffffff"
-														},
-														"default": "#ffffff"
-													}
-												},
-												"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-												"fontSize": "14px",
-												"fontWeight": 600,
-												"cursor": "pointer",
-												"marginTop": "2px"
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Body ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Body",
+											"value": {
+												"ttArg": "body"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "body"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Trigger label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Trigger label",
+											"value": {
+												"ttArg": "triggerLabel"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "triggerLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show action ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show action",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showAction"
 											}
 										},
-										"children": [
-											"{actionLabel}"
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showAction"
+										}
 									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "tooltip-popover-popover",
+									"title": "Popover",
+									"details": "Title: {title}\nBody: {body}\nTrigger label: {triggerLabel}\nShow action: {showAction}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
@@ -257,7 +320,7 @@
 		]
 	},
 	"previewBg": "#f2f2f2",
-	"version": 1,
+	"version": 2,
 	"familyKey": "tooltip-popover-popover",
 	"source": {
 		"kind": "archetype",

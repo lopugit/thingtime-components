@@ -3,7 +3,7 @@
 	"name": "Status Avatar",
 	"library": "reactflow",
 	"category": "data-display",
-	"description": "Initials avatar with a presence dot in the React Flow style — online, away or busy indicator ringed by the surface color.",
+	"description": "Initials avatar with a presence dot in the React Flow style — online, away or busy indicator ringed by the surface color. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"avatar",
 		"status",
@@ -53,14 +53,28 @@
 			],
 			"default": "md",
 			"label": "Size"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"position": "relative",
-				"display": "inline-flex"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -68,134 +82,300 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 600,
-								"borderRadius": "999px",
-								"flexShrink": 0,
-								"userSelect": "none"
-							},
-							{
-								"ttMap": {
-									"arg": "size",
-									"values": {
-										"sm": {
-											"width": "28px",
-											"height": "28px",
-											"fontSize": "10px"
-										},
-										"md": {
-											"width": "40px",
-											"height": "40px",
-											"fontSize": "12px"
-										},
-										"lg": {
-											"width": "56px",
-											"height": "56px",
-											"fontSize": "14px"
-										}
-									},
-									"default": {
-										"width": "40px",
-										"height": "40px",
-										"fontSize": "12px"
-									}
-								}
-							},
-							{
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1a192b",
-											"success": "#22c55e",
-											"warning": "#eab308",
-											"danger": "#ff0072",
-											"info": "#784be8",
-											"neutral": "#6f6e77"
-										},
-										"default": "#1a192b"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								}
-							}
-						]
+						"position": "relative",
+						"display": "inline-flex",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
-					"{initials}"
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"ttMerge": [
+									{
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+										"fontWeight": 600,
+										"borderRadius": "999px",
+										"flexShrink": 0,
+										"userSelect": "none",
+										"flexWrap": "wrap"
+									},
+									{
+										"ttMap": {
+											"arg": "size",
+											"values": {
+												"sm": {
+													"width": "28px",
+													"height": "28px",
+													"fontSize": "10px"
+												},
+												"md": {
+													"width": "40px",
+													"height": "40px",
+													"fontSize": "12px"
+												},
+												"lg": {
+													"width": "56px",
+													"height": "56px",
+													"fontSize": "14px"
+												}
+											},
+											"default": {
+												"width": "40px",
+												"height": "40px",
+												"fontSize": "12px"
+											}
+										}
+									},
+									{
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1a192b",
+													"success": "#22c55e",
+													"warning": "#eab308",
+													"danger": "#ff0072",
+													"info": "#784be8",
+													"neutral": "#6f6e77"
+												},
+												"default": "#1a192b"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										}
+									}
+								]
+							}
+						},
+						"children": [
+							"{initials}"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"ttMerge": [
+									{
+										"position": "absolute",
+										"right": "0",
+										"bottom": "0",
+										"borderRadius": "999px",
+										"border": "2px solid #ffffff",
+										"background": {
+											"ttMap": {
+												"arg": "status",
+												"values": {
+													"online": "#22c55e",
+													"away": "#eab308",
+													"busy": "#ff0072"
+												},
+												"default": "#22c55e"
+											}
+										}
+									},
+									{
+										"ttMap": {
+											"arg": "size",
+											"values": {
+												"sm": {
+													"width": "9px",
+													"height": "9px"
+												},
+												"md": {
+													"width": "11px",
+													"height": "11px"
+												},
+												"lg": {
+													"width": "14px",
+													"height": "14px"
+												}
+											},
+											"default": {
+												"width": "11px",
+												"height": "11px"
+											}
+										}
+									}
+								]
+							}
+						}
+					}
 				]
 			},
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"ttMerge": [
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
 							{
-								"position": "absolute",
-								"right": "0",
-								"bottom": "0",
-								"borderRadius": "999px",
-								"border": "2px solid #ffffff",
-								"background": {
-									"ttMap": {
-										"arg": "status",
-										"values": {
-											"online": "#22c55e",
-											"away": "#eab308",
-											"busy": "#ff0072"
+								"tag": "label",
+								"children": [
+									"Initials ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Initials",
+											"value": {
+												"ttArg": "initials"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"default": "#22c55e"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "initials"
+										}
 									}
-								}
+								]
 							},
 							{
-								"ttMap": {
-									"arg": "size",
-									"values": {
-										"sm": {
-											"width": "9px",
-											"height": "9px"
+								"tag": "label",
+								"children": [
+									"Status ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Status",
+											"value": {
+												"ttArg": "status"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
 										},
-										"md": {
-											"width": "11px",
-											"height": "11px"
-										},
-										"lg": {
-											"width": "14px",
-											"height": "14px"
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "online"
+												},
+												"children": [
+													"online"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "away"
+												},
+												"children": [
+													"away"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "busy"
+												},
+												"children": [
+													"busy"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "status"
 										}
-									},
-									"default": {
-										"width": "11px",
-										"height": "11px"
 									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "avatar-status",
+									"title": "Status Avatar",
+									"details": "Initials: {initials}\nStatus: {status}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "avatar-status",
 	"source": {
 		"kind": "archetype",

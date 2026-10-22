@@ -3,7 +3,7 @@
 	"name": "Day Agenda List",
 	"library": "thingtime",
 	"category": "scheduling",
-	"description": "Day agenda list in the Thingtime style — bold day header with a muted date, three time-slotted event rows in soft tone washes and a rainbow now-hairline with a dot pinned between slots.",
+	"description": "Day agenda list in the Thingtime style — bold day header with a muted date, three time-slotted event rows in soft tone washes and a rainbow now-hairline with a dot pinned between slots. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"calendar",
 		"agenda",
@@ -44,25 +44,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Now line"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "300px",
-				"gap": "10px",
-				"padding": "14px 16px",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#ececef",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -71,118 +74,29 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "baseline",
-						"gap": "8px"
+						"flexDirection": "column",
+						"width": "300px",
+						"gap": "10px",
+						"padding": "14px 16px",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#ececef",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "16px",
-								"fontWeight": 700,
-								"color": "#33333c"
-							}
-						},
-						"children": [
-							"{day}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#9a9aa6"
-							}
-						},
-						"children": [
-							"{date}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"width": "44px",
-								"flexShrink": 0,
-								"fontSize": "11px",
-								"color": "#b6b6c0",
-								"fontWeight": 500
-							}
-						},
-						"children": [
-							"9:00"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"flex": 1,
-								"padding": "8px 10px",
-								"borderRadius": "9px",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#f5f5f7",
-											"success": "#eafaf1",
-											"warning": "#fdf6e5",
-											"danger": "#fdeceb",
-											"info": "#fdeaf3",
-											"neutral": "#f5f5f7"
-										},
-										"default": "#f5f5f7"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#16161a",
-											"success": "#1f7a4a",
-											"warning": "#9a6c12",
-											"danger": "#a83238",
-											"info": "#a32d6a",
-											"neutral": "#5a5a66"
-										},
-										"default": "#16161a"
-									}
-								}
-							}
-						},
-						"children": [
-							"Standup"
-						]
-					}
-				]
-			},
-			{
-				"ttIf": {
-					"arg": "showNow",
-					"then": {
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "6px"
+								"alignItems": "baseline",
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -190,120 +104,393 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"width": "8px",
-										"height": "8px",
-										"borderRadius": "999px",
-										"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)",
-										"flexShrink": 0
+										"fontSize": "16px",
+										"fontWeight": 700,
+										"color": "#33333c"
 									}
-								}
+								},
+								"children": [
+									"{day}"
+								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"flex": 1,
-										"height": "2px",
-										"borderRadius": "999px",
-										"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
+										"fontSize": "12px",
+										"color": "#9a9aa6"
 									}
+								},
+								"children": [
+									"{date}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"width": "44px",
+										"flexShrink": 0,
+										"fontSize": "11px",
+										"color": "#b6b6c0",
+										"fontWeight": 500,
+										"maxWidth": "100%"
+									}
+								},
+								"children": [
+									"9:00"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"flex": 1,
+										"padding": "8px 10px",
+										"borderRadius": "9px",
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#f5f5f7",
+													"success": "#eafaf1",
+													"warning": "#fdf6e5",
+													"danger": "#fdeceb",
+													"info": "#fdeaf3",
+													"neutral": "#f5f5f7"
+												},
+												"default": "#f5f5f7"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#16161a",
+													"success": "#1f7a4a",
+													"warning": "#9a6c12",
+													"danger": "#a83238",
+													"info": "#a32d6a",
+													"neutral": "#5a5a66"
+												},
+												"default": "#16161a"
+											}
+										}
+									}
+								},
+								"children": [
+									"Standup"
+								]
+							}
+						]
+					},
+					{
+						"ttIf": {
+							"arg": "showNow",
+							"then": {
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "6px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "8px",
+												"height": "8px",
+												"borderRadius": "999px",
+												"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"flex": 1,
+												"height": "2px",
+												"borderRadius": "999px",
+												"background": "linear-gradient(90deg, #ff5f6d, #ffc371, #ffe66d, #7cf47c, #6ad6ff, #a78bfa, #f472b6)"
+											}
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"width": "44px",
+										"flexShrink": 0,
+										"fontSize": "11px",
+										"color": "#b6b6c0",
+										"fontWeight": 500,
+										"maxWidth": "100%"
+									}
+								},
+								"children": [
+									"10:30"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"flex": 1,
+										"padding": "8px 10px",
+										"borderRadius": "9px",
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"background": "#fdeaf3",
+										"color": "#a32d6a"
+									}
+								},
+								"children": [
+									"Design review"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"width": "44px",
+										"flexShrink": 0,
+										"fontSize": "11px",
+										"color": "#b6b6c0",
+										"fontWeight": 500,
+										"maxWidth": "100%"
+									}
+								},
+								"children": [
+									"1:00"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"flex": 1,
+										"padding": "8px 10px",
+										"borderRadius": "9px",
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"background": "#f5f5f7",
+										"color": "#9a9aa6"
+									}
+								},
+								"children": [
+									"Roadmap sync"
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Day ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Day",
+											"value": {
+												"ttArg": "day"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Date ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Date",
+											"value": {
+												"ttArg": "date"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "date"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Now line ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Now line",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showNow"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showNow"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "schedule-agenda",
+									"title": "Day Agenda List",
+									"details": "Day: {day}\nDate: {date}\nNow line: {showNow}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"width": "44px",
-								"flexShrink": 0,
-								"fontSize": "11px",
-								"color": "#b6b6c0",
-								"fontWeight": 500
-							}
-						},
-						"children": [
-							"10:30"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"flex": 1,
-								"padding": "8px 10px",
-								"borderRadius": "9px",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"background": "#fdeaf3",
-								"color": "#a32d6a"
-							}
-						},
-						"children": [
-							"Design review"
-						]
-					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
+				"tag": "small",
 				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"width": "44px",
-								"flexShrink": 0,
-								"fontSize": "11px",
-								"color": "#b6b6c0",
-								"fontWeight": 500
-							}
-						},
-						"children": [
-							"1:00"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"flex": 1,
-								"padding": "8px 10px",
-								"borderRadius": "9px",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"background": "#f5f5f7",
-								"color": "#9a9aa6"
-							}
-						},
-						"children": [
-							"Roadmap sync"
-						]
-					}
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "schedule-agenda",
 	"source": {
 		"kind": "archetype",

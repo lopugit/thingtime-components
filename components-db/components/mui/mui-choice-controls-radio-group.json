@@ -3,7 +3,7 @@
 	"name": "Radio Group",
 	"library": "mui",
 	"category": "forms",
-	"description": "Three stacked radio options in the Material UI style — the selected index gains a tone-colored ring and inner dot, the rest stay quiet library borders.",
+	"description": "Three stacked radio options in the Material UI style — the selected index gains a tone-colored ring and inner dot, the rest stay quiet library borders. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"radio",
@@ -56,15 +56,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "10px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -72,9 +85,15 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid rgba(0, 0, 0, 0.12)",
+						"borderRadius": "4px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -82,307 +101,367 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"background": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0,
-										"boxSizing": "border-box"
+								"display": "flex",
+								"flexWrap": "wrap",
+								"gap": "6px"
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "4px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"background": {
+											"ttIf": {
+												"arg": "selected",
+												"equals": "1",
+												"then": "#1976d2",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "selected",
+												"equals": "1",
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.87)"
+											}
+										}
 									},
-									{
+									"aria-pressed": {
 										"ttIf": {
 											"arg": "selected",
 											"equals": "1",
-											"then": {
-												"borderColor": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#1976d2",
-															"success": "#2e7d32",
-															"warning": "#ed6c02",
-															"danger": "#d32f2f",
-															"info": "#0288d1",
-															"neutral": "#616161"
-														},
-														"default": "#1976d2"
-													}
-												}
-											},
-											"else": {
-												"borderColor": "rgba(0, 0, 0, 0.12)"
-											}
+											"then": true,
+											"else": false
 										}
 									}
-								]
-							}
-						},
-						"children": [
-							{
-								"ttIf": {
-									"arg": "selected",
-									"equals": "1",
-									"then": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "9px",
-												"height": "9px",
-												"borderRadius": "999px",
-												"background": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#1976d2",
-															"success": "#2e7d32",
-															"warning": "#ed6c02",
-															"danger": "#d32f2f",
-															"info": "#0288d1",
-															"neutral": "#616161"
-														},
-														"default": "#1976d2"
-													}
-												}
-											}
-										}
-									}
+								},
+								"children": [
+									"{labelA}"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selected",
+									"value": "1"
 								}
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.87)"
-							}
-						},
-						"children": [
-							"{labelA}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"background": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0,
-										"boxSizing": "border-box"
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "4px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"background": {
+											"ttIf": {
+												"arg": "selected",
+												"equals": "2",
+												"then": "#1976d2",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "selected",
+												"equals": "2",
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.87)"
+											}
+										}
 									},
-									{
+									"aria-pressed": {
 										"ttIf": {
 											"arg": "selected",
 											"equals": "2",
-											"then": {
-												"borderColor": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#1976d2",
-															"success": "#2e7d32",
-															"warning": "#ed6c02",
-															"danger": "#d32f2f",
-															"info": "#0288d1",
-															"neutral": "#616161"
-														},
-														"default": "#1976d2"
-													}
-												}
-											},
-											"else": {
-												"borderColor": "rgba(0, 0, 0, 0.12)"
-											}
+											"then": true,
+											"else": false
 										}
 									}
-								]
-							}
-						},
-						"children": [
+								},
+								"children": [
+									"{labelB}"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selected",
+									"value": "2"
+								}
+							},
 							{
-								"ttIf": {
-									"arg": "selected",
-									"equals": "2",
-									"then": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "9px",
-												"height": "9px",
-												"borderRadius": "999px",
-												"background": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#1976d2",
-															"success": "#2e7d32",
-															"warning": "#ed6c02",
-															"danger": "#d32f2f",
-															"info": "#0288d1",
-															"neutral": "#616161"
-														},
-														"default": "#1976d2"
-													}
-												}
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "4px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"background": {
+											"ttIf": {
+												"arg": "selected",
+												"equals": "3",
+												"then": "#1976d2",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "selected",
+												"equals": "3",
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.87)"
 											}
 										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "selected",
+											"equals": "3",
+											"then": true,
+											"else": false
+										}
 									}
+								},
+								"children": [
+									"{labelC}"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selected",
+									"value": "3"
 								}
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.87)"
-							}
-						},
-						"children": [
-							"{labelB}"
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"background": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0,
-										"boxSizing": "border-box"
-									},
-									{
-										"ttIf": {
-											"arg": "selected",
-											"equals": "3",
-											"then": {
-												"borderColor": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#1976d2",
-															"success": "#2e7d32",
-															"warning": "#ed6c02",
-															"danger": "#d32f2f",
-															"info": "#0288d1",
-															"neutral": "#616161"
-														},
-														"default": "#1976d2"
-													}
-												}
-											},
-											"else": {
-												"borderColor": "rgba(0, 0, 0, 0.12)"
-											}
-										}
-									}
-								]
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"ttIf": {
-									"arg": "selected",
-									"equals": "3",
-									"then": {
-										"tag": "div",
+								"tag": "label",
+								"children": [
+									"Selected option ",
+									{
+										"tag": "select",
 										"props": {
+											"aria-label": "Selected option",
+											"value": {
+												"ttArg": "selected"
+											},
+											"maxLength": 500,
 											"style": {
-												"width": "9px",
-												"height": "9px",
-												"borderRadius": "999px",
-												"background": {
-													"ttMap": {
-														"arg": "tone",
-														"values": {
-															"primary": "#1976d2",
-															"success": "#2e7d32",
-															"warning": "#ed6c02",
-															"danger": "#d32f2f",
-															"info": "#0288d1",
-															"neutral": "#616161"
-														},
-														"default": "#1976d2"
-													}
-												}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "1"
+												},
+												"children": [
+													"1"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "2"
+												},
+												"children": [
+													"2"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "3"
+												},
+												"children": [
+													"3"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selected"
 										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Option A ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Option A",
+											"value": {
+												"ttArg": "labelA"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "labelA"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Option B ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Option B",
+											"value": {
+												"ttArg": "labelB"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "labelB"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Option C ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Option C",
+											"value": {
+												"ttArg": "labelC"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "labelC"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "choice-controls-radio-group",
+									"title": "Radio Group",
+									"details": "Option A: {labelA}\nOption B: {labelB}\nOption C: {labelC}\nSelected option: {selected}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.87)"
-							}
-						},
-						"children": [
-							"{labelC}"
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "choice-controls-radio-group",
 	"source": {
 		"kind": "archetype",

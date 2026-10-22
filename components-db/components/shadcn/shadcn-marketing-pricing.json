@@ -3,7 +3,7 @@
 	"name": "Pricing Card",
 	"library": "shadcn",
 	"category": "marketing",
-	"description": "Single-plan pricing card in the shadcn/ui style — plan name, large price with period, a check-icon feature list, and a full-width call-to-action button.",
+	"description": "Single-plan pricing card in the shadcn/ui style — plan name, large price with period, a check-icon feature list, and a full-width call-to-action button. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"marketing",
 		"pricing",
@@ -52,105 +52,72 @@
 			"default": "Start free trial",
 			"label": "Button label",
 			"maxLength": 30
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e4e4e7",
-				"borderRadius": "12px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"boxSizing": "border-box",
-				"padding": "24px",
-				"gap": "14px",
-				"width": "260px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "13px",
-						"fontWeight": 600,
-						"color": "#18181b"
-					}
-				},
-				"children": [
-					"{plan}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "baseline",
-						"gap": "4px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "30px",
-								"fontWeight": 600,
-								"color": "#09090b",
-								"lineHeight": 1
-							}
-						},
-						"children": [
-							"{price}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "13px",
-								"color": "#71717a"
-							}
-						},
-						"children": [
-							"/month"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"height": "1px",
-						"background": "#f4f4f5"
-					}
-				}
-			},
 			{
 				"tag": "div",
 				"props": {
 					"style": {
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "8px"
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e4e4e7",
+						"borderRadius": "12px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"boxSizing": "border-box",
+						"padding": "24px",
+						"gap": "14px",
+						"width": "260px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "13px",
+								"fontWeight": 600,
+								"color": "#18181b"
+							}
+						},
+						"children": [
+							"{plan}"
+						]
+					},
+					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px"
+								"alignItems": "baseline",
+								"gap": "4px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -158,40 +125,14 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"background": "#f0fdf4",
-										"color": "#15803d",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0
+										"fontSize": "30px",
+										"fontWeight": 600,
+										"color": "#09090b",
+										"lineHeight": 1
 									}
 								},
 								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 11,
-											"height": 11,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
-									}
+									"{price}"
 								]
 							},
 							{
@@ -199,11 +140,11 @@
 								"props": {
 									"style": {
 										"fontSize": "13px",
-										"color": "#09090b"
+										"color": "#71717a"
 									}
 								},
 								"children": [
-									"{feature1}"
+									"/month"
 								]
 							}
 						]
@@ -212,163 +153,516 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px"
+								"height": "1px",
+								"background": "#f4f4f5"
 							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"background": "#f0fdf4",
-										"color": "#15803d",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									{
-										"tag": "svg",
-										"props": {
-											"width": 11,
-											"height": 11,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "polyline",
-												"props": {
-													"points": "20 6 9 17 4 12"
-												}
-											}
-										]
-									}
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"color": "#09090b"
-									}
-								},
-								"children": [
-									"{feature2}"
-								]
-							}
-						]
+						}
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "10px"
+								"flexDirection": "column",
+								"gap": "8px"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"width": "18px",
-										"height": "18px",
-										"borderRadius": "999px",
-										"background": "#f0fdf4",
-										"color": "#15803d",
 										"display": "flex",
 										"alignItems": "center",
-										"justifyContent": "center",
-										"flexShrink": 0
+										"gap": "10px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
-										"tag": "svg",
+										"tag": "span",
 										"props": {
-											"width": 11,
-											"height": 11,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "currentColor",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
+											"style": {
+												"width": "18px",
+												"height": "18px",
+												"borderRadius": "999px",
+												"background": "#f0fdf4",
+												"color": "#15803d",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
 										},
 										"children": [
 											{
-												"tag": "polyline",
+												"tag": "svg",
 												"props": {
-													"points": "20 6 9 17 4 12"
-												}
+													"width": 11,
+													"height": 11,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "20 6 9 17 4 12"
+														}
+													}
+												]
 											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"color": "#09090b"
+											}
+										},
+										"children": [
+											"{feature1}"
 										]
 									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "13px",
-										"color": "#09090b"
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "10px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"{feature3}"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "18px",
+												"height": "18px",
+												"borderRadius": "999px",
+												"background": "#f0fdf4",
+												"color": "#15803d",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "svg",
+												"props": {
+													"width": 11,
+													"height": 11,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "20 6 9 17 4 12"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"color": "#09090b"
+											}
+										},
+										"children": [
+											"{feature2}"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "10px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "18px",
+												"height": "18px",
+												"borderRadius": "999px",
+												"background": "#f0fdf4",
+												"color": "#15803d",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "svg",
+												"props": {
+													"width": 11,
+													"height": 11,
+													"viewBox": "0 0 24 24",
+													"fill": "none",
+													"stroke": "currentColor",
+													"strokeWidth": 2,
+													"strokeLinecap": "round",
+													"strokeLinejoin": "round",
+													"xmlns": "http://www.w3.org/2000/svg"
+												},
+												"children": [
+													{
+														"tag": "polyline",
+														"props": {
+															"points": "20 6 9 17 4 12"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"color": "#09090b"
+											}
+										},
+										"children": [
+											"{feature3}"
+										]
+									}
 								]
 							}
 						]
+					},
+					{
+						"tag": "button",
+						"props": {
+							"type": "button",
+							"style": {
+								"display": "inline-flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"gap": "8px",
+								"border": "none",
+								"height": "auto",
+								"padding": "8px 12px",
+								"borderRadius": "8px",
+								"fontWeight": 500,
+								"fontSize": "14px",
+								"cursor": "pointer",
+								"background": "#18181b",
+								"color": "#fafafa",
+								"width": "auto",
+								"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+								"marginTop": "4px",
+								"maxWidth": "100%",
+								"minWidth": 0,
+								"whiteSpace": "normal",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
+							},
+							"aria-label": "{actionLabel}"
+						},
+						"children": [
+							"{actionLabel}"
+						],
+						"ttAction": "{actionKey}",
+						"ttActionInputs": {
+							"family": "marketing-pricing",
+							"title": "Pricing Card",
+							"details": "Plan name: {plan}\nPrice: {price}\nFeature 1: {feature1}\nFeature 2: {feature2}\nFeature 3: {feature3}\nButton label: {ctaLabel}"
+						}
 					}
 				]
 			},
 			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"gap": "8px",
-						"border": "none",
-						"height": "36px",
-						"padding": "0 18px",
-						"borderRadius": "8px",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontWeight": 500,
-						"fontSize": "14px",
-						"cursor": "pointer",
-						"background": "#18181b",
-						"color": "#fafafa",
-						"width": "100%",
-						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-						"marginTop": "4px"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"{ctaLabel}"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Plan name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Plan name",
+											"value": {
+												"ttArg": "plan"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "plan"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Price ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Price",
+											"value": {
+												"ttArg": "price"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "price"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Feature 1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Feature 1",
+											"value": {
+												"ttArg": "feature1"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "feature1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Feature 2 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Feature 2",
+											"value": {
+												"ttArg": "feature2"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "feature2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Feature 3 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Feature 3",
+											"value": {
+												"ttArg": "feature3"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "feature3"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Button label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Button label",
+											"value": {
+												"ttArg": "ctaLabel"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "ctaLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "marketing-pricing",
+									"title": "Pricing Card",
+									"details": "Plan name: {plan}\nPrice: {price}\nFeature 1: {feature1}\nFeature 2: {feature2}\nFeature 3: {feature3}\nButton label: {ctaLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "marketing-pricing",
 	"source": {
 		"kind": "archetype",

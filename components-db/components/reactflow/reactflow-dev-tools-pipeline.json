@@ -3,7 +3,7 @@
 	"name": "CI Pipeline",
 	"library": "reactflow",
 	"category": "developer",
-	"description": "CI pipeline stepper in the React Flow style — Build, Test, Deploy and Verify stage nodes joined by connector rails: solid success checks behind the current stage's signature-pink spinner arc, muted dots ahead, plus a duration caption.",
+	"description": "CI pipeline stepper in the React Flow style — Build, Test, Deploy and Verify stage nodes joined by connector rails: solid success checks behind the current stage's signature-pink spinner arc, muted dots ahead, plus a duration caption. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"developer",
 		"pipeline",
@@ -37,24 +37,28 @@
 			"default": "3m 42s",
 			"label": "Duration",
 			"maxLength": 16
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "5px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"padding": "14px 16px",
-				"gap": "14px",
-				"minWidth": "340px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -62,683 +66,417 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #1a192b",
+						"borderRadius": "5px",
+						"background": "#ffffff",
+						"color": "#1a192b",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": "#1a192b"
-							}
-						},
+						"tag": "h3",
 						"children": [
 							"{label}"
 						]
 					},
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1
-							}
-						}
-					},
-					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "5px",
-								"color": "#6f6e77",
-								"fontSize": "10px"
+								"flexWrap": "wrap",
+								"gap": "6px"
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
+								"tag": "button",
 								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 10
-										}
-									},
-									{
-										"tag": "polyline",
-										"props": {
-											"points": "12 6 12 12 16 14"
-										}
-									}
-								]
-							},
-							"{duration}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "flex-start"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"gap": "6px",
-								"width": "58px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"ttMap": {
-									"arg": "stage",
-									"values": {
-										"Build": {
-											"tag": "svg",
-											"props": {
-												"width": 28,
-												"height": 28,
-												"viewBox": "0 0 28 28",
-												"fill": "none",
-												"xmlns": "http://www.w3.org/2000/svg"
-											},
-											"children": [
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 14,
-														"cy": 14,
-														"r": 11,
-														"fill": "none",
-														"stroke": "#e2e2e5",
-														"strokeWidth": 3
-													}
-												},
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 14,
-														"cy": 14,
-														"r": 11,
-														"fill": "none",
-														"stroke": "#ff0072",
-														"strokeWidth": 3,
-														"strokeLinecap": "round",
-														"style": {
-															"strokeDasharray": "52 18",
-															"transform": "rotate(-90deg)",
-															"transformOrigin": "14px 14px"
-														}
-													}
-												}
-											]
-										}
-									},
-									"default": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "28px",
-												"height": "28px",
-												"borderRadius": "999px",
-												"background": "#22c55e",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center"
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "3px",
+										"border": "1px solid #1a192b",
+										"background": {
+											"ttIf": {
+												"arg": "stage",
+												"equals": "Build",
+												"then": "#1a192b",
+												"else": "#f4f4f5"
 											}
 										},
-										"children": [
-											{
-												"tag": "svg",
-												"props": {
-													"width": 14,
-													"height": 14,
-													"viewBox": "0 0 24 24",
-													"fill": "none",
-													"stroke": "#ffffff",
-													"strokeWidth": 2,
-													"strokeLinecap": "round",
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
-												},
-												"children": [
-													{
-														"tag": "polyline",
-														"props": {
-															"points": "20 6 9 17 4 12"
-														}
-													}
-												]
-											}
-										]
-									}
-								}
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "10px",
-										"fontWeight": 500,
+										"cursor": "pointer",
 										"color": {
-											"ttMap": {
+											"ttIf": {
 												"arg": "stage",
-												"values": {
-													"Build": "#1a192b"
-												},
-												"default": "#6f6e77"
+												"equals": "Build",
+												"then": "#ffffff",
+												"else": "#1a192b"
 											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "stage",
+											"equals": "Build",
+											"then": true,
+											"else": false
 										}
 									}
 								},
 								"children": [
 									"Build"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"flex": 1,
-								"height": "2px",
-								"marginTop": "13px",
-								"background": {
-									"ttMap": {
-										"arg": "stage",
-										"values": {
-											"Build": "#e2e2e5"
-										},
-										"default": "#22c55e"
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"gap": "6px",
-								"width": "58px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"ttMap": {
-									"arg": "stage",
-									"values": {
-										"Build": {
-											"tag": "div",
-											"props": {
-												"style": {
-													"width": "28px",
-													"height": "28px",
-													"borderRadius": "999px",
-													"background": "#ffffff",
-													"borderWidth": "2px",
-													"borderStyle": "solid",
-													"borderColor": "#e2e2e5",
-													"boxSizing": "border-box",
-													"display": "flex",
-													"alignItems": "center",
-													"justifyContent": "center"
-												}
-											},
-											"children": [
-												{
-													"tag": "span",
-													"props": {
-														"style": {
-															"width": "6px",
-															"height": "6px",
-															"borderRadius": "999px",
-															"background": "#91919a"
-														}
-													}
-												}
-											]
-										},
-										"Test": {
-											"tag": "svg",
-											"props": {
-												"width": 28,
-												"height": 28,
-												"viewBox": "0 0 28 28",
-												"fill": "none",
-												"xmlns": "http://www.w3.org/2000/svg"
-											},
-											"children": [
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 14,
-														"cy": 14,
-														"r": 11,
-														"fill": "none",
-														"stroke": "#e2e2e5",
-														"strokeWidth": 3
-													}
-												},
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 14,
-														"cy": 14,
-														"r": 11,
-														"fill": "none",
-														"stroke": "#ff0072",
-														"strokeWidth": 3,
-														"strokeLinecap": "round",
-														"style": {
-															"strokeDasharray": "52 18",
-															"transform": "rotate(-90deg)",
-															"transformOrigin": "14px 14px"
-														}
-													}
-												}
-											]
-										}
-									},
-									"default": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "28px",
-												"height": "28px",
-												"borderRadius": "999px",
-												"background": "#22c55e",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center"
-											}
-										},
-										"children": [
-											{
-												"tag": "svg",
-												"props": {
-													"width": 14,
-													"height": 14,
-													"viewBox": "0 0 24 24",
-													"fill": "none",
-													"stroke": "#ffffff",
-													"strokeWidth": 2,
-													"strokeLinecap": "round",
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
-												},
-												"children": [
-													{
-														"tag": "polyline",
-														"props": {
-															"points": "20 6 9 17 4 12"
-														}
-													}
-												]
-											}
-										]
-									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "stage",
+									"value": "Build"
 								}
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"fontSize": "10px",
-										"fontWeight": 500,
-										"color": {
-											"ttMap": {
+										"padding": "8px 12px",
+										"borderRadius": "3px",
+										"border": "1px solid #1a192b",
+										"background": {
+											"ttIf": {
 												"arg": "stage",
-												"values": {
-													"Test": "#1a192b"
-												},
-												"default": "#6f6e77"
+												"equals": "Test",
+												"then": "#1a192b",
+												"else": "#f4f4f5"
 											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "stage",
+												"equals": "Test",
+												"then": "#ffffff",
+												"else": "#1a192b"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "stage",
+											"equals": "Test",
+											"then": true,
+											"else": false
 										}
 									}
 								},
 								"children": [
 									"Test"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"flex": 1,
-								"height": "2px",
-								"marginTop": "13px",
-								"background": {
-									"ttMap": {
-										"arg": "stage",
-										"values": {
-											"Build": "#e2e2e5",
-											"Test": "#e2e2e5"
-										},
-										"default": "#22c55e"
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"gap": "6px",
-								"width": "58px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"ttMap": {
-									"arg": "stage",
-									"values": {
-										"Deploy": {
-											"tag": "svg",
-											"props": {
-												"width": 28,
-												"height": 28,
-												"viewBox": "0 0 28 28",
-												"fill": "none",
-												"xmlns": "http://www.w3.org/2000/svg"
-											},
-											"children": [
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 14,
-														"cy": 14,
-														"r": 11,
-														"fill": "none",
-														"stroke": "#e2e2e5",
-														"strokeWidth": 3
-													}
-												},
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 14,
-														"cy": 14,
-														"r": 11,
-														"fill": "none",
-														"stroke": "#ff0072",
-														"strokeWidth": 3,
-														"strokeLinecap": "round",
-														"style": {
-															"strokeDasharray": "52 18",
-															"transform": "rotate(-90deg)",
-															"transformOrigin": "14px 14px"
-														}
-													}
-												}
-											]
-										},
-										"Verify": {
-											"tag": "div",
-											"props": {
-												"style": {
-													"width": "28px",
-													"height": "28px",
-													"borderRadius": "999px",
-													"background": "#22c55e",
-													"display": "flex",
-													"alignItems": "center",
-													"justifyContent": "center"
-												}
-											},
-											"children": [
-												{
-													"tag": "svg",
-													"props": {
-														"width": 14,
-														"height": 14,
-														"viewBox": "0 0 24 24",
-														"fill": "none",
-														"stroke": "#ffffff",
-														"strokeWidth": 2,
-														"strokeLinecap": "round",
-														"strokeLinejoin": "round",
-														"xmlns": "http://www.w3.org/2000/svg"
-													},
-													"children": [
-														{
-															"tag": "polyline",
-															"props": {
-																"points": "20 6 9 17 4 12"
-															}
-														}
-													]
-												}
-											]
-										}
-									},
-									"default": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "28px",
-												"height": "28px",
-												"borderRadius": "999px",
-												"background": "#ffffff",
-												"borderWidth": "2px",
-												"borderStyle": "solid",
-												"borderColor": "#e2e2e5",
-												"boxSizing": "border-box",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center"
-											}
-										},
-										"children": [
-											{
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "6px",
-														"height": "6px",
-														"borderRadius": "999px",
-														"background": "#91919a"
-													}
-												}
-											}
-										]
-									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "stage",
+									"value": "Test"
 								}
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"fontSize": "10px",
-										"fontWeight": 500,
-										"color": {
-											"ttMap": {
+										"padding": "8px 12px",
+										"borderRadius": "3px",
+										"border": "1px solid #1a192b",
+										"background": {
+											"ttIf": {
 												"arg": "stage",
-												"values": {
-													"Deploy": "#1a192b"
-												},
-												"default": "#6f6e77"
+												"equals": "Deploy",
+												"then": "#1a192b",
+												"else": "#f4f4f5"
 											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "stage",
+												"equals": "Deploy",
+												"then": "#ffffff",
+												"else": "#1a192b"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "stage",
+											"equals": "Deploy",
+											"then": true,
+											"else": false
 										}
 									}
 								},
 								"children": [
 									"Deploy"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"flex": 1,
-								"height": "2px",
-								"marginTop": "13px",
-								"background": {
-									"ttMap": {
-										"arg": "stage",
-										"values": {
-											"Verify": "#22c55e"
-										},
-										"default": "#e2e2e5"
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"gap": "6px",
-								"width": "58px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"ttMap": {
-									"arg": "stage",
-									"values": {
-										"Verify": {
-											"tag": "svg",
-											"props": {
-												"width": 28,
-												"height": 28,
-												"viewBox": "0 0 28 28",
-												"fill": "none",
-												"xmlns": "http://www.w3.org/2000/svg"
-											},
-											"children": [
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 14,
-														"cy": 14,
-														"r": 11,
-														"fill": "none",
-														"stroke": "#e2e2e5",
-														"strokeWidth": 3
-													}
-												},
-												{
-													"tag": "circle",
-													"props": {
-														"cx": 14,
-														"cy": 14,
-														"r": 11,
-														"fill": "none",
-														"stroke": "#ff0072",
-														"strokeWidth": 3,
-														"strokeLinecap": "round",
-														"style": {
-															"strokeDasharray": "52 18",
-															"transform": "rotate(-90deg)",
-															"transformOrigin": "14px 14px"
-														}
-													}
-												}
-											]
-										}
-									},
-									"default": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "28px",
-												"height": "28px",
-												"borderRadius": "999px",
-												"background": "#ffffff",
-												"borderWidth": "2px",
-												"borderStyle": "solid",
-												"borderColor": "#e2e2e5",
-												"boxSizing": "border-box",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center"
-											}
-										},
-										"children": [
-											{
-												"tag": "span",
-												"props": {
-													"style": {
-														"width": "6px",
-														"height": "6px",
-														"borderRadius": "999px",
-														"background": "#91919a"
-													}
-												}
-											}
-										]
-									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "stage",
+									"value": "Deploy"
 								}
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"fontSize": "10px",
-										"fontWeight": 500,
-										"color": {
-											"ttMap": {
+										"padding": "8px 12px",
+										"borderRadius": "3px",
+										"border": "1px solid #1a192b",
+										"background": {
+											"ttIf": {
 												"arg": "stage",
-												"values": {
-													"Verify": "#1a192b"
-												},
-												"default": "#6f6e77"
+												"equals": "Verify",
+												"then": "#1a192b",
+												"else": "#f4f4f5"
 											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "stage",
+												"equals": "Verify",
+												"then": "#ffffff",
+												"else": "#1a192b"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "stage",
+											"equals": "Verify",
+											"then": true,
+											"else": false
 										}
 									}
 								},
 								"children": [
 									"Verify"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "stage",
+									"value": "Verify"
+								}
+							}
+						]
+					},
+					{
+						"tag": "p",
+						"children": [
+							"Recorded stage: {stage}"
+						]
+					},
+					{
+						"tag": "small",
+						"children": [
+							"Saves a pipeline record. Deployment requires a configured integration Action."
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Current stage ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Current stage",
+											"value": {
+												"ttArg": "stage"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "Build"
+												},
+												"children": [
+													"Build"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Test"
+												},
+												"children": [
+													"Test"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Deploy"
+												},
+												"children": [
+													"Deploy"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "Verify"
+												},
+												"children": [
+													"Verify"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "stage"
+										}
+									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Pipeline name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Pipeline name",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Duration ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Duration",
+											"value": {
+												"ttArg": "duration"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "duration"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "dev-tools-pipeline",
+									"title": "CI Pipeline",
+									"details": "Pipeline name: {label}\nCurrent stage: {stage}\nDuration: {duration}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -746,7 +484,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "dev-tools-pipeline",
 	"source": {
 		"kind": "archetype",

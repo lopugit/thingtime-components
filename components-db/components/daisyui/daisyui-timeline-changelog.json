@@ -3,7 +3,7 @@
 	"name": "Changelog Timeline",
 	"library": "daisyui",
 	"category": "data-display",
-	"description": "Changelog timeline in the daisyUI style — mono version chips on a tone tint head each entry, with a date mark and a muted release summary.",
+	"description": "Changelog timeline in the daisyUI style — mono version chips on a tone tint head each entry, with a date mark and a muted release summary. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"timeline",
 		"changelog",
@@ -46,86 +46,59 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
-		"tag": "ul",
+		"tag": "div",
 		"props": {
 			"style": {
-				"listStyle": "none",
-				"margin": 0,
-				"padding": 0,
-				"width": "280px",
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#1f2937"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"ttRepeat": {
-					"arg": "count",
-					"max": 5,
-					"node": {
-						"tag": "li",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "stretch",
-								"gap": "14px"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
+				"tag": "ul",
+				"props": {
+					"style": {
+						"listStyle": "none",
+						"margin": 0,
+						"padding": 0,
+						"width": "280px",
+						"display": "flex",
+						"flexDirection": "column",
+						"color": "#1f2937",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
+					}
+				},
+				"children": [
+					{
+						"ttRepeat": {
+							"arg": "count",
+							"max": 5,
+							"node": {
+								"tag": "li",
 								"props": {
 									"style": {
 										"display": "flex",
-										"flexDirection": "column",
-										"alignItems": "center",
-										"width": "12px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "12px",
-												"height": "12px",
-												"borderRadius": "999px",
-												"background": "#9ca3af",
-												"marginTop": "5px",
-												"flexShrink": 0
-											}
-										}
-									},
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "2px",
-												"flexGrow": 1,
-												"minHeight": "14px",
-												"marginTop": "4px",
-												"borderRadius": "999px",
-												"background": "#f2f2f2"
-											}
-										}
-									}
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"flexDirection": "column",
-										"gap": "2px",
-										"paddingBottom": "18px",
-										"minWidth": 0
+										"alignItems": "stretch",
+										"gap": "14px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
@@ -134,106 +107,324 @@
 										"props": {
 											"style": {
 												"display": "flex",
+												"flexDirection": "column",
 												"alignItems": "center",
-												"gap": "8px"
+												"width": "12px",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
 											}
 										},
 										"children": [
 											{
-												"tag": "span",
+												"tag": "div",
 												"props": {
 													"style": {
-														"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-														"fontSize": "12px",
-														"fontWeight": 600,
-														"padding": "2px 8px",
-														"borderRadius": "12px",
-														"background": {
-															"ttMap": {
-																"arg": "tone",
-																"values": {
-																	"primary": "#eee6ff",
-																	"success": "#dcfce7",
-																	"warning": "#fef9c3",
-																	"danger": "#ffe4e6",
-																	"info": "#e0f2fe",
-																	"neutral": "#f2f2f2"
-																},
-																"default": "#eee6ff"
-															}
-														},
-														"color": {
-															"ttMap": {
-																"arg": "tone",
-																"values": {
-																	"primary": "#4506cb",
-																	"success": "#00753d",
-																	"warning": "#854d0e",
-																	"danger": "#be123c",
-																	"info": "#0369a1",
-																	"neutral": "#2a323c"
-																},
-																"default": "#4506cb"
-															}
-														},
-														"borderWidth": "1px",
-														"borderStyle": "solid",
-														"borderColor": {
-															"ttMap": {
-																"arg": "tone",
-																"values": {
-																	"primary": "#d6c4fd",
-																	"success": "#86efac",
-																	"warning": "#fde047",
-																	"danger": "#fda4af",
-																	"info": "#7dd3fc",
-																	"neutral": "#d1d5db"
-																},
-																"default": "#d6c4fd"
-															}
-														}
+														"width": "12px",
+														"height": "12px",
+														"borderRadius": "999px",
+														"background": "#9ca3af",
+														"marginTop": "5px",
+														"flexShrink": 0,
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											},
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "2px",
+														"flexGrow": 1,
+														"minHeight": "14px",
+														"marginTop": "4px",
+														"borderRadius": "999px",
+														"background": "#f2f2f2",
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												}
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"flexDirection": "column",
+												"gap": "2px",
+												"paddingBottom": "18px",
+												"minWidth": 0
+											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"display": "flex",
+														"alignItems": "center",
+														"gap": "8px",
+														"flexWrap": "wrap"
 													}
 												},
 												"children": [
-													"v{version}.{n}"
+													{
+														"tag": "span",
+														"props": {
+															"style": {
+																"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+																"fontSize": "12px",
+																"fontWeight": 600,
+																"padding": "2px 8px",
+																"borderRadius": "12px",
+																"background": {
+																	"ttMap": {
+																		"arg": "tone",
+																		"values": {
+																			"primary": "#eee6ff",
+																			"success": "#dcfce7",
+																			"warning": "#fef9c3",
+																			"danger": "#ffe4e6",
+																			"info": "#e0f2fe",
+																			"neutral": "#f2f2f2"
+																		},
+																		"default": "#eee6ff"
+																	}
+																},
+																"color": {
+																	"ttMap": {
+																		"arg": "tone",
+																		"values": {
+																			"primary": "#4506cb",
+																			"success": "#00753d",
+																			"warning": "#854d0e",
+																			"danger": "#be123c",
+																			"info": "#0369a1",
+																			"neutral": "#2a323c"
+																		},
+																		"default": "#4506cb"
+																	}
+																},
+																"borderWidth": "1px",
+																"borderStyle": "solid",
+																"borderColor": {
+																	"ttMap": {
+																		"arg": "tone",
+																		"values": {
+																			"primary": "#d6c4fd",
+																			"success": "#86efac",
+																			"warning": "#fde047",
+																			"danger": "#fda4af",
+																			"info": "#7dd3fc",
+																			"neutral": "#d1d5db"
+																		},
+																		"default": "#d6c4fd"
+																	}
+																}
+															}
+														},
+														"children": [
+															"v{version}.{n}"
+														]
+													},
+													{
+														"tag": "span",
+														"props": {
+															"style": {
+																"color": "#9ca3af",
+																"fontSize": "12px"
+															}
+														},
+														"children": [
+															"Aug {n}"
+														]
+													}
 												]
 											},
 											{
 												"tag": "span",
 												"props": {
 													"style": {
-														"color": "#9ca3af",
-														"fontSize": "12px"
+														"color": "#6b7280",
+														"fontSize": "14px",
+														"marginTop": "2px"
 													}
 												},
 												"children": [
-													"Aug {n}"
+													"{summary}"
 												]
 											}
-										]
-									},
-									{
-										"tag": "span",
-										"props": {
-											"style": {
-												"color": "#6b7280",
-												"fontSize": "14px",
-												"marginTop": "2px"
-											}
-										},
-										"children": [
-											"{summary}"
 										]
 									}
 								]
 							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Version ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Version",
+											"value": {
+												"ttArg": "version"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "version"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Summary ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Summary",
+											"value": {
+												"ttArg": "summary"
+											},
+											"maxLength": 80,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "summary"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Entries ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Entries",
+											"value": {
+												"ttArg": "count"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 5
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "count"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "timeline-changelog",
+									"title": "Changelog Timeline",
+									"details": "Version: {version}\nSummary: {summary}\nEntries: {count}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "timeline-changelog",
 	"source": {
 		"kind": "archetype",

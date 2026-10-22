@@ -3,7 +3,7 @@
 	"name": "Actions Card",
 	"library": "reactflow",
 	"category": "layout",
-	"description": "Card with footer action buttons in the React Flow style — solid confirm beside an outlined cancel, right-aligned above the border.",
+	"description": "Card with footer action buttons in the React Flow style — solid confirm beside an outlined cancel, right-aligned above the border. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"card",
 		"actions",
@@ -22,7 +22,8 @@
 			"name": "body",
 			"type": "text",
 			"default": "This removes the project and its history. Collaborators lose access immediately.",
-			"label": "Body"
+			"label": "Body",
+			"maxLength": 500
 		},
 		{
 			"name": "primaryLabel",
@@ -51,168 +52,427 @@
 			],
 			"default": "danger",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "uiDismissed",
+			"type": "boolean",
+			"default": false
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "300px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"background": "#ffffff",
-				"color": "#1a192b",
-				"border": "1px solid #1a192b",
-				"borderRadius": "5px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"overflow": "hidden",
-				"boxSizing": "border-box"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"padding": "16px",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
+				"ttIf": {
+					"arg": "uiDismissed",
+					"then": {
+						"tag": "button",
 						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#1a192b"
-							}
+							"type": "button"
 						},
 						"children": [
-							"{title}"
-						]
+							"Show again"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "uiDismissed",
+							"value": false
+						}
 					},
-					{
-						"tag": "span",
+					"else": {
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "#6f6e77",
-								"lineHeight": 1.5
+								"display": "flex",
+								"flexDirection": "column",
+								"width": "300px",
+								"background": "#ffffff",
+								"color": "#1a192b",
+								"border": "1px solid #1a192b",
+								"borderRadius": "5px",
+								"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+								"overflow": "hidden",
+								"boxSizing": "border-box",
+								"maxWidth": "100%"
 							}
 						},
 						"children": [
-							"{body}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "flex-end",
-						"gap": "8px",
-						"padding": "12px 16px",
-						"borderTop": "1px solid #e2e2e5"
-					}
-				},
-				"children": [
-					{
-						"ttIf": {
-							"arg": "secondaryLabel",
-							"then": {
-								"tag": "button",
+							{
+								"tag": "div",
 								"props": {
-									"type": "button",
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"height": "24px",
-										"padding": "0 14px",
-										"border": "1px solid #1a192b",
-										"borderRadius": "3px",
-										"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"fontWeight": 500,
-										"fontSize": "12px",
-										"cursor": "pointer",
-										"background": "transparent",
-										"color": "#1a192b"
+										"display": "flex",
+										"flexDirection": "column",
+										"padding": "16px",
+										"gap": "8px"
 									}
 								},
 								"children": [
-									"{secondaryLabel}"
-								]
-							}
-						}
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
 									{
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"height": "24px",
-										"padding": "0 14px",
-										"border": "none",
-										"borderRadius": "3px",
-										"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"fontWeight": 500,
-										"fontSize": "12px",
-										"cursor": "pointer"
-									},
-									{
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#1a192b",
-													"success": "#22c55e",
-													"warning": "#eab308",
-													"danger": "#ff0072",
-													"info": "#784be8",
-													"neutral": "#6f6e77"
-												},
-												"default": "#1a192b"
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "14px",
+												"fontWeight": 600,
+												"color": "#1a192b"
 											}
 										},
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#ffffff",
-													"success": "#ffffff",
-													"warning": "#ffffff",
-													"danger": "#ffffff",
-													"info": "#ffffff",
-													"neutral": "#ffffff"
-												},
-												"default": "#ffffff"
+										"children": [
+											"{title}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#6f6e77",
+												"lineHeight": 1.5
 											}
+										},
+										"children": [
+											"{body}"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "flex-end",
+										"gap": "8px",
+										"padding": "12px 16px",
+										"borderTop": "1px solid #e2e2e5",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"ttIf": {
+											"arg": "secondaryLabel",
+											"then": {
+												"tag": "button",
+												"props": {
+													"type": "button",
+													"style": {
+														"display": "inline-flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"height": "24px",
+														"padding": "0 14px",
+														"border": "1px solid #1a192b",
+														"borderRadius": "3px",
+														"fontWeight": 500,
+														"fontSize": "12px",
+														"cursor": "pointer",
+														"background": "transparent",
+														"color": "#1a192b",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													"{secondaryLabel}"
+												],
+												"ttAction": "$ui",
+												"ttActionInputs": {
+													"op": "set",
+													"key": "uiDismissed",
+													"value": true
+												}
+											}
+										}
+									},
+									{
+										"tag": "button",
+										"props": {
+											"type": "button",
+											"style": {
+												"ttMerge": [
+													{
+														"display": "inline-flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"height": "24px",
+														"padding": "0 14px",
+														"border": "none",
+														"borderRadius": "3px",
+														"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+														"fontWeight": 500,
+														"fontSize": "12px",
+														"cursor": "pointer",
+														"flexWrap": "wrap"
+													},
+													{
+														"background": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "#1a192b",
+																	"success": "#22c55e",
+																	"warning": "#eab308",
+																	"danger": "#ff0072",
+																	"info": "#784be8",
+																	"neutral": "#6f6e77"
+																},
+																"default": "#1a192b"
+															}
+														},
+														"color": {
+															"ttMap": {
+																"arg": "tone",
+																"values": {
+																	"primary": "#ffffff",
+																	"success": "#ffffff",
+																	"warning": "#ffffff",
+																	"danger": "#ffffff",
+																	"info": "#ffffff",
+																	"neutral": "#ffffff"
+																},
+																"default": "#ffffff"
+															}
+														}
+													},
+													{
+														"width": "auto",
+														"height": "auto",
+														"minWidth": 0,
+														"padding": "8px 12px",
+														"whiteSpace": "normal",
+														"maxWidth": "100%",
+														"boxSizing": "border-box"
+													}
+												]
+											},
+											"aria-label": "{actionLabel}"
+										},
+										"children": [
+											"{actionLabel}"
+										],
+										"ttAction": "{actionKey}",
+										"ttActionInputs": {
+											"family": "card-actions",
+											"title": "Actions Card",
+											"details": "Title: {title}\nBody: {body}\nPrimary label: {primaryLabel}\nSecondary label: {secondaryLabel}"
 										}
 									}
 								]
 							}
+						]
+					}
+				}
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
 						},
 						"children": [
-							"{primaryLabel}"
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Body ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Body",
+											"value": {
+												"ttArg": "body"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "body"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Primary label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Primary label",
+											"value": {
+												"ttArg": "primaryLabel"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "primaryLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Secondary label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Secondary label",
+											"value": {
+												"ttArg": "secondaryLabel"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "secondaryLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "card-actions",
+									"title": "Actions Card",
+									"details": "Title: {title}\nBody: {body}\nPrimary label: {primaryLabel}\nSecondary label: {secondaryLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "card-actions",
 	"source": {
 		"kind": "archetype",

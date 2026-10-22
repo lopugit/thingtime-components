@@ -3,7 +3,7 @@
 	"name": "Photo Editor Bar",
 	"library": "mui",
 	"category": "media",
-	"description": "Photo-editor toolbar in the Material UI style — crop, rotate, adjust and filter tools with one active, an exposure slider with fill track, thumb and value chip, a before/after toggle and a save/cancel pair with uppercase Material actions.",
+	"description": "Photo-editor toolbar in the Material UI style — crop, rotate, adjust and filter tools with one active, an exposure slider with fill track, thumb and value chip, a before/after toggle and a save/cancel pair with uppercase Material actions. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"photo",
 		"editor",
@@ -51,23 +51,41 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "imageUrl",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
+		},
+		{
+			"name": "rotation",
+			"type": "number",
+			"default": 0,
+			"min": 0,
+			"max": 360
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"alignItems": "center",
-				"gap": "10px",
-				"padding": "8px 10px",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "rgba(0, 0, 0, 0.12)",
-				"borderRadius": "8px",
-				"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -75,505 +93,435 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "2px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid rgba(0, 0, 0, 0.12)",
+						"borderRadius": "4px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
-									{
-										"width": "26px",
-										"height": "26px",
-										"padding": "0",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"border": "none",
-										"background": "transparent",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"borderRadius": "4px",
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "tool",
-											"equals": "crop",
-											"then": {
-												"background": "#e3f2fd",
-												"color": "#1565c0"
-											}
-										}
-									}
-								]
-							}
-						},
+						"tag": "label",
 						"children": [
+							"Image URL",
 							{
-								"tag": "svg",
+								"tag": "input",
 								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"type": "url",
+									"aria-label": "imageUrl",
+									"value": {
+										"ttArg": "imageUrl"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
 								},
-								"children": [
-									{
-										"tag": "path",
-										"props": {
-											"d": "M6.13 1L6 16a2 2 0 0 0 2 2h15"
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M1 6.13L16 6a2 2 0 0 1 2 2v15"
-										}
-									}
-								]
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "imageUrl"
+								}
 							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
-									{
-										"width": "26px",
-										"height": "26px",
-										"padding": "0",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"border": "none",
-										"background": "transparent",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"borderRadius": "4px",
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "tool",
-											"equals": "rotate",
-											"then": {
-												"background": "#e3f2fd",
-												"color": "#1565c0"
-											}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "polyline",
-										"props": {
-											"points": "23 4 23 10 17 10"
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M20.49 15a9 9 0 1 1-2.12-9.36L23 10"
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
-									{
-										"width": "26px",
-										"height": "26px",
-										"padding": "0",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"border": "none",
-										"background": "transparent",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"borderRadius": "4px",
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "tool",
-											"equals": "adjust",
-											"then": {
-												"background": "#e3f2fd",
-												"color": "#1565c0"
-											}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 3
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.08a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"ttMerge": [
-									{
-										"width": "26px",
-										"height": "26px",
-										"padding": "0",
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"border": "none",
-										"background": "transparent",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"borderRadius": "4px",
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "tool",
-											"equals": "filters",
-											"then": {
-												"background": "#e3f2fd",
-												"color": "#1565c0"
-											}
-										}
-									}
-								]
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 14,
-									"height": 14,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "polygon",
-										"props": {
-											"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-										}
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"width": "1px",
-						"height": "18px",
-						"background": "rgba(0, 0, 0, 0.08)",
-						"flexShrink": 0
-					}
-				}
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": "rgba(0, 0, 0, 0.6)",
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"Exposure"
 						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"position": "relative",
-								"width": "96px",
-								"height": "4px",
-								"borderRadius": "999px",
-								"background": "rgba(0, 0, 0, 0.08)"
+								"overflow": "hidden",
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"position": "absolute",
-										"left": "0",
-										"top": "0",
-										"bottom": "0",
-										"width": "{exposure}%",
-										"borderRadius": "999px",
-										"background": "#1976d2"
-									}
-								}
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"position": "absolute",
-										"top": "50%",
-										"left": "calc({exposure}% - 6px)",
-										"marginTop": "-6px",
-										"width": "12px",
-										"height": "12px",
-										"boxSizing": "border-box",
-										"borderRadius": "999px",
-										"background": "#ffffff",
-										"border": "2px solid #1976d2"
+								"ttIf": {
+									"arg": "imageUrl",
+									"equals": "",
+									"then": {
+										"tag": "p",
+										"children": [
+											"Enter an image URL to view and adjust it."
+										]
+									},
+									"else": {
+										"tag": "img",
+										"props": {
+											"src": "{imageUrl}",
+											"alt": "Image preview",
+											"style": {
+												"width": "100%",
+												"maxHeight": "400px",
+												"objectFit": "contain",
+												"filter": "brightness({exposure}%)",
+												"transform": "rotate({rotation}deg)"
+											}
+										}
 									}
 								}
 							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "label",
+						"children": [
+							"Exposure",
+							{
+								"tag": "input",
+								"props": {
+									"type": "range",
+									"aria-label": "exposure",
+									"value": {
+										"ttArg": "exposure"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"min": 10,
+									"max": 200
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "exposure"
+								}
+							}
+						]
+					},
+					{
+						"tag": "button",
 						"props": {
+							"type": "button",
 							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "rgba(0, 0, 0, 0.87)",
+								"padding": "8px 12px",
+								"borderRadius": "4px",
+								"border": "1px solid rgba(0, 0, 0, 0.12)",
 								"background": "#fafafa",
-								"padding": "2px 6px",
-								"borderRadius": "4px"
+								"cursor": "pointer"
 							}
 						},
 						"children": [
-							"{exposure}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"width": "1px",
-						"height": "18px",
-						"background": "rgba(0, 0, 0, 0.08)",
-						"flexShrink": 0
-					}
-				}
-			},
-			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"ttMerge": [
-							{
-								"height": "22px",
-								"padding": "0 10px",
-								"display": "inline-flex",
-								"alignItems": "center",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderRadius": "999px",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"cursor": "pointer",
-								"whiteSpace": "nowrap"
-							},
+							"Rotate image"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "cycle",
+							"key": "rotation",
+							"values": [
+								0,
+								90,
+								180,
+								270
+							]
+						}
+					},
+					{
+						"tag": "tt-dialog",
+						"props": {
+							"title": "Image viewer",
+							"name": "Open image viewer"
+						},
+						"children": [
 							{
 								"ttIf": {
-									"arg": "original",
+									"arg": "imageUrl",
+									"equals": "",
 									"then": {
-										"background": "#fff4e5",
-										"color": "#663c00",
-										"borderColor": "#ffb74d"
+										"tag": "p",
+										"children": [
+											"Enter an image URL to view and adjust it."
+										]
 									},
 									"else": {
-										"background": "transparent",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"borderColor": "rgba(0, 0, 0, 0.12)"
+										"tag": "img",
+										"props": {
+											"src": "{imageUrl}",
+											"alt": "Image preview",
+											"style": {
+												"width": "100%",
+												"maxHeight": "400px",
+												"objectFit": "contain",
+												"filter": "brightness({exposure}%)",
+												"transform": "rotate({rotation}deg)"
+											}
+										}
 									}
 								}
 							}
 						]
+					},
+					{
+						"tag": "small",
+						"children": [
+							"Adjustments affect this preview. Save stores the image URL and settings in a private Thing."
+						]
 					}
-				},
+				]
+			},
+			{
+				"tag": "details",
 				"children": [
 					{
-						"ttIf": {
-							"arg": "original",
-							"then": "Before",
-							"else": "After"
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"width": "1px",
-						"height": "18px",
-						"background": "rgba(0, 0, 0, 0.08)",
-						"flexShrink": 0
-					}
-				}
-			},
-			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"height": "26px",
-						"padding": "0 8px",
-						"border": "none",
-						"background": "transparent",
-						"color": "rgba(0, 0, 0, 0.6)",
-						"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-						"fontSize": "12px",
-						"fontWeight": 500,
-						"cursor": "pointer",
-						"textTransform": "uppercase",
-						"letterSpacing": "0.02857em"
-					}
-				},
-				"children": [
-					"Cancel"
-				]
-			},
-			{
-				"tag": "button",
-				"props": {
-					"type": "button",
-					"style": {
-						"height": "26px",
-						"padding": "0 12px",
-						"border": "none",
-						"borderRadius": "4px",
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#1976d2",
-									"success": "#2e7d32",
-									"warning": "#ed6c02",
-									"danger": "#d32f2f",
-									"info": "#0288d1",
-									"neutral": "#616161"
-								},
-								"default": "#1976d2"
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#ffffff",
-									"success": "#ffffff",
-									"warning": "#ffffff",
-									"danger": "#ffffff",
-									"info": "#ffffff",
-									"neutral": "#ffffff"
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Exposure ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Exposure",
+											"value": {
+												"ttArg": "exposure"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "exposure"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"imageUrl ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "imageUrl",
+											"value": {
+												"ttArg": "imageUrl"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "imageUrl"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"rotation ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "rotation",
+											"value": {
+												"ttArg": "rotation"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 360
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "rotation"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Active tool ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Active tool",
+											"value": {
+												"ttArg": "tool"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "crop"
+												},
+												"children": [
+													"crop"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "rotate"
+												},
+												"children": [
+													"rotate"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "adjust"
+												},
+												"children": [
+													"adjust"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "filters"
+												},
+												"children": [
+													"filters"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "tool"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show original ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show original",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "original"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "original"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
 								},
-								"default": "#ffffff"
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "photo-gallery-editor",
+									"title": "Photo Editor Bar",
+									"details": "Active tool: {tool}\nExposure: {exposure}\nShow original: {original}\nimageUrl: {imageUrl}\nrotation: {rotation}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						},
-						"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-						"fontSize": "12px",
-						"fontWeight": 500,
-						"cursor": "pointer",
-						"boxShadow": "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
-						"textTransform": "uppercase",
-						"letterSpacing": "0.02857em"
+						]
 					}
-				},
-				"children": [
-					"Save"
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "photo-gallery-editor",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Sticky Note",
 	"library": "untitled",
 	"category": "collaboration",
-	"description": "Whiteboard sticky note in the Untitled UI style — a tinted square wash with handwritten-feel text, an author chip, a folded corner, and a tilt you can dial in degrees.",
+	"description": "Whiteboard sticky note in the Untitled UI style — a tinted square wash with handwritten-feel text, an author chip, a folded corner, and a tilt you can dial in degrees. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"whiteboard",
 		"sticky-note",
@@ -44,56 +44,28 @@
 			"label": "Tilt (deg)",
 			"min": -8,
 			"max": 8
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"position": "relative",
-						"width": "168px",
-						"height": "168px",
-						"boxSizing": "border-box",
-						"padding": "14px",
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "8px",
-						"overflow": "hidden",
-						"borderRadius": "8px",
-						"boxShadow": "0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03)",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"transform": "rotate(calc({tilt} * 1deg))"
-					},
-					{
-						"ttMap": {
-							"arg": "color",
-							"values": {
-								"yellow": {
-									"background": "#fef9c3",
-									"color": "#854d0e"
-								},
-								"pink": {
-									"background": "#fce7f3",
-									"color": "#9d174d"
-								},
-								"blue": {
-									"background": "#dbeafe",
-									"color": "#1e40af"
-								},
-								"green": {
-									"background": "#dcfce7",
-									"color": "#166534"
-								}
-							},
-							"default": {
-								"background": "#fef9c3",
-								"color": "#854d0e"
-							}
-						}
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -101,63 +73,341 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"flex": "1",
-						"fontSize": "16px",
-						"lineHeight": 1.35,
-						"fontWeight": 500,
-						"fontStyle": "italic",
-						"fontFamily": "'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive"
+						"ttMerge": [
+							{
+								"position": "relative",
+								"width": "168px",
+								"height": "168px",
+								"boxSizing": "border-box",
+								"padding": "14px",
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "8px",
+								"overflow": "hidden",
+								"borderRadius": "8px",
+								"boxShadow": "0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03)",
+								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+								"transform": "rotate(calc({tilt} * 1deg))",
+								"maxWidth": "100%"
+							},
+							{
+								"ttMap": {
+									"arg": "color",
+									"values": {
+										"yellow": {
+											"background": "#fef9c3",
+											"color": "#854d0e"
+										},
+										"pink": {
+											"background": "#fce7f3",
+											"color": "#9d174d"
+										},
+										"blue": {
+											"background": "#dbeafe",
+											"color": "#1e40af"
+										},
+										"green": {
+											"background": "#dcfce7",
+											"color": "#166534"
+										}
+									},
+									"default": {
+										"background": "#fef9c3",
+										"color": "#854d0e"
+									}
+								}
+							}
+						]
 					}
 				},
 				"children": [
-					"{text}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"alignSelf": "flex-start",
-						"padding": "2px 8px",
-						"borderRadius": "999px",
-						"background": "rgba(255, 255, 255, 0.6)",
-						"fontSize": "12px",
-						"fontWeight": 600
-					}
-				},
-				"children": [
-					"{author}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"position": "absolute",
-						"right": 0,
-						"bottom": 0,
-						"width": 0,
-						"height": 0,
-						"borderStyle": "solid",
-						"borderWidth": "0 0 20px 20px",
-						"borderColor": {
-							"ttMap": {
-								"arg": "color",
-								"values": {
-									"yellow": "transparent transparent #fde047 transparent",
-									"pink": "transparent transparent #f9a8d4 transparent",
-									"blue": "transparent transparent #93c5fd transparent",
-									"green": "transparent transparent #86efac transparent"
-								},
-								"default": "transparent transparent #fde047 transparent"
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"flex": "1",
+								"fontSize": "16px",
+								"lineHeight": 1.35,
+								"fontWeight": 500,
+								"fontStyle": "italic",
+								"fontFamily": "'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive"
+							}
+						},
+						"children": [
+							"{text}"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"alignSelf": "flex-start",
+								"padding": "2px 8px",
+								"borderRadius": "999px",
+								"background": "rgba(255, 255, 255, 0.6)",
+								"fontSize": "12px",
+								"fontWeight": 600
+							}
+						},
+						"children": [
+							"{author}"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"position": "absolute",
+								"right": 0,
+								"bottom": 0,
+								"width": 0,
+								"height": 0,
+								"borderStyle": "solid",
+								"borderWidth": "0 0 20px 20px",
+								"borderColor": {
+									"ttMap": {
+										"arg": "color",
+										"values": {
+											"yellow": "transparent transparent #fde047 transparent",
+											"pink": "transparent transparent #f9a8d4 transparent",
+											"blue": "transparent transparent #93c5fd transparent",
+											"green": "transparent transparent #86efac transparent"
+										},
+										"default": "transparent transparent #fde047 transparent"
+									}
+								}
 							}
 						}
 					}
-				}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Note ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Note",
+											"value": {
+												"ttArg": "text"
+											},
+											"maxLength": 80,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "text"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Color ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Color",
+											"value": {
+												"ttArg": "color"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "yellow"
+												},
+												"children": [
+													"yellow"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "pink"
+												},
+												"children": [
+													"pink"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "blue"
+												},
+												"children": [
+													"blue"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "green"
+												},
+												"children": [
+													"green"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "color"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Author ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Author",
+											"value": {
+												"ttArg": "author"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "author"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Tilt (deg) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Tilt (deg)",
+											"value": {
+												"ttArg": "tilt"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": -8,
+											"max": 8
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "tilt"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "whiteboard-collab-sticky",
+									"title": "Sticky Note",
+									"details": "Note: {text}\nColor: {color}\nAuthor: {author}\nTilt (deg): {tilt}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "whiteboard-collab-sticky",
 	"source": {
 		"kind": "archetype",

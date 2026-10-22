@@ -3,7 +3,7 @@
 	"name": "File Row",
 	"library": "untitled",
 	"category": "files",
-	"description": "File list row in the Untitled UI style — a tone-tinted file-type icon tile beside the name with a size-and-date caption, finished with a quiet kebab menu.",
+	"description": "File list row in the Untitled UI style — a tone-tinted file-type icon tile beside the name with a size-and-date caption, finished with a quiet kebab menu. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"file",
 		"list",
@@ -50,25 +50,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "center",
-				"gap": "12px",
-				"width": "320px",
-				"padding": "10px 12px",
-				"boxSizing": "border-box",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#eaecf0",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -76,281 +79,499 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"width": "38px",
-						"height": "38px",
-						"flexShrink": 0,
 						"display": "flex",
 						"alignItems": "center",
-						"justifyContent": "center",
+						"gap": "12px",
+						"width": "320px",
+						"padding": "10px 12px",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#eaecf0",
 						"borderRadius": "8px",
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#f9f5ff",
-									"success": "#ecfdf3",
-									"warning": "#fffaeb",
-									"danger": "#fef3f2",
-									"info": "#eff8ff",
-									"neutral": "#f2f4f7"
-								},
-								"default": "#f9f5ff"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#6941c6",
-									"success": "#027a48",
-									"warning": "#b54708",
-									"danger": "#b42318",
-									"info": "#175cd3",
-									"neutral": "#344054"
-								},
-								"default": "#6941c6"
-							}
-						}
+						"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
+						"maxWidth": "100%",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
 					{
-						"ttMap": {
-							"arg": "fileType",
-							"values": {
-								"doc": {
-									"tag": "svg",
-									"props": {
-										"width": 18,
-										"height": 18,
-										"viewBox": "0 0 24 24",
-										"fill": "none",
-										"stroke": "currentColor",
-										"strokeWidth": 2,
-										"strokeLinecap": "round",
-										"strokeLinejoin": "round",
-										"xmlns": "http://www.w3.org/2000/svg"
-									},
-									"children": [
-										{
-											"tag": "path",
-											"props": {
-												"d": "M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
-											}
+						"tag": "div",
+						"props": {
+							"style": {
+								"width": "38px",
+								"height": "38px",
+								"flexShrink": 0,
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "center",
+								"borderRadius": "8px",
+								"background": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#f9f5ff",
+											"success": "#ecfdf3",
+											"warning": "#fffaeb",
+											"danger": "#fef3f2",
+											"info": "#eff8ff",
+											"neutral": "#f2f4f7"
 										},
-										{
-											"tag": "polyline",
-											"props": {
-												"points": "13 2 13 9 20 9"
-											}
-										}
-									]
+										"default": "#f9f5ff"
+									}
 								},
-								"image": {
-									"tag": "svg",
-									"props": {
-										"width": 18,
-										"height": 18,
-										"viewBox": "0 0 24 24",
-										"fill": "none",
-										"stroke": "currentColor",
-										"strokeWidth": 2,
-										"strokeLinecap": "round",
-										"strokeLinejoin": "round",
-										"xmlns": "http://www.w3.org/2000/svg"
-									},
-									"children": [
-										{
-											"tag": "rect",
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#6941c6",
+											"success": "#027a48",
+											"warning": "#b54708",
+											"danger": "#b42318",
+											"info": "#175cd3",
+											"neutral": "#344054"
+										},
+										"default": "#6941c6"
+									}
+								},
+								"maxWidth": "100%",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"ttMap": {
+									"arg": "fileType",
+									"values": {
+										"doc": {
+											"tag": "svg",
 											"props": {
-												"x": 3,
-												"y": 3,
 												"width": 18,
 												"height": 18,
-												"rx": 2
-											}
+												"viewBox": "0 0 24 24",
+												"fill": "none",
+												"stroke": "currentColor",
+												"strokeWidth": 2,
+												"strokeLinecap": "round",
+												"strokeLinejoin": "round",
+												"xmlns": "http://www.w3.org/2000/svg"
+											},
+											"children": [
+												{
+													"tag": "path",
+													"props": {
+														"d": "M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
+													}
+												},
+												{
+													"tag": "polyline",
+													"props": {
+														"points": "13 2 13 9 20 9"
+													}
+												}
+											]
 										},
-										{
-											"tag": "circle",
+										"image": {
+											"tag": "svg",
 											"props": {
-												"cx": 8.5,
-												"cy": 8.5,
-												"r": 1.5
-											}
+												"width": 18,
+												"height": 18,
+												"viewBox": "0 0 24 24",
+												"fill": "none",
+												"stroke": "currentColor",
+												"strokeWidth": 2,
+												"strokeLinecap": "round",
+												"strokeLinejoin": "round",
+												"xmlns": "http://www.w3.org/2000/svg"
+											},
+											"children": [
+												{
+													"tag": "rect",
+													"props": {
+														"x": 3,
+														"y": 3,
+														"width": 18,
+														"height": 18,
+														"rx": 2
+													}
+												},
+												{
+													"tag": "circle",
+													"props": {
+														"cx": 8.5,
+														"cy": 8.5,
+														"r": 1.5
+													}
+												},
+												{
+													"tag": "polyline",
+													"props": {
+														"points": "21 15 16 10 5 21"
+													}
+												}
+											]
 										},
-										{
-											"tag": "polyline",
+										"video": {
+											"tag": "svg",
 											"props": {
-												"points": "21 15 16 10 5 21"
-											}
+												"width": 18,
+												"height": 18,
+												"viewBox": "0 0 24 24",
+												"fill": "none",
+												"stroke": "currentColor",
+												"strokeWidth": 2,
+												"strokeLinecap": "round",
+												"strokeLinejoin": "round",
+												"xmlns": "http://www.w3.org/2000/svg"
+											},
+											"children": [
+												{
+													"tag": "polygon",
+													"props": {
+														"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+													}
+												}
+											]
+										},
+										"audio": {
+											"tag": "svg",
+											"props": {
+												"width": 18,
+												"height": 18,
+												"viewBox": "0 0 24 24",
+												"fill": "none",
+												"stroke": "currentColor",
+												"strokeWidth": 2,
+												"strokeLinecap": "round",
+												"strokeLinejoin": "round",
+												"xmlns": "http://www.w3.org/2000/svg"
+											},
+											"children": [
+												{
+													"tag": "path",
+													"props": {
+														"d": "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
+													}
+												},
+												{
+													"tag": "path",
+													"props": {
+														"d": "M13.73 21a2 2 0 0 1-3.46 0"
+													}
+												}
+											]
 										}
-									]
-								},
-								"video": {
-									"tag": "svg",
-									"props": {
-										"width": 18,
-										"height": 18,
-										"viewBox": "0 0 24 24",
-										"fill": "none",
-										"stroke": "currentColor",
-										"strokeWidth": 2,
-										"strokeLinecap": "round",
-										"strokeLinejoin": "round",
-										"xmlns": "http://www.w3.org/2000/svg"
 									},
-									"children": [
-										{
-											"tag": "polygon",
-											"props": {
-												"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
-											}
-										}
-									]
-								},
-								"audio": {
-									"tag": "svg",
-									"props": {
-										"width": 18,
-										"height": 18,
-										"viewBox": "0 0 24 24",
-										"fill": "none",
-										"stroke": "currentColor",
-										"strokeWidth": 2,
-										"strokeLinecap": "round",
-										"strokeLinejoin": "round",
-										"xmlns": "http://www.w3.org/2000/svg"
-									},
-									"children": [
-										{
-											"tag": "path",
-											"props": {
-												"d": "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
-											}
+									"default": {
+										"tag": "svg",
+										"props": {
+											"width": 18,
+											"height": 18,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
 										},
-										{
-											"tag": "path",
-											"props": {
-												"d": "M13.73 21a2 2 0 0 1-3.46 0"
+										"children": [
+											{
+												"tag": "path",
+												"props": {
+													"d": "M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
+												}
+											},
+											{
+												"tag": "polyline",
+												"props": {
+													"points": "13 2 13 9 20 9"
+												}
 											}
-										}
-									]
+										]
+									}
 								}
-							},
-							"default": {
-								"tag": "svg",
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "2px",
+								"flex": 1,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
 								"props": {
-									"width": 18,
-									"height": 18,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"style": {
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"color": "#101828",
+										"whiteSpace": "nowrap",
+										"overflow": "hidden",
+										"textOverflow": "ellipsis"
+									}
 								},
 								"children": [
+									"{name}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "#475467",
+										"lineHeight": 1.4
+									}
+								},
+								"children": [
+									"{meta}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "svg",
+						"props": {
+							"width": 18,
+							"height": 18,
+							"viewBox": "0 0 24 24",
+							"fill": "#98a2b3",
+							"xmlns": "http://www.w3.org/2000/svg"
+						},
+						"children": [
+							{
+								"tag": "circle",
+								"props": {
+									"cx": 12,
+									"cy": 12,
+									"r": 1.6
+								}
+							},
+							{
+								"tag": "circle",
+								"props": {
+									"cx": 19,
+									"cy": 12,
+									"r": 1.6
+								}
+							},
+							{
+								"tag": "circle",
+								"props": {
+									"cx": 5,
+									"cy": 12,
+									"r": 1.6
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"File name ",
 									{
-										"tag": "path",
+										"tag": "input",
 										"props": {
-											"d": "M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"
-										}
-									},
-									{
-										"tag": "polyline",
-										"props": {
-											"points": "13 2 13 9 20 9"
+											"aria-label": "File name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
 										}
 									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Caption ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Caption",
+											"value": {
+												"ttArg": "meta"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "meta"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"File type ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "File type",
+											"value": {
+												"ttArg": "fileType"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "doc"
+												},
+												"children": [
+													"doc"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "image"
+												},
+												"children": [
+													"image"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "video"
+												},
+												"children": [
+													"video"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "audio"
+												},
+												"children": [
+													"audio"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "fileType"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "file-manager-file-row",
+									"title": "File Row",
+									"details": "File name: {name}\nCaption: {meta}\nFile type: {fileType}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"gap": "2px",
-						"flex": 1,
-						"minWidth": 0
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#101828",
-								"whiteSpace": "nowrap",
-								"overflow": "hidden",
-								"textOverflow": "ellipsis"
-							}
-						},
-						"children": [
-							"{name}"
 						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#475467",
-								"lineHeight": 1.4
-							}
-						},
-						"children": [
-							"{meta}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "svg",
-				"props": {
-					"width": 18,
-					"height": 18,
-					"viewBox": "0 0 24 24",
-					"fill": "#98a2b3",
-					"xmlns": "http://www.w3.org/2000/svg"
-				},
-				"children": [
-					{
-						"tag": "circle",
-						"props": {
-							"cx": 12,
-							"cy": 12,
-							"r": 1.6
-						}
-					},
-					{
-						"tag": "circle",
-						"props": {
-							"cx": 19,
-							"cy": 12,
-							"r": 1.6
-						}
-					},
-					{
-						"tag": "circle",
-						"props": {
-							"cx": 5,
-							"cy": 12,
-							"r": 1.6
-						}
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "file-manager-file-row",
 	"source": {
 		"kind": "archetype",

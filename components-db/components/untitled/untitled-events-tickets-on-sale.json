@@ -3,7 +3,7 @@
 	"name": "On-sale Banner",
 	"library": "untitled",
 	"category": "events",
-	"description": "Tickets on-sale banner in the Untitled UI style — headline and event caption over day, hour and minute countdown tiles, notify-me ghost and tone buy buttons, with a warning remaining-stock caption.",
+	"description": "Tickets on-sale banner in the Untitled UI style — headline and event caption over day, hour and minute countdown tiles, notify-me ghost and tone buy buttons, with a warning remaining-stock caption. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"on-sale",
 		"countdown",
@@ -63,26 +63,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"color": "#101828",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#eaecf0",
-				"borderRadius": "12px",
-				"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
-				"boxSizing": "border-box",
-				"width": "340px",
-				"padding": "14px",
-				"gap": "12px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -92,43 +94,18 @@
 					"style": {
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "2px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "16px",
-								"fontWeight": 600
-							}
-						},
-						"children": [
-							"Tickets on sale"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"color": "#475467"
-							}
-						},
-						"children": [
-							"{event}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
+						"color": "#101828",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#eaecf0",
+						"borderRadius": "12px",
+						"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
+						"boxSizing": "border-box",
+						"width": "340px",
+						"padding": "14px",
+						"gap": "12px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -138,14 +115,7 @@
 							"style": {
 								"display": "flex",
 								"flexDirection": "column",
-								"alignItems": "center",
-								"gap": "1px",
-								"minWidth": "44px",
-								"padding": "6px 8px",
-								"boxSizing": "border-box",
-								"borderRadius": "8px",
-								"background": "#f9fafb",
-								"color": "#101828"
+								"gap": "2px"
 							}
 						},
 						"children": [
@@ -153,26 +123,24 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
 										"fontSize": "16px",
-										"fontWeight": 700,
-										"lineHeight": 1.2
+										"fontWeight": 600
 									}
 								},
 								"children": [
-									"{days}"
+									"Tickets on sale"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "12px",
-										"opacity": 0.65
+										"fontSize": "14px",
+										"color": "#475467"
 									}
 								},
 								"children": [
-									"days"
+									"{event}"
 								]
 							}
 						]
@@ -182,232 +150,543 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
 								"alignItems": "center",
-								"gap": "1px",
-								"minWidth": "44px",
-								"padding": "6px 8px",
-								"boxSizing": "border-box",
-								"borderRadius": "8px",
-								"background": "#f9fafb",
-								"color": "#101828"
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "16px",
-										"fontWeight": 700,
-										"lineHeight": 1.2
+										"display": "flex",
+										"flexDirection": "column",
+										"alignItems": "center",
+										"gap": "1px",
+										"minWidth": "44px",
+										"padding": "6px 8px",
+										"boxSizing": "border-box",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"color": "#101828"
 									}
 								},
 								"children": [
-									"{hours}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"opacity": 0.65
-									}
-								},
-								"children": [
-									"hrs"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center",
-								"gap": "1px",
-								"minWidth": "44px",
-								"padding": "6px 8px",
-								"boxSizing": "border-box",
-								"borderRadius": "8px",
-								"background": "#f9fafb",
-								"color": "#101828"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "16px",
-										"fontWeight": 700,
-										"lineHeight": 1.2
-									}
-								},
-								"children": [
-									"{mins}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"opacity": 0.65
-									}
-								},
-								"children": [
-									"min"
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "36px",
-								"padding": "0 14px",
-								"border": "1px solid #eaecf0",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"cursor": "pointer",
-								"background": "transparent",
-								"color": "#101828",
-								"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)"
-							}
-						},
-						"children": [
-							"Notify me"
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"height": "36px",
-								"padding": "0 14px",
-								"border": "none",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"cursor": "pointer",
-								"flex": 1,
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#7f56d9",
-											"success": "#12b76a",
-											"warning": "#f79009",
-											"danger": "#f04438",
-											"info": "#2e90fa",
-											"neutral": "#344054"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "16px",
+												"fontWeight": 700,
+												"lineHeight": 1.2
+											}
 										},
-										"default": "#7f56d9"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
+										"children": [
+											"{days}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"opacity": 0.65
+											}
 										},
-										"default": "#ffffff"
+										"children": [
+											"days"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"alignItems": "center",
+										"gap": "1px",
+										"minWidth": "44px",
+										"padding": "6px 8px",
+										"boxSizing": "border-box",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"color": "#101828"
 									}
 								},
-								"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)"
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "16px",
+												"fontWeight": 700,
+												"lineHeight": 1.2
+											}
+										},
+										"children": [
+											"{hours}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"opacity": 0.65
+											}
+										},
+										"children": [
+											"hrs"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"alignItems": "center",
+										"gap": "1px",
+										"minWidth": "44px",
+										"padding": "6px 8px",
+										"boxSizing": "border-box",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"color": "#101828"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "16px",
+												"fontWeight": 700,
+												"lineHeight": 1.2
+											}
+										},
+										"children": [
+											"{mins}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"opacity": 0.65
+											}
+										},
+										"children": [
+											"min"
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"Buy tickets"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "5px"
-					}
-				},
-				"children": [
-					{
-						"tag": "svg",
-						"props": {
-							"width": 13,
-							"height": 13,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#f79009",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
 							{
-								"tag": "polygon",
+								"tag": "button",
 								"props": {
-									"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"cursor": "pointer",
+										"background": "transparent",
+										"color": "#101828",
+										"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "events-tickets-on-sale",
+									"title": "On-sale Banner",
+									"details": "Event: {event}\nDays: {days}\nHours: {hours}\nMinutes: {mins}\nRemaining: {left}"
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "8px",
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"cursor": "pointer",
+										"flex": 1,
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#7f56d9",
+													"success": "#12b76a",
+													"warning": "#f79009",
+													"danger": "#f04438",
+													"info": "#2e90fa",
+													"neutral": "#344054"
+												},
+												"default": "#7f56d9"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"boxShadow": "0 1px 2px rgba(16, 24, 40, 0.05)",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "events-tickets-on-sale",
+									"title": "On-sale Banner",
+									"details": "Event: {event}\nDays: {days}\nHours: {hours}\nMinutes: {mins}\nRemaining: {left}"
 								}
 							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": "#b54708"
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "5px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
-							"{left} remaining"
+							{
+								"tag": "svg",
+								"props": {
+									"width": 13,
+									"height": 13,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#f79009",
+									"strokeWidth": 2,
+									"strokeLinecap": "round",
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polygon",
+										"props": {
+											"points": "13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+										}
+									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"color": "#b54708"
+									}
+								},
+								"children": [
+									"{left} remaining"
+								]
+							}
 						]
 					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Event ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Event",
+											"value": {
+												"ttArg": "event"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "event"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Days ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Days",
+											"value": {
+												"ttArg": "days"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 99
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "days"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Hours ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Hours",
+											"value": {
+												"ttArg": "hours"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 23
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "hours"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Minutes ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Minutes",
+											"value": {
+												"ttArg": "mins"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 59
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mins"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Remaining ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Remaining",
+											"value": {
+												"ttArg": "left"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "left"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "events-tickets-on-sale",
+									"title": "On-sale Banner",
+									"details": "Event: {event}\nDays: {days}\nHours: {hours}\nMinutes: {mins}\nRemaining: {left}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "events-tickets-on-sale",
 	"source": {
 		"kind": "archetype",

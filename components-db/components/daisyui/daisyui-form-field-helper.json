@@ -3,7 +3,7 @@
 	"name": "Field + Helper Text",
 	"library": "daisyui",
 	"category": "forms",
-	"description": "Labeled input with guidance text underneath in the daisyUI style — the error toggle turns the border and helper line to the library's danger tone.",
+	"description": "Labeled input with guidance text underneath in the daisyUI style — the error toggle turns the border and helper line to the library's danger tone. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"field",
@@ -37,91 +37,319 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Error state"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "280px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
+				"tag": "div",
 				"props": {
 					"style": {
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontSize": "14px",
-						"fontWeight": 700,
-						"color": "#1f2937"
+						"display": "flex",
+						"flexDirection": "column",
+						"gap": "6px",
+						"width": "280px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
-					"{label}"
-				]
-			},
-			{
-				"tag": "input",
-				"props": {
-					"type": "text",
-					"placeholder": "{placeholder}",
-					"style": {
-						"ttMerge": [
-							{
-								"height": "48px",
-								"padding": "0 12px",
-								"borderRadius": "12px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#e5e6e6",
-								"background": "#ffffff",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+					{
+						"tag": "span",
+						"props": {
+							"style": {
 								"fontSize": "14px",
-								"color": "#1f2937",
-								"outline": "none",
-								"width": "100%",
-								"boxSizing": "border-box",
-								"boxShadow": "none"
+								"fontWeight": 700,
+								"color": "#1f2937"
+							}
+						},
+						"children": [
+							"{label}"
+						]
+					},
+					{
+						"tag": "input",
+						"props": {
+							"type": "text",
+							"placeholder": "{placeholder}",
+							"style": {
+								"ttMerge": [
+									{
+										"height": "48px",
+										"padding": "0 12px",
+										"borderRadius": "12px",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#e5e6e6",
+										"background": "#ffffff",
+										"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+										"fontSize": "14px",
+										"color": "#1f2937",
+										"outline": "none",
+										"width": "100%",
+										"boxSizing": "border-box",
+										"boxShadow": "none",
+										"maxWidth": "100%"
+									},
+									{
+										"borderColor": {
+											"ttIf": {
+												"arg": "error",
+												"then": "#ff5861",
+												"else": "#e5e6e6"
+											}
+										}
+									}
+								]
 							},
-							{
-								"borderColor": {
+							"value": {
+								"ttArg": "entry1"
+							},
+							"aria-label": "{placeholder}",
+							"maxLength": 500
+						},
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "entry1"
+						}
+					},
+					{
+						"tag": "button",
+						"props": {
+							"style": {
+								"fontSize": "14px",
+								"color": {
 									"ttIf": {
 										"arg": "error",
 										"then": "#ff5861",
-										"else": "#e5e6e6"
+										"else": "#6b7280"
 									}
+								}
+							},
+							"type": "button",
+							"aria-label": "This appears on your public profile.",
+							"aria-pressed": {
+								"ttArg": "error"
+							}
+						},
+						"children": [
+							"{helper}"
+						],
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "toggle",
+							"key": "error"
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Error state ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Error state",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "error"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "error"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"entry1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "entry1",
+											"value": {
+												"ttArg": "entry1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Helper text ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Helper text",
+											"value": {
+												"ttArg": "helper"
+											},
+											"maxLength": 80,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "helper"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "form-field-helper",
+									"title": "Field + Helper Text",
+									"details": "Label: {label}\nHelper text: {helper}\nError state: {error}\nentry1: {entry1}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				}
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"fontSize": "14px",
-						"color": {
-							"ttIf": {
-								"arg": "error",
-								"then": "#ff5861",
-								"else": "#6b7280"
-							}
-						}
-					}
-				},
-				"children": [
-					"{helper}"
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "form-field-helper",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Quest Card",
 	"library": "daisyui",
 	"category": "engagement",
-	"description": "Quest card in the daisyUI style — a star icon tile beside the quest title, a soft success reward chip, a percent-driven progress bar with a mono done/total readout, and a claim button that appears once the quest completes.",
+	"description": "Quest card in the daisyUI style — a star icon tile beside the quest title, a soft success reward chip, a percent-driven progress bar with a mono done/total readout, and a claim button that appears once the quest completes. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"gamification",
 		"quest",
@@ -52,26 +52,28 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Complete"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "row",
-				"width": "300px",
-				"padding": "16px",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e5e6e6",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"gap": "12px",
-				"alignItems": "flex-start"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -79,48 +81,21 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"width": "40px",
-						"height": "40px",
-						"borderRadius": "12px",
-						"background": "#eee6ff",
 						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"flexShrink": 0
-					}
-				},
-				"children": [
-					{
-						"tag": "svg",
-						"props": {
-							"width": 20,
-							"height": 20,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#4506cb",
-							"strokeWidth": 2,
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "polygon",
-								"props": {
-									"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"flex": 1,
-						"gap": "8px"
+						"flexDirection": "row",
+						"width": "300px",
+						"padding": "16px",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e5e6e6",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"gap": "12px",
+						"alignItems": "flex-start",
+						"maxWidth": "100%",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
@@ -128,58 +103,41 @@
 						"tag": "div",
 						"props": {
 							"style": {
+								"width": "40px",
+								"height": "40px",
+								"borderRadius": "12px",
+								"background": "#eee6ff",
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px"
+								"justifyContent": "center",
+								"flexShrink": 0,
+								"maxWidth": "100%",
+								"boxSizing": "border-box",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "svg",
 								"props": {
-									"style": {
-										"fontSize": "14px",
-										"fontWeight": 700,
-										"color": "#1f2937"
-									}
+									"width": 20,
+									"height": 20,
+									"viewBox": "0 0 24 24",
+									"fill": "none",
+									"stroke": "#4506cb",
+									"strokeWidth": 2,
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
 								},
 								"children": [
-									"{title}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"padding": "2px 8px",
-										"borderRadius": "999px",
-										"background": "#dcfce7",
-										"color": "#00753d",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"whiteSpace": "nowrap",
-										"flexShrink": 0
+									{
+										"tag": "polygon",
+										"props": {
+											"points": "12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"
+										}
 									}
-								},
-								"children": [
-									"+{xp} XP"
 								]
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"color": "#6b7280"
-							}
-						},
-						"children": [
-							"Keep the momentum going to bank the reward."
 						]
 					},
 					{
@@ -187,7 +145,8 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
+								"flexDirection": "column",
+								"flex": 1,
 								"gap": "8px"
 							}
 						},
@@ -196,25 +155,47 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"flex": 1,
-										"height": "8px",
-										"borderRadius": "999px",
-										"background": "#f2f2f2",
-										"overflow": "hidden"
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "space-between",
+										"gap": "8px",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
-										"tag": "div",
+										"tag": "span",
 										"props": {
 											"style": {
-												"width": "{percent}%",
-												"maxWidth": "100%",
-												"height": "100%",
-												"borderRadius": "999px",
-												"background": "#570df8"
+												"fontSize": "14px",
+												"fontWeight": 700,
+												"color": "#1f2937"
 											}
-										}
+										},
+										"children": [
+											"{title}"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"padding": "2px 8px",
+												"borderRadius": "999px",
+												"background": "#dcfce7",
+												"color": "#00753d",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"whiteSpace": "nowrap",
+												"flexShrink": 0,
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"+{xp} XP"
+										]
 									}
 								]
 							},
@@ -223,51 +204,356 @@
 								"props": {
 									"style": {
 										"fontSize": "12px",
-										"color": "#6b7280",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+										"color": "#6b7280"
 									}
 								},
 								"children": [
-									"{done}/{total}"
+									"Keep the momentum going to bank the reward."
 								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "8px",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"flex": 1,
+												"height": "8px",
+												"borderRadius": "999px",
+												"background": "#f2f2f2",
+												"overflow": "hidden"
+											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "{percent}%",
+														"maxWidth": "100%",
+														"height": "100%",
+														"borderRadius": "999px",
+														"background": "#570df8",
+														"boxSizing": "border-box"
+													}
+												}
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#6b7280",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+											}
+										},
+										"children": [
+											"{done}/{total}"
+										]
+									}
+								]
+							},
+							{
+								"ttIf": {
+									"arg": "complete",
+									"then": {
+										"tag": "button",
+										"props": {
+											"type": "button",
+											"style": {
+												"display": "inline-flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"alignSelf": "flex-start",
+												"height": "auto",
+												"padding": "8px 12px",
+												"border": "none",
+												"borderRadius": "8px",
+												"background": "#00a96e",
+												"color": "#ffffff",
+												"fontWeight": 600,
+												"fontSize": "12px",
+												"cursor": "pointer",
+												"width": "auto",
+												"minWidth": 0,
+												"whiteSpace": "normal",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											},
+											"aria-label": "{actionLabel}"
+										},
+										"children": [
+											"{actionLabel}"
+										],
+										"ttAction": "{actionKey}",
+										"ttActionInputs": {
+											"family": "gamification-quest",
+											"title": "Quest Card",
+											"details": "Quest title: {title}\nReward XP: {xp}\nSteps done: {done}\nSteps total: {total}\nProgress (0–100): {percent}\nComplete: {complete}"
+										}
+									}
+								}
 							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
 						]
 					},
 					{
-						"ttIf": {
-							"arg": "complete",
-							"then": {
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Quest title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Quest title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Reward XP ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Reward XP",
+											"value": {
+												"ttArg": "xp"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "xp"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Steps done ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Steps done",
+											"value": {
+												"ttArg": "done"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "done"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Steps total ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Steps total",
+											"value": {
+												"ttArg": "total"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "total"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Progress (0–100) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Progress (0–100)",
+											"value": {
+												"ttArg": "percent"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "percent"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Complete ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Complete",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "complete"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "complete"
+										}
+									}
+								]
+							},
+							{
 								"tag": "button",
 								"props": {
 									"type": "button",
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"alignSelf": "flex-start",
-										"height": "32px",
-										"padding": "0 14px",
-										"border": "none",
+										"border": "1px solid #e5e6e6",
 										"borderRadius": "8px",
-										"background": "#00a96e",
-										"color": "#ffffff",
-										"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-										"fontWeight": 600,
-										"fontSize": "12px",
-										"cursor": "pointer"
-									}
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "gamification-quest",
+									"title": "Quest Card",
+									"details": "Quest title: {title}\nReward XP: {xp}\nSteps done: {done}\nSteps total: {total}\nProgress (0–100): {percent}\nComplete: {complete}"
 								},
 								"children": [
-									"Claim reward"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "gamification-quest",
 	"source": {
 		"kind": "archetype",

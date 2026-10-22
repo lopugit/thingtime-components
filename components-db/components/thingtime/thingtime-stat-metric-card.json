@@ -3,7 +3,7 @@
 	"name": "Stat Card",
 	"library": "thingtime",
 	"category": "data-display",
-	"description": "Single-metric stat card in the Thingtime style — quiet label, large tabular value, and a tinted delta pill on Thingtime surface, border, and radius tokens.",
+	"description": "Single-metric stat card in the Thingtime style — quiet label, large tabular value, and a tinted delta pill on Thingtime surface, border, and radius tokens. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"stat",
 		"metric",
@@ -45,64 +45,47 @@
 			],
 			"default": "success",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"flexDirection": "column",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#ececef",
-				"borderRadius": "16px",
-				"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
-				"boxSizing": "border-box",
-				"padding": "16px 20px",
-				"gap": "6px",
-				"minWidth": "200px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "11px",
-						"fontWeight": 400,
-						"color": "#9a9aa6"
-					}
-				},
-				"children": [
-					"{label}"
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "24px",
-						"fontWeight": 700,
-						"color": "#33333c",
-						"lineHeight": 1.15,
-						"fontVariantNumeric": "tabular-nums"
-					}
-				},
-				"children": [
-					"{value}"
-				]
-			},
-			{
 				"tag": "div",
 				"props": {
 					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"marginTop": "2px"
+						"display": "inline-flex",
+						"flexDirection": "column",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#ececef",
+						"borderRadius": "16px",
+						"boxShadow": "0 1px 2px rgba(22, 22, 26, 0.04)",
+						"boxSizing": "border-box",
+						"padding": "16px 20px",
+						"gap": "6px",
+						"minWidth": 0
 					}
 				},
 				"children": [
@@ -110,63 +93,261 @@
 						"tag": "span",
 						"props": {
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"padding": "2px 8px",
-								"borderRadius": "999px",
 								"fontSize": "11px",
-								"fontWeight": 600,
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#f5f5f7",
-											"success": "#eafaf1",
-											"warning": "#fdf6e5",
-											"danger": "#fdeceb",
-											"info": "#fdeaf3",
-											"neutral": "#f5f5f7"
-										},
-										"default": "#eafaf1"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#16161a",
-											"success": "#1f7a4a",
-											"warning": "#9a6c12",
-											"danger": "#a83238",
-											"info": "#a32d6a",
-											"neutral": "#5a5a66"
-										},
-										"default": "#1f7a4a"
-									}
-								}
+								"fontWeight": 400,
+								"color": "#9a9aa6"
 							}
 						},
 						"children": [
-							"{delta}"
+							"{label}"
 						]
 					},
 					{
 						"tag": "span",
 						"props": {
 							"style": {
-								"fontSize": "11px",
-								"color": "#b6b6c0"
+								"fontSize": "24px",
+								"fontWeight": 700,
+								"color": "#33333c",
+								"lineHeight": 1.15,
+								"fontVariantNumeric": "tabular-nums"
 							}
 						},
 						"children": [
-							"vs last month"
+							"{value}"
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"marginTop": "2px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"padding": "2px 8px",
+										"borderRadius": "999px",
+										"fontSize": "11px",
+										"fontWeight": 600,
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#f5f5f7",
+													"success": "#eafaf1",
+													"warning": "#fdf6e5",
+													"danger": "#fdeceb",
+													"info": "#fdeaf3",
+													"neutral": "#f5f5f7"
+												},
+												"default": "#eafaf1"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#16161a",
+													"success": "#1f7a4a",
+													"warning": "#9a6c12",
+													"danger": "#a83238",
+													"info": "#a32d6a",
+													"neutral": "#5a5a66"
+												},
+												"default": "#1f7a4a"
+											}
+										},
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"{delta}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "11px",
+										"color": "#b6b6c0"
+									}
+								},
+								"children": [
+									"vs last month"
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Value",
+											"value": {
+												"ttArg": "value"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "value"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Delta ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Delta",
+											"value": {
+												"ttArg": "delta"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #ececef",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "delta"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #ececef",
+										"borderRadius": "9px",
+										"background": "#f5f5f7",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "stat-metric-card",
+									"title": "Stat Card",
+									"details": "Label: {label}\nValue: {value}\nDelta: {delta}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "stat-metric-card",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Incident Status Banner",
 	"library": "untitled",
 	"category": "support",
-	"description": "Incident status banner in the Untitled UI style — state dot and tint flip between operational, degraded, and outage, with subscribe and details actions plus a shimmer bar during incidents.",
+	"description": "Incident status banner in the Untitled UI style — state dot and tint flip between operational, degraded, and outage, with subscribe and details actions plus a shimmer bar during incidents. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"support",
 		"status",
@@ -36,44 +36,28 @@
 			"default": "4 min ago",
 			"label": "Updated",
 			"maxLength": 16
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "340px",
-				"padding": "12px 14px",
-				"boxSizing": "border-box",
-				"background": {
-					"ttMap": {
-						"arg": "state",
-						"values": {
-							"operational": "#ecfdf3",
-							"degraded": "#fffaeb",
-							"outage": "#fef3f2"
-						},
-						"default": "#ecfdf3"
-					}
-				},
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": {
-					"ttMap": {
-						"arg": "state",
-						"values": {
-							"operational": "#a6f4c5",
-							"degraded": "#fedf89",
-							"outage": "#fecdca"
-						},
-						"default": "#a6f4c5"
-					}
-				},
-				"borderRadius": "8px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -82,175 +66,417 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
+						"flexDirection": "column",
+						"gap": "6px",
+						"width": "340px",
+						"padding": "12px 14px",
+						"boxSizing": "border-box",
+						"background": {
+							"ttMap": {
+								"arg": "state",
+								"values": {
+									"operational": "#ecfdf3",
+									"degraded": "#fffaeb",
+									"outage": "#fef3f2"
+								},
+								"default": "#ecfdf3"
+							}
+						},
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": {
+							"ttMap": {
+								"arg": "state",
+								"values": {
+									"operational": "#a6f4c5",
+									"degraded": "#fedf89",
+									"outage": "#fecdca"
+								},
+								"default": "#a6f4c5"
+							}
+						},
+						"borderRadius": "8px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"width": "10px",
-								"height": "10px",
-								"borderRadius": "999px",
-								"flexShrink": 0,
-								"background": {
-									"ttMap": {
-										"arg": "state",
-										"values": {
-											"operational": "#12b76a",
-											"degraded": "#f79009",
-											"outage": "#f04438"
-										},
-										"default": "#12b76a"
-									}
-								}
-							}
-						}
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"textTransform": "capitalize",
-								"color": {
-									"ttMap": {
-										"arg": "state",
-										"values": {
-											"operational": "#027a48",
-											"degraded": "#b54708",
-											"outage": "#b42318"
-										},
-										"default": "#027a48"
-									}
-								}
-							}
-						},
-						"children": [
-							"{system} — {state}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "12px",
-						"color": "#475467",
-						"paddingLeft": "18px"
-					}
-				},
-				"children": [
-					"Updated {ago}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px",
-						"paddingLeft": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"background": "transparent",
-								"border": "none",
-								"cursor": "pointer",
-								"padding": "4px 8px",
-								"borderRadius": "8px",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": {
-									"ttMap": {
-										"arg": "state",
-										"values": {
-											"operational": "#027a48",
-											"degraded": "#b54708",
-											"outage": "#b42318"
-										},
-										"default": "#027a48"
-									}
-								}
-							}
-						},
-						"children": [
-							"Subscribe"
-						]
-					},
-					{
-						"tag": "a",
-						"props": {
-							"href": "#",
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"textDecoration": "underline",
-								"color": "#475467",
-								"padding": "4px 0"
-							}
-						},
-						"children": [
-							"Details"
-						]
-					}
-				]
-			},
-			{
-				"ttIf": {
-					"arg": "state",
-					"equals": "operational",
-					"then": "",
-					"else": {
 						"tag": "div",
 						"props": {
 							"style": {
-								"height": "4px",
-								"borderRadius": "999px",
-								"background": "#ffffff",
-								"overflow": "hidden",
-								"marginTop": "2px"
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
+								"tag": "span",
 								"props": {
 									"style": {
-										"height": "100%",
-										"width": "45%",
+										"width": "10px",
+										"height": "10px",
 										"borderRadius": "999px",
+										"flexShrink": 0,
 										"background": {
 											"ttMap": {
 												"arg": "state",
 												"values": {
+													"operational": "#12b76a",
 													"degraded": "#f79009",
 													"outage": "#f04438"
 												},
-												"default": "#f79009"
+												"default": "#12b76a"
+											}
+										},
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								}
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"textTransform": "capitalize",
+										"color": {
+											"ttMap": {
+												"arg": "state",
+												"values": {
+													"operational": "#027a48",
+													"degraded": "#b54708",
+													"outage": "#b42318"
+												},
+												"default": "#027a48"
 											}
 										}
 									}
+								},
+								"children": [
+									"{system} — {state}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"fontSize": "12px",
+								"color": "#475467",
+								"paddingLeft": "18px"
+							}
+						},
+						"children": [
+							"Updated {ago}"
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "8px",
+								"paddingLeft": "10px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"background": "transparent",
+										"border": "none",
+										"cursor": "pointer",
+										"padding": "8px 12px",
+										"borderRadius": "8px",
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"color": {
+											"ttMap": {
+												"arg": "state",
+												"values": {
+													"operational": "#027a48",
+													"degraded": "#b54708",
+													"outage": "#b42318"
+												},
+												"default": "#027a48"
+											}
+										},
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "support-help-status",
+									"title": "Incident Status Banner",
+									"details": "System: {system}\nState: {state}\nUpdated: {ago}"
+								}
+							},
+							{
+								"tag": "a",
+								"props": {
+									"href": "/things",
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"textDecoration": "underline",
+										"color": "#475467",
+										"padding": "4px 0"
+									}
+								},
+								"children": [
+									"Details"
+								]
+							}
+						]
+					},
+					{
+						"ttIf": {
+							"arg": "state",
+							"equals": "operational",
+							"then": "",
+							"else": {
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "4px",
+										"borderRadius": "999px",
+										"background": "#ffffff",
+										"overflow": "hidden",
+										"marginTop": "2px"
+									}
+								},
+								"children": [
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"height": "100%",
+												"width": "45%",
+												"borderRadius": "999px",
+												"background": {
+													"ttMap": {
+														"arg": "state",
+														"values": {
+															"degraded": "#f79009",
+															"outage": "#f04438"
+														},
+														"default": "#f79009"
+													}
+												},
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"System ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "System",
+											"value": {
+												"ttArg": "system"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "system"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"State ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "State",
+											"value": {
+												"ttArg": "state"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "operational"
+												},
+												"children": [
+													"operational"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "degraded"
+												},
+												"children": [
+													"degraded"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "outage"
+												},
+												"children": [
+													"outage"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "state"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Updated ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Updated",
+											"value": {
+												"ttArg": "ago"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #eaecf0",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "ago"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #eaecf0",
+										"borderRadius": "8px",
+										"background": "#f9fafb",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "support-help-status",
+									"title": "Incident Status Banner",
+									"details": "System: {system}\nState: {state}\nUpdated: {ago}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
 								}
 							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "support-help-status",
 	"source": {
 		"kind": "archetype",

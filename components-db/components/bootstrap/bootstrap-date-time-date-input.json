@@ -3,7 +3,7 @@
 	"name": "Date Input",
 	"library": "bootstrap",
 	"category": "forms",
-	"description": "Labeled date field in the Bootstrap style — calendar glyph beside a formatted date, with the library's focus ring and accent border when focused.",
+	"description": "Labeled date field in the Bootstrap style — calendar glyph beside a formatted date, with the library's focus ring and accent border when focused. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"date",
 		"input",
@@ -37,145 +37,358 @@
 			"default": "DD MMM YYYY",
 			"label": "Hint",
 			"maxLength": 40
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "selectedDate",
+			"type": "string",
+			"default": "",
+			"label": "Date"
+		},
+		{
+			"name": "selectedTime",
+			"type": "string",
+			"default": "",
+			"label": "Time"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "232px",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "label",
-				"props": {
-					"style": {
-						"fontSize": "14px",
-						"fontWeight": 500,
-						"color": "#212529"
-					}
-				},
-				"children": [
-					"{label}"
-				]
-			},
-			{
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
-							{
-								"display": "flex",
-								"alignItems": "center",
-								"gap": "8px",
-								"height": "38px",
-								"padding": "0 12px",
-								"boxSizing": "border-box",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderRadius": "6px",
-								"fontSize": "16px",
-								"color": "#212529"
-							},
-							{
-								"ttIf": {
-									"arg": "focused",
-									"then": {
-										"borderColor": "#0d6efd",
-										"boxShadow": "0 0 0 0.25rem rgba(13, 110, 253, 0.25)"
-									},
-									"else": {
-										"borderColor": "#dee2e6",
-										"boxShadow": "none"
-									}
-								}
-							}
-						]
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #dee2e6",
+						"borderRadius": "6px",
+						"background": "#ffffff",
+						"color": "#212529",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
-						"props": {
-							"width": 16,
-							"height": 16,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "#6c757d",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
+						"tag": "label",
 						"children": [
+							"Date",
 							{
-								"tag": "rect",
+								"tag": "input",
 								"props": {
-									"x": 3,
-									"y": 4,
-									"width": 18,
-									"height": 18,
-									"rx": 2
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 16,
-									"y1": 2,
-									"x2": 16,
-									"y2": 6
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 8,
-									"y1": 2,
-									"x2": 8,
-									"y2": 6
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 3,
-									"y1": 10,
-									"x2": 21,
-									"y2": 10
+									"type": "date",
+									"aria-label": "selectedDate",
+									"value": {
+										"ttArg": "selectedDate"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #dee2e6",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selectedDate"
 								}
 							}
 						]
 					},
-					"{date}"
+					{
+						"tag": "label",
+						"children": [
+							"Time",
+							{
+								"tag": "input",
+								"props": {
+									"type": "time",
+									"aria-label": "selectedTime",
+									"value": {
+										"ttArg": "selectedTime"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #dee2e6",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									}
+								},
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selectedTime"
+								}
+							}
+						]
+					}
 				]
 			},
 			{
-				"ttIf": {
-					"arg": "hint",
-					"then": {
-						"tag": "span",
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "#6c757d"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{hint}"
+							{
+								"tag": "label",
+								"children": [
+									"Date ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Date",
+											"value": {
+												"ttArg": "selectedDate"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedDate"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Time ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Time",
+											"value": {
+												"ttArg": "selectedTime"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selectedTime"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Date ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Date",
+											"value": {
+												"ttArg": "date"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "date"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Focused ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Focused",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "focused"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "focused"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Hint ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Hint",
+											"value": {
+												"ttArg": "hint"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "hint"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "date-time-date-input",
+									"title": "Date Input",
+									"details": "Label: {label}\nDate: {date}\nFocused: {focused}\nHint: {hint}\nDate: {selectedDate}\nTime: {selectedTime}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "date-time-date-input",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Combobox",
 	"library": "mui",
 	"category": "forms",
-	"description": "Type-ahead combobox in the Material UI style — search icon, typed query with a live caret bar, and a filtered result list whose active row wears the primary wash.",
+	"description": "Type-ahead combobox in the Material UI style — search icon, typed query with a live caret bar, and a filtered result list whose active row wears the primary wash. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"combobox",
@@ -49,15 +49,33 @@
 			],
 			"default": "1",
 			"label": "Active result"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "selection",
+			"type": "string",
+			"default": ""
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "260px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -65,219 +83,353 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"ttMerge": [
-							{
-								"height": "36px",
-								"padding": "0 12px",
-								"borderRadius": "4px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "rgba(0, 0, 0, 0.12)",
-								"background": "#ffffff",
-								"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-								"fontSize": "14px",
-								"color": "rgba(0, 0, 0, 0.87)",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "space-between",
-								"gap": "8px",
-								"cursor": "pointer",
-								"boxSizing": "border-box",
-								"boxShadow": "none"
-							},
-							{
-								"justifyContent": "flex-start",
-								"boxShadow": "0 0 0 3px rgba(25, 118, 210, 0.18)"
-							}
-						]
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid rgba(0, 0, 0, 0.12)",
+						"borderRadius": "4px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
-						"props": {
-							"width": 15,
-							"height": 15,
-							"viewBox": "0 0 24 24",
-							"fill": "none",
-							"stroke": "rgba(0, 0, 0, 0.6)",
-							"strokeWidth": 2,
-							"strokeLinecap": "round",
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
+						"tag": "label",
 						"children": [
+							"Select an option",
 							{
-								"tag": "circle",
+								"tag": "select",
 								"props": {
-									"cx": 11,
-									"cy": 11,
-									"r": 7
-								}
-							},
-							{
-								"tag": "line",
-								"props": {
-									"x1": 21,
-									"y1": 21,
-									"x2": 16.65,
-									"y2": 16.65
+									"value": {
+										"ttArg": "selection"
+									},
+									"aria-label": "Select an option",
+									"disabled": false
+								},
+								"children": [
+									{
+										"tag": "option",
+										"props": {
+											"value": ""
+										},
+										"children": [
+											"Choose…"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{resultA}"
+										},
+										"children": [
+											"{resultA}"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{resultB}"
+										},
+										"children": [
+											"{resultB}"
+										]
+									},
+									{
+										"tag": "option",
+										"props": {
+											"value": "{resultC}"
+										},
+										"children": [
+											"{resultC}"
+										]
+									}
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "selection"
 								}
 							}
 						]
 					},
 					{
-						"tag": "span",
+						"tag": "p",
 						"children": [
-							"{query}"
+							"Selected: {selection}"
 						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "1.5px",
-								"height": "14px",
-								"background": "#1976d2"
-							}
-						}
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"background": "#ffffff",
-						"borderWidth": "1px",
-						"borderStyle": "solid",
-						"borderColor": "rgba(0, 0, 0, 0.08)",
-						"borderRadius": "4px",
-						"boxShadow": "0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)",
-						"padding": "4px",
-						"display": "flex",
-						"flexDirection": "column",
-						"marginTop": "6px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "space-between",
-										"gap": "8px",
-										"padding": "7px 10px",
-										"borderRadius": "4px",
-										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-										"fontSize": "14px",
-										"color": "rgba(0, 0, 0, 0.87)",
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "active",
-											"equals": "1",
-											"then": {
-												"background": "#e3f2fd",
-												"color": "#1565c0"
-											},
-											"else": {}
-										}
-									}
-								]
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "span",
-								"children": [
-									"{resultA}"
-								]
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "space-between",
-										"gap": "8px",
-										"padding": "7px 10px",
-										"borderRadius": "4px",
-										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-										"fontSize": "14px",
-										"color": "rgba(0, 0, 0, 0.87)",
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "active",
-											"equals": "2",
-											"then": {
-												"background": "#e3f2fd",
-												"color": "#1565c0"
-											},
-											"else": {}
-										}
-									}
-								]
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "label",
 								"children": [
-									"{resultB}"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
+									"selection ",
 									{
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "space-between",
-										"gap": "8px",
-										"padding": "7px 10px",
-										"borderRadius": "4px",
-										"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-										"fontSize": "14px",
-										"color": "rgba(0, 0, 0, 0.87)",
-										"cursor": "pointer"
-									},
-									{
-										"ttIf": {
-											"arg": "active",
-											"equals": "3",
-											"then": {
-												"background": "#e3f2fd",
-												"color": "#1565c0"
+										"tag": "input",
+										"props": {
+											"aria-label": "selection",
+											"value": {
+												"ttArg": "selection"
 											},
-											"else": {}
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "selection"
 										}
 									}
 								]
-							}
-						},
-						"children": [
+							},
 							{
-								"tag": "span",
+								"tag": "label",
 								"children": [
-									"{resultC}"
+									"Query ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Query",
+											"value": {
+												"ttArg": "query"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "query"
+										}
+									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Result A ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Result A",
+											"value": {
+												"ttArg": "resultA"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "resultA"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Result B ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Result B",
+											"value": {
+												"ttArg": "resultB"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "resultB"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Result C ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Result C",
+											"value": {
+												"ttArg": "resultC"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "resultC"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Active result ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Active result",
+											"value": {
+												"ttArg": "active"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "1"
+												},
+												"children": [
+													"1"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "2"
+												},
+												"children": [
+													"2"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "3"
+												},
+												"children": [
+													"3"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "active"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "select-menu-combobox",
+									"title": "Combobox",
+									"details": "Query: {query}\nResult A: {resultA}\nResult B: {resultB}\nResult C: {resultC}\nActive result: {active}\nselection: {selection}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -285,7 +437,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "select-menu-combobox",
 	"source": {
 		"kind": "archetype",

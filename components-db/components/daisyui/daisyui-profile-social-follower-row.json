@@ -3,7 +3,7 @@
 	"name": "Follower Row",
 	"library": "daisyui",
 	"category": "social",
-	"description": "Follower list row in the daisyUI style — initials avatar wearing a presence dot, name with a mutuals caption, and a small tone-tinted follow chip on the right.",
+	"description": "Follower list row in the daisyUI style — initials avatar wearing a presence dot, name with a mutuals caption, and a small tone-tinted follow chip on the right. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"profile",
 		"list",
@@ -57,25 +57,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e5e6e6",
-				"borderRadius": "12px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"width": "300px",
-				"display": "flex",
-				"alignItems": "center",
-				"gap": "12px",
-				"padding": "10px 12px",
-				"boxSizing": "border-box"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -83,8 +86,20 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"position": "relative",
-						"flexShrink": 0
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e5e6e6",
+						"borderRadius": "12px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"width": "300px",
+						"display": "flex",
+						"alignItems": "center",
+						"gap": "12px",
+						"padding": "10px 12px",
+						"boxSizing": "border-box",
+						"maxWidth": "100%",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
@@ -92,136 +107,365 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": 40,
-								"height": 40,
-								"borderRadius": "999px",
-								"background": "#f2f2f2",
-								"color": "#2a323c",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "14px",
+								"position": "relative",
 								"flexShrink": 0
 							}
 						},
 						"children": [
-							"{initials}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"position": "absolute",
-								"right": "-1px",
-								"bottom": "-1px",
-								"width": "10px",
-								"height": "10px",
-								"borderRadius": "999px",
-								"borderWidth": "2px",
-								"borderStyle": "solid",
-								"borderColor": "#ffffff",
-								"background": {
-									"ttMap": {
-										"arg": "presence",
-										"values": {
-											"online": "#00a96e",
-											"away": "#ffbe00",
-											"offline": "#9ca3af"
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": 40,
+										"height": 40,
+										"borderRadius": "999px",
+										"background": "#f2f2f2",
+										"color": "#2a323c",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "14px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"{initials}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"position": "absolute",
+										"right": "-1px",
+										"bottom": "-1px",
+										"width": "10px",
+										"height": "10px",
+										"borderRadius": "999px",
+										"borderWidth": "2px",
+										"borderStyle": "solid",
+										"borderColor": "#ffffff",
+										"background": {
+											"ttMap": {
+												"arg": "presence",
+												"values": {
+													"online": "#00a96e",
+													"away": "#ffbe00",
+													"offline": "#9ca3af"
+												},
+												"default": "#00a96e"
+											}
 										},
-										"default": "#00a96e"
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
 									}
 								}
 							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"flex": 1,
-						"minWidth": 0
-					}
-				},
-				"children": [
+						]
+					},
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"color": "#1f2937"
+								"display": "flex",
+								"flexDirection": "column",
+								"flex": 1,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{name}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"color": "#1f2937"
+									}
+								},
+								"children": [
+									"{name}"
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "#6b7280"
+									}
+								},
+								"children": [
+									"{mutuals}"
+								]
+							}
 						]
 					},
 					{
 						"tag": "span",
 						"props": {
 							"style": {
+								"padding": "4px 12px",
+								"borderRadius": "999px",
+								"background": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#eee6ff",
+											"success": "#dcfce7",
+											"warning": "#fef9c3",
+											"danger": "#ffe4e6",
+											"info": "#e0f2fe",
+											"neutral": "#f2f2f2"
+										},
+										"default": "#eee6ff"
+									}
+								},
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#4506cb",
+											"success": "#00753d",
+											"warning": "#854d0e",
+											"danger": "#be123c",
+											"info": "#0369a1",
+											"neutral": "#2a323c"
+										},
+										"default": "#4506cb"
+									}
+								},
 								"fontSize": "12px",
-								"color": "#6b7280"
+								"fontWeight": 600,
+								"flexShrink": 0
 							}
 						},
 						"children": [
-							"{mutuals}"
+							"Follow"
 						]
 					}
 				]
 			},
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"padding": "4px 12px",
-						"borderRadius": "999px",
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#eee6ff",
-									"success": "#dcfce7",
-									"warning": "#fef9c3",
-									"danger": "#ffe4e6",
-									"info": "#e0f2fe",
-									"neutral": "#f2f2f2"
-								},
-								"default": "#eee6ff"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#4506cb",
-									"success": "#00753d",
-									"warning": "#854d0e",
-									"danger": "#be123c",
-									"info": "#0369a1",
-									"neutral": "#2a323c"
-								},
-								"default": "#4506cb"
-							}
-						},
-						"fontSize": "12px",
-						"fontWeight": 600,
-						"flexShrink": 0
-					}
-				},
+				"tag": "details",
 				"children": [
-					"Follow"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Initials ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Initials",
+											"value": {
+												"ttArg": "initials"
+											},
+											"maxLength": 3,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "initials"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Mutuals ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Mutuals",
+											"value": {
+												"ttArg": "mutuals"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mutuals"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Presence ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Presence",
+											"value": {
+												"ttArg": "presence"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "online"
+												},
+												"children": [
+													"online"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "away"
+												},
+												"children": [
+													"away"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "offline"
+												},
+												"children": [
+													"offline"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "presence"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "profile-social-follower-row",
+									"title": "Follower Row",
+									"details": "Initials: {initials}\nName: {name}\nMutuals: {mutuals}\nPresence: {presence}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "profile-social-follower-row",
 	"source": {
 		"kind": "archetype",

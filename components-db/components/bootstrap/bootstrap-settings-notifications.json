@@ -3,7 +3,7 @@
 	"name": "Notification Matrix",
 	"library": "bootstrap",
 	"category": "settings",
-	"description": "Notification preference matrix in the Bootstrap style — Push and Email channel columns over Mentions, Replies, and Digests rows of tone-filled checkboxes, with a mono header row.",
+	"description": "Notification preference matrix in the Bootstrap style — Push and Email channel columns over Mentions, Replies, and Digests rows of tone-filled checkboxes, with a mono header row. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"settings",
 		"notifications",
@@ -29,25 +29,28 @@
 			"type": "boolean",
 			"default": false,
 			"label": "Mentions email"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#dee2e6",
-				"borderRadius": "6px",
-				"boxShadow": "none",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"overflow": "hidden",
-				"padding": "12px 14px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -56,37 +59,33 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"paddingBottom": "8px",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "solid",
-						"borderBottomColor": "#e9ecef"
+						"flexDirection": "column",
+						"width": "320px",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#dee2e6",
+						"borderRadius": "6px",
+						"boxShadow": "none",
+						"overflow": "hidden",
+						"padding": "12px 14px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"letterSpacing": "0.08em",
-								"textTransform": "uppercase",
-								"color": "#6c757d"
-							}
-						},
-						"children": [
-							"{title}"
-						]
-					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center"
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"paddingBottom": "8px",
+								"borderBottomWidth": "1px",
+								"borderBottomStyle": "solid",
+								"borderBottomColor": "#e9ecef",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -94,79 +93,99 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"width": "48px",
-										"textAlign": "center",
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
 										"fontSize": "12px",
-										"fontWeight": 500,
-										"color": "#adb5bd"
+										"fontWeight": 600,
+										"letterSpacing": "0.08em",
+										"textTransform": "uppercase",
+										"color": "#6c757d"
 									}
 								},
 								"children": [
-									"Push"
+									"{title}"
 								]
 							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "48px",
-										"textAlign": "center",
-										"fontSize": "12px",
-										"fontWeight": 500,
-										"color": "#adb5bd"
-									}
-								},
-								"children": [
-									"Email"
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"padding": "10px 0",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "solid",
-						"borderBottomColor": "#e9ecef"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"color": "#212529"
-							}
-						},
-						"children": [
-							"Mentions"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center"
-							}
-						},
-						"children": [
 							{
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "48px",
 										"display": "flex",
-										"justifyContent": "center"
+										"alignItems": "center",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "48px",
+												"textAlign": "center",
+												"fontSize": "12px",
+												"fontWeight": 500,
+												"color": "#adb5bd",
+												"maxWidth": "100%"
+											}
+										},
+										"children": [
+											"Push"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "48px",
+												"textAlign": "center",
+												"fontSize": "12px",
+												"fontWeight": 500,
+												"color": "#adb5bd",
+												"maxWidth": "100%"
+											}
+										},
+										"children": [
+											"Email"
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"padding": "10px 0",
+								"borderBottomWidth": "1px",
+								"borderBottomStyle": "solid",
+								"borderBottomColor": "#e9ecef",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "14px",
+										"fontWeight": 500,
+										"color": "#212529"
+									}
+								},
+								"children": [
+									"Mentions"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"alignItems": "center",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
@@ -174,73 +193,219 @@
 										"tag": "div",
 										"props": {
 											"style": {
-												"ttMerge": [
-													{
-														"width": "16px",
-														"height": "16px",
-														"boxSizing": "border-box",
-														"borderRadius": "4px",
-														"display": "flex",
-														"alignItems": "center",
-														"justifyContent": "center",
-														"flexShrink": 0
+												"width": "48px",
+												"display": "flex",
+												"justifyContent": "center",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "button",
+												"props": {
+													"style": {
+														"ttMerge": [
+															{
+																"width": "16px",
+																"height": "16px",
+																"boxSizing": "border-box",
+																"borderRadius": "4px",
+																"display": "flex",
+																"alignItems": "center",
+																"justifyContent": "center",
+																"flexShrink": 0,
+																"maxWidth": "100%",
+																"flexWrap": "wrap"
+															},
+															{
+																"ttIf": {
+																	"arg": "mentionsPush",
+																	"then": {
+																		"background": "#0d6efd"
+																	},
+																	"else": {
+																		"background": "#ffffff",
+																		"borderWidth": "1px",
+																		"borderStyle": "solid",
+																		"borderColor": "#dee2e6"
+																	}
+																}
+															}
+														]
 													},
+													"type": "button",
+													"aria-label": "mentionsPush",
+													"aria-pressed": {
+														"ttArg": "mentionsPush"
+													}
+												},
+												"children": [
 													{
 														"ttIf": {
 															"arg": "mentionsPush",
 															"then": {
-																"background": "#0d6efd"
-															},
-															"else": {
-																"background": "#ffffff",
-																"borderWidth": "1px",
-																"borderStyle": "solid",
-																"borderColor": "#dee2e6"
+																"tag": "svg",
+																"props": {
+																	"width": 11,
+																	"height": 11,
+																	"viewBox": "0 0 24 24",
+																	"fill": "none",
+																	"stroke": "#ffffff",
+																	"strokeWidth": 2,
+																	"strokeLinecap": "round",
+																	"strokeLinejoin": "round",
+																	"xmlns": "http://www.w3.org/2000/svg"
+																},
+																"children": [
+																	{
+																		"tag": "polyline",
+																		"props": {
+																			"points": "20 6 9 17 4 12"
+																		}
+																	}
+																]
 															}
 														}
 													}
-												]
+												],
+												"ttAction": "$ui",
+												"ttActionInputs": {
+													"op": "toggle",
+													"key": "mentionsPush"
+												}
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "48px",
+												"display": "flex",
+												"justifyContent": "center",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
 											}
 										},
 										"children": [
 											{
-												"ttIf": {
-													"arg": "mentionsPush",
-													"then": {
-														"tag": "svg",
-														"props": {
-															"width": 11,
-															"height": 11,
-															"viewBox": "0 0 24 24",
-															"fill": "none",
-															"stroke": "#ffffff",
-															"strokeWidth": 2,
-															"strokeLinecap": "round",
-															"strokeLinejoin": "round",
-															"xmlns": "http://www.w3.org/2000/svg"
-														},
-														"children": [
+												"tag": "button",
+												"props": {
+													"style": {
+														"ttMerge": [
 															{
-																"tag": "polyline",
-																"props": {
-																	"points": "20 6 9 17 4 12"
+																"width": "16px",
+																"height": "16px",
+																"boxSizing": "border-box",
+																"borderRadius": "4px",
+																"display": "flex",
+																"alignItems": "center",
+																"justifyContent": "center",
+																"flexShrink": 0,
+																"maxWidth": "100%",
+																"flexWrap": "wrap"
+															},
+															{
+																"ttIf": {
+																	"arg": "mentionsEmail",
+																	"then": {
+																		"background": "#0d6efd"
+																	},
+																	"else": {
+																		"background": "#ffffff",
+																		"borderWidth": "1px",
+																		"borderStyle": "solid",
+																		"borderColor": "#dee2e6"
+																	}
 																}
 															}
 														]
+													},
+													"type": "button",
+													"aria-label": "mentionsEmail",
+													"aria-pressed": {
+														"ttArg": "mentionsEmail"
 													}
+												},
+												"children": [
+													{
+														"ttIf": {
+															"arg": "mentionsEmail",
+															"then": {
+																"tag": "svg",
+																"props": {
+																	"width": 11,
+																	"height": 11,
+																	"viewBox": "0 0 24 24",
+																	"fill": "none",
+																	"stroke": "#ffffff",
+																	"strokeWidth": 2,
+																	"strokeLinecap": "round",
+																	"strokeLinejoin": "round",
+																	"xmlns": "http://www.w3.org/2000/svg"
+																},
+																"children": [
+																	{
+																		"tag": "polyline",
+																		"props": {
+																			"points": "20 6 9 17 4 12"
+																		}
+																	}
+																]
+															}
+														}
+													}
+												],
+												"ttAction": "$ui",
+												"ttActionInputs": {
+													"op": "toggle",
+													"key": "mentionsEmail"
 												}
 											}
 										]
 									}
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"padding": "10px 0",
+								"borderBottomWidth": "1px",
+								"borderBottomStyle": "solid",
+								"borderBottomColor": "#e9ecef",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "14px",
+										"fontWeight": 500,
+										"color": "#212529"
+									}
+								},
+								"children": [
+									"Replies"
 								]
 							},
 							{
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "48px",
 										"display": "flex",
-										"justifyContent": "center"
+										"alignItems": "center",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
@@ -248,8 +413,19 @@
 										"tag": "div",
 										"props": {
 											"style": {
-												"ttMerge": [
-													{
+												"width": "48px",
+												"display": "flex",
+												"justifyContent": "center",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
 														"width": "16px",
 														"height": "16px",
 														"boxSizing": "border-box",
@@ -257,30 +433,14 @@
 														"display": "flex",
 														"alignItems": "center",
 														"justifyContent": "center",
-														"flexShrink": 0
-													},
-													{
-														"ttIf": {
-															"arg": "mentionsEmail",
-															"then": {
-																"background": "#0d6efd"
-															},
-															"else": {
-																"background": "#ffffff",
-																"borderWidth": "1px",
-																"borderStyle": "solid",
-																"borderColor": "#dee2e6"
-															}
-														}
+														"flexShrink": 0,
+														"background": "#0d6efd",
+														"maxWidth": "100%",
+														"flexWrap": "wrap"
 													}
-												]
-											}
-										},
-										"children": [
-											{
-												"ttIf": {
-													"arg": "mentionsEmail",
-													"then": {
+												},
+												"children": [
+													{
 														"tag": "svg",
 														"props": {
 															"width": 11,
@@ -302,6 +462,42 @@
 															}
 														]
 													}
+												]
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "48px",
+												"display": "flex",
+												"justifyContent": "center",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "16px",
+														"height": "16px",
+														"boxSizing": "border-box",
+														"borderRadius": "4px",
+														"display": "flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"flexShrink": 0,
+														"background": "#ffffff",
+														"borderWidth": "1px",
+														"borderStyle": "solid",
+														"borderColor": "#dee2e6",
+														"maxWidth": "100%",
+														"flexWrap": "wrap"
+													}
 												}
 											}
 										]
@@ -309,104 +505,39 @@
 								]
 							}
 						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"padding": "10px 0",
-						"borderBottomWidth": "1px",
-						"borderBottomStyle": "solid",
-						"borderBottomColor": "#e9ecef"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"color": "#212529"
-							}
-						},
-						"children": [
-							"Replies"
-						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center"
+								"alignItems": "center",
+								"justifyContent": "space-between",
+								"padding": "10px 0",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
+								"tag": "span",
 								"props": {
 									"style": {
-										"width": "48px",
-										"display": "flex",
-										"justifyContent": "center"
+										"fontSize": "14px",
+										"fontWeight": 500,
+										"color": "#212529"
 									}
 								},
 								"children": [
-									{
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": "16px",
-												"height": "16px",
-												"boxSizing": "border-box",
-												"borderRadius": "4px",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"flexShrink": 0,
-												"background": "#0d6efd"
-											}
-										},
-										"children": [
-											{
-												"tag": "svg",
-												"props": {
-													"width": 11,
-													"height": 11,
-													"viewBox": "0 0 24 24",
-													"fill": "none",
-													"stroke": "#ffffff",
-													"strokeWidth": 2,
-													"strokeLinecap": "round",
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
-												},
-												"children": [
-													{
-														"tag": "polyline",
-														"props": {
-															"points": "20 6 9 17 4 12"
-														}
-													}
-												]
-											}
-										]
-									}
+									"Digests"
 								]
 							},
 							{
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "48px",
 										"display": "flex",
-										"justifyContent": "center"
+										"alignItems": "center",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
@@ -414,20 +545,94 @@
 										"tag": "div",
 										"props": {
 											"style": {
-												"width": "16px",
-												"height": "16px",
-												"boxSizing": "border-box",
-												"borderRadius": "4px",
+												"width": "48px",
 												"display": "flex",
-												"alignItems": "center",
 												"justifyContent": "center",
-												"flexShrink": 0,
-												"background": "#ffffff",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6"
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
 											}
-										}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "16px",
+														"height": "16px",
+														"boxSizing": "border-box",
+														"borderRadius": "4px",
+														"display": "flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"flexShrink": 0,
+														"background": "#ffffff",
+														"borderWidth": "1px",
+														"borderStyle": "solid",
+														"borderColor": "#dee2e6",
+														"maxWidth": "100%",
+														"flexWrap": "wrap"
+													}
+												}
+											}
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "48px",
+												"display": "flex",
+												"justifyContent": "center",
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "div",
+												"props": {
+													"style": {
+														"width": "16px",
+														"height": "16px",
+														"boxSizing": "border-box",
+														"borderRadius": "4px",
+														"display": "flex",
+														"alignItems": "center",
+														"justifyContent": "center",
+														"flexShrink": 0,
+														"background": "#0d6efd",
+														"maxWidth": "100%",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													{
+														"tag": "svg",
+														"props": {
+															"width": 11,
+															"height": 11,
+															"viewBox": "0 0 24 24",
+															"fill": "none",
+															"stroke": "#ffffff",
+															"strokeWidth": 2,
+															"strokeLinecap": "round",
+															"strokeLinejoin": "round",
+															"xmlns": "http://www.w3.org/2000/svg"
+														},
+														"children": [
+															{
+																"tag": "polyline",
+																"props": {
+																	"points": "20 6 9 17 4 12"
+																}
+															}
+														]
+													}
+												]
+											}
+										]
 									}
 								]
 							}
@@ -436,120 +641,137 @@
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"padding": "10px 0"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "14px",
-								"fontWeight": 500,
-								"color": "#212529"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"Digests"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"alignItems": "center"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "48px",
-										"display": "flex",
-										"justifyContent": "center"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Mentions push ",
 									{
-										"tag": "div",
+										"tag": "input",
 										"props": {
-											"style": {
-												"width": "16px",
-												"height": "16px",
-												"boxSizing": "border-box",
-												"borderRadius": "4px",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"flexShrink": 0,
-												"background": "#ffffff",
-												"borderWidth": "1px",
-												"borderStyle": "solid",
-												"borderColor": "#dee2e6"
+											"aria-label": "Mentions push",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "mentionsPush"
 											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mentionsPush"
 										}
 									}
 								]
 							},
 							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "48px",
-										"display": "flex",
-										"justifyContent": "center"
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Mentions email ",
 									{
-										"tag": "div",
+										"tag": "input",
 										"props": {
-											"style": {
-												"width": "16px",
-												"height": "16px",
-												"boxSizing": "border-box",
-												"borderRadius": "4px",
-												"display": "flex",
-												"alignItems": "center",
-												"justifyContent": "center",
-												"flexShrink": 0,
-												"background": "#0d6efd"
+											"aria-label": "Mentions email",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "mentionsEmail"
 											}
 										},
-										"children": [
-											{
-												"tag": "svg",
-												"props": {
-													"width": 11,
-													"height": 11,
-													"viewBox": "0 0 24 24",
-													"fill": "none",
-													"stroke": "#ffffff",
-													"strokeWidth": 2,
-													"strokeLinecap": "round",
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
-												},
-												"children": [
-													{
-														"tag": "polyline",
-														"props": {
-															"points": "20 6 9 17 4 12"
-														}
-													}
-												]
-											}
-										]
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "mentionsEmail"
+										}
 									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 30,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "settings-notifications",
+									"title": "Notification Matrix",
+									"details": "Title: {title}\nMentions push: {mentionsPush}\nMentions email: {mentionsEmail}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -557,7 +779,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "settings-notifications",
 	"source": {
 		"kind": "archetype",

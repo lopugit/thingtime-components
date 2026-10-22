@@ -3,7 +3,7 @@
 	"name": "Disabled Input",
 	"library": "daisyui",
 	"category": "forms",
-	"description": "Disabled text field in the daisyUI style — muted label over a filled, non-interactive control with a not-allowed cursor and a faint hint.",
+	"description": "Disabled text field in the daisyUI style — muted label over a filled, non-interactive control with a not-allowed cursor and a faint hint. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"input",
 		"disabled",
@@ -31,86 +31,267 @@
 			"default": "Contact an admin to change this.",
 			"label": "Hint",
 			"maxLength": 80
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "260px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "label",
+				"tag": "div",
 				"props": {
 					"style": {
-						"fontSize": "14px",
-						"fontWeight": 500,
-						"color": "#6b7280",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+						"display": "flex",
+						"flexDirection": "column",
+						"gap": "6px",
+						"width": "260px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
-					"{label}"
-				]
-			},
-			{
-				"tag": "input",
-				"props": {
-					"type": "text",
-					"value": "{value}",
-					"disabled": true,
-					"style": {
-						"ttMerge": [
-							{
-								"width": "100%",
-								"padding": "0 12px",
-								"border": "1px solid #e5e6e6",
-								"borderRadius": "12px",
-								"background": "#ffffff",
-								"color": "#1f2937",
-								"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-								"outline": "none",
-								"boxSizing": "border-box"
-							},
-							{
-								"height": "48px",
-								"fontSize": "14px",
-								"background": "#f2f2f2",
-								"color": "#6b7280",
-								"border": "1px solid #f2f2f2",
-								"cursor": "not-allowed",
-								"boxShadow": "none"
-							}
-						]
-					}
-				}
-			},
-			{
-				"ttIf": {
-					"arg": "hint",
-					"then": {
-						"tag": "span",
+					{
+						"tag": "label",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"color": "#9ca3af"
+								"fontSize": "14px",
+								"fontWeight": 500,
+								"color": "#6b7280"
 							}
 						},
 						"children": [
-							"{hint}"
+							"{label}"
+						]
+					},
+					{
+						"tag": "input",
+						"props": {
+							"type": "text",
+							"value": "{value}",
+							"disabled": true,
+							"style": {
+								"ttMerge": [
+									{
+										"width": "100%",
+										"padding": "0 12px",
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "12px",
+										"background": "#ffffff",
+										"color": "#1f2937",
+										"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+										"outline": "none",
+										"boxSizing": "border-box",
+										"maxWidth": "100%"
+									},
+									{
+										"height": "48px",
+										"fontSize": "14px",
+										"background": "#f2f2f2",
+										"color": "#6b7280",
+										"border": "1px solid #f2f2f2",
+										"cursor": "not-allowed",
+										"boxShadow": "none"
+									}
+								]
+							}
+						}
+					},
+					{
+						"ttIf": {
+							"arg": "hint",
+							"then": {
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"color": "#9ca3af"
+									}
+								},
+								"children": [
+									"{hint}"
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Value",
+											"value": {
+												"ttArg": "value"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "value"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Hint ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Hint",
+											"value": {
+												"ttArg": "hint"
+											},
+											"maxLength": 80,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "hint"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "input-disabled",
+									"title": "Disabled Input",
+									"details": "Label: {label}\nValue: {value}\nHint: {hint}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "input-disabled",
 	"source": {
 		"kind": "archetype",

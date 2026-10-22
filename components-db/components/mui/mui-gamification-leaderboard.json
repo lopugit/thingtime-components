@@ -3,7 +3,7 @@
 	"name": "Leaderboard",
 	"library": "mui",
 	"category": "engagement",
-	"description": "Four-row leaderboard in the Material UI style — gold, silver, and bronze medal circles for the podium with a plain fourth rank, initials avatars, mono right-aligned points, and the viewer's row tinted and renamed via the you arg.",
+	"description": "Four-row leaderboard in the Material UI style — gold, silver, and bronze medal circles for the podium with a plain fourth rank, initials avatars, mono right-aligned points, and the viewer's row tinted and renamed via the you arg. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"gamification",
 		"leaderboard",
@@ -32,182 +32,73 @@
 			"default": "You",
 			"label": "Your display name",
 			"maxLength": 24
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "280px",
-				"padding": "16px",
-				"boxSizing": "border-box",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "rgba(0, 0, 0, 0.12)",
-				"borderRadius": "8px",
-				"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-				"gap": "8px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "13px",
-						"fontWeight": 500,
-						"color": "rgba(0, 0, 0, 0.87)",
-						"textTransform": "uppercase",
-						"letterSpacing": "0.02857em"
-					}
-				},
-				"children": [
-					"{title}"
-				]
-			},
 			{
 				"tag": "div",
 				"props": {
 					"style": {
 						"display": "flex",
 						"flexDirection": "column",
-						"gap": "2px"
+						"width": "280px",
+						"padding": "16px",
+						"boxSizing": "border-box",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "rgba(0, 0, 0, 0.12)",
+						"borderRadius": "8px",
+						"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+						"gap": "8px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
+						"tag": "span",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "10px",
-										"padding": "6px 8px",
-										"borderRadius": "4px"
-									},
-									{
-										"ttIf": {
-											"arg": "you",
-											"equals": 1,
-											"then": {
-												"background": "#e3f2fd"
-											}
-										}
-									}
-								]
+								"fontSize": "13px",
+								"fontWeight": 500,
+								"color": "rgba(0, 0, 0, 0.87)",
+								"textTransform": "uppercase",
+								"letterSpacing": "0.02857em"
 							}
 						},
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "22px",
-										"height": "22px",
-										"borderRadius": "999px",
-										"background": "#d4af37",
-										"color": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"1"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "26px",
-										"height": "26px",
-										"borderRadius": "999px",
-										"background": "#fafafa",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontWeight": 600,
-										"fontSize": "12px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"MK"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"flex": 1,
-										"fontSize": "13px",
-										"fontWeight": 500,
-										"color": "rgba(0, 0, 0, 0.87)",
-										"whiteSpace": "nowrap",
-										"overflow": "hidden",
-										"textOverflow": "ellipsis"
-									}
-								},
-								"children": [
-									{
-										"ttIf": {
-											"arg": "you",
-											"equals": 1,
-											"then": "{name}",
-											"else": "Mila Kang"
-										}
-									}
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "rgba(0, 0, 0, 0.87)",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-									}
-								},
-								"children": [
-									"12,480"
-								]
-							}
+							"{title}"
 						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "10px",
-										"padding": "6px 8px",
-										"borderRadius": "4px"
-									},
-									{
-										"ttIf": {
-											"arg": "you",
-											"equals": 2,
-											"then": {
-												"background": "#e3f2fd"
-											}
-										}
-									}
-								]
+								"display": "flex",
+								"flexDirection": "column",
+								"gap": "2px"
 							}
 						},
 						"children": [
@@ -215,290 +106,607 @@
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "22px",
-										"height": "22px",
-										"borderRadius": "999px",
-										"background": "#c0c0c0",
-										"color": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"flexShrink": 0
+										"ttMerge": [
+											{
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "10px",
+												"padding": "6px 8px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "you",
+													"equals": 1,
+													"then": {
+														"background": "#e3f2fd"
+													}
+												}
+											}
+										]
 									}
 								},
 								"children": [
-									"2"
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "22px",
+												"height": "22px",
+												"borderRadius": "999px",
+												"background": "#d4af37",
+												"color": "#ffffff",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"1"
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "26px",
+												"height": "26px",
+												"borderRadius": "999px",
+												"background": "#fafafa",
+												"color": "rgba(0, 0, 0, 0.6)",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"fontWeight": 600,
+												"fontSize": "12px",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"MK"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"flex": 1,
+												"fontSize": "13px",
+												"fontWeight": 500,
+												"color": "rgba(0, 0, 0, 0.87)",
+												"whiteSpace": "nowrap",
+												"overflow": "hidden",
+												"textOverflow": "ellipsis"
+											}
+										},
+										"children": [
+											{
+												"ttIf": {
+													"arg": "you",
+													"equals": 1,
+													"then": "{name}",
+													"else": "Mila Kang"
+												}
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "rgba(0, 0, 0, 0.87)",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+											}
+										},
+										"children": [
+											"12,480"
+										]
+									}
 								]
 							},
 							{
 								"tag": "div",
 								"props": {
 									"style": {
-										"width": "26px",
-										"height": "26px",
-										"borderRadius": "999px",
-										"background": "#fafafa",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontWeight": 600,
-										"fontSize": "12px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"AV"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"flex": 1,
-										"fontSize": "13px",
-										"fontWeight": 500,
-										"color": "rgba(0, 0, 0, 0.87)",
-										"whiteSpace": "nowrap",
-										"overflow": "hidden",
-										"textOverflow": "ellipsis"
+										"ttMerge": [
+											{
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "10px",
+												"padding": "6px 8px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "you",
+													"equals": 2,
+													"then": {
+														"background": "#e3f2fd"
+													}
+												}
+											}
+										]
 									}
 								},
 								"children": [
 									{
-										"ttIf": {
-											"arg": "you",
-											"equals": 2,
-											"then": "{name}",
-											"else": "Ari Voss"
-										}
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "22px",
+												"height": "22px",
+												"borderRadius": "999px",
+												"background": "#c0c0c0",
+												"color": "#ffffff",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"2"
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "26px",
+												"height": "26px",
+												"borderRadius": "999px",
+												"background": "#fafafa",
+												"color": "rgba(0, 0, 0, 0.6)",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"fontWeight": 600,
+												"fontSize": "12px",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"AV"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"flex": 1,
+												"fontSize": "13px",
+												"fontWeight": 500,
+												"color": "rgba(0, 0, 0, 0.87)",
+												"whiteSpace": "nowrap",
+												"overflow": "hidden",
+												"textOverflow": "ellipsis"
+											}
+										},
+										"children": [
+											{
+												"ttIf": {
+													"arg": "you",
+													"equals": 2,
+													"then": "{name}",
+													"else": "Ari Voss"
+												}
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "rgba(0, 0, 0, 0.87)",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+											}
+										},
+										"children": [
+											"11,930"
+										]
 									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "rgba(0, 0, 0, 0.87)",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+										"ttMerge": [
+											{
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "10px",
+												"padding": "6px 8px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "you",
+													"equals": 3,
+													"then": {
+														"background": "#e3f2fd"
+													}
+												}
+											}
+										]
 									}
 								},
 								"children": [
-									"11,930"
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "22px",
+												"height": "22px",
+												"borderRadius": "999px",
+												"background": "#cd7f32",
+												"color": "#ffffff",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"3"
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "26px",
+												"height": "26px",
+												"borderRadius": "999px",
+												"background": "#fafafa",
+												"color": "rgba(0, 0, 0, 0.6)",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"fontWeight": 600,
+												"fontSize": "12px",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"SI"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"flex": 1,
+												"fontSize": "13px",
+												"fontWeight": 500,
+												"color": "rgba(0, 0, 0, 0.87)",
+												"whiteSpace": "nowrap",
+												"overflow": "hidden",
+												"textOverflow": "ellipsis"
+											}
+										},
+										"children": [
+											{
+												"ttIf": {
+													"arg": "you",
+													"equals": 3,
+													"then": "{name}",
+													"else": "Sam Ito"
+												}
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "rgba(0, 0, 0, 0.87)",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+											}
+										},
+										"children": [
+											"10,215"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"ttMerge": [
+											{
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "10px",
+												"padding": "6px 8px",
+												"borderRadius": "4px",
+												"flexWrap": "wrap"
+											},
+											{
+												"ttIf": {
+													"arg": "you",
+													"equals": 4,
+													"then": {
+														"background": "#e3f2fd"
+													}
+												}
+											}
+										]
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "22px",
+												"textAlign": "center",
+												"fontSize": "12px",
+												"color": "rgba(0, 0, 0, 0.6)",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"flexShrink": 0,
+												"maxWidth": "100%"
+											}
+										},
+										"children": [
+											"4"
+										]
+									},
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"width": "26px",
+												"height": "26px",
+												"borderRadius": "999px",
+												"background": "#fafafa",
+												"color": "rgba(0, 0, 0, 0.6)",
+												"display": "flex",
+												"alignItems": "center",
+												"justifyContent": "center",
+												"fontWeight": 600,
+												"fontSize": "12px",
+												"flexShrink": 0,
+												"maxWidth": "100%",
+												"boxSizing": "border-box",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											"NR"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"flex": 1,
+												"fontSize": "13px",
+												"fontWeight": 500,
+												"color": "rgba(0, 0, 0, 0.87)",
+												"whiteSpace": "nowrap",
+												"overflow": "hidden",
+												"textOverflow": "ellipsis"
+											}
+										},
+										"children": [
+											{
+												"ttIf": {
+													"arg": "you",
+													"equals": 4,
+													"then": "{name}",
+													"else": "Noa Reyes"
+												}
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"fontWeight": 600,
+												"color": "rgba(0, 0, 0, 0.87)",
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+											}
+										},
+										"children": [
+											"9,864"
+										]
+									}
 								]
 							}
 						]
-					},
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "10px",
-										"padding": "6px 8px",
-										"borderRadius": "4px"
-									},
-									{
-										"ttIf": {
-											"arg": "you",
-											"equals": 3,
-											"then": {
-												"background": "#e3f2fd"
-											}
-										}
-									}
-								]
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "22px",
-										"height": "22px",
-										"borderRadius": "999px",
-										"background": "#cd7f32",
-										"color": "#ffffff",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"3"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "26px",
-										"height": "26px",
-										"borderRadius": "999px",
-										"background": "#fafafa",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontWeight": 600,
-										"fontSize": "12px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"SI"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"flex": 1,
-										"fontSize": "13px",
-										"fontWeight": 500,
-										"color": "rgba(0, 0, 0, 0.87)",
-										"whiteSpace": "nowrap",
-										"overflow": "hidden",
-										"textOverflow": "ellipsis"
-									}
-								},
-								"children": [
-									{
-										"ttIf": {
-											"arg": "you",
-											"equals": 3,
-											"then": "{name}",
-											"else": "Sam Ito"
-										}
-									}
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "rgba(0, 0, 0, 0.87)",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-									}
-								},
-								"children": [
-									"10,215"
-								]
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"ttMerge": [
-									{
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "10px",
-										"padding": "6px 8px",
-										"borderRadius": "4px"
-									},
-									{
-										"ttIf": {
-											"arg": "you",
-											"equals": 4,
-											"then": {
-												"background": "#e3f2fd"
-											}
-										}
-									}
-								]
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"width": "22px",
-										"textAlign": "center",
-										"fontSize": "12px",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"flexShrink": 0
-									}
-								},
+								"tag": "label",
 								"children": [
-									"4"
-								]
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"width": "26px",
-										"height": "26px",
-										"borderRadius": "999px",
-										"background": "#fafafa",
-										"color": "rgba(0, 0, 0, 0.6)",
-										"display": "flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"fontWeight": 600,
-										"fontSize": "12px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									"NR"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"flex": 1,
-										"fontSize": "13px",
-										"fontWeight": 500,
-										"color": "rgba(0, 0, 0, 0.87)",
-										"whiteSpace": "nowrap",
-										"overflow": "hidden",
-										"textOverflow": "ellipsis"
-									}
-								},
-								"children": [
+									"Title ",
 									{
-										"ttIf": {
-											"arg": "you",
-											"equals": 4,
-											"then": "{name}",
-											"else": "Noa Reyes"
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
 										}
 									}
 								]
 							},
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"fontWeight": 600,
-										"color": "rgba(0, 0, 0, 0.87)",
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+								"tag": "label",
+								"children": [
+									"Your rank (1–4) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Your rank (1–4)",
+											"value": {
+												"ttArg": "you"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 1,
+											"max": 4
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "you"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Your display name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Your display name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "gamification-leaderboard",
+									"title": "Leaderboard",
+									"details": "Title: {title}\nYour rank (1–4): {you}\nYour display name: {name}"
 								},
 								"children": [
-									"9,864"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -506,7 +714,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "gamification-leaderboard",
 	"source": {
 		"kind": "archetype",

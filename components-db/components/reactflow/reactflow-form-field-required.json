@@ -3,7 +3,7 @@
 	"name": "Required Field",
 	"library": "reactflow",
 	"category": "forms",
-	"description": "Labeled input in the React Flow style whose required toggle swaps a danger-tone asterisk for a muted \"(optional)\" hint, with fine print below.",
+	"description": "Labeled input in the React Flow style whose required toggle swaps a danger-tone asterisk for a muted \"(optional)\" hint, with fine print below. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"form",
 		"field",
@@ -37,16 +37,34 @@
 			"default": "We only use this to sign you in.",
 			"label": "Hint",
 			"maxLength": 80
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
+		},
+		{
+			"name": "entry1",
+			"type": "string",
+			"default": "",
+			"maxLength": 500
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "280px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -55,103 +73,302 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "4px"
+						"flexDirection": "column",
+						"gap": "6px",
+						"width": "280px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "4px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 600,
+										"color": "#1a192b"
+									}
+								},
+								"children": [
+									"{label}"
+								]
+							},
+							{
+								"ttIf": {
+									"arg": "required",
+									"then": {
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"fontWeight": 600,
+												"color": "#ff0072"
+											}
+										},
+										"children": [
+											"*"
+										]
+									},
+									"else": {
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"color": "#b1b1b7"
+											}
+										},
+										"children": [
+											"(optional)"
+										]
+									}
+								}
+							}
+						]
+					},
+					{
+						"tag": "input",
+						"props": {
+							"type": "text",
+							"placeholder": "{placeholder}",
+							"style": {
+								"ttMerge": [
+									{
+										"height": "30px",
+										"padding": "0 12px",
+										"borderRadius": "3px",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#1a192b",
+										"background": "#ffffff",
+										"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+										"fontSize": "12px",
+										"color": "#1a192b",
+										"outline": "none",
+										"width": "100%",
+										"boxSizing": "border-box",
+										"boxShadow": "none",
+										"maxWidth": "100%"
+									},
+									{}
+								]
+							},
+							"value": {
+								"ttArg": "entry1"
+							},
+							"aria-label": "{placeholder}",
+							"maxLength": 500
+						},
+						"ttAction": "$ui",
+						"ttActionInputs": {
+							"op": "set",
+							"key": "entry1"
+						}
+					},
 					{
 						"tag": "span",
 						"props": {
 							"style": {
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "12px",
-								"fontWeight": 600,
-								"color": "#1a192b"
+								"fontSize": "10px",
+								"color": "#6f6e77"
 							}
 						},
 						"children": [
-							"{label}"
+							"{hint}"
 						]
-					},
-					{
-						"ttIf": {
-							"arg": "required",
-							"then": {
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"fontSize": "12px",
-										"fontWeight": 600,
-										"color": "#ff0072"
-									}
-								},
-								"children": [
-									"*"
-								]
-							},
-							"else": {
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-										"fontSize": "10px",
-										"color": "#b1b1b7"
-									}
-								},
-								"children": [
-									"(optional)"
-								]
-							}
-						}
 					}
 				]
 			},
 			{
-				"tag": "input",
-				"props": {
-					"type": "text",
-					"placeholder": "{placeholder}",
-					"style": {
-						"ttMerge": [
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
 							{
-								"height": "30px",
-								"padding": "0 12px",
-								"borderRadius": "3px",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#1a192b",
-								"background": "#ffffff",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontSize": "12px",
-								"color": "#1a192b",
-								"outline": "none",
-								"width": "100%",
-								"boxSizing": "border-box",
-								"boxShadow": "none"
+								"tag": "label",
+								"children": [
+									"entry1 ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "entry1",
+											"value": {
+												"ttArg": "entry1"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "entry1"
+										}
+									}
+								]
 							},
-							{}
+							{
+								"tag": "label",
+								"children": [
+									"Label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Label",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Required ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Required",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "required"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "required"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Hint ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Hint",
+											"value": {
+												"ttArg": "hint"
+											},
+											"maxLength": 80,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "hint"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "form-field-required",
+									"title": "Required Field",
+									"details": "Label: {label}\nRequired: {required}\nHint: {hint}\nentry1: {entry1}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-						"fontSize": "10px",
-						"color": "#6f6e77"
-					}
-				},
-				"children": [
-					"{hint}"
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "form-field-required",
 	"source": {
 		"kind": "archetype",

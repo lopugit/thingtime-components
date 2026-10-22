@@ -3,7 +3,7 @@
 	"name": "Multiplayer Cursors",
 	"library": "reactflow",
 	"category": "collaboration",
-	"description": "Multiplayer cursor field in the React Flow style — three hue-coded pointer arrows with name flag chips drifting over a dotted canvas band, plus a live presence caption.",
+	"description": "Multiplayer cursor field in the React Flow style — three hue-coded pointer arrows with name flag chips drifting over a dotted canvas band, plus a live presence caption. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"whiteboard",
 		"cursor",
@@ -37,25 +37,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Live caption"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"position": "relative",
-				"width": "260px",
-				"height": "160px",
-				"boxSizing": "border-box",
-				"borderRadius": "5px",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"overflow": "hidden",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"background": "#f8f8f8",
-				"backgroundImage": "radial-gradient(circle, #91919a 1px, transparent 1px)",
-				"backgroundSize": "14px 14px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -63,248 +66,389 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"position": "absolute",
-						"left": "28px",
-						"top": "26px",
-						"display": "flex",
-						"flexDirection": "column",
-						"alignItems": "flex-start"
+						"position": "relative",
+						"width": "260px",
+						"height": "160px",
+						"boxSizing": "border-box",
+						"borderRadius": "5px",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#1a192b",
+						"overflow": "hidden",
+						"background": "#f8f8f8",
+						"backgroundImage": "radial-gradient(circle, #91919a 1px, transparent 1px)",
+						"backgroundSize": "14px 14px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "svg",
-						"props": {
-							"width": 18,
-							"height": 18,
-							"viewBox": "0 0 24 24",
-							"fill": {
-								"ttMap": {
-									"arg": "tone",
-									"values": {
-										"primary": "#1a192b",
-										"success": "#22c55e",
-										"warning": "#eab308",
-										"danger": "#ff0072",
-										"info": "#784be8",
-										"neutral": "#6f6e77"
-									},
-									"default": "#1a192b"
-								}
-							},
-							"stroke": "#ffffff",
-							"strokeWidth": 1.5,
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "polygon",
-								"props": {
-									"points": "5 2 19 11 12 12.5 9 20"
-								}
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"marginLeft": "11px",
-								"padding": "2px 7px",
-								"borderRadius": "2px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1a192b",
-											"success": "#22c55e",
-											"warning": "#eab308",
-											"danger": "#ff0072",
-											"info": "#784be8",
-											"neutral": "#6f6e77"
-										},
-										"default": "#1a192b"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"{name}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"position": "absolute",
-						"left": "152px",
-						"top": "62px",
-						"display": "flex",
-						"flexDirection": "column",
-						"alignItems": "flex-start"
-					}
-				},
-				"children": [
-					{
-						"tag": "svg",
-						"props": {
-							"width": 18,
-							"height": 18,
-							"viewBox": "0 0 24 24",
-							"fill": "#22c55e",
-							"stroke": "#ffffff",
-							"strokeWidth": 1.5,
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "polygon",
-								"props": {
-									"points": "5 2 19 11 12 12.5 9 20"
-								}
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"marginLeft": "11px",
-								"padding": "2px 7px",
-								"borderRadius": "2px",
-								"background": "#22c55e",
-								"color": "#ffffff",
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"Sam"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"position": "absolute",
-						"left": "80px",
-						"top": "96px",
-						"display": "flex",
-						"flexDirection": "column",
-						"alignItems": "flex-start"
-					}
-				},
-				"children": [
-					{
-						"tag": "svg",
-						"props": {
-							"width": 18,
-							"height": 18,
-							"viewBox": "0 0 24 24",
-							"fill": "#ff0072",
-							"stroke": "#ffffff",
-							"strokeWidth": 1.5,
-							"strokeLinejoin": "round",
-							"xmlns": "http://www.w3.org/2000/svg"
-						},
-						"children": [
-							{
-								"tag": "polygon",
-								"props": {
-									"points": "5 2 19 11 12 12.5 9 20"
-								}
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"marginLeft": "11px",
-								"padding": "2px 7px",
-								"borderRadius": "2px",
-								"background": "#ff0072",
-								"color": "#ffffff",
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"Mia"
-						]
-					}
-				]
-			},
-			{
-				"ttIf": {
-					"arg": "live",
-					"then": {
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
 								"position": "absolute",
-								"top": "8px",
-								"right": "8px",
-								"display": "inline-flex",
-								"alignItems": "center",
-								"gap": "5px",
-								"padding": "3px 8px",
-								"borderRadius": "999px",
-								"background": "#ffffff",
-								"borderWidth": "1px",
-								"borderStyle": "solid",
-								"borderColor": "#e2e2e5",
-								"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-								"fontSize": "10px",
-								"fontWeight": 600,
-								"color": "#6f6e77"
+								"left": "28px",
+								"top": "26px",
+								"display": "flex",
+								"flexDirection": "column",
+								"alignItems": "flex-start"
 							}
 						},
 						"children": [
+							{
+								"tag": "svg",
+								"props": {
+									"width": 18,
+									"height": 18,
+									"viewBox": "0 0 24 24",
+									"fill": {
+										"ttMap": {
+											"arg": "tone",
+											"values": {
+												"primary": "#1a192b",
+												"success": "#22c55e",
+												"warning": "#eab308",
+												"danger": "#ff0072",
+												"info": "#784be8",
+												"neutral": "#6f6e77"
+											},
+											"default": "#1a192b"
+										}
+									},
+									"stroke": "#ffffff",
+									"strokeWidth": 1.5,
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polygon",
+										"props": {
+											"points": "5 2 19 11 12 12.5 9 20"
+										}
+									}
+								]
+							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"width": "6px",
-										"height": "6px",
-										"borderRadius": "999px",
-										"background": "#22c55e"
+										"marginLeft": "11px",
+										"padding": "2px 7px",
+										"borderRadius": "2px",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1a192b",
+													"success": "#22c55e",
+													"warning": "#eab308",
+													"danger": "#ff0072",
+													"info": "#784be8",
+													"neutral": "#6f6e77"
+												},
+												"default": "#1a192b"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"whiteSpace": "nowrap"
 									}
-								}
+								},
+								"children": [
+									"{name}"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"position": "absolute",
+								"left": "152px",
+								"top": "62px",
+								"display": "flex",
+								"flexDirection": "column",
+								"alignItems": "flex-start"
+							}
+						},
+						"children": [
+							{
+								"tag": "svg",
+								"props": {
+									"width": 18,
+									"height": 18,
+									"viewBox": "0 0 24 24",
+									"fill": "#22c55e",
+									"stroke": "#ffffff",
+									"strokeWidth": 1.5,
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polygon",
+										"props": {
+											"points": "5 2 19 11 12 12.5 9 20"
+										}
+									}
+								]
 							},
-							"3 live"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"marginLeft": "11px",
+										"padding": "2px 7px",
+										"borderRadius": "2px",
+										"background": "#22c55e",
+										"color": "#ffffff",
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"whiteSpace": "nowrap"
+									}
+								},
+								"children": [
+									"Sam"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"position": "absolute",
+								"left": "80px",
+								"top": "96px",
+								"display": "flex",
+								"flexDirection": "column",
+								"alignItems": "flex-start"
+							}
+						},
+						"children": [
+							{
+								"tag": "svg",
+								"props": {
+									"width": 18,
+									"height": 18,
+									"viewBox": "0 0 24 24",
+									"fill": "#ff0072",
+									"stroke": "#ffffff",
+									"strokeWidth": 1.5,
+									"strokeLinejoin": "round",
+									"xmlns": "http://www.w3.org/2000/svg"
+								},
+								"children": [
+									{
+										"tag": "polygon",
+										"props": {
+											"points": "5 2 19 11 12 12.5 9 20"
+										}
+									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"marginLeft": "11px",
+										"padding": "2px 7px",
+										"borderRadius": "2px",
+										"background": "#ff0072",
+										"color": "#ffffff",
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"whiteSpace": "nowrap"
+									}
+								},
+								"children": [
+									"Mia"
+								]
+							}
+						]
+					},
+					{
+						"ttIf": {
+							"arg": "live",
+							"then": {
+								"tag": "span",
+								"props": {
+									"style": {
+										"position": "absolute",
+										"top": "8px",
+										"right": "8px",
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "5px",
+										"padding": "3px 8px",
+										"borderRadius": "999px",
+										"background": "#ffffff",
+										"borderWidth": "1px",
+										"borderStyle": "solid",
+										"borderColor": "#e2e2e5",
+										"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+										"fontSize": "10px",
+										"fontWeight": 600,
+										"color": "#6f6e77",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"width": "6px",
+												"height": "6px",
+												"borderRadius": "999px",
+												"background": "#22c55e",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										}
+									},
+									"3 live"
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Your name ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Your name",
+											"value": {
+												"ttArg": "name"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "name"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Live caption ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Live caption",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "live"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "live"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "whiteboard-collab-cursors",
+									"title": "Multiplayer Cursors",
+									"details": "Your name: {name}\nLive caption: {live}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "whiteboard-collab-cursors",
 	"source": {
 		"kind": "archetype",

@@ -3,7 +3,7 @@
 	"name": "Confirm Dialog",
 	"library": "daisyui",
 	"category": "overlays",
-	"description": "Destructive confirm dialog in the daisyUI style — a tone-tinted alert badge over centered title and body, cancel beside a danger-toned commit button.",
+	"description": "Destructive confirm dialog in the daisyUI style — a tone-tinted alert badge over centered title and body, cancel beside a danger-toned commit button. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"modal",
 		"confirm",
@@ -14,14 +14,14 @@
 		{
 			"name": "title",
 			"type": "string",
-			"default": "Delete this file?",
+			"default": "Review this draft",
 			"label": "Title",
 			"maxLength": 40
 		},
 		{
 			"name": "body",
 			"type": "text",
-			"default": "This will permanently remove the file from your workspace. This action cannot be undone.",
+			"default": "Saving stores a private record. This example does not delete any file.",
 			"label": "Body",
 			"maxLength": 200
 		},
@@ -52,191 +52,209 @@
 			],
 			"default": "danger",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"width": "340px",
-				"minHeight": "280px",
-				"boxSizing": "border-box",
-				"background": "rgba(12, 12, 16, 0.45)",
-				"borderRadius": "12px",
-				"overflow": "hidden",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"alignItems": "center",
-				"justifyContent": "center",
-				"padding": "24px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"tag": "div",
+				"tag": "tt-dialog",
 				"props": {
-					"style": {
-						"background": "#ffffff",
-						"color": "#1f2937",
-						"borderRadius": "16px",
-						"boxShadow": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-						"display": "flex",
-						"flexDirection": "column",
-						"overflow": "hidden",
-						"width": "272px",
-						"alignItems": "center",
-						"textAlign": "center",
-						"padding": "20px"
-					}
+					"title": "{title}",
+					"name": "Open confirm",
+					"type": "modal"
 				},
 				"children": [
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "40px",
-								"height": "40px",
-								"borderRadius": "999px",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#eee6ff",
-											"success": "#dcfce7",
-											"warning": "#fef9c3",
-											"danger": "#ffe4e6",
-											"info": "#e0f2fe",
-											"neutral": "#f2f2f2"
-										},
-										"default": "#eee6ff"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#4506cb",
-											"success": "#00753d",
-											"warning": "#854d0e",
-											"danger": "#be123c",
-											"info": "#0369a1",
-											"neutral": "#2a323c"
-										},
-										"default": "#4506cb"
-									}
-								},
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0
+								"display": "grid",
+								"gap": "12px",
+								"padding": "16px",
+								"border": "1px solid #e5e6e6",
+								"borderRadius": "12px",
+								"background": "#ffffff",
+								"color": "#1f2937",
+								"minWidth": 0,
+								"maxWidth": "100%"
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
-								"props": {
-									"width": 20,
-									"height": 20,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
+								"tag": "p",
 								"children": [
-									{
-										"tag": "path",
-										"props": {
-											"d": "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 12,
-											"y1": 9,
-											"x2": 12,
-											"y2": 13
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 12,
-											"y1": 17,
-											"x2": 12.01,
-											"y2": 17
-										}
-									}
+									"{body}"
+								]
+							},
+							{
+								"tag": "p",
+								"children": [
+									"Edit the values below and save a private draft. No external changes are made."
 								]
 							}
 						]
-					},
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
 					{
-						"tag": "h3",
-						"props": {
-							"style": {
-								"margin": "12px 0 4px",
-								"fontSize": "18px",
-								"fontWeight": 700
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"{title}"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "p",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"margin": 0,
-								"color": "#6b7280",
-								"fontSize": "14px",
-								"lineHeight": 1.6
-							}
-						},
-						"children": [
-							"{body}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
+								"display": "grid",
 								"gap": "8px",
-								"marginTop": "16px"
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "button",
-								"props": {
-									"type": "button",
-									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"height": "32px",
-										"padding": "0 14px",
-										"borderRadius": "12px",
-										"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"cursor": "pointer",
-										"borderWidth": "1px",
-										"borderStyle": "solid",
-										"borderColor": "#e5e6e6",
-										"background": "#ffffff",
-										"color": "#1f2937"
-									}
-								},
+								"tag": "label",
 								"children": [
-									"{cancelLabel}"
+									"Title ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Title",
+											"value": {
+												"ttArg": "title"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "title"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Body ",
+									{
+										"tag": "textarea",
+										"props": {
+											"aria-label": "Body",
+											"value": {
+												"ttArg": "body"
+											},
+											"maxLength": 200,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "body"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Confirm label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Confirm label",
+											"value": {
+												"ttArg": "confirmLabel"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "confirmLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Cancel label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Cancel label",
+											"value": {
+												"ttArg": "cancelLabel"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "cancelLabel"
+										}
+									}
 								]
 							},
 							{
@@ -244,51 +262,41 @@
 								"props": {
 									"type": "button",
 									"style": {
-										"display": "inline-flex",
-										"alignItems": "center",
-										"justifyContent": "center",
-										"height": "32px",
-										"padding": "0 14px",
-										"borderRadius": "12px",
-										"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-										"fontSize": "14px",
-										"fontWeight": 600,
-										"cursor": "pointer",
-										"border": "none",
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#570df8",
-													"success": "#00a96e",
-													"warning": "#ffbe00",
-													"danger": "#ff5861",
-													"info": "#00b6ff",
-													"neutral": "#2a323c"
-												},
-												"default": "#570df8"
-											}
-										},
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#ffffff",
-													"success": "#ffffff",
-													"warning": "#382800",
-													"danger": "#ffffff",
-													"info": "#ffffff",
-													"neutral": "#ffffff"
-												},
-												"default": "#ffffff"
-											}
-										},
-										"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)"
-									}
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "modal-drawer-confirm",
+									"title": "Confirm Dialog",
+									"details": "Title: {title}\nBody: {body}\nConfirm label: {confirmLabel}\nCancel label: {cancelLabel}"
 								},
 								"children": [
-									"{confirmLabel}"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -296,7 +304,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "modal-drawer-confirm",
 	"source": {
 		"kind": "archetype",

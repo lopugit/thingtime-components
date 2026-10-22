@@ -3,7 +3,7 @@
 	"name": "Interview Slot Card",
 	"library": "reactflow",
 	"category": "hiring",
-	"description": "Interview slot card in the React Flow style — calendar date block, time with a duration chip, interviewer avatar and role caption, meet-link chip with a video glyph, Confirm and Reschedule actions, and a timezone caption.",
+	"description": "Interview slot card in the React Flow style — calendar date block, time with a duration chip, interviewer avatar and role caption, meet-link chip with a video glyph, Confirm and Reschedule actions, and a timezone caption. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"hiring",
 		"interview",
@@ -52,26 +52,28 @@
 			],
 			"default": "primary",
 			"label": "Tone"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"width": "320px",
-				"boxSizing": "border-box",
-				"padding": "16px",
-				"gap": "12px",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#1a192b",
-				"background": "#ffffff",
-				"borderRadius": "5px",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "transparent",
-				"boxShadow": "0 0 0 0.5px #1a192b, 0 3px 10px rgba(26, 25, 43, 0.15)"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -80,8 +82,19 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "12px"
+						"flexDirection": "column",
+						"width": "320px",
+						"boxSizing": "border-box",
+						"padding": "16px",
+						"gap": "12px",
+						"color": "#1a192b",
+						"background": "#ffffff",
+						"borderRadius": "5px",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "transparent",
+						"boxShadow": "0 0 0 0.5px #1a192b, 0 3px 10px rgba(26, 25, 43, 0.15)",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -90,41 +103,126 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
 								"alignItems": "center",
-								"gap": "0px",
-								"padding": "6px 12px",
-								"borderRadius": "3px",
-								"background": "#f4f4f5",
-								"flexShrink": 0
+								"gap": "12px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "10px",
-										"fontWeight": 700,
-										"letterSpacing": "0.08em",
-										"color": "#ff0072"
+										"display": "flex",
+										"flexDirection": "column",
+										"alignItems": "center",
+										"gap": "0px",
+										"padding": "6px 12px",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"flexShrink": 0
 									}
 								},
 								"children": [
-									"AUG"
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"fontWeight": 700,
+												"letterSpacing": "0.08em",
+												"color": "#ff0072"
+											}
+										},
+										"children": [
+											"AUG"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "16px",
+												"fontWeight": 600,
+												"lineHeight": 1.2
+											}
+										},
+										"children": [
+											"{day}"
+										]
+									}
 								]
 							},
 							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "16px",
-										"fontWeight": 600,
-										"lineHeight": 1.2
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "4px",
+										"flex": "1",
+										"minWidth": 0
 									}
 								},
 								"children": [
-									"{day}"
+									{
+										"tag": "div",
+										"props": {
+											"style": {
+												"display": "flex",
+												"alignItems": "center",
+												"gap": "8px",
+												"flexWrap": "wrap"
+											}
+										},
+										"children": [
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"fontSize": "12px",
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"{time}"
+												]
+											},
+											{
+												"tag": "span",
+												"props": {
+													"style": {
+														"display": "inline-flex",
+														"alignItems": "center",
+														"gap": "4px",
+														"padding": "2px 8px",
+														"borderRadius": "3px",
+														"fontSize": "10px",
+														"fontWeight": 600,
+														"lineHeight": 1.6,
+														"background": "#f4f4f5",
+														"color": "#6f6e77",
+														"flexWrap": "wrap"
+													}
+												},
+												"children": [
+													"{duration}"
+												]
+											}
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"color": "#6f6e77"
+											}
+										},
+										"children": [
+											"Technical interview · Round 2"
+										]
+									}
 								]
 							}
 						]
@@ -134,10 +232,9 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "4px",
-								"flex": "1",
-								"minWidth": 0
+								"alignItems": "center",
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -145,9 +242,35 @@
 								"tag": "div",
 								"props": {
 									"style": {
+										"width": "28px",
+										"height": "28px",
+										"borderRadius": "999px",
+										"background": "#f4f4f5",
+										"color": "#3f3e4a",
 										"display": "flex",
 										"alignItems": "center",
-										"gap": "8px"
+										"justifyContent": "center",
+										"fontWeight": 600,
+										"fontSize": "10px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									"SO"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "0px",
+										"flex": "1",
+										"minWidth": 0
 									}
 								},
 								"children": [
@@ -160,27 +283,19 @@
 											}
 										},
 										"children": [
-											"{time}"
+											"{interviewer}"
 										]
 									},
 									{
 										"tag": "span",
 										"props": {
 											"style": {
-												"display": "inline-flex",
-												"alignItems": "center",
-												"gap": "4px",
-												"padding": "2px 8px",
-												"borderRadius": "3px",
 												"fontSize": "10px",
-												"fontWeight": 600,
-												"lineHeight": 1.6,
-												"background": "#f4f4f5",
 												"color": "#6f6e77"
 											}
 										},
 										"children": [
-											"{duration}"
+											"Engineering Manager"
 										]
 									}
 								]
@@ -189,47 +304,56 @@
 								"tag": "span",
 								"props": {
 									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"gap": "4px",
+										"padding": "2px 8px",
+										"borderRadius": "3px",
 										"fontSize": "10px",
-										"color": "#6f6e77"
+										"fontWeight": 600,
+										"lineHeight": 1.6,
+										"background": "#f1ecfd",
+										"color": "#5b21b6",
+										"flexShrink": 0,
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"Technical interview · Round 2"
+									{
+										"tag": "svg",
+										"props": {
+											"width": 12,
+											"height": 12,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "#5b21b6",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "rect",
+												"props": {
+													"x": 1,
+													"y": 6,
+													"width": 13,
+													"height": 12,
+													"rx": 2
+												}
+											},
+											{
+												"tag": "polygon",
+												"props": {
+													"points": "23 7 16 12 23 17"
+												}
+											}
+										]
+									},
+									"Meet link"
 								]
 							}
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "28px",
-								"height": "28px",
-								"borderRadius": "999px",
-								"background": "#f4f4f5",
-								"color": "#3f3e4a",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"fontWeight": 600,
-								"fontSize": "10px",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"SO"
 						]
 					},
 					{
@@ -237,36 +361,113 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"gap": "0px",
-								"flex": "1",
-								"minWidth": 0
+								"alignItems": "center",
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"gap": "6px",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "3px",
+										"fontWeight": 500,
 										"fontSize": "12px",
-										"fontWeight": 600
-									}
+										"cursor": "pointer",
+										"flex": "1",
+										"background": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#1a192b",
+													"success": "#22c55e",
+													"warning": "#eab308",
+													"danger": "#ff0072",
+													"info": "#784be8",
+													"neutral": "#6f6e77"
+												},
+												"default": "#1a192b"
+											}
+										},
+										"color": {
+											"ttMap": {
+												"arg": "tone",
+												"values": {
+													"primary": "#ffffff",
+													"success": "#ffffff",
+													"warning": "#ffffff",
+													"danger": "#ffffff",
+													"info": "#ffffff",
+													"neutral": "#ffffff"
+												},
+												"default": "#ffffff"
+											}
+										},
+										"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
 								},
 								"children": [
-									"{interviewer}"
-								]
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "job-hiring-interview",
+									"title": "Interview Slot Card",
+									"details": "Day: {day}\nTime: {time}\nDuration: {duration}\nInterviewer: {interviewer}"
+								}
 							},
 							{
-								"tag": "span",
+								"tag": "button",
 								"props": {
+									"type": "button",
 									"style": {
-										"fontSize": "10px",
-										"color": "#6f6e77"
-									}
+										"display": "inline-flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"gap": "6px",
+										"height": "auto",
+										"padding": "8px 12px",
+										"border": "none",
+										"borderRadius": "3px",
+										"fontWeight": 500,
+										"fontSize": "12px",
+										"cursor": "pointer",
+										"background": "transparent",
+										"color": "#6f6e77",
+										"width": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
 								},
 								"children": [
-									"Engineering Manager"
-								]
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "job-hiring-interview",
+									"title": "Interview Slot Card",
+									"details": "Day: {day}\nTime: {time}\nDuration: {duration}\nInterviewer: {interviewer}"
+								}
 							}
 						]
 					},
@@ -274,162 +475,210 @@
 						"tag": "span",
 						"props": {
 							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"gap": "4px",
-								"padding": "2px 8px",
-								"borderRadius": "3px",
 								"fontSize": "10px",
-								"fontWeight": 600,
-								"lineHeight": 1.6,
-								"background": "#f1ecfd",
-								"color": "#5b21b6",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 12,
-									"height": 12,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "#5b21b6",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "rect",
-										"props": {
-											"x": 1,
-											"y": 6,
-											"width": 13,
-											"height": 12,
-											"rx": 2
-										}
-									},
-									{
-										"tag": "polygon",
-										"props": {
-											"points": "23 7 16 12 23 17"
-										}
-									}
-								]
-							},
-							"Meet link"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "6px",
-								"height": "24px",
-								"padding": "0 14px",
-								"border": "none",
-								"borderRadius": "3px",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 500,
-								"fontSize": "12px",
-								"cursor": "pointer",
-								"flex": "1",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#1a192b",
-											"success": "#22c55e",
-											"warning": "#eab308",
-											"danger": "#ff0072",
-											"info": "#784be8",
-											"neutral": "#6f6e77"
-										},
-										"default": "#1a192b"
-									}
-								},
-								"color": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#ffffff",
-											"success": "#ffffff",
-											"warning": "#ffffff",
-											"danger": "#ffffff",
-											"info": "#ffffff",
-											"neutral": "#ffffff"
-										},
-										"default": "#ffffff"
-									}
-								},
-								"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)"
-							}
-						},
-						"children": [
-							"Confirm"
-						]
-					},
-					{
-						"tag": "button",
-						"props": {
-							"type": "button",
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"gap": "6px",
-								"height": "24px",
-								"padding": "0 14px",
-								"border": "none",
-								"borderRadius": "3px",
-								"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-								"fontWeight": 500,
-								"fontSize": "12px",
-								"cursor": "pointer",
-								"background": "transparent",
 								"color": "#6f6e77"
 							}
 						},
 						"children": [
-							"Reschedule"
+							"All times in GMT+10 · Sydney"
 						]
 					}
 				]
 			},
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "10px",
-						"color": "#6f6e77"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"All times in GMT+10 · Sydney"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Day ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Day",
+											"value": {
+												"ttArg": "day"
+											},
+											"maxLength": 2,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "day"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Time ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Time",
+											"value": {
+												"ttArg": "time"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "time"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Duration ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Duration",
+											"value": {
+												"ttArg": "duration"
+											},
+											"maxLength": 10,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "duration"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Interviewer ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Interviewer",
+											"value": {
+												"ttArg": "interviewer"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "interviewer"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "job-hiring-interview",
+									"title": "Interview Slot Card",
+									"details": "Day: {day}\nTime: {time}\nDuration: {duration}\nInterviewer: {interviewer}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "job-hiring-interview",
 	"source": {
 		"kind": "archetype",

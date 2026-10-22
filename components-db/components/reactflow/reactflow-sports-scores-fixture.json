@@ -3,7 +3,7 @@
 	"name": "Fixture Card",
 	"library": "reactflow",
 	"category": "sports",
-	"description": "Upcoming match card in the React Flow style — league chip and kickoff time, the team pair around a VS divider, venue caption, 1/X/2 odds chips, and a remind-me bell ghost button.",
+	"description": "Upcoming match card in the React Flow style — league chip and kickoff time, the team pair around a VS divider, venue caption, 1/X/2 odds chips, and a remind-me bell ghost button. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"sports",
 		"fixture",
@@ -46,26 +46,28 @@
 			"default": "Falcon Park",
 			"label": "Venue",
 			"maxLength": 32
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"boxSizing": "border-box",
-				"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-				"color": "#1a192b",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#1a192b",
-				"borderRadius": "8px",
-				"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
-				"width": "280px",
-				"padding": "14px",
-				"gap": "12px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -74,129 +76,19 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"justifyContent": "space-between",
-						"gap": "8px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"display": "inline-flex",
-								"alignItems": "center",
-								"padding": "2px 8px",
-								"borderRadius": "3px",
-								"background": "#f4f4f5",
-								"color": "#1a192b",
-								"fontSize": "10px",
-								"fontWeight": 600
-							}
-						},
-						"children": [
-							"{league}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "10px",
-								"color": "#6f6e77"
-							}
-						},
-						"children": [
-							"{kickoff}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1,
-								"textAlign": "right",
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"minWidth": 0,
-								"overflow": "hidden",
-								"textOverflow": "ellipsis",
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"{home}"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"padding": "3px 7px",
-								"borderRadius": "999px",
-								"background": "#f4f4f5",
-								"color": "#b1b1b7",
-								"fontSize": "10px",
-								"fontWeight": 700,
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"VS"
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"flex": 1,
-								"fontSize": "14px",
-								"fontWeight": 600,
-								"minWidth": 0,
-								"overflow": "hidden",
-								"textOverflow": "ellipsis",
-								"whiteSpace": "nowrap"
-							}
-						},
-						"children": [
-							"{away}"
-						]
-					}
-				]
-			},
-			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"fontSize": "10px",
-						"color": "#6f6e77",
-						"textAlign": "center"
-					}
-				},
-				"children": [
-					"{venue}"
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "6px"
+						"flexDirection": "column",
+						"boxSizing": "border-box",
+						"color": "#1a192b",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#1a192b",
+						"borderRadius": "8px",
+						"boxShadow": "0 1px 2px rgba(26, 25, 43, 0.08)",
+						"width": "280px",
+						"padding": "14px",
+						"gap": "12px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -205,13 +97,10 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"flex": 1,
 								"alignItems": "center",
-								"gap": "2px",
-								"padding": "6px 0",
-								"background": "#f4f4f5",
-								"borderRadius": "3px"
+								"justifyContent": "space-between",
+								"gap": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -219,13 +108,19 @@
 								"tag": "span",
 								"props": {
 									"style": {
+										"display": "inline-flex",
+										"alignItems": "center",
+										"padding": "2px 8px",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"color": "#1a192b",
 										"fontSize": "10px",
 										"fontWeight": 600,
-										"color": "#b1b1b7"
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
-									"1"
+									"{league}"
 								]
 							},
 							{
@@ -233,13 +128,12 @@
 								"props": {
 									"style": {
 										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"color": "#1a192b"
+										"fontSize": "10px",
+										"color": "#6f6e77"
 									}
 								},
 								"children": [
-									"2.10"
+									"{kickoff}"
 								]
 							}
 						]
@@ -249,13 +143,9 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"flexDirection": "column",
-								"flex": 1,
 								"alignItems": "center",
-								"gap": "2px",
-								"padding": "6px 0",
-								"background": "#f4f4f5",
-								"borderRadius": "3px"
+								"gap": "10px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
@@ -263,122 +153,462 @@
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontSize": "10px",
+										"flex": 1,
+										"textAlign": "right",
+										"fontSize": "14px",
 										"fontWeight": 600,
-										"color": "#b1b1b7"
+										"minWidth": 0,
+										"overflow": "hidden",
+										"textOverflow": "ellipsis",
+										"whiteSpace": "nowrap"
 									}
 								},
 								"children": [
-									"X"
+									"{home}"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"color": "#1a192b"
-									}
-								},
-								"children": [
-									"3.40"
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"flex": 1,
-								"alignItems": "center",
-								"gap": "2px",
-								"padding": "6px 0",
-								"background": "#f4f4f5",
-								"borderRadius": "3px"
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
+										"padding": "3px 7px",
+										"borderRadius": "999px",
+										"background": "#f4f4f5",
+										"color": "#b1b1b7",
 										"fontSize": "10px",
-										"fontWeight": 600,
-										"color": "#b1b1b7"
+										"fontWeight": 700,
+										"flexShrink": 0
 									}
 								},
 								"children": [
-									"2"
+									"VS"
 								]
 							},
 							{
 								"tag": "span",
 								"props": {
 									"style": {
-										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-										"fontSize": "12px",
-										"fontWeight": 700,
-										"color": "#1a192b"
+										"flex": 1,
+										"fontSize": "14px",
+										"fontWeight": 600,
+										"minWidth": 0,
+										"overflow": "hidden",
+										"textOverflow": "ellipsis",
+										"whiteSpace": "nowrap"
 									}
 								},
 								"children": [
-									"3.60"
+									"{away}"
 								]
 							}
 						]
 					},
 					{
-						"tag": "button",
+						"tag": "span",
 						"props": {
-							"type": "button",
 							"style": {
-								"width": "30px",
-								"alignSelf": "stretch",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"background": "transparent",
-								"border": "none",
-								"borderRadius": "3px",
+								"fontSize": "10px",
 								"color": "#6f6e77",
-								"cursor": "pointer",
-								"padding": "0",
-								"flexShrink": 0
+								"textAlign": "center"
+							}
+						},
+						"children": [
+							"{venue}"
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"display": "flex",
+								"alignItems": "center",
+								"gap": "6px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
+								"tag": "div",
 								"props": {
-									"width": 15,
-									"height": 15,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"flex": 1,
+										"alignItems": "center",
+										"gap": "2px",
+										"padding": "6px 0",
+										"background": "#f4f4f5",
+										"borderRadius": "3px"
+									}
 								},
 								"children": [
 									{
-										"tag": "path",
+										"tag": "span",
 										"props": {
-											"d": "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
-										}
+											"style": {
+												"fontSize": "10px",
+												"fontWeight": 600,
+												"color": "#b1b1b7"
+											}
+										},
+										"children": [
+											"1"
+										]
 									},
 									{
-										"tag": "path",
+										"tag": "span",
 										"props": {
-											"d": "M13.73 21a2 2 0 0 1-3.46 0"
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"color": "#1a192b"
+											}
+										},
+										"children": [
+											"2.10"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"flex": 1,
+										"alignItems": "center",
+										"gap": "2px",
+										"padding": "6px 0",
+										"background": "#f4f4f5",
+										"borderRadius": "3px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"fontWeight": 600,
+												"color": "#b1b1b7"
+											}
+										},
+										"children": [
+											"X"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"color": "#1a192b"
+											}
+										},
+										"children": [
+											"3.40"
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"flex": 1,
+										"alignItems": "center",
+										"gap": "2px",
+										"padding": "6px 0",
+										"background": "#f4f4f5",
+										"borderRadius": "3px"
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "10px",
+												"fontWeight": 600,
+												"color": "#b1b1b7"
+											}
+										},
+										"children": [
+											"2"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+												"fontSize": "12px",
+												"fontWeight": 700,
+												"color": "#1a192b"
+											}
+										},
+										"children": [
+											"3.60"
+										]
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"width": "auto",
+										"alignSelf": "stretch",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"background": "transparent",
+										"border": "none",
+										"borderRadius": "3px",
+										"color": "#6f6e77",
+										"cursor": "pointer",
+										"padding": "8px 12px",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"height": "auto",
+										"minWidth": 0,
+										"whiteSpace": "normal",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"children": [
+									"{actionLabel}"
+								],
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "sports-scores-fixture",
+									"title": "Fixture Card",
+									"details": "League: {league}\nHome team: {home}\nAway team: {away}\nKickoff: {kickoff}\nVenue: {venue}"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"League ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "League",
+											"value": {
+												"ttArg": "league"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "league"
 										}
 									}
 								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Home team ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Home team",
+											"value": {
+												"ttArg": "home"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "home"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Away team ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Away team",
+											"value": {
+												"ttArg": "away"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "away"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Kickoff ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Kickoff",
+											"value": {
+												"ttArg": "kickoff"
+											},
+											"maxLength": 20,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "kickoff"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Venue ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Venue",
+											"value": {
+												"ttArg": "venue"
+											},
+											"maxLength": 32,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #1a192b",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "venue"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #1a192b",
+										"borderRadius": "3px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "sports-scores-fixture",
+									"title": "Fixture Card",
+									"details": "League: {league}\nHome team: {home}\nAway team: {away}\nKickoff: {kickoff}\nVenue: {venue}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
 						]
 					}
@@ -386,7 +616,7 @@
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "sports-scores-fixture",
 	"source": {
 		"kind": "archetype",

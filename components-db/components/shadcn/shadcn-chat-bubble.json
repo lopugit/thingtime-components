@@ -3,7 +3,7 @@
 	"name": "Message Bubble Pair",
 	"library": "shadcn",
 	"category": "messaging",
-	"description": "Incoming and outgoing chat bubbles in the shadcn/ui style — quiet surface on the left, tone-solid reply on the right, library-native corners with a sharp tail edge and a timestamp.",
+	"description": "Incoming and outgoing chat bubbles in the shadcn/ui style — quiet surface on the left, tone-solid reply on the right, library-native corners with a sharp tail edge and a timestamp. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"chat",
 		"message",
@@ -45,17 +45,28 @@
 			"default": "9:41 AM",
 			"label": "Timestamp",
 			"maxLength": 12
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"gap": "6px",
-				"width": "280px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -63,80 +74,256 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"padding": "8px 12px",
-						"maxWidth": "220px",
-						"fontSize": "14px",
-						"lineHeight": 1.45,
-						"background": "#f4f4f5",
-						"color": "#09090b",
-						"borderRadius": "8px 8px 8px 6px",
-						"alignSelf": "flex-start"
+						"display": "flex",
+						"flexDirection": "column",
+						"gap": "6px",
+						"width": "280px",
+						"maxWidth": "100%",
+						"boxSizing": "border-box"
 					}
 				},
 				"children": [
-					"{incoming}"
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"padding": "8px 12px",
+								"maxWidth": "220px",
+								"fontSize": "14px",
+								"lineHeight": 1.45,
+								"background": "#f4f4f5",
+								"color": "#09090b",
+								"borderRadius": "8px 8px 8px 6px",
+								"alignSelf": "flex-start"
+							}
+						},
+						"children": [
+							"{incoming}"
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
+								"padding": "8px 12px",
+								"maxWidth": "220px",
+								"fontSize": "14px",
+								"lineHeight": 1.45,
+								"background": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#18181b",
+											"success": "#16a34a",
+											"warning": "#f59e0b",
+											"danger": "#ef4444",
+											"info": "#3b82f6",
+											"neutral": "#71717a"
+										},
+										"default": "#18181b"
+									}
+								},
+								"color": {
+									"ttMap": {
+										"arg": "tone",
+										"values": {
+											"primary": "#fafafa",
+											"success": "#ffffff",
+											"warning": "#ffffff",
+											"danger": "#fafafa",
+											"info": "#ffffff",
+											"neutral": "#ffffff"
+										},
+										"default": "#fafafa"
+									}
+								},
+								"borderRadius": "8px 8px 6px 8px",
+								"alignSelf": "flex-end"
+							}
+						},
+						"children": [
+							"{outgoing}"
+						]
+					},
+					{
+						"tag": "span",
+						"props": {
+							"style": {
+								"alignSelf": "flex-end",
+								"fontSize": "12px",
+								"color": "#71717a"
+							}
+						},
+						"children": [
+							"{time}"
+						]
+					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"padding": "8px 12px",
-						"maxWidth": "220px",
-						"fontSize": "14px",
-						"lineHeight": 1.45,
-						"background": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#18181b",
-									"success": "#16a34a",
-									"warning": "#f59e0b",
-									"danger": "#ef4444",
-									"info": "#3b82f6",
-									"neutral": "#71717a"
-								},
-								"default": "#18181b"
-							}
-						},
-						"color": {
-							"ttMap": {
-								"arg": "tone",
-								"values": {
-									"primary": "#fafafa",
-									"success": "#ffffff",
-									"warning": "#ffffff",
-									"danger": "#fafafa",
-									"info": "#ffffff",
-									"neutral": "#ffffff"
-								},
-								"default": "#fafafa"
-							}
-						},
-						"borderRadius": "8px 8px 6px 8px",
-						"alignSelf": "flex-end"
-					}
-				},
+				"tag": "details",
 				"children": [
-					"{outgoing}"
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Incoming message ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Incoming message",
+											"value": {
+												"ttArg": "incoming"
+											},
+											"maxLength": 120,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "incoming"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Outgoing message ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Outgoing message",
+											"value": {
+												"ttArg": "outgoing"
+											},
+											"maxLength": 120,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "outgoing"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Timestamp ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Timestamp",
+											"value": {
+												"ttArg": "time"
+											},
+											"maxLength": 12,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "time"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "chat-bubble",
+									"title": "Message Bubble Pair",
+									"details": "Incoming message: {incoming}\nOutgoing message: {outgoing}\nTimestamp: {time}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
 				]
 			},
 			{
-				"tag": "span",
-				"props": {
-					"style": {
-						"alignSelf": "flex-end",
-						"fontSize": "12px",
-						"color": "#71717a"
-					}
-				},
+				"tag": "small",
 				"children": [
-					"{time}"
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "chat-bubble",
 	"source": {
 		"kind": "archetype",

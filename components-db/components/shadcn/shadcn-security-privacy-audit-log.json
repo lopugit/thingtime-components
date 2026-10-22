@@ -3,7 +3,7 @@
 	"name": "Security Audit Log",
 	"library": "shadcn",
 	"category": "security",
-	"description": "Security audit log in the shadcn/ui style — three event rows with icon tiles, bold actor plus action text, IP and device captions, mono timestamps, and a danger-tinted suspicious entry with a review link.",
+	"description": "Security audit log in the shadcn/ui style — three event rows with icon tiles, bold actor plus action text, IP and device captions, mono timestamps, and a danger-tinted suspicious entry with a review link. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"security",
 		"audit",
@@ -37,25 +37,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Flag suspicious entry"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save draft",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"flexDirection": "column",
-				"background": "#ffffff",
-				"borderWidth": "1px",
-				"borderStyle": "solid",
-				"borderColor": "#e4e4e7",
-				"borderRadius": "12px",
-				"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-				"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-				"boxSizing": "border-box",
-				"width": "400px",
-				"padding": "10px",
-				"gap": "4px"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -64,10 +67,18 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px",
-						"padding": "8px 10px",
-						"borderRadius": "8px"
+						"flexDirection": "column",
+						"background": "#ffffff",
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"borderColor": "#e4e4e7",
+						"borderRadius": "12px",
+						"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+						"boxSizing": "border-box",
+						"width": "400px",
+						"padding": "10px",
+						"gap": "4px",
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -75,420 +86,628 @@
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "32px",
-								"height": "32px",
-								"borderRadius": "8px",
-								"background": "#f4f4f5",
-								"color": "#3f3f46",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 15,
-									"height": 15,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 12,
-											"r": 3
-										}
-									},
-									{
-										"tag": "path",
-										"props": {
-											"d": "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.08a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"minWidth": 0,
-								"flex": 1
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"color": "#09090b",
-										"lineHeight": 1.4
-									}
-								},
-								"children": [
-									{
-										"tag": "strong",
-										"props": {
-											"style": {
-												"fontWeight": 600
-											}
-										},
-										"children": [
-											"{actor}"
-										]
-									},
-									"{action}"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "#71717a"
-									}
-								},
-								"children": [
-									"{ip} · MacBook Pro · Sydney, AU"
-								]
-							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "#a1a1aa",
-								"marginLeft": "auto",
-								"whiteSpace": "nowrap",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"2m ago"
-						]
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"ttMerge": [
-							{
 								"display": "flex",
 								"alignItems": "center",
 								"gap": "10px",
 								"padding": "8px 10px",
-								"borderRadius": "8px"
+								"borderRadius": "8px",
+								"flexWrap": "wrap"
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "32px",
+										"height": "32px",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"color": "#3f3f46",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 15,
+											"height": 15,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 12,
+													"r": 3
+												}
+											},
+											{
+												"tag": "path",
+												"props": {
+													"d": "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.08a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+												}
+											}
+										]
+									}
+								]
 							},
 							{
-								"ttIf": {
-									"arg": "flagged",
-									"then": {
-										"background": "#fef2f2"
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"minWidth": 0,
+										"flex": 1
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"color": "#09090b",
+												"lineHeight": 1.4
+											}
+										},
+										"children": [
+											{
+												"tag": "strong",
+												"props": {
+													"style": {
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"{actor}"
+												]
+											},
+											"{action}"
+										]
 									},
-									"else": {}
-								}
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#71717a"
+											}
+										},
+										"children": [
+											"{ip} · MacBook Pro · Sydney, AU"
+										]
+									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "12px",
+										"color": "#a1a1aa",
+										"marginLeft": "auto",
+										"whiteSpace": "nowrap",
+										"flexShrink": 0
+									}
+								},
+								"children": [
+									"2m ago"
+								]
 							}
 						]
-					}
-				},
-				"children": [
+					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"width": "32px",
-								"height": "32px",
-								"borderRadius": "8px",
-								"background": "#fef2f2",
-								"color": "#b91c1c",
+								"ttMerge": [
+									{
+										"display": "flex",
+										"alignItems": "center",
+										"gap": "10px",
+										"padding": "8px 10px",
+										"borderRadius": "8px",
+										"flexWrap": "wrap"
+									},
+									{
+										"ttIf": {
+											"arg": "flagged",
+											"then": {
+												"background": "#fef2f2"
+											},
+											"else": {}
+										}
+									}
+								]
+							}
+						},
+						"children": [
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"width": "32px",
+										"height": "32px",
+										"borderRadius": "8px",
+										"background": "#fef2f2",
+										"color": "#b91c1c",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
+									}
+								},
+								"children": [
+									{
+										"tag": "svg",
+										"props": {
+											"width": 15,
+											"height": 15,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "path",
+												"props": {
+													"d": "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 9,
+													"x2": 12,
+													"y2": 13
+												}
+											},
+											{
+												"tag": "line",
+												"props": {
+													"x1": 12,
+													"y1": 17,
+													"x2": 12.01,
+													"y2": 17
+												}
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"minWidth": 0,
+										"flex": 1
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "13px",
+												"color": "#09090b",
+												"lineHeight": 1.4
+											}
+										},
+										"children": [
+											{
+												"tag": "strong",
+												"props": {
+													"style": {
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"Unknown device"
+												]
+											},
+											" signed in from a new location"
+										]
+									},
+									{
+										"tag": "span",
+										"props": {
+											"style": {
+												"fontSize": "12px",
+												"color": "#71717a"
+											}
+										},
+										"children": [
+											"185.220.101.4 · Windows · Riga, LV"
+										]
+									},
+									{
+										"ttIf": {
+											"arg": "flagged",
+											"then": {
+												"tag": "a",
+												"props": {
+													"href": "/things",
+													"style": {
+														"color": "#ef4444",
+														"fontSize": "12px",
+														"fontWeight": 600,
+														"textDecoration": "underline"
+													}
+												},
+												"children": [
+													"Review this sign-in"
+												]
+											}
+										}
+									}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "12px",
+										"color": "#a1a1aa",
+										"marginLeft": "auto",
+										"whiteSpace": "nowrap",
+										"flexShrink": 0
+									}
+								},
+								"children": [
+									"1h ago"
+								]
+							}
+						]
+					},
+					{
+						"tag": "div",
+						"props": {
+							"style": {
 								"display": "flex",
 								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0
+								"gap": "10px",
+								"padding": "8px 10px",
+								"borderRadius": "8px",
+								"flexWrap": "wrap"
 							}
 						},
 						"children": [
 							{
-								"tag": "svg",
-								"props": {
-									"width": 15,
-									"height": 15,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "path",
-										"props": {
-											"d": "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 12,
-											"y1": 9,
-											"x2": 12,
-											"y2": 13
-										}
-									},
-									{
-										"tag": "line",
-										"props": {
-											"x1": 12,
-											"y1": 17,
-											"x2": 12.01,
-											"y2": 17
-										}
-									}
-								]
-							}
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"minWidth": 0,
-								"flex": 1
-							}
-						},
-						"children": [
-							{
-								"tag": "span",
+								"tag": "div",
 								"props": {
 									"style": {
-										"fontSize": "13px",
-										"color": "#09090b",
-										"lineHeight": 1.4
+										"width": "32px",
+										"height": "32px",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"color": "#3f3f46",
+										"display": "flex",
+										"alignItems": "center",
+										"justifyContent": "center",
+										"flexShrink": 0,
+										"maxWidth": "100%",
+										"boxSizing": "border-box",
+										"flexWrap": "wrap"
 									}
 								},
 								"children": [
 									{
-										"tag": "strong",
+										"tag": "svg",
+										"props": {
+											"width": 15,
+											"height": 15,
+											"viewBox": "0 0 24 24",
+											"fill": "none",
+											"stroke": "currentColor",
+											"strokeWidth": 2,
+											"strokeLinecap": "round",
+											"strokeLinejoin": "round",
+											"xmlns": "http://www.w3.org/2000/svg"
+										},
+										"children": [
+											{
+												"tag": "path",
+												"props": {
+													"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+												}
+											},
+											{
+												"tag": "circle",
+												"props": {
+													"cx": 12,
+													"cy": 7,
+													"r": 4
+												}
+											}
+										]
+									}
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"display": "flex",
+										"flexDirection": "column",
+										"gap": "2px",
+										"minWidth": 0,
+										"flex": 1
+									}
+								},
+								"children": [
+									{
+										"tag": "span",
 										"props": {
 											"style": {
-												"fontWeight": 600
+												"fontSize": "13px",
+												"color": "#09090b",
+												"lineHeight": 1.4
 											}
 										},
 										"children": [
-											"Unknown device"
+											{
+												"tag": "strong",
+												"props": {
+													"style": {
+														"fontWeight": 600
+													}
+												},
+												"children": [
+													"Mia K."
+												]
+											},
+											" generated an API token"
 										]
 									},
-									" signed in from a new location"
-								]
-							},
-							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "#71717a"
-									}
-								},
-								"children": [
-									"185.220.101.4 · Windows · Riga, LV"
-								]
-							},
-							{
-								"ttIf": {
-									"arg": "flagged",
-									"then": {
-										"tag": "a",
+									{
+										"tag": "span",
 										"props": {
-											"href": "#",
 											"style": {
-												"color": "#ef4444",
 												"fontSize": "12px",
-												"fontWeight": 600,
-												"textDecoration": "underline"
+												"color": "#71717a"
 											}
 										},
 										"children": [
-											"Review this sign-in"
+											"10.0.12.4 · CLI · read-only scope"
 										]
 									}
-								}
+								]
+							},
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+										"fontSize": "12px",
+										"color": "#a1a1aa",
+										"marginLeft": "auto",
+										"whiteSpace": "nowrap",
+										"flexShrink": 0
+									}
+								},
+								"children": [
+									"Yesterday"
+								]
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "#a1a1aa",
-								"marginLeft": "auto",
-								"whiteSpace": "nowrap",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"1h ago"
 						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"alignItems": "center",
-						"gap": "10px",
-						"padding": "8px 10px",
-						"borderRadius": "8px"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "32px",
-								"height": "32px",
-								"borderRadius": "8px",
-								"background": "#f4f4f5",
-								"color": "#3f3f46",
-								"display": "flex",
-								"alignItems": "center",
-								"justifyContent": "center",
-								"flexShrink": 0
-							}
-						},
+						"tag": "summary",
 						"children": [
-							{
-								"tag": "svg",
-								"props": {
-									"width": 15,
-									"height": 15,
-									"viewBox": "0 0 24 24",
-									"fill": "none",
-									"stroke": "currentColor",
-									"strokeWidth": 2,
-									"strokeLinecap": "round",
-									"strokeLinejoin": "round",
-									"xmlns": "http://www.w3.org/2000/svg"
-								},
-								"children": [
-									{
-										"tag": "path",
-										"props": {
-											"d": "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-										}
-									},
-									{
-										"tag": "circle",
-										"props": {
-											"cx": 12,
-											"cy": 7,
-											"r": 4
-										}
-									}
-								]
-							}
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"gap": "2px",
-								"minWidth": 0,
-								"flex": 1
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "13px",
-										"color": "#09090b",
-										"lineHeight": 1.4
-									}
-								},
+								"tag": "label",
 								"children": [
+									"Actor ",
 									{
-										"tag": "strong",
+										"tag": "input",
 										"props": {
+											"aria-label": "Actor",
+											"value": {
+												"ttArg": "actor"
+											},
+											"maxLength": 30,
 											"style": {
-												"fontWeight": 600
-											}
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
 										},
-										"children": [
-											"Mia K."
-										]
-									},
-									" generated an API token"
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "actor"
+										}
+									}
 								]
 							},
 							{
-								"tag": "span",
-								"props": {
-									"style": {
-										"fontSize": "12px",
-										"color": "#71717a"
+								"tag": "label",
+								"children": [
+									"Action ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Action",
+											"value": {
+												"ttArg": "action"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "action"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"IP address ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "IP address",
+											"value": {
+												"ttArg": "ip"
+											},
+											"maxLength": 40,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e4e4e7",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "ip"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Flag suspicious entry ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Flag suspicious entry",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "flagged"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "flagged"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e4e4e7",
+										"borderRadius": "8px",
+										"background": "#f4f4f5",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "security-privacy-audit-log",
+									"title": "Security Audit Log",
+									"details": "Actor: {actor}\nAction: {action}\nIP address: {ip}\nFlag suspicious entry: {flagged}"
 								},
 								"children": [
-									"10.0.12.4 · CLI · read-only scope"
+									"{actionLabel}"
 								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						]
-					},
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontFamily": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-								"fontSize": "12px",
-								"color": "#a1a1aa",
-								"marginLeft": "auto",
-								"whiteSpace": "nowrap",
-								"flexShrink": 0
-							}
-						},
-						"children": [
-							"Yesterday"
 						]
 					}
+				]
+			},
+			{
+				"tag": "small",
+				"children": [
+					"Draft only. Saving creates a private Thing. External effects require a configured Action."
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "security-privacy-audit-log",
 	"source": {
 		"kind": "archetype",

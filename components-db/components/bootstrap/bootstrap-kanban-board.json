@@ -3,7 +3,7 @@
 	"name": "Mini Kanban Board",
 	"library": "bootstrap",
 	"category": "project",
-	"description": "Miniature three-lane board in the Bootstrap style — To do, Doing and Done lanes with tiny skeleton cards, the Doing lane highlighted with the library accent.",
+	"description": "Miniature three-lane board in the Bootstrap style — To do, Doing and Done lanes with tiny skeleton cards, the Doing lane highlighted with the library accent. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"kanban",
 		"board",
@@ -31,23 +31,28 @@
 			"default": "Done",
 			"label": "Last lane",
 			"maxLength": 16
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "flex",
-				"alignItems": "stretch",
-				"gap": "8px",
-				"width": "310px",
-				"boxSizing": "border-box",
-				"padding": "10px",
-				"background": "#ffffff",
-				"border": "1px solid #dee2e6",
-				"borderRadius": "8px",
-				"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
-				"fontFamily": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -56,157 +61,333 @@
 				"props": {
 					"style": {
 						"display": "flex",
-						"flexDirection": "column",
-						"flex": "1",
-						"gap": "6px",
-						"padding": "8px",
-						"background": "#f8f9fa",
-						"border": "1px solid #e9ecef",
-						"borderRadius": "6px",
-						"boxShadow": "none"
-					}
-				},
-				"children": [
-					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"color": "#6c757d"
-							}
-						},
-						"children": [
-							"{todo}"
-						]
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "16px",
-								"background": "#ffffff",
-								"border": "1px solid #dee2e6",
-								"borderRadius": "4px",
-								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
-							}
-						}
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"height": "16px",
-								"background": "#ffffff",
-								"border": "1px solid #dee2e6",
-								"borderRadius": "4px",
-								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
-							}
-						}
-					}
-				]
-			},
-			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"flex": "1",
-						"gap": "6px",
-						"padding": "8px",
+						"alignItems": "stretch",
+						"gap": "8px",
+						"width": "310px",
+						"boxSizing": "border-box",
+						"padding": "10px",
 						"background": "#ffffff",
-						"border": "1.5px solid #0d6efd",
-						"borderRadius": "6px",
-						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+						"border": "1px solid #dee2e6",
+						"borderRadius": "8px",
+						"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)",
+						"maxWidth": "100%",
+						"flexWrap": "wrap"
 					}
 				},
 				"children": [
 					{
-						"tag": "span",
+						"tag": "div",
 						"props": {
 							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"color": "#0d6efd"
+								"display": "flex",
+								"flexDirection": "column",
+								"flex": "1",
+								"gap": "6px",
+								"padding": "8px",
+								"background": "#f8f9fa",
+								"border": "1px solid #e9ecef",
+								"borderRadius": "6px",
+								"boxShadow": "none"
 							}
 						},
 						"children": [
-							"{doing}"
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 500,
+										"color": "#6c757d"
+									}
+								},
+								"children": [
+									"{todo}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #dee2e6",
+										"borderRadius": "4px",
+										"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+									}
+								}
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #dee2e6",
+										"borderRadius": "4px",
+										"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+									}
+								}
+							}
 						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"height": "16px",
+								"display": "flex",
+								"flexDirection": "column",
+								"flex": "1",
+								"gap": "6px",
+								"padding": "8px",
 								"background": "#ffffff",
-								"border": "1px solid #dee2e6",
-								"borderRadius": "4px",
+								"border": "1.5px solid #0d6efd",
+								"borderRadius": "6px",
 								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 500,
+										"color": "#0d6efd"
+									}
+								},
+								"children": [
+									"{doing}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #dee2e6",
+										"borderRadius": "4px",
+										"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+									}
+								}
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #dee2e6",
+										"borderRadius": "4px",
+										"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+									}
+								}
+							}
+						]
 					},
 					{
 						"tag": "div",
 						"props": {
 							"style": {
-								"height": "16px",
-								"background": "#ffffff",
-								"border": "1px solid #dee2e6",
-								"borderRadius": "4px",
-								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+								"display": "flex",
+								"flexDirection": "column",
+								"flex": "1",
+								"gap": "6px",
+								"padding": "8px",
+								"background": "#f8f9fa",
+								"border": "1px solid #e9ecef",
+								"borderRadius": "6px",
+								"boxShadow": "none"
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "span",
+								"props": {
+									"style": {
+										"fontSize": "12px",
+										"fontWeight": 500,
+										"color": "#6c757d"
+									}
+								},
+								"children": [
+									"{done}"
+								]
+							},
+							{
+								"tag": "div",
+								"props": {
+									"style": {
+										"height": "16px",
+										"background": "#ffffff",
+										"border": "1px solid #dee2e6",
+										"borderRadius": "4px",
+										"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+									}
+								}
+							}
+						]
 					}
 				]
 			},
 			{
-				"tag": "div",
-				"props": {
-					"style": {
-						"display": "flex",
-						"flexDirection": "column",
-						"flex": "1",
-						"gap": "6px",
-						"padding": "8px",
-						"background": "#f8f9fa",
-						"border": "1px solid #e9ecef",
-						"borderRadius": "6px",
-						"boxShadow": "none"
-					}
-				},
+				"tag": "details",
 				"children": [
 					{
-						"tag": "span",
-						"props": {
-							"style": {
-								"fontSize": "12px",
-								"fontWeight": 500,
-								"color": "#6c757d"
-							}
-						},
+						"tag": "summary",
 						"children": [
-							"{done}"
+							"Edit and save"
 						]
 					},
 					{
-						"tag": "div",
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"height": "16px",
-								"background": "#ffffff",
-								"border": "1px solid #dee2e6",
-								"borderRadius": "4px",
-								"boxShadow": "0 .125rem .25rem rgba(0, 0, 0, .075)"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
-						}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"First lane ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "First lane",
+											"value": {
+												"ttArg": "todo"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "todo"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Middle lane ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Middle lane",
+											"value": {
+												"ttArg": "doing"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "doing"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Last lane ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Last lane",
+											"value": {
+												"ttArg": "done"
+											},
+											"maxLength": 16,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #dee2e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "done"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #dee2e6",
+										"borderRadius": "6px",
+										"background": "#f8f9fa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "kanban-board",
+									"title": "Mini Kanban Board",
+									"details": "First lane: {todo}\nMiddle lane: {doing}\nLast lane: {done}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "kanban-board",
 	"source": {
 		"kind": "archetype",

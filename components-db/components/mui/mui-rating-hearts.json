@@ -3,7 +3,7 @@
 	"name": "Heart Rating",
 	"library": "mui",
 	"category": "data-display",
-	"description": "Five-heart affection rating in the Material UI style — tone-colored filled hearts clipped over faint outlines, for favourites, reactions, and cozy scores.",
+	"description": "Five-heart affection rating in the Material UI style — tone-colored filled hearts clipped over faint outlines, for favourites, reactions, and cozy scores. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"rating",
 		"hearts",
@@ -38,16 +38,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Show value"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"alignItems": "center",
-				"gap": "10px",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -55,8 +67,15 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"position": "relative",
-						"display": "inline-flex"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid rgba(0, 0, 0, 0.12)",
+						"borderRadius": "4px",
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
@@ -65,148 +84,367 @@
 						"props": {
 							"style": {
 								"display": "flex",
-								"alignItems": "center",
-								"gap": "0px"
+								"flexWrap": "wrap",
+								"gap": "6px"
 							}
 						},
 						"children": [
 							{
-								"ttRepeat": {
-									"count": 5,
-									"max": 5,
-									"node": {
-										"tag": "svg",
-										"props": {
-											"width": 20,
-											"height": 20,
-											"viewBox": "0 0 24 24",
-											"fill": "none",
-											"stroke": "rgba(0, 0, 0, 0.38)",
-											"strokeWidth": 2,
-											"strokeLinecap": "round",
-											"strokeLinejoin": "round",
-											"xmlns": "http://www.w3.org/2000/svg"
-										},
-										"children": [
-											{
-												"tag": "path",
-												"props": {
-													"d": "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-												}
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "4px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"background": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 1,
+												"then": "#1976d2",
+												"else": "#fafafa"
 											}
-										]
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 1,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.87)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "hearts",
+											"equals": 1,
+											"then": true,
+											"else": false
+										}
 									}
+								},
+								"children": [
+									"1 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "hearts",
+									"value": 1
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "4px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"background": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 2,
+												"then": "#1976d2",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 2,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.87)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "hearts",
+											"equals": 2,
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"2 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "hearts",
+									"value": 2
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "4px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"background": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 3,
+												"then": "#1976d2",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 3,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.87)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "hearts",
+											"equals": 3,
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"3 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "hearts",
+									"value": 3
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "4px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"background": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 4,
+												"then": "#1976d2",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 4,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.87)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "hearts",
+											"equals": 4,
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"4 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "hearts",
+									"value": 4
+								}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"padding": "8px 12px",
+										"borderRadius": "4px",
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"background": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 5,
+												"then": "#1976d2",
+												"else": "#fafafa"
+											}
+										},
+										"cursor": "pointer",
+										"color": {
+											"ttIf": {
+												"arg": "hearts",
+												"equals": 5,
+												"then": "#ffffff",
+												"else": "rgba(0, 0, 0, 0.87)"
+											}
+										}
+									},
+									"aria-pressed": {
+										"ttIf": {
+											"arg": "hearts",
+											"equals": 5,
+											"then": true,
+											"else": false
+										}
+									}
+								},
+								"children": [
+									"5 ★"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "hearts",
+									"value": 5
 								}
 							}
 						]
 					},
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"position": "absolute",
-								"top": "0px",
-								"left": "0px",
-								"height": "100%",
-								"width": "calc({hearts} * 20px)",
-								"overflow": "hidden",
-								"whiteSpace": "nowrap"
-							}
-						},
+						"tag": "p",
 						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"display": "flex",
-										"alignItems": "center",
-										"gap": "0px",
-										"width": "100px",
-										"flexShrink": 0
-									}
-								},
-								"children": [
-									{
-										"ttRepeat": {
-											"count": 5,
-											"max": 5,
-											"node": {
-												"tag": "svg",
-												"props": {
-													"width": 20,
-													"height": 20,
-													"viewBox": "0 0 24 24",
-													"fill": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#1976d2",
-																"success": "#2e7d32",
-																"warning": "#ed6c02",
-																"danger": "#d32f2f",
-																"info": "#0288d1",
-																"neutral": "#616161"
-															},
-															"default": "#d32f2f"
-														}
-													},
-													"stroke": {
-														"ttMap": {
-															"arg": "tone",
-															"values": {
-																"primary": "#1976d2",
-																"success": "#2e7d32",
-																"warning": "#ed6c02",
-																"danger": "#d32f2f",
-																"info": "#0288d1",
-																"neutral": "#616161"
-															},
-															"default": "#d32f2f"
-														}
-													},
-													"strokeWidth": 2,
-													"strokeLinecap": "round",
-													"strokeLinejoin": "round",
-													"xmlns": "http://www.w3.org/2000/svg"
-												},
-												"children": [
-													{
-														"tag": "path",
-														"props": {
-															"d": "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-														}
-													}
-												]
-											}
-										}
-									}
-								]
-							}
+							"Your rating: {hearts} / 5"
 						]
 					}
 				]
 			},
 			{
-				"ttIf": {
-					"arg": "showValue",
-					"then": {
-						"tag": "span",
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
 						"props": {
 							"style": {
-								"fontSize": "13px",
-								"fontWeight": 600,
-								"color": "rgba(0, 0, 0, 0.6)"
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
 							}
 						},
 						"children": [
-							"{hearts}/5"
+							{
+								"tag": "label",
+								"children": [
+									"Hearts (0–5) ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Hearts (0–5)",
+											"value": {
+												"ttArg": "hearts"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 5
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "hearts"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show value",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showValue"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showValue"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "rating-hearts",
+									"title": "Heart Rating",
+									"details": "Hearts (0–5): {hearts}\nShow value: {showValue}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
 						]
 					}
-				}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "rating-hearts",
 	"source": {
 		"kind": "archetype",

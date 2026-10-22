@@ -3,7 +3,7 @@
 	"name": "Tooltip",
 	"library": "mui",
 	"category": "overlays",
-	"description": "Dark tooltip bubble in the Material UI style — inverse ink pill anchored above or below its trigger, with a CSS-triangle arrow pointing at the control.",
+	"description": "Dark tooltip bubble in the Material UI style — inverse ink pill anchored above or below its trigger, with a CSS-triangle arrow pointing at the control. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"tooltip",
 		"overlay",
@@ -40,157 +40,288 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Show arrow"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"display": "inline-flex",
-				"flexDirection": "column",
-				"alignItems": "center",
-				"gap": "4px",
-				"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
 			{
-				"ttIf": {
-					"arg": "placement",
-					"equals": "top",
-					"then": {
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center"
-							}
-						},
-						"children": [
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"background": "rgba(0, 0, 0, 0.87)",
-										"color": "#ffffff",
-										"padding": "5px 10px",
-										"borderRadius": "4px",
-										"fontSize": "12px",
-										"maxWidth": "220px",
-										"textAlign": "center",
-										"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)"
-									}
-								},
-								"children": [
-									"{label}"
-								]
-							},
-							{
-								"ttIf": {
-									"arg": "showArrow",
-									"then": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": 0,
-												"height": 0,
-												"borderLeft": "6px solid transparent",
-												"borderRight": "6px solid transparent",
-												"borderTop": "6px solid rgba(0, 0, 0, 0.87)"
-											}
-										}
-									}
-								}
-							}
-						]
-					}
-				}
-			},
-			{
-				"tag": "button",
+				"tag": "details",
 				"props": {
-					"type": "button",
 					"style": {
-						"display": "inline-flex",
-						"alignItems": "center",
-						"justifyContent": "center",
-						"gap": "6px",
-						"height": "36px",
-						"padding": "0 14px",
-						"background": "#ffffff",
-						"color": "rgba(0, 0, 0, 0.87)",
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
 						"border": "1px solid rgba(0, 0, 0, 0.12)",
 						"borderRadius": "4px",
-						"fontFamily": "Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-						"fontSize": "13px",
-						"fontWeight": 500,
-						"boxShadow": "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
-						"cursor": "pointer",
-						"textTransform": "uppercase",
-						"letterSpacing": "0.02857em"
+						"background": "#ffffff",
+						"color": "rgba(0, 0, 0, 0.87)",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
-					"{triggerLabel}"
-				]
-			},
-			{
-				"ttIf": {
-					"arg": "placement",
-					"equals": "bottom",
-					"then": {
-						"tag": "div",
-						"props": {
-							"style": {
-								"display": "flex",
-								"flexDirection": "column",
-								"alignItems": "center"
-							}
-						},
+					{
+						"tag": "summary",
+						"children": [
+							"{triggerLabel}"
+						]
+					},
+					{
+						"tag": "section",
 						"children": [
 							{
-								"ttIf": {
-									"arg": "showArrow",
-									"then": {
-										"tag": "div",
-										"props": {
-											"style": {
-												"width": 0,
-												"height": 0,
-												"borderLeft": "6px solid transparent",
-												"borderRight": "6px solid transparent",
-												"borderBottom": "6px solid rgba(0, 0, 0, 0.87)"
-											}
-										}
-									}
-								}
-							},
-							{
-								"tag": "div",
-								"props": {
-									"style": {
-										"background": "rgba(0, 0, 0, 0.87)",
-										"color": "#ffffff",
-										"padding": "5px 10px",
-										"borderRadius": "4px",
-										"fontSize": "12px",
-										"maxWidth": "220px",
-										"textAlign": "center",
-										"boxShadow": "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)"
-									}
-								},
+								"tag": "p",
 								"children": [
 									"{label}"
+								]
+							},
+							{
+								"tag": "nav",
+								"children": [
+									{
+										"tag": "a",
+										"props": {
+											"href": "/things"
+										},
+										"children": [
+											"Open Things"
+										]
+									},
+									" · ",
+									{
+										"tag": "a",
+										"props": {
+											"href": "/builder"
+										},
+										"children": [
+											"Open builder"
+										]
+									}
 								]
 							}
 						]
 					}
-				}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
+					},
+					{
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Tooltip text ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Tooltip text",
+											"value": {
+												"ttArg": "label"
+											},
+											"maxLength": 60,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "label"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Trigger label ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Trigger label",
+											"value": {
+												"ttArg": "triggerLabel"
+											},
+											"maxLength": 24,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "text"
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "triggerLabel"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Placement ",
+									{
+										"tag": "select",
+										"props": {
+											"aria-label": "Placement",
+											"value": {
+												"ttArg": "placement"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid rgba(0, 0, 0, 0.12)",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											}
+										},
+										"children": [
+											{
+												"tag": "option",
+												"props": {
+													"value": "top"
+												},
+												"children": [
+													"top"
+												]
+											},
+											{
+												"tag": "option",
+												"props": {
+													"value": "bottom"
+												},
+												"children": [
+													"bottom"
+												]
+											}
+										],
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "placement"
+										}
+									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show arrow ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show arrow",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showArrow"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showArrow"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid rgba(0, 0, 0, 0.12)",
+										"borderRadius": "4px",
+										"background": "#fafafa",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "tooltip-popover-tooltip",
+									"title": "Tooltip",
+									"details": "Tooltip text: {label}\nTrigger label: {triggerLabel}\nPlacement: {placement}\nShow arrow: {showArrow}"
+								},
+								"children": [
+									"{actionLabel}"
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
+								},
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
+							}
+						]
+					}
+				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "tooltip-popover-tooltip",
 	"source": {
 		"kind": "archetype",

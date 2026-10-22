@@ -3,7 +3,7 @@
 	"name": "Slider",
 	"library": "daisyui",
 	"category": "forms",
-	"description": "Single-thumb slider in the daisyUI style — filled track up to the percent value, a surface thumb with a tone-colored border, optional value bubble.",
+	"description": "Single-thumb slider in the daisyUI style — filled track up to the percent value, a surface thumb with a tone-colored border, optional value bubble. Interactive controls and editable values; saves private Things through an Action.",
 	"tags": [
 		"slider",
 		"input",
@@ -38,30 +38,28 @@
 			"type": "boolean",
 			"default": true,
 			"label": "Show value bubble"
+		},
+		{
+			"name": "actionKey",
+			"type": "string",
+			"default": "demo-catalog-records-save",
+			"maxLength": 500,
+			"label": "Action to run"
+		},
+		{
+			"name": "actionLabel",
+			"type": "string",
+			"default": "Save record",
+			"maxLength": 500,
+			"label": "Action label"
 		}
 	],
 	"render": {
 		"tag": "div",
 		"props": {
 			"style": {
-				"ttMerge": [
-					{
-						"width": "240px",
-						"fontFamily": "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-						"paddingBottom": "8px"
-					},
-					{
-						"ttIf": {
-							"arg": "showValue",
-							"then": {
-								"paddingTop": "36px"
-							},
-							"else": {
-								"paddingTop": "8px"
-							}
-						}
-					}
-				]
+				"maxWidth": "100%",
+				"minWidth": 0
 			}
 		},
 		"children": [
@@ -69,125 +67,173 @@
 				"tag": "div",
 				"props": {
 					"style": {
-						"position": "relative",
-						"height": "8px",
-						"background": "#f2f2f2",
-						"borderRadius": "999px"
+						"display": "grid",
+						"gap": "12px",
+						"padding": "16px",
+						"border": "1px solid #e5e6e6",
+						"borderRadius": "12px",
+						"background": "#ffffff",
+						"color": "#1f2937",
+						"minWidth": 0,
+						"maxWidth": "100%"
 					}
 				},
 				"children": [
 					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"width": "{percent}%",
-								"height": "100%",
-								"background": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#570df8",
-											"success": "#00a96e",
-											"warning": "#ffbe00",
-											"danger": "#ff5861",
-											"info": "#00b6ff",
-											"neutral": "#2a323c"
-										},
-										"default": "#570df8"
-									}
+						"tag": "label",
+						"children": [
+							"percent: {percent}%",
+							{
+								"tag": "input",
+								"props": {
+									"type": "range",
+									"aria-label": "percent",
+									"value": {
+										"ttArg": "percent"
+									},
+									"style": {
+										"width": "100%",
+										"minWidth": 0,
+										"padding": "8px",
+										"border": "1px solid #e5e6e6",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"min": 0,
+									"max": 100,
+									"step": 1
 								},
-								"borderRadius": "999px"
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "set",
+									"key": "percent"
+								}
 							}
-						}
+						]
+					}
+				]
+			},
+			{
+				"tag": "details",
+				"children": [
+					{
+						"tag": "summary",
+						"children": [
+							"Edit and save"
+						]
 					},
 					{
-						"ttIf": {
-							"arg": "showValue",
-							"then": {
-								"tag": "div",
-								"props": {
-									"style": {
-										"position": "absolute",
-										"left": "{percent}%",
-										"top": "-32px",
-										"transform": "translateX(-50%)",
-										"background": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#570df8",
-													"success": "#00a96e",
-													"warning": "#ffbe00",
-													"danger": "#ff5861",
-													"info": "#00b6ff",
-													"neutral": "#2a323c"
-												},
-												"default": "#570df8"
-											}
+						"tag": "fieldset",
+						"props": {
+							"style": {
+								"display": "grid",
+								"gap": "8px",
+								"border": 0,
+								"minWidth": 0
+							}
+						},
+						"children": [
+							{
+								"tag": "label",
+								"children": [
+									"Value ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Value",
+											"value": {
+												"ttArg": "percent"
+											},
+											"maxLength": 500,
+											"style": {
+												"width": "100%",
+												"minWidth": 0,
+												"padding": "8px",
+												"border": "1px solid #e5e6e6",
+												"maxWidth": "100%",
+												"boxSizing": "border-box"
+											},
+											"type": "number",
+											"min": 0,
+											"max": 100
 										},
-										"color": {
-											"ttMap": {
-												"arg": "tone",
-												"values": {
-													"primary": "#ffffff",
-													"success": "#ffffff",
-													"warning": "#382800",
-													"danger": "#ffffff",
-													"info": "#ffffff",
-													"neutral": "#ffffff"
-												},
-												"default": "#ffffff"
-											}
-										},
-										"padding": "2px 8px",
-										"borderRadius": "8px",
-										"fontSize": "12px",
-										"fontWeight": 700
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "percent"
+										}
 									}
+								]
+							},
+							{
+								"tag": "label",
+								"children": [
+									"Show value bubble ",
+									{
+										"tag": "input",
+										"props": {
+											"aria-label": "Show value bubble",
+											"type": "checkbox",
+											"checked": {
+												"ttArg": "showValue"
+											}
+										},
+										"ttAction": "$ui",
+										"ttActionInputs": {
+											"op": "set",
+											"key": "showValue"
+										}
+									}
+								]
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button",
+									"style": {
+										"border": "1px solid #e5e6e6",
+										"borderRadius": "8px",
+										"background": "#f2f2f2",
+										"width": "auto",
+										"height": "auto",
+										"minWidth": 0,
+										"padding": "8px 12px",
+										"whiteSpace": "normal",
+										"maxWidth": "100%",
+										"boxSizing": "border-box"
+									},
+									"aria-label": "{actionLabel}"
+								},
+								"ttAction": "{actionKey}",
+								"ttActionInputs": {
+									"family": "slider-progress-slider",
+									"title": "Slider",
+									"details": "Value: {percent}\nShow value bubble: {showValue}"
 								},
 								"children": [
-									"{percent}"
+									"{actionLabel}"
 								]
-							}
-						}
-					},
-					{
-						"tag": "div",
-						"props": {
-							"style": {
-								"position": "absolute",
-								"left": "{percent}%",
-								"top": "50%",
-								"transform": "translate(-50%, -50%)",
-								"width": "20px",
-								"height": "20px",
-								"borderRadius": "999px",
-								"background": "#ffffff",
-								"borderWidth": "2px",
-								"borderStyle": "solid",
-								"borderColor": {
-									"ttMap": {
-										"arg": "tone",
-										"values": {
-											"primary": "#570df8",
-											"success": "#00a96e",
-											"warning": "#ffbe00",
-											"danger": "#ff5861",
-											"info": "#00b6ff",
-											"neutral": "#2a323c"
-										},
-										"default": "#570df8"
-									}
+							},
+							{
+								"tag": "button",
+								"props": {
+									"type": "button"
 								},
-								"boxShadow": "0 1px 2px 0 rgba(0, 0, 0, 0.05)"
+								"children": [
+									"Reset values"
+								],
+								"ttAction": "$ui",
+								"ttActionInputs": {
+									"op": "reset"
+								}
 							}
-						}
+						]
 					}
 				]
 			}
 		]
 	},
-	"version": 1,
+	"version": 2,
 	"familyKey": "slider-progress-slider",
 	"source": {
 		"kind": "archetype",
